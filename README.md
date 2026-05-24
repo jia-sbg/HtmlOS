@@ -2,7 +2,6 @@
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-v2.7.1-0078d7?style=flat-square)
 ![许可](https://img.shields.io/badge/许可-MIT-30d158?style=flat-square)
 ![技术栈](https://img.shields.io/badge/技术栈-HTML%2FCSS%2FJS-ffb900?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-支持-5e5ce6?style=flat-square)
@@ -140,7 +139,7 @@ close 关闭应用返回桌面
 
 ```
 HtmlOS/
-├── index.html              # 单文件完整系统 (~3000行)
+├── index.html              # 单文件完整系统
 ├── README.md               # 项目说明
 └── .github/                # GitHub配置
 ```
@@ -174,5 +173,6 @@ HtmlOS/
 
 🔗 GitHub仓库 · 
 🎬 B站主页
-
 Deepseek帮我写的😋
+</div>
+```
