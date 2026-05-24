@@ -1420,10 +1420,7 @@
           ⚙️ 系统设置
         </div>
         <div class="setting-group-content">
-          <div class="setting-item">
-            <label>清理应用缓存</label>
-            <button onclick="clearAllAppCache()">一键清理</button>
-          </div>
+          <!-- 已删除清理应用缓存按钮 -->
         </div>
       </div>
       
@@ -1475,7 +1472,7 @@
           
           <div class="setting-item">
             <button onclick="forceRefreshAllApps()" style="flex:1;">🔄 强制刷新所有应用</button>
-            <button onclick="clearAllAppCache()" style="flex:1;">🧹 清除全部应用缓存</button>
+            <!-- 已删除清除全部应用缓存按钮 -->
           </div>
           
           <div class="setting-item">
@@ -2545,8 +2542,6 @@
             <button class="secondary" onclick="renameAppFromInfo('${fileKey}')">✏️ 重命名</button>
             <button class="secondary" onclick="toggleHideFromInfo('${fileKey}')">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
             <button class="secondary" onclick="toggleLockFromInfo('${fileKey}')">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
-            <button class="secondary" onclick="moveToFirstPage('${fileKey}')">🏠 移至首页</button>
-            <button class="secondary" onclick="moveToLastPage('${fileKey}')">📄 移至末页</button>
             <button class="secondary" onclick="exportSingleApp('${fileKey}')">📤 导出应用</button>
             ${app.source !== 'system' ? '<button class="danger" onclick="deleteAppFromInfo(\'' + fileKey + '\')">🗑️ 卸载应用</button>' : ''}
           </div>
@@ -2606,47 +2601,6 @@
         showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
         showAppInfo(fileKey); // 刷新信息页面
       }
-    }
-    
-    // ========== 应用移动功能 ==========
-    function moveToFirstPage(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) return;
-      
-      // 从当前位置移除
-      installedApps = installedApps.filter(a => a.file !== fileKey);
-      // 添加到开头
-      installedApps.unshift(app);
-      
-      saveApps();
-      saveLayout();
-      currentPage = 0;
-      renderApps();
-      closeAppInfo();
-      showToast('应用已移至首页', 'success');
-    }
-    
-    function moveToLastPage(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) return;
-      
-      // 从当前位置移除
-      installedApps = installedApps.filter(a => a.file !== fileKey);
-      // 添加到末尾
-      installedApps.push(app);
-      
-      saveApps();
-      saveLayout();
-      
-      // 跳转到最后一页
-      const perPage = cols * 3;
-      const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
-      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
-      currentPage = totalPages - 1;
-      
-      renderApps();
-      closeAppInfo();
-      showToast('应用已移至末页', 'success');
     }
     
     async function exportSingleApp(fileKey) {
@@ -3166,8 +3120,6 @@
         <button onclick="showAppInfo('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">ℹ️ 应用信息</button>
         <button onclick="hideApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
         <button onclick="lockApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
-        <button onclick="moveToFirstPage('${app.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">🏠 移至首页</button>
-        <button onclick="moveToLastPage('${app.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">📄 移至末页</button>
         ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;">🗑️ 卸载</button>`:''}
         <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#333;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">取消</button>`;
       document.body.appendChild(modal);
@@ -3526,15 +3478,6 @@
         reader.readAsText(e.target.files[0]);
       };
       input.click();
-    }
-    
-    // ========== 一键清理所有应用缓存 ==========
-    async function clearAllAppCache() {
-      if (!confirm('确定要清除所有应用缓存吗？这不会删除已安装的应用')) return;
-      const contents = await dbGetAll(STORE_CONTENT);
-      for (const content of contents) await dbDelete(STORE_CONTENT, content.file);
-      showToast('✅ 所有应用缓存已清除', 'success');
-      addLog('info', '清除所有应用缓存');
     }
     
     // ========== 强制刷新所有应用 ==========
