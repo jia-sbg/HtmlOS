@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v2.6</title>
+  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v2.7.1</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -240,6 +240,57 @@
       transform: scale(0.95);
     }
     
+    /* 编辑模式工具栏 */
+    .edit-toolbar {
+      display: none;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+    
+    .edit-toolbar.show {
+      display: flex;
+    }
+    
+    .edit-toolbar button {
+      padding: 6px 12px;
+      font-size: 13px;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 20px;
+      color: white;
+      cursor: pointer;
+      backdrop-filter: var(--backdrop-blur);
+      transition: all var(--transition-speed) ease;
+    }
+    
+    .edit-toolbar button:active {
+      transform: scale(0.95);
+    }
+    
+    /* 页面指示器 */
+    .page-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+    
+    .page-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all 0.2s ease;
+    }
+    
+    .page-dot.active {
+      background: var(--primary-color);
+      transform: scale(1.2);
+    }
+    
     /* 应用网格 - 磁贴系统优化 */
     .apps-container {
       display: grid;
@@ -256,6 +307,12 @@
       /* 性能优化：硬件加速 */
       transform: translateZ(0);
       will-change: scroll-position;
+    }
+    
+    /* 编辑模式下禁用滚动 */
+    .apps-container.edit-mode {
+      touch-action: none;
+      overflow: hidden;
     }
     
     /* 应用磁贴 - 深度优化 */
@@ -348,6 +405,39 @@
       top: 4px;
       right: 4px;
       font-size: 12px;
+    }
+    
+    /* 编辑模式下的磁贴抖动动画 */
+    .apps-container.edit-mode .app-icon {
+      animation: shake 0.5s infinite alternate;
+      cursor: grab;
+    }
+    
+    .apps-container.edit-mode .app-icon:active {
+      cursor: grabbing;
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    
+    @keyframes shake {
+      from { transform: rotate(-1deg); }
+      to { transform: rotate(1deg); }
+    }
+    
+    /* 拖拽中的磁贴 */
+    .app-icon.dragging {
+      opacity: 0.5;
+      transform: scale(1.1);
+      z-index: 1000;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    }
+    
+    /* 放置目标指示器 */
+    .drop-indicator {
+      background: rgba(255,255,255,0.3);
+      border: 2px dashed var(--primary-color);
+      border-radius: var(--card-radius);
     }
     
     /* 图标Emoji */
@@ -622,6 +712,16 @@
     .bottom-bar button:active { 
       background: var(--primary-color);
       transform: scale(0.95);
+    }
+    
+    /* 编辑模式底部栏 */
+    .bottom-bar.edit-mode {
+      background: var(--primary-color);
+    }
+    
+    .bottom-bar.edit-mode button {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.3);
     }
     
     /* 应用框架容器 */
@@ -1128,6 +1228,29 @@
     .app-info-actions .secondary {
       background: #3a3a3c;
     }
+    
+    /* 编辑模式提示 */
+    .edit-mode-tip {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 10000;
+      animation: fadeInOut 3s ease forwards;
+      pointer-events: none;
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -1171,13 +1294,23 @@
       <input type="text" id="searchApps" placeholder="🔍 搜索应用..." />
     </div>
     
-    <!-- 工具栏 -->
-    <div class="toolbar">
+    <!-- 普通工具栏 -->
+    <div class="toolbar" id="normalToolbar">
       <button onclick="showSortMenu()">🔄 排序</button>
       <button onclick="toggleHiddenApps()">👁️ 显示隐藏应用</button>
       <button onclick="scrollToTop()">⬆️ 回到顶部</button>
       <button onclick="fixTileLayout()">🔧 修复布局</button>
     </div>
+    
+    <!-- 编辑模式工具栏 -->
+    <div class="edit-toolbar" id="editToolbar">
+      <button onclick="exitEditMode()">✅ 完成编辑</button>
+      <button onclick="autoArrangeApps()">📐 自动整理</button>
+      <button onclick="resetLayout()">🔄 重置布局</button>
+    </div>
+    
+    <!-- 页面指示器 -->
+    <div class="page-indicator" id="pageIndicator"></div>
     
     <!-- 应用网格 -->
     <div class="apps-container" id="appsContainer"></div>
@@ -1273,6 +1406,11 @@
             <label>触摸震动反馈</label>
             <input type="checkbox" id="vibrationToggle" />
           </div>
+          
+          <div class="setting-item">
+            <label>显示页面指示器</label>
+            <input type="checkbox" id="pageIndicatorToggle" checked />
+          </div>
         </div>
       </div>
       
@@ -1283,8 +1421,8 @@
         </div>
         <div class="setting-group-content">
           <div class="setting-item">
-            <label>应用权限管理</label>
-            <button onclick="showPermissionManager()">管理权限</button>
+            <label>清理应用缓存</label>
+            <button onclick="clearAllAppCache()">一键清理</button>
           </div>
         </div>
       </div>
@@ -1305,11 +1443,6 @@
               <button onclick="exportApps()" class="primary-btn" style="flex:1;">📤 导出备份</button>
               <button onclick="importApps()" style="flex:1;">📥 导入备份</button>
             </div>
-          </div>
-          
-          <div class="setting-item">
-            <label>清理应用缓存</label>
-            <button onclick="clearAllAppCache()">一键清理</button>
           </div>
         </div>
       </div>
@@ -1412,7 +1545,7 @@
   </div>
   
   <!-- 底部栏 -->
-  <div class="bottom-bar">
+  <div class="bottom-bar" id="bottomBar">
     <button onclick="openInstaller()">➕ 安装应用</button>
     <button onclick="openSettings()">⚙ 设置</button>
   </div>
@@ -1424,6 +1557,14 @@
     let currentSort = 'name';
     let appUsageStats = {};
     const MAX_NOTIFICATIONS = 50;
+    
+    // 编辑模式相关变量
+    let editMode = false;
+    let draggedElement = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
     
     // 预设壁纸
     const presetWallpapers = [
@@ -1570,7 +1711,7 @@
     // ==================== Service Worker - 优化缓存策略 ====================
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'htmlos-v2.6';
+        const CACHE_NAME = 'htmlos-v2.7.1';
         const CACHE_WHITELIST = ['index.html', './'];
         
         self.addEventListener('install', event => {
@@ -1669,13 +1810,13 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 3;
+    const DB_VERSION = 5; // 升级数据库版本
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
     const STORE_DEV = 'devOptions';
     const STORE_STATS = 'stats';
-    const STORE_PERMISSIONS = 'permissions';
+    const STORE_LAYOUT = 'layout';
     
     let db = null;
     
@@ -1692,7 +1833,7 @@
           if (!database.objectStoreNames.contains(STORE_SETTINGS)) database.createObjectStore(STORE_SETTINGS, { keyPath: 'key' });
           if (!database.objectStoreNames.contains(STORE_DEV)) database.createObjectStore(STORE_DEV, { keyPath: 'key' });
           if (!database.objectStoreNames.contains(STORE_STATS)) database.createObjectStore(STORE_STATS, { keyPath: 'key' });
-          if (!database.objectStoreNames.contains(STORE_PERMISSIONS)) database.createObjectStore(STORE_PERMISSIONS, { keyPath: 'appFile' });
+          if (!database.objectStoreNames.contains(STORE_LAYOUT)) database.createObjectStore(STORE_LAYOUT, { keyPath: 'page' });
         };
       });
     }
@@ -1839,7 +1980,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80; // 增加滑动阈值，防止误触
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 8.1 稳定版 v2.6';
+    const VERSION = 'HTMLOS 8.1 稳定版 v2.7.1';
     
     const colorPalette = ['#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e', '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#ff8c00', '#e3008c'];
     
@@ -1919,6 +2060,8 @@
         installedApps.sort((a, b) => b._size - a._size);
       }
       
+      // 排序后重置布局
+      await resetLayout();
       renderApps();
       document.getElementById('sortMenu').style.display = 'none';
       showToast(`已按${sortBy === 'name' ? '名称' : sortBy === 'installTime' ? '安装时间' : sortBy === 'lastUsed' ? '使用频率' : '应用大小'}排序`, 'info');
@@ -1977,9 +2120,346 @@
       showToast('磁贴布局已修复', 'success');
     }
     
-    // ========== 权限管理 ==========
-    function showPermissionManager() {
-      showToast('权限管理功能开发中', 'info');
+    // ========== 自动整理桌面 ==========
+    function autoArrangeApps() {
+      // 按名称排序
+      installedApps.sort((a, b) => a.name.localeCompare(b.name, 'zh'));
+      saveApps();
+      saveLayout();
+      renderApps();
+      showToast('桌面已自动整理', 'success');
+    }
+    
+    // ========== 桌面编辑模式 ==========
+    function enterEditMode() {
+      if (editMode) return;
+      
+      editMode = true;
+      document.getElementById('appsContainer').classList.add('edit-mode');
+      document.getElementById('normalToolbar').style.display = 'none';
+      document.getElementById('editToolbar').classList.add('show');
+      document.getElementById('bottomBar').classList.add('edit-mode');
+      document.getElementById('navButtons').classList.add('hidden');
+      document.getElementById('pageIndicator').style.display = 'none';
+      
+      // 禁用左右滑动
+      window.swipeDisabled = true;
+      
+      // 显示编辑模式提示
+      showEditModeTip();
+      
+      showToast('进入编辑模式，拖拽磁贴调整位置', 'info');
+      addLog('info', '进入桌面编辑模式');
+    }
+    
+    function showEditModeTip() {
+      const tip = document.createElement('div');
+      tip.className = 'edit-mode-tip';
+      tip.innerHTML = '📐 编辑模式<br>拖拽磁贴调整位置<br>点击"完成编辑"保存';
+      document.body.appendChild(tip);
+      setTimeout(() => tip.remove(), 3000);
+    }
+    
+    function exitEditMode() {
+      if (!editMode) return;
+      
+      editMode = false;
+      document.getElementById('appsContainer').classList.remove('edit-mode');
+      document.getElementById('normalToolbar').style.display = 'flex';
+      document.getElementById('editToolbar').classList.remove('show');
+      document.getElementById('bottomBar').classList.remove('edit-mode');
+      document.getElementById('navButtons').classList.remove('hidden');
+      
+      // 恢复页面指示器
+      const showIndicator = document.getElementById('pageIndicatorToggle')?.checked ?? true;
+      if (showIndicator) {
+        document.getElementById('pageIndicator').style.display = 'flex';
+      }
+      
+      // 恢复左右滑动
+      window.swipeDisabled = false;
+      
+      // 保存布局
+      saveLayout();
+      
+      showToast('退出编辑模式，布局已保存', 'success');
+      addLog('info', '退出桌面编辑模式，布局已保存');
+    }
+    
+    // ========== 布局保存与加载 - 彻底修复 ==========
+    async function saveLayout() {
+      // 只保存当前页的布局
+      const perPage = cols * 3;
+      const start = currentPage * perPage;
+      const end = start + perPage;
+      
+      // 获取当前页的应用
+      let filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
+      const currentPageApps = filteredApps.slice(start, end);
+      
+      // 保存当前页的应用顺序
+      await dbPut(STORE_LAYOUT, {
+        page: currentPage,
+        order: currentPageApps.map(app => app.file)
+      });
+      
+      addLog('info', `保存第 ${currentPage + 1} 页布局，共 ${currentPageApps.length} 个应用`);
+    }
+    
+    async function loadLayout() {
+      // 加载当前页的布局
+      const layout = await dbGet(STORE_LAYOUT, currentPage);
+      
+      if (layout && layout.order && layout.order.length > 0) {
+        addLog('info', `加载第 ${currentPage + 1} 页布局`);
+        
+        // 过滤隐藏应用
+        let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
+        
+        // 创建一个映射表，方便查找应用
+        const appMap = new Map();
+        filteredApps.forEach(app => appMap.set(app.file, app));
+        
+        // 按照保存的顺序重新排列当前页的应用
+        const orderedApps = [];
+        const remainingApps = [];
+        
+        // 先添加保存顺序中的应用
+        layout.order.forEach(file => {
+          if (appMap.has(file)) {
+            orderedApps.push(appMap.get(file));
+            appMap.delete(file);
+          }
+        });
+        
+        // 再添加剩余的应用
+        remainingApps.push(...appMap.values());
+        
+        // 合并数组
+        const newFilteredApps = [...orderedApps, ...remainingApps];
+        
+        // 更新installedApps数组，保持所有应用的顺序
+        // 首先获取所有应用（包括隐藏的）
+        const allApps = [...installedApps];
+        
+        // 创建一个新的应用数组
+        const newAllApps = [];
+        
+        // 先添加当前页排序后的应用
+        newAllApps.push(...newFilteredApps);
+        
+        // 再添加其他页的应用（保持原有顺序）
+        allApps.forEach(app => {
+          if (!newAllApps.find(a => a.file === app.file)) {
+            newAllApps.push(app);
+          }
+        });
+        
+        // 更新installedApps
+        installedApps = newAllApps;
+      } else {
+        addLog('info', `第 ${currentPage + 1} 页没有保存的布局，使用默认顺序`);
+      }
+    }
+    
+    async function resetLayout() {
+      // 删除所有页面的布局
+      const layouts = await dbGetAll(STORE_LAYOUT);
+      for (const layout of layouts) {
+        await dbDelete(STORE_LAYOUT, layout.page);
+      }
+      
+      currentPage = 0;
+      showToast('布局已重置', 'success');
+      renderApps();
+    }
+    
+    // ========== 更新页面指示器 ==========
+    function updatePageIndicator(totalPages) {
+      const container = document.getElementById('pageIndicator');
+      const showIndicator = document.getElementById('pageIndicatorToggle')?.checked ?? true;
+      
+      if (!showIndicator || totalPages <= 1 || editMode) {
+        container.style.display = 'none';
+        return;
+      }
+      
+      container.style.display = 'flex';
+      container.innerHTML = '';
+      
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('div');
+        dot.className = `page-dot ${i === currentPage ? 'active' : ''}`;
+        dot.onclick = () => {
+          currentPage = i;
+          loadLayout();
+          renderApps();
+        };
+        container.appendChild(dot);
+      }
+    }
+    
+    // ========== 磁贴拖拽功能 ==========
+    function setupDragAndDrop() {
+      const container = document.getElementById('appsContainer');
+      
+      container.addEventListener('touchstart', handleDragStart, { passive: false });
+      container.addEventListener('touchmove', handleDragMove, { passive: false });
+      container.addEventListener('touchend', handleDragEnd);
+      
+      container.addEventListener('mousedown', handleDragStart);
+      container.addEventListener('mousemove', handleDragMove);
+      container.addEventListener('mouseup', handleDragEnd);
+      container.addEventListener('mouseleave', handleDragEnd);
+    }
+    
+    function handleDragStart(e) {
+      if (!editMode) return;
+      
+      const target = e.target.closest('.app-icon');
+      if (!target) return;
+      
+      e.preventDefault();
+      
+      draggedElement = target;
+      draggedElement.classList.add('dragging');
+      
+      const rect = draggedElement.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      
+      dragOffsetX = clientX - rect.left;
+      dragOffsetY = clientY - rect.top;
+      
+      // 设置拖拽元素的位置
+      draggedElement.style.position = 'fixed';
+      draggedElement.style.zIndex = '1000';
+      draggedElement.style.left = rect.left + 'px';
+      draggedElement.style.top = rect.top + 'px';
+      draggedElement.style.width = rect.width + 'px';
+      draggedElement.style.height = rect.height + 'px';
+      
+      // 创建占位符
+      const placeholder = document.createElement('div');
+      placeholder.className = 'app-icon ' + draggedElement.className.match(/size-\w+/)[0];
+      placeholder.style.visibility = 'hidden';
+      draggedElement.parentNode.insertBefore(placeholder, draggedElement);
+      draggedElement._placeholder = placeholder;
+    }
+    
+    function handleDragMove(e) {
+      if (!draggedElement || !editMode) return;
+      
+      e.preventDefault();
+      
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      
+      // 更新拖拽元素的位置
+      draggedElement.style.left = (clientX - dragOffsetX) + 'px';
+      draggedElement.style.top = (clientY - dragOffsetY) + 'px';
+      
+      // 找到最近的磁贴位置
+      const container = document.getElementById('appsContainer');
+      const tiles = container.querySelectorAll('.app-icon:not(.dragging)');
+      
+      let closestTile = null;
+      let closestDistance = Infinity;
+      
+      tiles.forEach(tile => {
+        const rect = tile.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(clientX - centerX, clientY - centerY);
+        
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestTile = tile;
+        }
+      });
+      
+      // 移动占位符到最近的位置
+      if (closestTile && closestDistance < 100) {
+        const placeholder = draggedElement._placeholder;
+        if (closestTile.nextSibling !== placeholder) {
+          closestTile.parentNode.insertBefore(placeholder, closestTile.nextSibling);
+        }
+      }
+    }
+    
+    function handleDragEnd(e) {
+      if (!draggedElement || !editMode) return;
+      
+      // 恢复拖拽元素的样式
+      draggedElement.classList.remove('dragging');
+      draggedElement.style.position = '';
+      draggedElement.style.zIndex = '';
+      draggedElement.style.left = '';
+      draggedElement.style.top = '';
+      draggedElement.style.width = '';
+      draggedElement.style.height = '';
+      
+      // 将拖拽元素移动到占位符的位置
+      const placeholder = draggedElement._placeholder;
+      if (placeholder) {
+        placeholder.parentNode.insertBefore(draggedElement, placeholder);
+        placeholder.remove();
+      }
+      
+      // 更新应用数组的顺序
+      updateAppOrderFromDOM();
+      
+      draggedElement = null;
+    }
+    
+    function updateAppOrderFromDOM() {
+      const container = document.getElementById('appsContainer');
+      const tiles = container.querySelectorAll('.app-icon');
+      const newOrder = [];
+      
+      tiles.forEach(tile => {
+        const file = tile.getAttribute('data-file');
+        const app = installedApps.find(a => a.file === file);
+        if (app) {
+          newOrder.push(app);
+        }
+      });
+      
+      // 合并不在当前页的应用
+      const perPage = cols * 3;
+      const start = currentPage * perPage;
+      const end = start + perPage;
+      
+      // 获取所有应用
+      const allApps = [...installedApps];
+      
+      // 创建一个新的应用数组
+      const newAllApps = [];
+      
+      // 先添加当前页之前的应用（保持原有顺序）
+      const beforeApps = allApps.filter(app => {
+        const filteredApps = showHiddenApps ? allApps : allApps.filter(a => !a.hidden);
+        const index = filteredApps.findIndex(a => a.file === app.file);
+        return index < start;
+      });
+      newAllApps.push(...beforeApps);
+      
+      // 添加当前页排序后的应用
+      newAllApps.push(...newOrder);
+      
+      // 添加当前页之后的应用（保持原有顺序）
+      const afterApps = allApps.filter(app => {
+        const filteredApps = showHiddenApps ? allApps : allApps.filter(a => !a.hidden);
+        const index = filteredApps.findIndex(a => a.file === app.file);
+        return index >= end;
+      });
+      newAllApps.push(...afterApps);
+      
+      // 更新installedApps
+      installedApps = newAllApps;
+      
+      // 保存布局
+      saveLayout();
     }
     
     // ========== 全屏应用信息功能 ==========
@@ -2065,6 +2545,8 @@
             <button class="secondary" onclick="renameAppFromInfo('${fileKey}')">✏️ 重命名</button>
             <button class="secondary" onclick="toggleHideFromInfo('${fileKey}')">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
             <button class="secondary" onclick="toggleLockFromInfo('${fileKey}')">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
+            <button class="secondary" onclick="moveToFirstPage('${fileKey}')">🏠 移至首页</button>
+            <button class="secondary" onclick="moveToLastPage('${fileKey}')">📄 移至末页</button>
             <button class="secondary" onclick="exportSingleApp('${fileKey}')">📤 导出应用</button>
             ${app.source !== 'system' ? '<button class="danger" onclick="deleteAppFromInfo(\'' + fileKey + '\')">🗑️ 卸载应用</button>' : ''}
           </div>
@@ -2126,6 +2608,47 @@
       }
     }
     
+    // ========== 应用移动功能 ==========
+    function moveToFirstPage(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      
+      // 从当前位置移除
+      installedApps = installedApps.filter(a => a.file !== fileKey);
+      // 添加到开头
+      installedApps.unshift(app);
+      
+      saveApps();
+      saveLayout();
+      currentPage = 0;
+      renderApps();
+      closeAppInfo();
+      showToast('应用已移至首页', 'success');
+    }
+    
+    function moveToLastPage(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      
+      // 从当前位置移除
+      installedApps = installedApps.filter(a => a.file !== fileKey);
+      // 添加到末尾
+      installedApps.push(app);
+      
+      saveApps();
+      saveLayout();
+      
+      // 跳转到最后一页
+      const perPage = cols * 3;
+      const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
+      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
+      currentPage = totalPages - 1;
+      
+      renderApps();
+      closeAppInfo();
+      showToast('应用已移至末页', 'success');
+    }
+    
     async function exportSingleApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
@@ -2177,6 +2700,7 @@
       if (stats) appUsageStats = stats.value;
       
       await loadInstalledApps();
+      await loadLayout(); // 加载保存的布局
       await loadSettings();
       initWallpaperPresets();
       
@@ -2208,10 +2732,16 @@
       if (vibration?.value === 'on') {
         document.getElementById('vibrationToggle').checked = true;
       }
+      const pageIndicator = await dbGet(STORE_SETTINGS, 'pageIndicator');
+      if (pageIndicator?.value === 'off') {
+        document.getElementById('pageIndicatorToggle').checked = false;
+        document.getElementById('pageIndicator').style.display = 'none';
+      }
       
       document.getElementById('mainContainer').style.display = 'flex';
       renderApps();
       setupSwipe();
+      setupDragAndDrop(); // 初始化拖拽功能
       updateDateTime();
       setInterval(updateDateTime, 1000);
       setupSearch();
@@ -2379,6 +2909,15 @@
         await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimState ? 'on' : 'off' });
         const vibrationState = document.getElementById('vibrationToggle').checked;
         await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationState ? 'on' : 'off' });
+        const pageIndicatorState = document.getElementById('pageIndicatorToggle').checked;
+        await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
+        
+        // 更新页面指示器显示
+        if (pageIndicatorState) {
+          document.getElementById('pageIndicator').style.display = 'flex';
+        } else {
+          document.getElementById('pageIndicator').style.display = 'none';
+        }
         
         showToast('设置已保存', 'success');
         addLog('info', '设置已保存');
@@ -2432,14 +2971,14 @@
       showToast('磁贴大小: ' + sizeLabels[app.size], 'info', 1500);
     }
     
-    // ========== 渲染应用 - 磁贴系统优化 ==========
+    // ========== 渲染应用 - 彻底修复分页问题 ==========
     function renderApps() {
       const container = document.getElementById('appsContainer');
       if (!container) return;
       container.innerHTML = '';
       
       // 过滤隐藏应用
-      let filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
+      let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
       
       // 排序
       if (currentSort === 'name') {
@@ -2453,13 +2992,27 @@
       }
       
       const perPage = cols * 3;
+      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
+      
+      // 确保currentPage在有效范围内
+      if (currentPage < 0) currentPage = 0;
+      if (currentPage >= totalPages) currentPage = totalPages - 1;
+      
       const start = currentPage * perPage;
       const end = start + perPage;
       const pageApps = filteredApps.slice(start, end);
       
+      if (pageApps.length === 0 && filteredApps.length > 0) {
+        // 如果当前页没有应用但总应用数大于0，跳转到第一页
+        currentPage = 0;
+        renderApps();
+        return;
+      }
+      
       if (pageApps.length === 0) {
         container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>';
         document.getElementById('navButtons').classList.add('hidden');
+        updatePageIndicator(totalPages);
         return;
       }
       
@@ -2478,7 +3031,14 @@
         div.ontouchstart = (e) => {
           touchMoved = false; longPressActive = false; isClickHandled = false;
           touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
-          longPressTimer = setTimeout(() => { if (!touchMoved) { longPressActive = true; isClickHandled = true; showActionMenu(app, div); } }, 500);
+          
+          // 编辑模式下不显示长按菜单
+          if (!editMode) {
+            longPressTimer = setTimeout(() => { if (!touchMoved) { longPressActive = true; isClickHandled = true; showActionMenu(app, div); } }, 500);
+          } else {
+            // 编辑模式下长按直接进入拖拽
+            longPressTimer = setTimeout(() => { if (!touchMoved) { longPressActive = true; isClickHandled = true; } }, 200);
+          }
         };
         
         div.ontouchmove = (e) => {
@@ -2492,19 +3052,39 @@
           if (!touchMoved && !longPressActive && !isClickHandled) {
             isClickHandled = true;
             if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
-              launchApp(app.file, div);
+              if (!editMode) {
+                launchApp(app.file, div);
+              }
             }
           }
           longPressActive = false;
         };
         
-        div.onclick = (e) => { if (!isClickHandled) { isClickHandled = true; launchApp(app.file, div); } };
-        div.oncontextmenu = (e) => { e.preventDefault(); isClickHandled = true; showActionMenu(app, div); };
+        div.onclick = (e) => { 
+          if (!isClickHandled) { 
+            isClickHandled = true; 
+            if (!editMode) {
+              launchApp(app.file, div); 
+            }
+          } 
+        };
+        
+        div.oncontextmenu = (e) => { 
+          e.preventDefault(); 
+          isClickHandled = true; 
+          if (!editMode) {
+            showActionMenu(app, div); 
+          } else {
+            enterEditMode();
+          }
+        };
+        
         fragment.appendChild(div);
       });
       
       container.appendChild(fragment);
       updatePageInfo(filteredApps.length, perPage);
+      updatePageIndicator(totalPages);
     }
     
     // ========== 桌面长按菜单 ==========
@@ -2514,31 +3094,21 @@
       container.ontouchstart = (e) => {
         if (e.target === container || e.target.classList.contains('container') || e.target.id === 'appsContainer') {
           touchMoved = false;
-          longPressTimer = setTimeout(() => { if (!touchMoved) showDesktopMenu(e); }, 500);
+          longPressTimer = setTimeout(() => { if (!touchMoved && !editMode) enterEditMode(); }, 500);
         }
       };
       container.ontouchmove = () => { touchMoved = true; if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; } };
       container.ontouchend = () => { if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; } };
       container.oncontextmenu = (e) => {
         if (e.target === container || e.target.classList.contains('container') || e.target.id === 'appsContainer') {
-          e.preventDefault(); showDesktopMenu(e);
+          e.preventDefault(); 
+          if (!editMode) {
+            enterEditMode();
+          } else {
+            exitEditMode();
+          }
         }
       };
-    }
-    
-    function showDesktopMenu(e) {
-      document.querySelector('.desktop-menu-modal')?.remove();
-      const modal = document.createElement('div');
-      modal.className = 'app-action-modal desktop-menu-modal';
-      modal.innerHTML = `
-        <h3 style="margin-bottom:15px;text-align:center;">🖥️ 桌面菜单</h3>
-        <button onclick="openInstaller();document.querySelector('.desktop-menu-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#0a84ff;border:none;color:#fff;cursor:pointer;">➕ 安装应用</button>
-        <button onclick="openSettings();document.querySelector('.desktop-menu-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">⚙ 系统设置</button>
-        <button onclick="currentPage=0;renderApps();document.querySelector('.desktop-menu-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">🔄 刷新桌面</button>
-        <button onclick="toggleHiddenApps();document.querySelector('.desktop-menu-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">👁️ ${showHiddenApps ? '隐藏' : '显示'}隐藏应用</button>
-        <button onclick="fixTileLayout();document.querySelector('.desktop-menu-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">🔧 修复磁贴布局</button>
-        <button onclick="document.querySelector('.desktop-menu-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#333;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">❌ 取消</button>`;
-      document.body.appendChild(modal);
     }
     
     // ========== 应用更新和信息 ==========
@@ -2596,6 +3166,8 @@
         <button onclick="showAppInfo('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">ℹ️ 应用信息</button>
         <button onclick="hideApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
         <button onclick="lockApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
+        <button onclick="moveToFirstPage('${app.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">🏠 移至首页</button>
+        <button onclick="moveToLastPage('${app.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#3a3a3c;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">📄 移至末页</button>
         ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;">🗑️ 卸载</button>`:''}
         <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#333;border:1px solid #4a4a4c;color:#fff;cursor:pointer;">取消</button>`;
       document.body.appendChild(modal);
@@ -2631,7 +3203,7 @@
       addLog('info', '卸载应用: ' + fileKey);
     }
     
-    // ========== 分页 ==========
+    // ========== 分页 - 彻底修复 ==========
     function updatePageInfo(total, perPage) {
       const totalPages = Math.ceil(total/perPage) || 1;
       document.getElementById('pageInfo').textContent = `第 ${currentPage+1} / ${totalPages} 页`;
@@ -2641,14 +3213,32 @@
       document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
       
       // 显示/隐藏分页按钮
-      if (totalPages <= 1) {
+      if (totalPages <= 1 || editMode) {
         document.getElementById('navButtons').classList.add('hidden');
       } else {
         document.getElementById('navButtons').classList.remove('hidden');
       }
     }
-    function prevPage() { if (currentPage > 0) { currentPage--; renderApps(); } }
-    function nextPage() { if (currentPage < Math.ceil((showHiddenApps ? installedApps.length : installedApps.filter(a=>!a.hidden).length)/(cols*3))-1) { currentPage++; renderApps(); } }
+    
+    function prevPage() { 
+      if (currentPage > 0 && !editMode) { 
+        currentPage--; 
+        loadLayout(); 
+        renderApps(); 
+      } 
+    }
+    
+    function nextPage() { 
+      const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
+      const perPage = cols * 3;
+      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
+      
+      if (currentPage < totalPages - 1 && !editMode) { 
+        currentPage++; 
+        loadLayout(); 
+        renderApps(); 
+      } 
+    }
     
     // ========== 滑动页面优化 - 扩大滑动区域，调整灵敏度 ==========
     function setupSwipe() {
@@ -2656,6 +3246,7 @@
       let sx=0, sy=0, swiping=false, startTime=0;
       
       container.addEventListener('touchstart', e=>{
+        if (window.swipeDisabled || editMode) return; // 编辑模式下禁用滑动
         sx=e.touches[0].clientX;
         sy=e.touches[0].clientY;
         swiping=false;
@@ -2663,6 +3254,7 @@
       },{passive:true});
       
       container.addEventListener('touchmove', e=>{
+        if (window.swipeDisabled || editMode) return; // 编辑模式下禁用滑动
         const dx=Math.abs(e.touches[0].clientX-sx);
         const dy=Math.abs(e.touches[0].clientY-sy);
         // 只有当水平滑动距离明显大于垂直滑动距离时才认为是水平滑动
@@ -2670,6 +3262,7 @@
       },{passive:true});
       
       container.addEventListener('touchend', e=>{
+        if (window.swipeDisabled || editMode) return; // 编辑模式下禁用滑动
         const dx=e.changedTouches[0].clientX-sx;
         const dy=Math.abs(e.changedTouches[0].clientY-sy);
         const deltaTime=Date.now()-startTime;
@@ -2693,12 +3286,15 @@
         if (term === '') {
           // 清空搜索，恢复正常显示
           currentPage = 0;
+          loadLayout();
           renderApps();
           return;
         }
         
-        // 搜索时隐藏分页
+        // 搜索时隐藏分页和编辑模式
         document.getElementById('navButtons').classList.add('hidden');
+        document.getElementById('pageIndicator').style.display = 'none';
+        if (editMode) exitEditMode();
         
         const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
         if (filtered.length===0) { container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>'; return; }
@@ -2859,7 +3455,7 @@
         await dbClear(STORE_SETTINGS);
         await dbClear(STORE_DEV);
         await dbClear(STORE_STATS);
-        await dbClear(STORE_PERMISSIONS);
+        await dbClear(STORE_LAYOUT);
       }catch(e){}
       localStorage.clear();
       // 强制刷新页面，确保所有状态清空
@@ -2872,7 +3468,8 @@
       for(const app of installedApps){const c=await getContentSafe(app.file);awc.push({...app,fileContent:c});}
       const st=await dbGetAll(STORE_SETTINGS),so={};st.forEach(s=>so[s.key]=s.value);
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{}},null,2)],{type:'application/json'});
+      const layouts = await dbGetAll(STORE_LAYOUT);
+      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},layouts:layouts},null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');
       a.href=url;a.download='htmlos-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
@@ -2893,6 +3490,7 @@
             if (!merge) {
               await dbClear(STORE_APPS);
               await dbClear(STORE_CONTENT);
+              await dbClear(STORE_LAYOUT);
               installedApps=[];
             }
             
@@ -2903,6 +3501,13 @@
               installedApps.push({name:escapeHtml(app.name),file:app.file,icon:app.icon||'📱',color:app.color||colorPalette[0],customColor:app.customColor||app.color||colorPalette[0],size:app.size||'small',source:app.source||'user',installTime:app.installTime||new Date().toISOString(),lastUpdated:app.lastUpdated||new Date().toISOString(),hidden:app.hidden||false,locked:app.locked||false});
             }
             saveApps();
+            
+            // 导入布局
+            if(data.layouts && !merge) {
+              for(const layout of data.layouts) {
+                await dbPut(STORE_LAYOUT, layout);
+              }
+            }
             
             if(data.settings && !merge) {
               for(const[k,v]of Object.entries(data.settings))if(v)await dbPut(STORE_SETTINGS,{key:k,value:v});
@@ -2949,6 +3554,7 @@
       document.getElementById('colsSelect').value=String(cols);
       document.getElementById('fpsToggle').checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
       document.getElementById('memoryAutoRecycle').checked=((await dbGet(STORE_SETTINGS,'memoryAutoRecycle'))?.value)==='on';
+      document.getElementById('pageIndicatorToggle').checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
       document.getElementById('sysInfo').innerHTML=`<p>📊 系统信息</p><p>应用数量: ${installedApps.length}</p><p>存储引擎: IndexedDB</p><p>日志条数: ${systemLogs.length}</p><p>版本: <span id="versionText" onclick="activateDevMode()">${VERSION}</span></p>`;
       document.getElementById('settingsModal').classList.add('show');
     }
