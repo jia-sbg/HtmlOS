@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v3.0</title>
+  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v3.1</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -26,12 +26,13 @@
       flex-direction: column;
       transition: background 0.3s ease;
       overflow: hidden;
+      perspective: 1000px;
       /* 全局硬件加速 */
       transform: translateZ(0);
       will-change: background;
     }
     
-    /* 主题变量定义 - 玻璃质感优化 */
+    /* 主题变量定义 - 最新CSS3玻璃质感 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -66,8 +67,8 @@
       --bottom-bg: rgba(255,255,255,0.12);
       --modal-bg: rgba(28,28,30,0.85);
       --btn-bg: rgba(255,255,255,0.22);
-      --backdrop-blur: blur(8px); /* 降低模糊强度提升性能 */
-      --transition-speed: 0.2s; /* 缩短动画时长 */
+      --backdrop-blur: blur(12px); /* 增强玻璃模糊效果 */
+      --transition-speed: 0.3s; /* 优化动画时长 */
       --input-bg: rgba(255,255,255,0.1);
       --input-border: 1px solid rgba(255,255,255,0.2);
     }
@@ -476,9 +477,16 @@
       justify-content: center;
       align-items: center;
       z-index: 250;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
     }
     
-    .modal.show { display: flex; }
+    .modal.show { 
+      display: flex; 
+      opacity: 1;
+      visibility: visible;
+    }
     
     .modal-content {
       background: var(--modal-bg);
@@ -494,9 +502,14 @@
       backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       color: var(--text-color);
+      transform: scale(0.9);
       /* 性能优化 */
       transform: translateZ(0);
       will-change: transform, opacity;
+    }
+    
+    .modal.show .modal-content {
+      transform: scale(1);
     }
     
     .modal-content h2 { 
@@ -715,7 +728,7 @@
       transform: scale(0.95);
     }
     
-    /* 应用框架容器 */
+    /* 应用框架容器 - 3D效果 */
     #appFrameContainer {
       position: fixed;
       top: 0; left: 0;
@@ -725,15 +738,13 @@
       display: none;
       flex-direction: column;
       transform-origin: center center;
-      transform: scale(0.95);
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform: rotateY(-90deg) scale(0.8);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
     #appFrameContainer.show { 
       display: flex;
-      transform: scale(1);
-      opacity: 1;
+      transform: rotateY(0) scale(1);
     }
     
     .app-navbar {
@@ -1115,11 +1126,15 @@
       display: none;
       flex-direction: column;
       backdrop-filter: var(--backdrop-blur);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
     }
     
     .app-info-fullscreen.show {
       display: flex;
-      animation: fadeIn 0.3s ease;
+      opacity: 1;
+      visibility: visible;
     }
     
     @keyframes fadeIn {
@@ -1455,6 +1470,34 @@
       background: var(--primary-color);
       color: white;
     }
+    
+    /* 沙箱警告模态框 */
+    .sandbox-warning {
+      background: rgba(255,59,48,0.1);
+      border: 1px solid rgba(255,59,48,0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .sandbox-warning-title {
+      color: #ff3b30;
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .sandbox-warning-content {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    .sf-hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -1593,14 +1636,16 @@
   <div class="modal warning-modal" id="sandboxWarningModal">
     <div class="modal-content warning-modal-content">
       <h3>⚠️ 警告：关闭沙箱</h3>
-      <p>沙箱是HTMLOS的重要安全机制，它可以：</p>
-      <ul style="margin: 10px 0 10px 20px; color: var(--text-secondary);">
-        <li>隔离应用与主系统</li>
-        <li>防止恶意应用访问您的数据</li>
-        <li>限制应用的权限</li>
-        <li>保护您的隐私安全</li>
-      </ul>
-      <p class="warning-text">关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！</p>
+      <div class="sandbox-warning">
+        <div class="sandbox-warning-title">
+          <span>⚠️</span> 关闭安全沙箱有风险
+        </div>
+        <div class="sandbox-warning-content">
+          安全沙箱通过隔离应用运行环境来保护您的系统安全。关闭沙箱后，应用将获得完全的系统访问权限，恶意应用可能会窃取您的个人信息、修改系统文件或造成其他损害。
+          <br><br>
+          只有在您完全信任所有已安装和将要安装的应用时，才建议关闭沙箱。
+        </div>
+      </div>
       <div class="modal-actions">
         <button onclick="closeSandboxWarning()">取消</button>
         <button onclick="requestPasswordForSandbox()" class="danger-btn">确认关闭</button>
@@ -1649,39 +1694,6 @@
             <span id="currentUserDisplay">HTMLOS 用户</span>
           </div>
           <button onclick="openUserInfoModal()" style="width: 100%;">编辑用户信息</button>
-        </div>
-      </div>
-      
-      <!-- 安全与隐私 -->
-      <div class="setting-group" id="securityGroup">
-        <div class="setting-group-header">
-          🔒 安全与隐私
-        </div>
-        <div class="setting-group-content">
-          <div class="setting-item">
-            <label>设置系统密码</label>
-            <button onclick="openSetPasswordModal()">修改密码</button>
-          </div>
-          
-          <div class="setting-item">
-            <label>安装应用需要密码</label>
-            <input type="checkbox" id="installRequirePasswordToggle" />
-          </div>
-          
-          <div class="setting-item">
-            <label>打开锁定应用需要密码</label>
-            <input type="checkbox" id="openLockedRequirePasswordToggle" checked />
-          </div>
-          
-          <div class="setting-item">
-            <label>显示安装确认对话框</label>
-            <input type="checkbox" id="showInstallConfirmToggle" checked />
-          </div>
-          
-          <div class="setting-item">
-            <label>沙箱状态</label>
-            <span id="sandboxStatusDisplay">✅ 已开启</span>
-          </div>
         </div>
       </div>
       
@@ -1881,7 +1893,6 @@
         <button onclick="closeSettings()">关闭</button>
       </div>
       <span class="danger-link" onclick="triggerResetWarning()">恢复默认设置</span>
-      <span class="danger-link" onclick="triggerFormatWarning()" style="margin-top: 8px;">格式化系统</span>
     </div>
   </div>
   
@@ -1920,21 +1931,6 @@
       </div>
       <button onclick="requestPasswordForReset()" style="width: 100%; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer; margin-top: 15px;">确认恢复</button>
       <button onclick="closeResetWarning()" style="width: 100%; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer; margin-top: 10px;">取消</button>
-    </div>
-  </div>
-  
-  <!-- 格式化警告 -->
-  <div class="hidden-modal" id="formatWarningModal">
-    <div class="hidden-modal-content reset-modal-content">
-      <div class="warning-icon">🗑️</div>
-      <h3>警告：即将格式化系统</h3>
-      <p>此操作会删除所有用户应用并恢复默认设置。</p>
-      <p>所有数据将被永久删除！</p>
-      <div class="warning-text">
-        警告：此操作不可撤销！
-      </div>
-      <button onclick="requestPasswordForFormat()" style="width: 100%; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer; margin-top: 15px;">确认格式化</button>
-      <button onclick="closeFormatWarning()" style="width: 100%; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer; margin-top: 10px;">取消</button>
     </div>
   </div>
   
@@ -1995,7 +1991,7 @@
     
     // 系统安全设置
     let securitySettings = {
-      systemPassword: '', // 空字符串表示无密码
+      systemPassword: '1234', // 默认密码1234
       installRequirePassword: false,
       openLockedRequirePassword: true,
       showInstallConfirm: true
@@ -2206,7 +2202,7 @@
     // ==================== Service Worker - 优化缓存策略 ====================
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'htmlos-v3.0';
+        const CACHE_NAME = 'htmlos-v3.1';
         const CACHE_WHITELIST = ['index.html', './'];
         
         self.addEventListener('install', event => {
@@ -2362,7 +2358,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.0') {
+            if (name !== 'htmlos-v3.1') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2499,14 +2495,7 @@
     }
     
     function updateSandboxStatusDisplay() {
-      const display = document.getElementById('sandboxStatusDisplay');
-      if (systemSettings.sandboxEnabled) {
-        display.textContent = '✅ 已开启';
-        display.style.color = '#30d158';
-      } else {
-        display.textContent = '⚠️ 已关闭';
-        display.style.color = '#ff9f0a';
-      }
+      // 沙箱状态显示已移至开发者选项
     }
     
     // ==================== 密码设置 ====================
@@ -2617,7 +2606,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 10; // 升级数据库版本
+    const DB_VERSION = 11; // 升级数据库版本
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2766,7 +2755,7 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80; // 增加滑动阈值，防止误触
-    const VERSION = 'HTMLOS 8.1 稳定版 v3.0';
+    const VERSION = 'HTMLOS 8.1 风格 · 稳定版 v3.1';
     
     const colorPalette = ['#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e', '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#ff8c00', '#e3008c'];
     
@@ -3242,15 +3231,11 @@
       const openLockedRequirePassword = await dbGet(STORE_SETTINGS, 'open_locked_require_password');
       const showInstallConfirm = await dbGet(STORE_SETTINGS, 'show_install_confirm');
       
-      securitySettings.systemPassword = systemPassword?.value || '';
+      // 如果没有保存的密码，使用默认密码1234
+      securitySettings.systemPassword = systemPassword?.value || '1234';
       securitySettings.installRequirePassword = installRequirePassword?.value === 'true';
       securitySettings.openLockedRequirePassword = openLockedRequirePassword?.value !== 'false';
       securitySettings.showInstallConfirm = showInstallConfirm?.value !== 'false';
-      
-      // 更新安全设置界面
-      document.getElementById('installRequirePasswordToggle').checked = securitySettings.installRequirePassword;
-      document.getElementById('openLockedRequirePasswordToggle').checked = securitySettings.openLockedRequirePassword;
-      document.getElementById('showInstallConfirmToggle').checked = securitySettings.showInstallConfirm;
       
       // 更新用户信息显示
       document.getElementById('userName').textContent = currentUser.name;
@@ -3283,7 +3268,6 @@
       systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
       document.getElementById('sandboxToggle').checked = !systemSettings.sandboxEnabled;
       updateSandboxState();
-      updateSandboxStatusDisplay();
       
       // 恢复内存优化设置
       const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
@@ -3349,7 +3333,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS 3.0 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS 3.1 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3395,11 +3379,6 @@
       systemSettings.autoOptimizeMemory = document.getElementById('autoOptimizeMemoryToggle').checked;
       systemSettings.advancedOptimizeMemory = document.getElementById('advancedOptimizeMemoryToggle').checked;
       
-      // 保存安全设置
-      securitySettings.installRequirePassword = document.getElementById('installRequirePasswordToggle').checked;
-      securitySettings.openLockedRequirePassword = document.getElementById('openLockedRequirePasswordToggle').checked;
-      securitySettings.showInstallConfirm = document.getElementById('showInstallConfirmToggle').checked;
-      
       // 保存到数据库
       await dbPut(STORE_SETTINGS, { key: 'show_seconds', value: String(systemSettings.showSeconds) });
       await dbPut(STORE_SETTINGS, { key: 'time_24', value: String(systemSettings.time24) });
@@ -3411,9 +3390,6 @@
       await dbPut(STORE_SETTINGS, { key: 'app_close_confirm', value: String(systemSettings.appCloseConfirm) });
       await dbPut(STORE_SETTINGS, { key: 'auto_optimize_memory', value: String(systemSettings.autoOptimizeMemory) });
       await dbPut(STORE_SETTINGS, { key: 'advanced_optimize_memory', value: String(systemSettings.advancedOptimizeMemory) });
-      await dbPut(STORE_SETTINGS, { key: 'install_require_password', value: String(securitySettings.installRequirePassword) });
-      await dbPut(STORE_SETTINGS, { key: 'open_locked_require_password', value: String(securitySettings.openLockedRequirePassword) });
-      await dbPut(STORE_SETTINGS, { key: 'show_install_confirm', value: String(securitySettings.showInstallConfirm) });
       
       // 启动/停止自动内存优化
       startAutoMemoryOptimize();
@@ -3998,7 +3974,7 @@
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
-    // ========== 安装应用 - 安卓风格优化 ==========
+    // ========== 安装应用 - 安卓风格优化 - 修复单文件安装问题 ==========
     function openInstaller() { 
       // 检查是否需要密码
       if (securitySettings.installRequirePassword) {
@@ -4026,39 +4002,48 @@
         if(!file)return;
         const reader=new FileReader();
         reader.onload=async(e)=>{
-          const content=e.target.result;
-          const sizeKB = Math.round(content.length / 1024 * 100) / 100;
-          const fileName='user/apps/'+Date.now()+'_'+file.name;
-          const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-          const now=new Date().toISOString();
-          
-          currentInstallApp = {
-            name: escapeHtml(file.name.replace(/\.html?$/i,'')),
-            file: fileName,
-            icon: '📱',
-            color: color,
-            customColor: color,
-            size: 'small',
-            source: 'user',
-            installTime: now,
-            lastUpdated: now,
-            hidden: false,
-            locked: false,
-            content: content,
-            sizeKB: sizeKB
-          };
-          
-          if (securitySettings.showInstallConfirm) {
-            showInstallConfirm(currentInstallApp, false);
-          } else {
-            await setContentSafe(fileName, content);
-            installedApps.push(currentInstallApp);
-            saveApps();
-            currentPage=0;
-            renderApps();
-            showToast('安装成功！', 'success');
-            addLog('info','安装应用: '+file.name);
+          try {
+            const content=e.target.result;
+            const sizeKB = Math.round(content.length / 1024 * 100) / 100;
+            const fileName='user/apps/'+Date.now()+'_'+file.name;
+            const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+            const now=new Date().toISOString();
+            
+            currentInstallApp = {
+              name: escapeHtml(file.name.replace(/\.html?$/i,'')),
+              file: fileName,
+              icon: '📱',
+              color: color,
+              customColor: color,
+              size: 'small',
+              source: 'user',
+              installTime: now,
+              lastUpdated: now,
+              hidden: false,
+              locked: false,
+              content: content,
+              sizeKB: sizeKB
+            };
+            
+            if (securitySettings.showInstallConfirm) {
+              showInstallConfirm(currentInstallApp, false);
+            } else {
+              await setContentSafe(fileName, content);
+              installedApps.push(currentInstallApp);
+              saveApps();
+              currentPage=0;
+              renderApps();
+              showToast('安装成功！', 'success');
+              addLog('info','安装应用: '+file.name);
+            }
+          } catch (err) {
+            showToast('安装失败: ' + err.message, 'error');
+            addLog('error', '单文件安装失败', err);
           }
+        };
+        reader.onerror = (err) => {
+          showToast('读取文件失败: ' + err.message, 'error');
+          addLog('error', '读取文件失败', err);
         };
         reader.readAsText(file);
       };
@@ -4330,6 +4315,10 @@
       newFrame.id='appFrame';
       newFrame.allow='camera *; microphone *; accelerometer; geolocation; gyroscope';
       newFrame.allowfullscreen=true;
+      // 重新设置沙箱属性
+      if (systemSettings.sandboxEnabled) {
+        newFrame.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+      }
       oldFrame.parentNode.replaceChild(newFrame, oldFrame);
       
       runningAppFile=null;
@@ -4391,38 +4380,6 @@
         showToast('恢复默认设置失败: ' + e.message, 'error');
         addLog('error', '恢复默认设置失败', e);
       }
-    }
-    
-    // ========== 格式化 ==========
-    function triggerFormatWarning(){
-      closeResetWarning();
-      document.getElementById('formatWarningModal').classList.add('show');
-    }
-    
-    function closeFormatWarning(){
-      document.getElementById('formatWarningModal').classList.remove('show');
-    }
-    
-    function requestPasswordForFormat() {
-      closeFormatWarning();
-      verifyPassword('格式化系统', '请输入系统密码以格式化系统', (success) => {
-        if (success) {
-          confirmFormat();
-        }
-      });
-    }
-    
-    async function confirmFormat(){
-      try{
-        await dbClear(STORE_APPS);
-        await dbClear(STORE_CONTENT);
-        await dbClear(STORE_SETTINGS);
-        await dbClear(STORE_DEV);
-        await dbClear(STORE_STATS);
-      }catch(e){}
-      localStorage.clear();
-      // 强制刷新页面，确保所有状态清空
-      location.reload(true);
     }
     
     // ========== 导出/导入 ==========
