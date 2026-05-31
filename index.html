@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v2.9</title>
+  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v3.0</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -595,6 +595,7 @@
     
     .setting-item input[type="text"],
     .setting-item input[type="number"],
+    .setting-item input[type="password"],
     .setting-item select {
       flex: 1;
       max-width: 200px;
@@ -1029,10 +1030,12 @@
     
     .custom-icon-input {
       margin-top: 15px;
+      display: flex;
+      gap: 8px;
     }
     
     .custom-icon-input input {
-      width: 100%;
+      flex: 1;
       padding: 12px;
       background: var(--input-bg);
       border: var(--input-border);
@@ -1040,6 +1043,16 @@
       font-size: 20px;
       text-align: center;
       border-radius: 8px;
+    }
+    
+    .custom-icon-input button {
+      padding: 12px 16px;
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
     }
     
     /* 离线提示横幅 */
@@ -1316,6 +1329,132 @@
       background: rgba(255, 159, 10, 0.1);
       border-radius: 8px;
     }
+    
+    /* 密码输入模态框 */
+    .password-modal {
+      z-index: 3500 !important;
+    }
+    
+    .password-modal-content {
+      text-align: center;
+      max-width: 350px;
+    }
+    
+    .password-modal-content h3 {
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    
+    .password-modal-content input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: var(--input-bg);
+      border: var(--input-border);
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      text-align: center;
+    }
+    
+    /* 安装确认模态框 - 安卓风格 */
+    .install-confirm-modal {
+      z-index: 2800 !important;
+    }
+    
+    .install-confirm-content {
+      max-width: 380px;
+      text-align: center;
+    }
+    
+    .install-confirm-content .app-icon-large {
+      font-size: 64px;
+      margin-bottom: 15px;
+    }
+    
+    .install-confirm-content h3 {
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    
+    .install-confirm-content .app-info {
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    .install-confirm-content .install-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .install-confirm-content .install-actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .install-confirm-content .install-actions button.cancel {
+      background: var(--input-bg);
+      color: var(--text-color);
+      border: var(--input-border);
+    }
+    
+    .install-confirm-content .install-actions button.install {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    /* 安装完成模态框 */
+    .install-complete-modal {
+      z-index: 2800 !important;
+    }
+    
+    .install-complete-content {
+      max-width: 350px;
+      text-align: center;
+    }
+    
+    .install-complete-content .success-icon {
+      font-size: 64px;
+      margin-bottom: 15px;
+      color: #30d158;
+    }
+    
+    .install-complete-content h3 {
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    
+    .install-complete-content .complete-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .install-complete-content .complete-actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .install-complete-content .complete-actions button.done {
+      background: var(--input-bg);
+      color: var(--text-color);
+      border: var(--input-border);
+    }
+    
+    .install-complete-content .complete-actions button.launch {
+      background: var(--primary-color);
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -1426,12 +1565,26 @@
         </div>
         <div class="custom-icon-input">
           <input type="text" id="customAvatarInput" placeholder="输入自定义头像Emoji" maxlength="4" />
+          <button onclick="saveCustomAvatar()">保存</button>
         </div>
       </div>
       
       <div class="modal-actions">
         <button onclick="saveUserInfo()" class="primary-btn">保存</button>
         <button onclick="closeUserInfoModal()">取消</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 密码输入模态框 -->
+  <div class="modal password-modal" id="passwordModal">
+    <div class="modal-content password-modal-content">
+      <h3 id="passwordModalTitle">请输入密码</h3>
+      <p id="passwordModalMessage" style="color: var(--text-secondary); margin-bottom: 15px;"></p>
+      <input type="password" id="passwordInput" placeholder="请输入密码" />
+      <div class="modal-actions">
+        <button onclick="closePasswordModal()">取消</button>
+        <button onclick="confirmPassword()" class="primary-btn">确认</button>
       </div>
     </div>
   </div>
@@ -1448,11 +1601,34 @@
         <li>保护您的隐私安全</li>
       </ul>
       <p class="warning-text">关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！</p>
-      <p>请输入密码确认关闭：</p>
-      <input type="password" id="sandboxPasswordInput" placeholder="密码：1234" style="width: 100%; padding: 8px; margin: 10px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <div class="modal-actions">
-        <button onclick="confirmDisableSandbox()" class="danger-btn">确认关闭</button>
         <button onclick="closeSandboxWarning()">取消</button>
+        <button onclick="requestPasswordForSandbox()" class="danger-btn">确认关闭</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 安装确认模态框 -->
+  <div class="modal install-confirm-modal" id="installConfirmModal">
+    <div class="modal-content install-confirm-content">
+      <div class="app-icon-large" id="installAppIcon">📱</div>
+      <h3 id="installAppName">应用名称</h3>
+      <div class="app-info" id="installAppInfo">文件大小: 未知</div>
+      <div class="install-actions">
+        <button class="cancel" onclick="closeInstallConfirm()">取消</button>
+        <button class="install" id="installConfirmBtn" onclick="confirmInstall()">安装</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 安装完成模态框 -->
+  <div class="modal install-complete-modal" id="installCompleteModal">
+    <div class="modal-content install-complete-content">
+      <div class="success-icon">✅</div>
+      <h3 id="installCompleteTitle">安装成功</h3>
+      <p id="installCompleteMessage" style="color: var(--text-secondary);"></p>
+      <div class="complete-actions" id="installCompleteActions">
+        <button class="done" onclick="closeInstallComplete()">完成</button>
       </div>
     </div>
   </div>
@@ -1473,6 +1649,39 @@
             <span id="currentUserDisplay">HTMLOS 用户</span>
           </div>
           <button onclick="openUserInfoModal()" style="width: 100%;">编辑用户信息</button>
+        </div>
+      </div>
+      
+      <!-- 安全与隐私 -->
+      <div class="setting-group" id="securityGroup">
+        <div class="setting-group-header">
+          🔒 安全与隐私
+        </div>
+        <div class="setting-group-content">
+          <div class="setting-item">
+            <label>设置系统密码</label>
+            <button onclick="openSetPasswordModal()">修改密码</button>
+          </div>
+          
+          <div class="setting-item">
+            <label>安装应用需要密码</label>
+            <input type="checkbox" id="installRequirePasswordToggle" />
+          </div>
+          
+          <div class="setting-item">
+            <label>打开锁定应用需要密码</label>
+            <input type="checkbox" id="openLockedRequirePasswordToggle" checked />
+          </div>
+          
+          <div class="setting-item">
+            <label>显示安装确认对话框</label>
+            <input type="checkbox" id="showInstallConfirmToggle" checked />
+          </div>
+          
+          <div class="setting-item">
+            <label>沙箱状态</label>
+            <span id="sandboxStatusDisplay">✅ 已开启</span>
+          </div>
         </div>
       </div>
       
@@ -1672,6 +1881,30 @@
         <button onclick="closeSettings()">关闭</button>
       </div>
       <span class="danger-link" onclick="triggerResetWarning()">恢复默认设置</span>
+      <span class="danger-link" onclick="triggerFormatWarning()" style="margin-top: 8px;">格式化系统</span>
+    </div>
+  </div>
+  
+  <!-- 设置密码模态框 -->
+  <div class="modal" id="setPasswordModal">
+    <div class="modal-content" style="max-width: 350px;">
+      <h3>🔑 设置系统密码</h3>
+      <div class="setting-item">
+        <label>当前密码</label>
+        <input type="password" id="currentPasswordInput" placeholder="留空表示无密码" />
+      </div>
+      <div class="setting-item">
+        <label>新密码</label>
+        <input type="password" id="newPasswordInput" placeholder="输入新密码" />
+      </div>
+      <div class="setting-item">
+        <label>确认新密码</label>
+        <input type="password" id="confirmPasswordInput" placeholder="再次输入新密码" />
+      </div>
+      <div class="modal-actions">
+        <button onclick="closeSetPasswordModal()">取消</button>
+        <button onclick="savePassword()" class="primary-btn">保存</button>
+      </div>
     </div>
   </div>
   
@@ -1685,13 +1918,8 @@
       <div class="warning-text">
         注意：此操作不可撤销！
       </div>
-      <p>请输入密码确认：</p>
-      <input type="password" id="resetPasswordInput" placeholder="默认密码 1234" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
-      <br><br>
-      <div style="display: flex; gap: 10px;">
-        <button onclick="confirmReset()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认恢复</button>
-        <button onclick="closeResetWarning()" style="flex:1; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer;">取消</button>
-      </div>
+      <button onclick="requestPasswordForReset()" style="width: 100%; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer; margin-top: 15px;">确认恢复</button>
+      <button onclick="closeResetWarning()" style="width: 100%; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer; margin-top: 10px;">取消</button>
     </div>
   </div>
   
@@ -1705,13 +1933,8 @@
       <div class="warning-text">
         警告：此操作不可撤销！
       </div>
-      <p>请输入密码确认：</p>
-      <input type="password" id="formatPasswordInput" placeholder="默认密码 1234" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
-      <br><br>
-      <div style="display: flex; gap: 10px;">
-        <button onclick="confirmFormat()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认格式化</button>
-        <button onclick="closeFormatWarning()" style="flex:1; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer;">取消</button>
-      </div>
+      <button onclick="requestPasswordForFormat()" style="width: 100%; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer; margin-top: 15px;">确认格式化</button>
+      <button onclick="closeFormatWarning()" style="width: 100%; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer; margin-top: 10px;">取消</button>
     </div>
   </div>
   
@@ -1769,6 +1992,22 @@
       name: 'HTMLOS 用户',
       avatar: '👤'
     };
+    
+    // 系统安全设置
+    let securitySettings = {
+      systemPassword: '', // 空字符串表示无密码
+      installRequirePassword: false,
+      openLockedRequirePassword: true,
+      showInstallConfirm: true
+    };
+    
+    // 密码回调函数
+    let passwordCallback = null;
+    
+    // 待安装应用数据
+    let pendingInstallApps = [];
+    let currentInstallApp = null;
+    let isUpdateMode = false;
     
     // 预设头像库
     const presetAvatars = [
@@ -1967,7 +2206,7 @@
     // ==================== Service Worker - 优化缓存策略 ====================
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'htmlos-v2.9';
+        const CACHE_NAME = 'htmlos-v3.0';
         const CACHE_WHITELIST = ['index.html', './'];
         
         self.addEventListener('install', event => {
@@ -2123,7 +2362,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v2.9') {
+            if (name !== 'htmlos-v3.0') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2173,6 +2412,45 @@
       }
     }
     
+    // ==================== 密码系统 ====================
+    function openPasswordModal(title, message, callback) {
+      document.getElementById('passwordModalTitle').textContent = title;
+      document.getElementById('passwordModalMessage').textContent = message;
+      document.getElementById('passwordInput').value = '';
+      passwordCallback = callback;
+      document.getElementById('passwordModal').classList.add('show');
+      document.getElementById('passwordInput').focus();
+    }
+    
+    function closePasswordModal() {
+      document.getElementById('passwordModal').classList.remove('show');
+      passwordCallback = null;
+    }
+    
+    function confirmPassword() {
+      const inputPassword = document.getElementById('passwordInput').value;
+      if (inputPassword === securitySettings.systemPassword) {
+        closePasswordModal();
+        if (passwordCallback) {
+          passwordCallback(true);
+        }
+      } else {
+        showToast('密码错误！', 'error');
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+      }
+    }
+    
+    // 密码验证包装函数
+    function verifyPassword(title, message, callback) {
+      if (securitySettings.systemPassword === '') {
+        // 无密码，直接通过
+        callback(true);
+      } else {
+        openPasswordModal(title, message, callback);
+      }
+    }
+    
     // ==================== 沙箱控制 ====================
     function toggleSandbox() {
       const sandboxToggle = document.getElementById('sandboxToggle');
@@ -2184,6 +2462,7 @@
         // 用户想要开启沙箱
         systemSettings.sandboxEnabled = true;
         updateSandboxState();
+        updateSandboxStatusDisplay();
         showToast('✅ 沙箱已开启', 'success');
         addLog('info', '沙箱已开启');
       }
@@ -2191,22 +2470,20 @@
     
     function closeSandboxWarning() {
       document.getElementById('sandboxWarningModal').classList.remove('show');
-      document.getElementById('sandboxPasswordInput').value = '';
     }
     
-    function confirmDisableSandbox() {
-      const password = document.getElementById('sandboxPasswordInput').value;
-      if (password !== '1234') {
-        showToast('密码错误！', 'error');
-        return;
-      }
-      
-      systemSettings.sandboxEnabled = false;
-      updateSandboxState();
-      document.getElementById('sandboxToggle').checked = true;
+    function requestPasswordForSandbox() {
       closeSandboxWarning();
-      showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
-      addLog('warn', '沙箱已关闭，系统处于不安全状态！');
+      verifyPassword('关闭沙箱', '请输入系统密码以关闭沙箱', (success) => {
+        if (success) {
+          systemSettings.sandboxEnabled = false;
+          updateSandboxState();
+          updateSandboxStatusDisplay();
+          document.getElementById('sandboxToggle').checked = true;
+          showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
+          addLog('warn', '沙箱已关闭，系统处于不安全状态！');
+        }
+      });
     }
     
     function updateSandboxState() {
@@ -2219,6 +2496,56 @@
       
       // 保存设置
       dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
+    }
+    
+    function updateSandboxStatusDisplay() {
+      const display = document.getElementById('sandboxStatusDisplay');
+      if (systemSettings.sandboxEnabled) {
+        display.textContent = '✅ 已开启';
+        display.style.color = '#30d158';
+      } else {
+        display.textContent = '⚠️ 已关闭';
+        display.style.color = '#ff9f0a';
+      }
+    }
+    
+    // ==================== 密码设置 ====================
+    function openSetPasswordModal() {
+      document.getElementById('currentPasswordInput').value = '';
+      document.getElementById('newPasswordInput').value = '';
+      document.getElementById('confirmPasswordInput').value = '';
+      document.getElementById('setPasswordModal').classList.add('show');
+    }
+    
+    function closeSetPasswordModal() {
+      document.getElementById('setPasswordModal').classList.remove('show');
+    }
+    
+    async function savePassword() {
+      const currentPassword = document.getElementById('currentPasswordInput').value;
+      const newPassword = document.getElementById('newPasswordInput').value;
+      const confirmPassword = document.getElementById('confirmPasswordInput').value;
+      
+      // 验证当前密码
+      if (currentPassword !== securitySettings.systemPassword) {
+        showToast('当前密码错误！', 'error');
+        return;
+      }
+      
+      // 验证新密码
+      if (newPassword !== confirmPassword) {
+        showToast('两次输入的新密码不一致！', 'error');
+        return;
+      }
+      
+      securitySettings.systemPassword = newPassword;
+      
+      // 保存到数据库
+      await dbPut(STORE_SETTINGS, { key: 'system_password', value: newPassword });
+      
+      closeSetPasswordModal();
+      showToast('密码已保存', 'success');
+      addLog('info', '系统密码已更新');
     }
     
     // ==================== 用户信息管理 ====================
@@ -2250,16 +2577,21 @@
       document.getElementById('userInfoModal').classList.remove('show');
     }
     
+    function saveCustomAvatar() {
+      const customAvatar = document.getElementById('customAvatarInput').value.trim();
+      if (customAvatar) {
+        document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
+        document.getElementById('userAvatarPreview').textContent = customAvatar;
+        showToast('自定义头像已设置', 'success');
+      } else {
+        showToast('请输入有效的Emoji', 'error');
+      }
+    }
+    
     async function saveUserInfo() {
       const newName = document.getElementById('userNameInput').value.trim();
       // 获取当前预览的头像（可能是预设或自定义）
       let newAvatar = document.getElementById('userAvatarPreview').textContent;
-      
-      // 检查自定义输入框是否有内容
-      const customAvatar = document.getElementById('customAvatarInput').value.trim();
-      if (customAvatar) {
-        newAvatar = customAvatar;
-      }
       
       if (!newName) {
         showToast('用户名不能为空', 'error');
@@ -2285,7 +2617,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 9; // 升级数据库版本
+    const DB_VERSION = 10; // 升级数据库版本
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2434,8 +2766,7 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80; // 增加滑动阈值，防止误触
-    const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 8.1 稳定版 v2.9';
+    const VERSION = 'HTMLOS 8.1 稳定版 v3.0';
     
     const colorPalette = ['#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e', '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#ff8c00', '#e3008c'];
     
@@ -2783,6 +3114,106 @@
       addLog('info', '卸载应用: ' + fileKey);
     }
     
+    // ========== 安卓风格安装器 ==========
+    function closeInstallConfirm() {
+      document.getElementById('installConfirmModal').classList.remove('show');
+      currentInstallApp = null;
+      pendingInstallApps = [];
+    }
+    
+    function closeInstallComplete() {
+      document.getElementById('installCompleteModal').classList.remove('show');
+      currentInstallApp = null;
+      pendingInstallApps = [];
+      renderApps();
+    }
+    
+    function showInstallConfirm(app, isUpdate = false) {
+      document.getElementById('installAppIcon').textContent = app.icon || '📱';
+      document.getElementById('installAppName').textContent = app.name;
+      document.getElementById('installAppInfo').textContent = `文件大小: ${app.sizeKB} KB`;
+      document.getElementById('installConfirmBtn').textContent = isUpdate ? '更新' : '安装';
+      isUpdateMode = isUpdate;
+      
+      document.getElementById('installConfirmModal').classList.add('show');
+    }
+    
+    function showInstallComplete(successCount, totalCount, appName = null) {
+      if (totalCount === 1 && appName) {
+        document.getElementById('installCompleteTitle').textContent = `${isUpdateMode ? '更新' : '安装'}成功`;
+        document.getElementById('installCompleteMessage').textContent = `"${appName}" 已成功${isUpdateMode ? '更新' : '安装'}`;
+        document.getElementById('installCompleteActions').innerHTML = `
+          <button class="done" onclick="closeInstallComplete()">完成</button>
+          <button class="launch" onclick="launchInstalledApp()">打开</button>
+        `;
+      } else {
+        document.getElementById('installCompleteTitle').textContent = `${isUpdateMode ? '更新' : '安装'}完成`;
+        document.getElementById('installCompleteMessage').textContent = `成功: ${successCount} | 失败: ${totalCount - successCount}`;
+        document.getElementById('installCompleteActions').innerHTML = `
+          <button class="done" onclick="closeInstallComplete()">完成</button>
+        `;
+      }
+      
+      document.getElementById('installCompleteModal').classList.add('show');
+    }
+    
+    function launchInstalledApp() {
+      if (currentInstallApp) {
+        closeInstallComplete();
+        setTimeout(() => {
+          const element = document.querySelector(`[data-file="${currentInstallApp.file}"]`);
+          launchApp(currentInstallApp.file, element);
+        }, 300);
+      }
+    }
+    
+    async function confirmInstall() {
+      closeInstallConfirm();
+      
+      if (pendingInstallApps.length > 0) {
+        // 多文件安装
+        let successCount = 0;
+        const totalCount = pendingInstallApps.length;
+        
+        for (let i = 0; i < pendingInstallApps.length; i++) {
+          const app = pendingInstallApps[i];
+          try {
+            await setContentSafe(app.file, app.content);
+            const existingIndex = installedApps.findIndex(a => a.name === app.name);
+            if (existingIndex !== -1) {
+              installedApps[existingIndex].file = app.file;
+              installedApps[existingIndex].lastUpdated = new Date().toISOString();
+            } else {
+              installedApps.push(app);
+            }
+            successCount++;
+          } catch (err) {
+            addLog('error', `安装失败: ${app.name}`, err);
+          }
+        }
+        
+        saveApps();
+        showInstallComplete(successCount, totalCount);
+      } else if (currentInstallApp) {
+        // 单文件安装/更新
+        try {
+          await setContentSafe(currentInstallApp.file, currentInstallApp.content);
+          const existingIndex = installedApps.findIndex(a => a.name === currentInstallApp.name);
+          if (existingIndex !== -1) {
+            installedApps[existingIndex].file = currentInstallApp.file;
+            installedApps[existingIndex].lastUpdated = new Date().toISOString();
+          } else {
+            installedApps.push(currentInstallApp);
+          }
+          saveApps();
+          showInstallComplete(1, 1, currentInstallApp.name);
+        } catch (err) {
+          showToast(`${isUpdateMode ? '更新' : '安装'}失败: ${err.message}`, 'error');
+          addLog('error', `${isUpdateMode ? '更新' : '安装'}失败: ${currentInstallApp.name}`, err);
+        }
+      }
+    }
+    
     // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', async () => {
       window.addEventListener('error', (e) => {
@@ -2804,6 +3235,22 @@
       const userAvatar = await dbGet(STORE_SETTINGS, 'user_avatar');
       if (userName) currentUser.name = userName.value;
       if (userAvatar) currentUser.avatar = userAvatar.value;
+      
+      // 加载安全设置
+      const systemPassword = await dbGet(STORE_SETTINGS, 'system_password');
+      const installRequirePassword = await dbGet(STORE_SETTINGS, 'install_require_password');
+      const openLockedRequirePassword = await dbGet(STORE_SETTINGS, 'open_locked_require_password');
+      const showInstallConfirm = await dbGet(STORE_SETTINGS, 'show_install_confirm');
+      
+      securitySettings.systemPassword = systemPassword?.value || '';
+      securitySettings.installRequirePassword = installRequirePassword?.value === 'true';
+      securitySettings.openLockedRequirePassword = openLockedRequirePassword?.value !== 'false';
+      securitySettings.showInstallConfirm = showInstallConfirm?.value !== 'false';
+      
+      // 更新安全设置界面
+      document.getElementById('installRequirePasswordToggle').checked = securitySettings.installRequirePassword;
+      document.getElementById('openLockedRequirePasswordToggle').checked = securitySettings.openLockedRequirePassword;
+      document.getElementById('showInstallConfirmToggle').checked = securitySettings.showInstallConfirm;
       
       // 更新用户信息显示
       document.getElementById('userName').textContent = currentUser.name;
@@ -2836,6 +3283,7 @@
       systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
       document.getElementById('sandboxToggle').checked = !systemSettings.sandboxEnabled;
       updateSandboxState();
+      updateSandboxStatusDisplay();
       
       // 恢复内存优化设置
       const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
@@ -2887,9 +3335,21 @@
         if (!e.target.closest('#sandboxWarningModal') && !e.target.closest('#sandboxToggle')) {
           document.getElementById('sandboxWarningModal').classList.remove('show');
         }
+        if (!e.target.closest('#passwordModal')) {
+          closePasswordModal();
+        }
+        if (!e.target.closest('#setPasswordModal')) {
+          closeSetPasswordModal();
+        }
+        if (!e.target.closest('#installConfirmModal')) {
+          closeInstallConfirm();
+        }
+        if (!e.target.closest('#installCompleteModal')) {
+          closeInstallComplete();
+        }
       });
       
-      addLog('info', 'HTMLOS 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS 3.0 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2935,6 +3395,11 @@
       systemSettings.autoOptimizeMemory = document.getElementById('autoOptimizeMemoryToggle').checked;
       systemSettings.advancedOptimizeMemory = document.getElementById('advancedOptimizeMemoryToggle').checked;
       
+      // 保存安全设置
+      securitySettings.installRequirePassword = document.getElementById('installRequirePasswordToggle').checked;
+      securitySettings.openLockedRequirePassword = document.getElementById('openLockedRequirePasswordToggle').checked;
+      securitySettings.showInstallConfirm = document.getElementById('showInstallConfirmToggle').checked;
+      
       // 保存到数据库
       await dbPut(STORE_SETTINGS, { key: 'show_seconds', value: String(systemSettings.showSeconds) });
       await dbPut(STORE_SETTINGS, { key: 'time_24', value: String(systemSettings.time24) });
@@ -2946,6 +3411,9 @@
       await dbPut(STORE_SETTINGS, { key: 'app_close_confirm', value: String(systemSettings.appCloseConfirm) });
       await dbPut(STORE_SETTINGS, { key: 'auto_optimize_memory', value: String(systemSettings.autoOptimizeMemory) });
       await dbPut(STORE_SETTINGS, { key: 'advanced_optimize_memory', value: String(systemSettings.advancedOptimizeMemory) });
+      await dbPut(STORE_SETTINGS, { key: 'install_require_password', value: String(securitySettings.installRequirePassword) });
+      await dbPut(STORE_SETTINGS, { key: 'open_locked_require_password', value: String(securitySettings.openLockedRequirePassword) });
+      await dbPut(STORE_SETTINGS, { key: 'show_install_confirm', value: String(securitySettings.showInstallConfirm) });
       
       // 启动/停止自动内存优化
       startAutoMemoryOptimize();
@@ -3290,6 +3758,19 @@
       if (!app) { showToast('应用不存在', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法更新', 'error'); return; }
       
+      // 检查是否需要密码
+      if (securitySettings.installRequirePassword) {
+        verifyPassword('更新应用', '请输入系统密码以更新应用', (success) => {
+          if (success) {
+            proceedWithUpdate(fileKey, app);
+          }
+        });
+      } else {
+        proceedWithUpdate(fileKey, app);
+      }
+    }
+    
+    function proceedWithUpdate(fileKey, app) {
       const input = document.createElement('input');
       input.type='file'; input.accept='.html,.htm';
       input.onchange=async(e)=>{
@@ -3297,9 +3778,28 @@
         if(!file)return;
         const reader=new FileReader();
         reader.onload=async(e)=>{
-          if (await updateAppContent(fileKey, e.target.result)) {
+          const content = e.target.result;
+          const sizeKB = Math.round(content.length / 1024 * 100) / 100;
+          
+          currentInstallApp = {
+            name: app.name,
+            file: fileKey,
+            icon: app.icon,
+            color: app.color,
+            customColor: app.customColor,
+            size: app.size,
+            source: app.source,
+            installTime: app.installTime,
+            lastUpdated: new Date().toISOString(),
+            content: content,
+            sizeKB: sizeKB
+          };
+          
+          if (securitySettings.showInstallConfirm) {
+            showInstallConfirm(currentInstallApp, true);
+          } else {
+            await updateAppContent(fileKey, content);
             showToast(`应用 "${app.name}" 更新成功！`, 'success');
-            document.querySelector('.app-action-modal')?.remove();
             renderApps();
           }
         };
@@ -3327,6 +3827,7 @@
         <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
           <div class="custom-icon-input">
             <input type="text" id="customIconInput" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
+            <button onclick="saveCustomAppIcon('${app.file}')">保存</button>
           </div>
         </div>
         <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div></div>
@@ -3340,6 +3841,16 @@
         ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 卸载</button>`:''}
         <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>`;
       document.body.appendChild(modal);
+    }
+    
+    function saveCustomAppIcon(fileKey) {
+      const customIcon = document.getElementById('customIconInput').value.trim();
+      if (customIcon) {
+        changeAppIcon(fileKey, customIcon);
+        document.querySelector('.app-action-modal')?.remove();
+      } else {
+        showToast('请输入有效的Emoji', 'error');
+      }
     }
     
     function renameApp(fileKey) {
@@ -3487,11 +3998,27 @@
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
-    // ========== 安装应用 - 新增多文件安装功能 ==========
-    function openInstaller() { document.getElementById('installModal').classList.add('show'); }
-    function closeModal() { document.getElementById('installModal').classList.remove('show'); document.getElementById('installProgress').style.display='none'; }
+    // ========== 安装应用 - 安卓风格优化 ==========
+    function openInstaller() { 
+      // 检查是否需要密码
+      if (securitySettings.installRequirePassword) {
+        verifyPassword('安装应用', '请输入系统密码以安装应用', (success) => {
+          if (success) {
+            document.getElementById('installModal').classList.add('show');
+          }
+        });
+      } else {
+        document.getElementById('installModal').classList.add('show');
+      }
+    }
+    
+    function closeModal() { 
+      document.getElementById('installModal').classList.remove('show'); 
+      document.getElementById('installProgress').style.display='none'; 
+    }
     
     async function showFilePicker() {
+      closeModal();
       const input = document.createElement('input');
       input.type='file'; input.accept='.html,.htm';
       input.onchange=async(e)=>{
@@ -3500,14 +4027,38 @@
         const reader=new FileReader();
         reader.onload=async(e)=>{
           const content=e.target.result;
+          const sizeKB = Math.round(content.length / 1024 * 100) / 100;
           const fileName='user/apps/'+Date.now()+'_'+file.name;
-          await setContentSafe(fileName,content);
           const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
           const now=new Date().toISOString();
-          installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fileName,icon:'📱',color:color,customColor:color,size:'small',source:'user',installTime:now,lastUpdated:now,hidden:false,locked:false});
-          saveApps(); closeModal(); currentPage=0; renderApps();
-          showToast('安装成功！', 'success');
-          addLog('info','安装应用: '+file.name);
+          
+          currentInstallApp = {
+            name: escapeHtml(file.name.replace(/\.html?$/i,'')),
+            file: fileName,
+            icon: '📱',
+            color: color,
+            customColor: color,
+            size: 'small',
+            source: 'user',
+            installTime: now,
+            lastUpdated: now,
+            hidden: false,
+            locked: false,
+            content: content,
+            sizeKB: sizeKB
+          };
+          
+          if (securitySettings.showInstallConfirm) {
+            showInstallConfirm(currentInstallApp, false);
+          } else {
+            await setContentSafe(fileName, content);
+            installedApps.push(currentInstallApp);
+            saveApps();
+            currentPage=0;
+            renderApps();
+            showToast('安装成功！', 'success');
+            addLog('info','安装应用: '+file.name);
+          }
         };
         reader.readAsText(file);
       };
@@ -3515,6 +4066,7 @@
     }
     
     async function showMultiFilePicker() {
+      closeModal();
       const input = document.createElement('input');
       input.type='file'; input.multiple=true; input.accept='.html,.htm';
       const pd=document.getElementById('installProgress'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
@@ -3524,11 +4076,12 @@
         const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
         if(files.length===0){showToast('没有选择任何HTML文件','warning');pd.style.display='none';return;}
         
-        let sc=0,fc=0;
+        pendingInstallApps = [];
+        
         for(let i=0;i<files.length;i++){
           const file=files[i];
           pf.style.width=Math.round((i/files.length)*100)+'%';
-          pt.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
+          pt.textContent=`正在处理 ${i+1}/${files.length}: ${file.name}`;
           
           try{
             await new Promise((resolve,reject)=>{
@@ -3537,17 +4090,25 @@
                 try{
                   const c=e.target.result;
                   const fn='user/apps/'+Date.now()+'_'+file.name;
-                  await setContentSafe(fn,c);
-                  const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
-                  if(ex!==-1){
-                    installedApps[ex].file=fn;
-                    installedApps[ex].lastUpdated=new Date().toISOString();
-                  }else{
-                    const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-                    const n=new Date().toISOString();
-                    installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fn,icon:'📱',color:cl,customColor:cl,size:'small',source:'user',installTime:n,lastUpdated:n,hidden:false,locked:false});
-                  }
-                  sc++;
+                  const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+                  const n=new Date().toISOString();
+                  const sizeKB = Math.round(c.length / 1024 * 100) / 100;
+                  
+                  pendingInstallApps.push({
+                    name: escapeHtml(file.name.replace(/\.html?$/i,'')),
+                    file: fn,
+                    icon: '📱',
+                    color: cl,
+                    customColor: cl,
+                    size: 'small',
+                    source: 'user',
+                    installTime: n,
+                    lastUpdated: n,
+                    hidden: false,
+                    locked: false,
+                    content: c,
+                    sizeKB: sizeKB
+                  });
                   resolve();
                 }catch(err){
                   reject(err);
@@ -3557,28 +4118,57 @@
               r.readAsText(file);
             });
           }catch(err){
-            fc++;
-            addLog('error', '安装失败: ' + file.name, err);
+            addLog('error', '处理文件失败: ' + file.name, err);
           }
         }
         
         pf.style.width='100%'; 
-        pt.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
-        saveApps(); 
-        renderApps();
+        pd.style.display='none';
         
-        setTimeout(()=>{
-          pd.style.display='none';
-          closeModal();
-          showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
-          addLog('info',`多文件安装完成: ${sc}成功, ${fc}失败`);
-        },1500);
+        if (pendingInstallApps.length === 1) {
+          // 单个文件，显示确认对话框
+          currentInstallApp = pendingInstallApps[0];
+          pendingInstallApps = [];
+          if (securitySettings.showInstallConfirm) {
+            showInstallConfirm(currentInstallApp, false);
+          } else {
+            await setContentSafe(currentInstallApp.file, currentInstallApp.content);
+            installedApps.push(currentInstallApp);
+            saveApps();
+            renderApps();
+            showToast('安装成功！', 'success');
+          }
+        } else if (pendingInstallApps.length > 1) {
+          // 多个文件，直接安装
+          let successCount = 0;
+          for (let i = 0; i < pendingInstallApps.length; i++) {
+            const app = pendingInstallApps[i];
+            try {
+              await setContentSafe(app.file, app.content);
+              const existingIndex = installedApps.findIndex(a => a.name === app.name);
+              if (existingIndex !== -1) {
+                installedApps[existingIndex].file = app.file;
+                installedApps[existingIndex].lastUpdated = new Date().toISOString();
+              } else {
+                installedApps.push(app);
+              }
+              successCount++;
+            } catch (err) {
+              addLog('error', '安装失败: ' + app.name, err);
+            }
+          }
+          
+          saveApps();
+          renderApps();
+          showInstallComplete(successCount, pendingInstallApps.length);
+        }
       };
       
       input.click();
     }
     
     async function showFolderPicker() {
+      closeModal();
       const input=document.createElement('input');
       input.type='file'; input.webkitdirectory=true; input.multiple=true; input.accept='.html,.htm';
       const pd=document.getElementById('installProgress'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
@@ -3588,11 +4178,12 @@
         const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
         if(files.length===0){showToast('文件夹中没有HTML文件','warning');pd.style.display='none';return;}
         
-        let sc=0,fc=0;
+        pendingInstallApps = [];
+        
         for(let i=0;i<files.length;i++){
           const file=files[i];
           pf.style.width=Math.round((i/files.length)*100)+'%';
-          pt.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
+          pt.textContent=`正在处理 ${i+1}/${files.length}: ${file.name}`;
           
           try{
             await new Promise((resolve,reject)=>{
@@ -3601,17 +4192,25 @@
                 try{
                   const c=e.target.result;
                   const fn='user/apps/'+Date.now()+'_'+file.name;
-                  await setContentSafe(fn,c);
-                  const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
-                  if(ex!==-1){
-                    installedApps[ex].file=fn;
-                    installedApps[ex].lastUpdated=new Date().toISOString();
-                  }else{
-                    const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-                    const n=new Date().toISOString();
-                    installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fn,icon:'📱',color:cl,customColor:cl,size:'small',source:'user',installTime:n,lastUpdated:n,hidden:false,locked:false});
-                  }
-                  sc++;
+                  const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+                  const n=new Date().toISOString();
+                  const sizeKB = Math.round(c.length / 1024 * 100) / 100;
+                  
+                  pendingInstallApps.push({
+                    name: escapeHtml(file.name.replace(/\.html?$/i,'')),
+                    file: fn,
+                    icon: '📱',
+                    color: cl,
+                    customColor: cl,
+                    size: 'small',
+                    source: 'user',
+                    installTime: n,
+                    lastUpdated: n,
+                    hidden: false,
+                    locked: false,
+                    content: c,
+                    sizeKB: sizeKB
+                  });
                   resolve();
                 }catch(err){
                   reject(err);
@@ -3621,22 +4220,50 @@
               r.readAsText(file);
             });
           }catch(err){
-            fc++;
-            addLog('error', '安装失败: ' + file.name, err);
+            addLog('error', '处理文件失败: ' + file.name, err);
           }
         }
         
         pf.style.width='100%'; 
-        pt.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
-        saveApps(); 
-        renderApps();
+        pd.style.display='none';
         
-        setTimeout(()=>{
-          pd.style.display='none';
-          closeModal();
-          showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
-          addLog('info',`文件夹安装完成: ${sc}成功, ${fc}失败`);
-        },1500);
+        if (pendingInstallApps.length === 1) {
+          // 单个文件，显示确认对话框
+          currentInstallApp = pendingInstallApps[0];
+          pendingInstallApps = [];
+          if (securitySettings.showInstallConfirm) {
+            showInstallConfirm(currentInstallApp, false);
+          } else {
+            await setContentSafe(currentInstallApp.file, currentInstallApp.content);
+            installedApps.push(currentInstallApp);
+            saveApps();
+            renderApps();
+            showToast('安装成功！', 'success');
+          }
+        } else if (pendingInstallApps.length > 1) {
+          // 多个文件，直接安装
+          let successCount = 0;
+          for (let i = 0; i < pendingInstallApps.length; i++) {
+            const app = pendingInstallApps[i];
+            try {
+              await setContentSafe(app.file, app.content);
+              const existingIndex = installedApps.findIndex(a => a.name === app.name);
+              if (existingIndex !== -1) {
+                installedApps[existingIndex].file = app.file;
+                installedApps[existingIndex].lastUpdated = new Date().toISOString();
+              } else {
+                installedApps.push(app);
+              }
+              successCount++;
+            } catch (err) {
+              addLog('error', '安装失败: ' + app.name, err);
+            }
+          }
+          
+          saveApps();
+          renderApps();
+          showInstallComplete(successCount, pendingInstallApps.length);
+        }
       };
       
       input.click();
@@ -3647,35 +4274,49 @@
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
       
+      // 检查是否是锁定应用且需要密码
+      if (app.locked && securitySettings.openLockedRequirePassword) {
+        verifyPassword('打开应用', `请输入密码以打开"${app.name}"`, (success) => {
+          if (success) {
+            proceedWithLaunch(filePath, iconElement, app);
+          }
+        });
+      } else {
+        proceedWithLaunch(filePath, iconElement, app);
+      }
+    }, 300);
+    
+    function proceedWithLaunch(filePath, iconElement, app) {
       if (document.getElementById('launchAnimToggle').checked && iconElement) {
         iconElement.classList.add('launch-anim');
         setTimeout(()=>iconElement.classList.remove('launch-anim'),300);
       }
       
-      const content = await getContentSafe(filePath);
-      if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
-      
-      // 更新使用统计
-      appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
-      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
-      
-      runningAppFile = filePath;
-      document.getElementById('runningAppTitle').textContent = (app.icon?app.icon+' ':'') + app.name;
-      populateSwitchAppSelect();
-      const frameCont = document.getElementById('appFrameContainer');
-      frameCont.classList.add('show');
-      document.getElementById('mainContainer').style.display = 'none';
-      const appFrame = document.getElementById('appFrame');
-      
-      // 更新沙箱状态
-      updateSandboxState();
-      
-      // 直接加载原始内容，不做任何修改
-      appFrame.srcdoc = content;
-      setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
-      if (document.getElementById('vibrationToggle').checked && navigator.vibrate) navigator.vibrate(30);
-      addLog('info','启动应用: '+app.name);
-    },300);
+      getContentSafe(filePath).then(content => {
+        if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
+        
+        // 更新使用统计
+        appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
+        dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
+        
+        runningAppFile = filePath;
+        document.getElementById('runningAppTitle').textContent = (app.icon?app.icon+' ':'') + app.name;
+        populateSwitchAppSelect();
+        const frameCont = document.getElementById('appFrameContainer');
+        frameCont.classList.add('show');
+        document.getElementById('mainContainer').style.display = 'none';
+        const appFrame = document.getElementById('appFrame');
+        
+        // 更新沙箱状态
+        updateSandboxState();
+        
+        // 直接加载原始内容，不做任何修改
+        appFrame.srcdoc = content;
+        setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
+        if (document.getElementById('vibrationToggle').checked && navigator.vibrate) navigator.vibrate(30);
+        addLog('info','启动应用: '+app.name);
+      });
+    }
     
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
@@ -3709,7 +4350,6 @@
     // ========== 恢复默认设置 ==========
     function triggerResetWarning(){
       closeSettings();
-      document.getElementById('resetPasswordInput').value='';
       document.getElementById('resetWarningModal').classList.add('show');
     }
     
@@ -3717,15 +4357,19 @@
       document.getElementById('resetWarningModal').classList.remove('show');
     }
     
+    function requestPasswordForReset() {
+      closeResetWarning();
+      verifyPassword('恢复默认设置', '请输入系统密码以恢复默认设置', (success) => {
+        if (success) {
+          confirmReset();
+        }
+      });
+    }
+    
     async function confirmReset(){
-      if(document.getElementById('resetPasswordInput').value!==FORMAT_PASSWORD){
-        showToast('密码错误！','error');
-        return;
-      }
-      
       try {
         // 只删除设置相关数据，保留应用和内容
-        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled'];
+        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'system_password'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
         
         for (const setting of allSettings) {
@@ -3752,7 +4396,6 @@
     // ========== 格式化 ==========
     function triggerFormatWarning(){
       closeResetWarning();
-      document.getElementById('formatPasswordInput').value='';
       document.getElementById('formatWarningModal').classList.add('show');
     }
     
@@ -3760,11 +4403,16 @@
       document.getElementById('formatWarningModal').classList.remove('show');
     }
     
+    function requestPasswordForFormat() {
+      closeFormatWarning();
+      verifyPassword('格式化系统', '请输入系统密码以格式化系统', (success) => {
+        if (success) {
+          confirmFormat();
+        }
+      });
+    }
+    
     async function confirmFormat(){
-      if(document.getElementById('formatPasswordInput').value!==FORMAT_PASSWORD){
-        showToast('密码错误！','error');
-        return;
-      }
       try{
         await dbClear(STORE_APPS);
         await dbClear(STORE_CONTENT);
