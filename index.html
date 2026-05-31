@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v3.1</title>
+  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v3.2</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -1316,6 +1316,33 @@
       transform: scale(1.1);
     }
     
+    /* 自定义颜色输入 */
+    .custom-color-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .custom-color-input input {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--input-bg);
+      border: var(--input-border);
+      color: white;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    
+    .custom-color-input button {
+      padding: 8px 16px;
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
     /* 恢复默认设置模态框样式 */
     .reset-modal-content {
       text-align: center;
@@ -1674,6 +1701,7 @@
       <p id="installCompleteMessage" style="color: var(--text-secondary);"></p>
       <div class="complete-actions" id="installCompleteActions">
         <button class="done" onclick="closeInstallComplete()">完成</button>
+        <button class="launch" onclick="launchInstalledApp()">打开</button>
       </div>
     </div>
   </div>
@@ -1989,10 +2017,10 @@
       avatar: '👤'
     };
     
-    // 系统安全设置
+    // 系统安全设置 - 已移除安装密码验证
     let securitySettings = {
       systemPassword: '1234', // 默认密码1234
-      installRequirePassword: false,
+      installRequirePassword: false, // 永久禁用安装密码
       openLockedRequirePassword: true,
       showInstallConfirm: true
     };
@@ -2202,7 +2230,7 @@
     // ==================== Service Worker - 优化缓存策略 ====================
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'htmlos-v3.1';
+        const CACHE_NAME = 'htmlos-v3.2';
         const CACHE_WHITELIST = ['index.html', './'];
         
         self.addEventListener('install', event => {
@@ -2358,7 +2386,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.1') {
+            if (name !== 'htmlos-v3.2') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2606,7 +2634,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 11; // 升级数据库版本
+    const DB_VERSION = 12; // 升级数据库版本
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2755,9 +2783,10 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80; // 增加滑动阈值，防止误触
-    const VERSION = 'HTMLOS 8.1 风格 · 稳定版 v3.1';
+    const VERSION = 'HTMLOS 8.1 风格 · 稳定版 v3.2';
     
-    const colorPalette = ['#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e', '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#ff8c00', '#e3008c'];
+    // 优化后的颜色方案 - 移除了一个颜色，添加自定义调色板
+    const colorPalette = ['#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e', '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#e3008c'];
     
     // 大幅扩展emoji图标库
     const iconLibrary = [
@@ -3227,13 +3256,12 @@
       
       // 加载安全设置
       const systemPassword = await dbGet(STORE_SETTINGS, 'system_password');
-      const installRequirePassword = await dbGet(STORE_SETTINGS, 'install_require_password');
       const openLockedRequirePassword = await dbGet(STORE_SETTINGS, 'open_locked_require_password');
       const showInstallConfirm = await dbGet(STORE_SETTINGS, 'show_install_confirm');
       
       // 如果没有保存的密码，使用默认密码1234
       securitySettings.systemPassword = systemPassword?.value || '1234';
-      securitySettings.installRequirePassword = installRequirePassword?.value === 'true';
+      securitySettings.installRequirePassword = false; // 永久禁用
       securitySettings.openLockedRequirePassword = openLockedRequirePassword?.value !== 'false';
       securitySettings.showInstallConfirm = showInstallConfirm?.value !== 'false';
       
@@ -3333,7 +3361,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS 3.1 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS 3.2 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3734,16 +3762,8 @@
       if (!app) { showToast('应用不存在', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法更新', 'error'); return; }
       
-      // 检查是否需要密码
-      if (securitySettings.installRequirePassword) {
-        verifyPassword('更新应用', '请输入系统密码以更新应用', (success) => {
-          if (success) {
-            proceedWithUpdate(fileKey, app);
-          }
-        });
-      } else {
-        proceedWithUpdate(fileKey, app);
-      }
+      // 直接更新，无需密码
+      proceedWithUpdate(fileKey, app);
     }
     
     function proceedWithUpdate(fileKey, app) {
@@ -3784,7 +3804,7 @@
       input.click();
     }
     
-    // ========== 应用菜单 ==========
+    // ========== 应用菜单 - 添加自定义调色板 ==========
     function showActionMenu(app, element) {
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
@@ -3806,7 +3826,12 @@
             <button onclick="saveCustomAppIcon('${app.file}')">保存</button>
           </div>
         </div>
-        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div></div>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div>
+          <div class="custom-color-input">
+            <input type="text" id="customColorInput" placeholder="输入自定义颜色 #ff0000" maxlength="7" value="${app.customColor||app.color||'#0078d7'}" />
+            <button onclick="saveCustomAppColor('${app.file}')">应用</button>
+          </div>
+        </div>
         <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">📐 磁贴大小 (当前: ${sizeLabels[app.size||'small']})</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
         <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
@@ -3826,6 +3851,18 @@
         document.querySelector('.app-action-modal')?.remove();
       } else {
         showToast('请输入有效的Emoji', 'error');
+      }
+    }
+    
+    function saveCustomAppColor(fileKey) {
+      const customColor = document.getElementById('customColorInput').value.trim();
+      // 验证颜色格式
+      const colorRegex = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+      if (colorRegex.test(customColor)) {
+        changeAppColor(fileKey, customColor);
+        document.querySelector('.app-action-modal')?.remove();
+      } else {
+        showToast('请输入有效的颜色格式 (#ff0000)', 'error');
       }
     }
     
@@ -3974,18 +4011,10 @@
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
-    // ========== 安装应用 - 安卓风格优化 - 修复单文件安装问题 ==========
+    // ========== 安装应用 - 安卓风格优化 - 已移除密码验证 ==========
     function openInstaller() { 
-      // 检查是否需要密码
-      if (securitySettings.installRequirePassword) {
-        verifyPassword('安装应用', '请输入系统密码以安装应用', (success) => {
-          if (success) {
-            document.getElementById('installModal').classList.add('show');
-          }
-        });
-      } else {
-        document.getElementById('installModal').classList.add('show');
-      }
+      // 直接打开安装器，无需密码
+      document.getElementById('installModal').classList.add('show');
     }
     
     function closeModal() { 
