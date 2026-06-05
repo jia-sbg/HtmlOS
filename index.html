@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.2</title>
+  <title>HTMLOS · v3.2.1</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -109,6 +109,7 @@
       z-index: 100;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
+      transform: translateZ(0);
     }
     
     .win-user {
@@ -331,6 +332,7 @@
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
+      transform: translateZ(0);
     }
     
     /* 应用磁贴 */
@@ -353,6 +355,8 @@
       width: 100%;
       height: 100%;
       aspect-ratio: 1 / 1;
+      will-change: transform, filter, box-shadow;
+      position: relative;
     }
     
     .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
@@ -454,6 +458,7 @@
       padding: 20px;
       padding-top: env(safe-area-inset-top, 20px);
       padding-bottom: env(safe-area-inset-bottom, 20px);
+      will-change: opacity;
     }
     
     .modal.show { display: flex; }
@@ -472,6 +477,9 @@
       color: var(--text-color);
       width: 100%;
       max-width: 400px;
+      -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
+      will-change: transform, opacity;
     }
     
     .modal-content h2 { 
@@ -491,6 +499,7 @@
       padding-bottom: 8px;
       overflow-x: auto;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     
     .settings-tabs::-webkit-scrollbar {
@@ -507,6 +516,7 @@
       font-size: 14px;
       white-space: nowrap;
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
     
     .settings-tab.active {
@@ -516,10 +526,13 @@
     
     .settings-panel {
       display: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
     }
     
     .settings-panel.active {
       display: block;
+      opacity: 1;
     }
     
     .setting-section {
@@ -546,6 +559,8 @@
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       border: var(--card-border);
+      flex-wrap: wrap;
+      gap: 8px;
     }
     
     .setting-item:last-child {
@@ -555,6 +570,8 @@
     .setting-item label { 
       font-size: 15px; 
       color: var(--text-color);
+      flex: 1;
+      min-width: 120px;
     }
     
     .setting-item input[type="checkbox"] {
@@ -584,6 +601,7 @@
       font-size: 14px;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
+      flex-shrink: 0;
     }
     
     .setting-item button {
@@ -596,6 +614,7 @@
       font-size: 14px;
       transition: all 0.2s ease;
       touch-action: manipulation;
+      flex-shrink: 0;
     }
     
     .setting-item button:active {
@@ -674,6 +693,7 @@
       flex-shrink: 0;
       transition: all var(--transition-speed) ease;
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
+      transform: translateZ(0);
     }
     
     .bottom-bar button { 
@@ -709,6 +729,7 @@
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
       padding-top: env(safe-area-inset-top, 0);
+      will-change: transform, opacity;
     }
     
     #appFrameContainer.show { 
@@ -727,6 +748,7 @@
       gap: 10px;
       flex-shrink: 0;
       min-height: 50px;
+      transform: translateZ(0);
     }
     
     .app-navbar button { 
@@ -807,6 +829,8 @@
       cursor: pointer;
       animation: toastIn 0.3s ease;
       transition: opacity 0.3s, transform 0.3s;
+      transform: translateZ(0);
+      will-change: opacity, transform;
     }
     
     .toast-notification.removing {
@@ -842,6 +866,8 @@
       display: none;
       overflow-y: auto;
       padding: 15px;
+      -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
     }
     
     .notification-center.show {
@@ -905,6 +931,8 @@
       -webkit-backdrop-filter: var(--backdrop-blur);
       width: 100%;
       max-width: 350px;
+      -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
     }
     
     .sys-info {
@@ -940,14 +968,15 @@
       z-index: 9998;
       border: 1px solid #0f0;
       display: none;
+      transform: translateZ(0);
     }
     
     #fpsCounter.show { display: block; }
     
     @keyframes launchPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
     }
     
     .app-icon.launch-anim {
@@ -967,6 +996,7 @@
       max-height: 250px;
       overflow-y: auto;
       padding: 5px;
+      -webkit-overflow-scrolling: touch;
     }
     
     .icon-option {
@@ -1003,10 +1033,12 @@
       margin-top: 15px;
       display: flex;
       gap: 8px;
+      align-items: center;
     }
     
     .custom-icon-input input {
       flex: 1;
+      min-width: 0;
       padding: 12px;
       background: var(--input-bg);
       border: var(--input-border);
@@ -1017,6 +1049,7 @@
     }
     
     .custom-icon-input button {
+      flex-shrink: 0;
       padding: 12px 16px;
       background: var(--primary-color);
       border: none;
@@ -1041,6 +1074,7 @@
       z-index: 10000;
       font-weight: bold;
       padding-top: env(safe-area-inset-top, 4px);
+      transform: translateZ(0);
     }
     #offlineBanner.show { display: block; }
     
@@ -1067,6 +1101,7 @@
       grid-template-columns: repeat(8, 1fr);
       gap: 8px;
       margin: 10px 0;
+      -webkit-overflow-scrolling: touch;
     }
     
     .color-swatch {
@@ -1581,6 +1616,8 @@
     let currentSort = 'name';
     let appUsageStats = {};
     const MAX_NOTIFICATIONS = 50;
+    const MAX_TOASTS = 3;
+    const toastQueue = [];
     
     // 内存优化定时器
     let memoryOptimizeTimer = null;
@@ -1620,8 +1657,78 @@
     // 预设头像库
     const presetAvatars = [
       '👤', '👨', '👩', '🧑', '👦', '👧', '👴', '👵',
-      '😀', '😎', '🤩', '🥳', '😇', '🤗', '😺', '🦊'
+      '😀', '😎', '🤩', '🥳', '😇', '🤗', '😺', '🦊',
+      '🐱', '🐶', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷',
+      '🌟', '🔥', '💎', '🎮', '🎵', '📚', '✈️', '🚀'
     ];
+    
+    // 缓存DOM元素
+    const $ = (id) => document.getElementById(id);
+    const toastContainer = $('toastContainer');
+    const notificationCenter = $('notificationCenter');
+    const notificationList = $('notificationList');
+    const offlineBanner = $('offlineBanner');
+    const winHeader = document.querySelector('.win-header');
+    const mainContainer = $('mainContainer');
+    const searchApps = $('searchApps');
+    const pageIndicator = $('pageIndicator');
+    const appsContainer = $('appsContainer');
+    const navButtons = $('navButtons');
+    const prevBtn = $('prevBtn');
+    const nextBtn = $('nextBtn');
+    const pageInfo = $('pageInfo');
+    const fpsCounter = $('fpsCounter');
+    const installModal = $('installModal');
+    const installProgress = $('installProgress');
+    const progressFill = $('progressFill');
+    const progressText = $('progressText');
+    const userInfoModal = $('userInfoModal');
+    const userNameInput = $('userNameInput');
+    const userAvatarPreview = $('userAvatarPreview');
+    const avatarGrid = $('avatarGrid');
+    const customAvatarInput = $('customAvatarInput');
+    const settingsModal = $('settingsModal');
+    const bgColorPicker = $('bgColorPicker');
+    const bgImageInput = $('bgImageInput');
+    const wallpaperPresets = $('wallpaperPresets');
+    const themeSelect = $('themeSelect');
+    const colsSelect = $('colsSelect');
+    const launchAnimToggle = $('launchAnimToggle');
+    const vibrationToggle = $('vibrationToggle');
+    const pageIndicatorToggle = $('pageIndicatorToggle');
+    const showSecondsToggle = $('showSecondsToggle');
+    const time24Toggle = $('time24Toggle');
+    const showDateToggle = $('showDateToggle');
+    const toastEnabledToggle = $('toastEnabledToggle');
+    const toastDurationInput = $('toastDurationInput');
+    const notificationSoundToggle = $('notificationSoundToggle');
+    const autoOptimizeMemoryToggle = $('autoOptimizeMemoryToggle');
+    const doubleClickTopToggle = $('doubleClickTopToggle');
+    const appCloseConfirmToggle = $('appCloseConfirmToggle');
+    const mergeBackup = $('mergeBackup');
+    const fpsToggle = $('fpsToggle');
+    const advancedOptimizeMemoryToggle = $('advancedOptimizeMemoryToggle');
+    const sandboxToggle = $('sandboxToggle');
+    const sysInfo = $('sysInfo');
+    const resetWarningModal = $('resetWarningModal');
+    const resetPasswordInput = $('resetPasswordInput');
+    const formatWarningModal = $('formatWarningModal');
+    const formatPasswordInput = $('formatPasswordInput');
+    const sortMenu = $('sortMenu');
+    const appFrameContainer = $('appFrameContainer');
+    const switchAppSelect = $('switchAppSelect');
+    const runningAppTitle = $('runningAppTitle');
+    let appFrame = $('appFrame');
+    const bottomBar = $('bottomBar');
+    const headerDate = $('headerDate');
+    const datetime = $('datetime');
+    const userIcon = $('userIcon');
+    const userName = $('userName');
+    const batteryStatus = $('batteryStatus');
+    const batteryIcon = $('batteryIcon');
+    const batteryLevel = $('batteryLevel');
+    const batteryPercent = $('batteryPercent');
+    const devTab = $('devTab');
     
     // ==================== 日志系统 ====================
     const systemLogs = [];
@@ -1670,7 +1777,18 @@
       
       addNotification(message, type);
       
-      const container = document.getElementById('toastContainer');
+      toastQueue.push({ message, type, duration });
+      
+      if (toastContainer.children.length < MAX_TOASTS) {
+        processToastQueue();
+      }
+    }
+    
+    function processToastQueue() {
+      if (toastQueue.length === 0) return;
+      
+      const { message, type, duration } = toastQueue.shift();
+      
       const toast = document.createElement('div');
       toast.className = `toast-notification ${type}`;
       
@@ -1678,7 +1796,7 @@
       toast.textContent = (icons[type] || '') + ' ' + message;
       
       toast.onclick = () => removeToast(toast);
-      container.appendChild(toast);
+      toastContainer.appendChild(toast);
       
       const timeout = setTimeout(() => removeToast(toast), duration);
       toast._timeout = timeout;
@@ -1693,7 +1811,10 @@
       toast._removing = true;
       clearTimeout(toast._timeout);
       toast.classList.add('removing');
-      setTimeout(() => toast.parentNode?.removeChild(toast), 300);
+      setTimeout(() => {
+        toast.parentNode?.removeChild(toast);
+        processToastQueue();
+      }, 300);
     }
     
     function addNotification(message, type) {
@@ -1709,18 +1830,17 @@
     }
     
     function updateNotificationCenter() {
-      const list = document.getElementById('notificationList');
-      list.innerHTML = '';
+      notificationList.innerHTML = '';
       notifications.forEach(n => {
         const item = document.createElement('div');
         item.className = 'notification-item';
         item.innerHTML = `<div>${n.message}</div><div class="time">${n.time}</div>`;
-        list.appendChild(item);
+        notificationList.appendChild(item);
       });
     }
     
     function toggleNotificationCenter() {
-      document.getElementById('notificationCenter').classList.toggle('show');
+      notificationCenter.classList.toggle('show');
     }
     
     function clearAllNotifications() {
@@ -1755,28 +1875,24 @@
     // ==================== 电池状态 - 增强版 ====================
     function updateBatteryStatus(battery) {
       const level = Math.round(battery.level * 100);
-      const levelEl = document.getElementById('batteryLevel');
-      const percentEl = document.getElementById('batteryPercent');
-      const iconEl = document.getElementById('batteryIcon');
-      const statusEl = document.getElementById('batteryStatus');
       
-      statusEl.style.display = 'flex';
+      batteryStatus.style.display = 'flex';
       
-      levelEl.style.width = level + '%';
-      percentEl.textContent = level + '%';
+      batteryLevel.style.width = level + '%';
+      batteryPercent.textContent = level + '%';
       
       if (battery.charging) {
-        iconEl.classList.add('battery-charging');
+        batteryIcon.classList.add('battery-charging');
       } else {
-        iconEl.classList.remove('battery-charging');
+        batteryIcon.classList.remove('battery-charging');
       }
       
       if (level <= 20 && !battery.charging) {
-        levelEl.style.background = '#ff4530';
+        batteryLevel.style.background = '#ff4530';
       } else if (level <= 50) {
-        levelEl.style.background = '#ffb900';
+        batteryLevel.style.background = '#ffb900';
       } else {
-        levelEl.style.background = '#30d158';
+        batteryLevel.style.background = '#30d158';
       }
     }
     
@@ -1805,7 +1921,7 @@
     
     function fallbackBatteryDetection() {
       addLog('info', '浏览器不支持电池API');
-      document.getElementById('batteryStatus').style.display = 'none';
+      batteryStatus.style.display = 'none';
       
       if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
         document.addEventListener('touchstart', function iosBatteryCheck() {
@@ -1827,10 +1943,14 @@
     // ==================== 内存优化系统 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
+      const before = window.performance?.memory?.usedJSHeapSize || 0;
       if (window.gc) {
         try { window.gc(); } catch (e) {}
       }
-      addLog('info', '基础内存优化完成');
+      const after = window.performance?.memory?.usedJSHeapSize || 0;
+      const freed = Math.round((before - after) / 1024 / 1024);
+      addLog('info', `基础内存优化完成，释放 ${freed} MB 内存`);
+      showToast(`基础内存优化完成，释放 ${freed} MB 内存`, 'success');
     }
     
     function advancedOptimizeMemory() {
@@ -1840,7 +1960,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2') {
+            if (name !== 'htmlos-v3.2.1') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -1882,7 +2002,6 @@
     
     // ==================== 沙箱控制 ====================
     function toggleSandbox() {
-      const sandboxToggle = document.getElementById('sandboxToggle');
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
         if (confirm('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n确定要关闭吗？')) {
@@ -1901,7 +2020,6 @@
     }
     
     function updateSandboxState() {
-      const appFrame = document.getElementById('appFrame');
       if (systemSettings.sandboxEnabled) {
         appFrame.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads';
       } else {
@@ -1912,10 +2030,11 @@
     
     // ==================== 用户信息管理 ====================
     function openUserInfoModal() {
-      document.getElementById('userNameInput').value = currentUser.name;
-      document.getElementById('userAvatarPreview').textContent = currentUser.avatar;
+      userNameInput.value = currentUser.name;
+      userAvatarPreview.textContent = currentUser.avatar;
+      // 设置自定义头像输入框的默认值
+      customAvatarInput.value = presetAvatars.includes(currentUser.avatar) ? '' : currentUser.avatar;
       
-      const avatarGrid = document.getElementById('avatarGrid');
       avatarGrid.innerHTML = '';
       presetAvatars.forEach(avatar => {
         const div = document.createElement('div');
@@ -1924,31 +2043,31 @@
         div.onclick = () => {
           document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
           div.classList.add('selected');
-          document.getElementById('userAvatarPreview').textContent = avatar;
-          document.getElementById('customAvatarInput').value = '';
+          userAvatarPreview.textContent = avatar;
+          customAvatarInput.value = '';
         };
         avatarGrid.appendChild(div);
       });
       
-      document.getElementById('userInfoModal').classList.add('show');
+      userInfoModal.classList.add('show');
     }
     
     function closeUserInfoModal() {
-      document.getElementById('userInfoModal').classList.remove('show');
+      userInfoModal.classList.remove('show');
     }
     
     function applyCustomAvatar() {
-      const customAvatar = document.getElementById('customAvatarInput').value.trim();
+      const customAvatar = customAvatarInput.value.trim();
       if (customAvatar) {
-        document.getElementById('userAvatarPreview').textContent = customAvatar;
+        userAvatarPreview.textContent = customAvatar;
         document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
         showToast('自定义头像已应用', 'success');
       }
     }
     
     async function saveUserInfo() {
-      const newName = document.getElementById('userNameInput').value.trim();
-      let newAvatar = document.getElementById('userAvatarPreview').textContent;
+      const newName = userNameInput.value.trim();
+      let newAvatar = userAvatarPreview.textContent;
       
       if (!newName) {
         showToast('用户名不能为空', 'error');
@@ -1958,8 +2077,8 @@
       currentUser.name = newName;
       currentUser.avatar = newAvatar;
       
-      document.getElementById('userName').textContent = newName;
-      document.getElementById('userIcon').textContent = newAvatar;
+      userName.textContent = newName;
+      userIcon.textContent = newAvatar;
       
       await dbPut(STORE_SETTINGS, { key: 'user_name', value: newName });
       await dbPut(STORE_SETTINGS, { key: 'user_avatar', value: newAvatar });
@@ -2089,19 +2208,18 @@
     // ==================== FPS 模块 ====================
     (function() {
       let frameCount = 0, lastTime = performance.now();
-      const fpsElement = document.getElementById('fpsCounter');
       function updateFPS() {
         frameCount++;
         const now = performance.now(), delta = now - lastTime;
         if (delta >= 1000) {
-          fpsElement.textContent = `FPS: ${Math.round((frameCount * 1000) / delta)}`;
+          fpsCounter.textContent = `FPS: ${Math.round((frameCount * 1000) / delta)}`;
           frameCount = 0; lastTime = now;
         }
         requestAnimationFrame(updateFPS);
       }
       function toggleFPS(show) {
-        if (show) { fpsElement.classList.add('show'); if (!window.__fpsRunning) { window.__fpsRunning = true; requestAnimationFrame(updateFPS); } }
-        else { fpsElement.classList.remove('show'); }
+        if (show) { fpsCounter.classList.add('show'); if (!window.__fpsRunning) { window.__fpsRunning = true; requestAnimationFrame(updateFPS); } }
+        else { fpsCounter.classList.remove('show'); }
       }
       window.fpsControl = { toggle: toggleFPS };
     })();
@@ -2116,7 +2234,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 极致优化版 v3.2';
+    const VERSION = 'HTMLOS 极致优化版 v3.2.1';
     
     // 扩展颜色方案
     const colorPalette = [
@@ -2128,7 +2246,8 @@
     // 扩展emoji图标库
     const iconLibrary = [
       '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦', 
-      '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡'
+      '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡',
+      '🎯', '🎁', '🎪', '🎭', '🎤', '🎧', '🎸', '🎹', '🎺', '🎻', '🥁', '🏆', '🏅', '🎖️', '🥇', '🥈', '🥉', '⚽', '🏀'
     ];
     
     const sizeOptions = ['small', 'medium', 'large', 'wide', 'big'];
@@ -2141,7 +2260,7 @@
       if (versionClickCount === 7) {
         devModeActive = true;
         dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'true' });
-        document.getElementById('devTab').style.display = 'block';
+        devTab.style.display = 'block';
         showToast('✅ 开发者模式已激活！', 'dev', 4000);
         addLog('info', '开发者模式已激活');
         versionClickCount = 0;
@@ -2153,12 +2272,12 @@
     function deactivateDevMode() {
       devModeActive = false;
       dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'false' });
-      document.getElementById('devTab').style.display = 'none';
+      devTab.style.display = 'none';
       window.fpsControl.toggle(false);
-      document.getElementById('fpsToggle').checked = false;
+      fpsToggle.checked = false;
       
       systemSettings.advancedOptimizeMemory = false;
-      document.getElementById('advancedOptimizeMemoryToggle').checked = false;
+      advancedOptimizeMemoryToggle.checked = false;
       if (advancedMemoryOptimizeTimer) {
         clearInterval(advancedMemoryOptimizeTimer);
         advancedMemoryOptimizeTimer = null;
@@ -2170,19 +2289,18 @@
     
     // ========== 壁纸预设初始化 ==========
     function initWallpaperPresets() {
-      const container = document.getElementById('wallpaperPresets');
-      container.innerHTML = '';
+      wallpaperPresets.innerHTML = '';
       presetWallpapers.forEach(wp => {
         const div = document.createElement('div');
         div.className = 'wallpaper-preset';
         div.style.backgroundImage = `url(${wp.url})`;
         div.title = wp.name;
         div.onclick = () => {
-          document.getElementById('bgImageInput').value = wp.url;
+          bgImageInput.value = wp.url;
           document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
           div.classList.add('selected');
         };
-        container.appendChild(div);
+        wallpaperPresets.appendChild(div);
       });
     }
     
@@ -2198,7 +2316,7 @@
         const reader = new FileReader();
         reader.onload = (e) => {
           const imageUrl = e.target.result;
-          document.getElementById('bgImageInput').value = imageUrl;
+          bgImageInput.value = imageUrl;
           document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
           showToast('壁纸已选择，点击保存应用', 'success');
         };
@@ -2209,7 +2327,7 @@
     
     // ========== 应用排序 ==========
     function showSortMenu() {
-      document.getElementById('sortMenu').style.display = 'block';
+      sortMenu.style.display = 'block';
     }
     
     async function sortApps(sortBy) {
@@ -2225,7 +2343,7 @@
       }
       
       renderApps();
-      document.getElementById('sortMenu').style.display = 'none';
+      sortMenu.style.display = 'none';
       showToast(`已按${sortBy === 'name' ? '名称' : sortBy === 'installTime' ? '安装时间' : sortBy === 'lastUsed' ? '使用频率' : '应用大小'}排序`, 'info');
     }
     
@@ -2262,11 +2380,11 @@
     
     // ========== 返回顶部 ==========
     function scrollToTop() {
-      document.getElementById('appsContainer').scrollTo({ top: 0, behavior: 'smooth' });
+      appsContainer.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     let lastHeaderClick = 0;
-    document.querySelector('.win-header').addEventListener('click', () => {
+    winHeader.addEventListener('click', () => {
       if (!systemSettings.doubleClickTop) return;
       
       const now = Date.now();
@@ -2285,16 +2403,15 @@
     
     // ========== 更新页面指示器 ==========
     function updatePageIndicator(totalPages) {
-      const container = document.getElementById('pageIndicator');
-      const showIndicator = document.getElementById('pageIndicatorToggle')?.checked ?? true;
+      const showIndicator = pageIndicatorToggle?.checked ?? true;
       
       if (!showIndicator || totalPages <= 1) {
-        container.style.display = 'none';
+        pageIndicator.style.display = 'none';
         return;
       }
       
-      container.style.display = 'flex';
-      container.innerHTML = '';
+      pageIndicator.style.display = 'flex';
+      pageIndicator.innerHTML = '';
       
       for (let i = 0; i < totalPages; i++) {
         const dot = document.createElement('div');
@@ -2303,7 +2420,7 @@
           currentPage = i;
           renderApps();
         };
-        container.appendChild(dot);
+        pageIndicator.appendChild(dot);
       }
     }
     
@@ -2328,6 +2445,17 @@
       colorInput.click();
     }
     
+    // ========== 网络状态监听 ==========
+    window.addEventListener('online', () => {
+      offlineBanner.classList.remove('show');
+      showToast('网络已恢复', 'success');
+    });
+    
+    window.addEventListener('offline', () => {
+      offlineBanner.classList.add('show');
+      showToast('您已离线，部分功能受限', 'warning');
+    });
+    
     // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', async () => {
       window.addEventListener('error', (e) => {
@@ -2343,13 +2471,13 @@
       const stats = await dbGet(STORE_STATS, 'appUsage');
       if (stats) appUsageStats = stats.value;
       
-      const userName = await dbGet(STORE_SETTINGS, 'user_name');
-      const userAvatar = await dbGet(STORE_SETTINGS, 'user_avatar');
-      if (userName) currentUser.name = userName.value;
-      if (userAvatar) currentUser.avatar = userAvatar.value;
+      const userNameVal = await dbGet(STORE_SETTINGS, 'user_name');
+      const userAvatarVal = await dbGet(STORE_SETTINGS, 'user_avatar');
+      if (userNameVal) currentUser.name = userNameVal.value;
+      if (userAvatarVal) currentUser.avatar = userAvatarVal.value;
       
-      document.getElementById('userName').textContent = currentUser.name;
-      document.getElementById('userIcon').textContent = currentUser.avatar;
+      userName.textContent = currentUser.name;
+      userIcon.textContent = currentUser.avatar;
       
       await loadSystemSettings();
       await loadInstalledApps();
@@ -2360,43 +2488,43 @@
       const devSetting = await dbGet(STORE_SETTINGS, 'dev_mode');
       devModeActive = devSetting && devSetting.value === 'true';
       if (devModeActive) {
-        document.getElementById('devTab').style.display = 'block';
+        devTab.style.display = 'block';
       }
       
       const fpsState = await dbGet(STORE_SETTINGS, 'fps');
       if (fpsState?.value === 'on') {
-        document.getElementById('fpsToggle').checked = true;
+        fpsToggle.checked = true;
         window.fpsControl.toggle(true);
       }
       
       const sandboxState = await dbGet(STORE_SETTINGS, 'sandbox_enabled');
       systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
-      document.getElementById('sandboxToggle').checked = !systemSettings.sandboxEnabled;
+      sandboxToggle.checked = !systemSettings.sandboxEnabled;
       updateSandboxState();
       
       const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
       systemSettings.autoOptimizeMemory = autoOptimizeState?.value === 'true';
-      document.getElementById('autoOptimizeMemoryToggle').checked = systemSettings.autoOptimizeMemory;
+      autoOptimizeMemoryToggle.checked = systemSettings.autoOptimizeMemory;
       startAutoMemoryOptimize();
       
       const advancedOptimizeState = await dbGet(STORE_SETTINGS, 'advanced_optimize_memory');
       systemSettings.advancedOptimizeMemory = advancedOptimizeState?.value === 'true';
-      document.getElementById('advancedOptimizeMemoryToggle').checked = systemSettings.advancedOptimizeMemory;
+      advancedOptimizeMemoryToggle.checked = systemSettings.advancedOptimizeMemory;
       if (devModeActive) {
         startAdvancedAutoMemoryOptimize();
       }
       
       const launchAnim = await dbGet(STORE_SETTINGS, 'launchAnim');
       if (launchAnim?.value === 'off') {
-        document.getElementById('launchAnimToggle').checked = false;
+        launchAnimToggle.checked = false;
       }
       const vibration = await dbGet(STORE_SETTINGS, 'vibration');
       if (vibration?.value === 'on') {
-        document.getElementById('vibrationToggle').checked = true;
+        vibrationToggle.checked = true;
       }
       const pageIndicator = await dbGet(STORE_SETTINGS, 'pageIndicator');
       if (pageIndicator?.value === 'off') {
-        document.getElementById('pageIndicatorToggle').checked = false;
+        pageIndicatorToggle.checked = false;
         document.getElementById('pageIndicator').style.display = 'none';
       }
       
@@ -2409,20 +2537,20 @@
       
       document.addEventListener('click', (e) => {
         if (!e.target.closest('#notificationCenter') && !e.target.closest('[onclick="toggleNotificationCenter()"]')) {
-          document.getElementById('notificationCenter').classList.remove('show');
+          notificationCenter.classList.remove('show');
         }
         if (!e.target.closest('#sortMenu') && !e.target.closest('[onclick="showSortMenu()"]')) {
-          document.getElementById('sortMenu').style.display = 'none';
+          sortMenu.style.display = 'none';
         }
         if (!e.target.closest('#userInfoModal') && !e.target.closest('.win-user')) {
-          document.getElementById('userInfoModal').classList.remove('show');
+          userInfoModal.classList.remove('show');
         }
         if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
           document.querySelector('.app-action-modal')?.remove();
         }
       });
       
-      addLog('info', 'HTMLOS v3.2 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.2.1 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2443,29 +2571,29 @@
       systemSettings.autoOptimizeMemory = map['auto_optimize_memory'] === 'true';
       systemSettings.advancedOptimizeMemory = map['advanced_optimize_memory'] === 'true';
       
-      document.getElementById('showSecondsToggle').checked = systemSettings.showSeconds;
-      document.getElementById('time24Toggle').checked = systemSettings.time24;
-      document.getElementById('showDateToggle').checked = systemSettings.showDate;
-      document.getElementById('toastEnabledToggle').checked = systemSettings.toastEnabled;
-      document.getElementById('toastDurationInput').value = systemSettings.toastDuration / 1000;
-      document.getElementById('notificationSoundToggle').checked = systemSettings.notificationSound;
-      document.getElementById('doubleClickTopToggle').checked = systemSettings.doubleClickTop;
-      document.getElementById('appCloseConfirmToggle').checked = systemSettings.appCloseConfirm;
-      document.getElementById('autoOptimizeMemoryToggle').checked = systemSettings.autoOptimizeMemory;
-      document.getElementById('advancedOptimizeMemoryToggle').checked = systemSettings.advancedOptimizeMemory;
+      showSecondsToggle.checked = systemSettings.showSeconds;
+      time24Toggle.checked = systemSettings.time24;
+      showDateToggle.checked = systemSettings.showDate;
+      toastEnabledToggle.checked = systemSettings.toastEnabled;
+      toastDurationInput.value = systemSettings.toastDuration / 1000;
+      notificationSoundToggle.checked = systemSettings.notificationSound;
+      doubleClickTopToggle.checked = systemSettings.doubleClickTop;
+      appCloseConfirmToggle.checked = systemSettings.appCloseConfirm;
+      autoOptimizeMemoryToggle.checked = systemSettings.autoOptimizeMemory;
+      advancedOptimizeMemoryToggle.checked = systemSettings.advancedOptimizeMemory;
     }
     
     async function saveSystemSettings() {
-      systemSettings.showSeconds = document.getElementById('showSecondsToggle').checked;
-      systemSettings.time24 = document.getElementById('time24Toggle').checked;
-      systemSettings.showDate = document.getElementById('showDateToggle').checked;
-      systemSettings.toastEnabled = document.getElementById('toastEnabledToggle').checked;
-      systemSettings.toastDuration = parseInt(document.getElementById('toastDurationInput').value) * 1000;
-      systemSettings.notificationSound = document.getElementById('notificationSoundToggle').checked;
-      systemSettings.doubleClickTop = document.getElementById('doubleClickTopToggle').checked;
-      systemSettings.appCloseConfirm = document.getElementById('appCloseConfirmToggle').checked;
-      systemSettings.autoOptimizeMemory = document.getElementById('autoOptimizeMemoryToggle').checked;
-      systemSettings.advancedOptimizeMemory = document.getElementById('advancedOptimizeMemoryToggle').checked;
+      systemSettings.showSeconds = showSecondsToggle.checked;
+      systemSettings.time24 = time24Toggle.checked;
+      systemSettings.showDate = showDateToggle.checked;
+      systemSettings.toastEnabled = toastEnabledToggle.checked;
+      systemSettings.toastDuration = parseInt(toastDurationInput.value) * 1000;
+      systemSettings.notificationSound = notificationSoundToggle.checked;
+      systemSettings.doubleClickTop = doubleClickTopToggle.checked;
+      systemSettings.appCloseConfirm = appCloseConfirmToggle.checked;
+      systemSettings.autoOptimizeMemory = autoOptimizeMemoryToggle.checked;
+      systemSettings.advancedOptimizeMemory = advancedOptimizeMemoryToggle.checked;
       
       await dbPut(STORE_SETTINGS, { key: 'show_seconds', value: String(systemSettings.showSeconds) });
       await dbPut(STORE_SETTINGS, { key: 'time_24', value: String(systemSettings.time24) });
@@ -2489,7 +2617,7 @@
     // ========== iframe postMessage 通信 ==========
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
-        if (event.source !== document.getElementById('appFrame').contentWindow) return;
+        if (event.source !== appFrame.contentWindow) return;
         
         const msg = event.data;
         if (!msg || !msg.type || !msg.from || msg.from !== 'htmlos-app') return;
@@ -2506,13 +2634,13 @@
             });
             break;
           case 'setTitle':
-            if (msg.data?.title) document.getElementById('runningAppTitle').textContent = msg.data.title;
+            if (msg.data?.title) runningAppTitle.textContent = msg.data.title;
             break;
           case 'toast':
             if (msg.data?.message) showToast(msg.data.message, msg.data.type || 'info', msg.data.duration || 3000);
             break;
           case 'vibrate':
-            if (navigator.vibrate && msg.data?.pattern && document.getElementById('vibrationToggle').checked) {
+            if (navigator.vibrate && msg.data?.pattern && vibrationToggle.checked) {
               navigator.vibrate(msg.data.pattern);
             }
             break;
@@ -2542,7 +2670,6 @@
     }
     
     function sendMessageToApp(data) {
-      const appFrame = document.getElementById('appFrame');
       if (appFrame?.contentWindow) {
         appFrame.contentWindow.postMessage({ from: 'htmlos-host', timestamp: Date.now(), ...data }, '*');
       }
@@ -2573,9 +2700,21 @@
     
     const saveApps = throttle(async function() {
       try {
-        await dbClear(STORE_APPS);
+        // 移除全表清空，直接put覆盖，性能提升显著
         for (const app of installedApps) {
-          await dbPut(STORE_APPS, { name: app.name, file: app.file, icon: app.icon || '📱', color: app.color || colorPalette[0], customColor: app.customColor || app.color || colorPalette[0], size: app.size || 'small', source: app.source || 'user', installTime: app.installTime || new Date().toISOString(), lastUpdated: app.lastUpdated || new Date().toISOString(), hidden: app.hidden || false, locked: app.locked || false });
+          await dbPut(STORE_APPS, { 
+            name: app.name, 
+            file: app.file, 
+            icon: app.icon || '📱', 
+            color: app.color || colorPalette[0], 
+            customColor: app.customColor || app.color || colorPalette[0], 
+            size: app.size || 'small', 
+            source: app.source || 'user', 
+            installTime: app.installTime || new Date().toISOString(), 
+            lastUpdated: app.lastUpdated || new Date().toISOString(), 
+            hidden: app.hidden || false, 
+            locked: app.locked || false 
+          });
         }
       } catch (e) { addLog('error', '保存应用数据失败', e); }
     }, 200);
@@ -2586,10 +2725,10 @@
         const map = {};
         settings.forEach(s => map[s.key] = s.value);
         if (map['bg']) { document.body.style.setProperty('--bg', map['bg']); document.body.style.background = map['bg']; }
-        if (map['cols']) { cols = parseInt(map['cols']); document.body.style.setProperty('--cols', cols); document.getElementById('colsSelect').value = cols; }
+        if (map['cols']) { cols = parseInt(map['cols']); document.body.style.setProperty('--cols', cols); colsSelect.value = cols; }
         const theme = map['theme'] || 'sharp';
         document.body.className = `theme-${theme}`;
-        document.getElementById('themeSelect').value = theme;
+        themeSelect.value = theme;
       } catch (e) {
         addLog('error', '加载设置失败，回退localStorage', e);
         const bg = localStorage.getItem('htmlos_bg');
@@ -2599,40 +2738,40 @@
     }
     
     async function saveSettings() {
-      const color = document.getElementById('bgColorPicker').value;
-      const imageUrl = document.getElementById('bgImageInput').value.trim();
+      const color = bgColorPicker.value;
+      const imageUrl = bgImageInput.value.trim();
       let bgValue = imageUrl ? `url(${imageUrl}) center/cover no-repeat fixed` : color;
       document.body.style.background = bgValue;
       document.body.style.setProperty('--bg', bgValue);
       
-      const newCols = parseInt(document.getElementById('colsSelect').value);
+      const newCols = parseInt(colsSelect.value);
       cols = newCols;
       document.body.style.setProperty('--cols', cols);
       
       try {
         await dbPut(STORE_SETTINGS, { key: 'bg', value: bgValue });
         await dbPut(STORE_SETTINGS, { key: 'cols', value: String(cols) });
-        const theme = document.getElementById('themeSelect').value;
+        const theme = themeSelect.value;
         document.body.className = `theme-${theme}`;
         await dbPut(STORE_SETTINGS, { key: 'theme', value: theme });
         
-        const fpsState = document.getElementById('fpsToggle').checked;
+        const fpsState = fpsToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'fps', value: fpsState ? 'on' : 'off' });
         window.fpsControl.toggle(fpsState);
         
-        const launchAnimState = document.getElementById('launchAnimToggle').checked;
+        const launchAnimState = launchAnimToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimState ? 'on' : 'off' });
-        const vibrationState = document.getElementById('vibrationToggle').checked;
+        const vibrationState = vibrationToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationState ? 'on' : 'off' });
-        const pageIndicatorState = document.getElementById('pageIndicatorToggle').checked;
+        const pageIndicatorState = pageIndicatorToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
         
         await saveSystemSettings();
         
         if (pageIndicatorState) {
-          document.getElementById('pageIndicator').style.display = 'flex';
+          pageIndicator.style.display = 'flex';
         } else {
-          document.getElementById('pageIndicator').style.display = 'none';
+          pageIndicator.style.display = 'none';
         }
         
         showToast('设置已保存', 'success');
@@ -2689,9 +2828,7 @@
     
     // ========== 渲染应用 ==========
     function renderApps() {
-      const container = document.getElementById('appsContainer');
-      if (!container) return;
-      container.innerHTML = '';
+      appsContainer.innerHTML = '';
       
       let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
       
@@ -2720,8 +2857,8 @@
       }
       
       if (pageApps.length === 0) {
-        container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>';
-        document.getElementById('navButtons').classList.add('hidden');
+        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>';
+        navButtons.classList.add('hidden');
         updatePageIndicator(totalPages);
         return;
       }
@@ -2735,57 +2872,92 @@
         div.setAttribute('data-file', app.file);
         div.innerHTML = `<span class="icon-emoji">${app.icon || '📱'}</span><span class="tile-label" title="${app.name}">${app.name}</span>`;
         
-        let longPressTimer, touchMoved = false, isClickHandled = false;
-        
-        div.ontouchstart = (e) => {
-          touchMoved = false; isClickHandled = false;
-          touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
-          
-          longPressTimer = setTimeout(() => { if (!touchMoved) { isClickHandled = true; showActionMenu(app, div); } }, 500);
-        };
-        
-        div.ontouchmove = (e) => {
-          if (Math.abs(e.touches[0].clientX - touchStartX) > TOUCH_THRESHOLD || Math.abs(e.touches[0].clientY - touchStartY) > TOUCH_THRESHOLD) {
-            touchMoved = true; if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
-          }
-        };
-        
-        div.ontouchend = (e) => {
-          if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
-          if (!touchMoved && !isClickHandled) {
-            isClickHandled = true;
-            if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
-              launchApp(app.file, div);
-            }
-          }
-        };
-        
-        div.onclick = (e) => { 
-          if (!isClickHandled) { 
-            isClickHandled = true; 
-            launchApp(app.file, div); 
-          } 
-        };
-        
-        div.oncontextmenu = (e) => { 
-          e.preventDefault(); 
-          isClickHandled = true; 
-          showActionMenu(app, div); 
-        };
-        
         fragment.appendChild(div);
       });
       
-      container.appendChild(fragment);
+      appsContainer.appendChild(fragment);
       updatePageInfo(filteredApps.length, perPage);
       updatePageIndicator(totalPages);
       
       if (totalPages > 1) {
-        document.getElementById('navButtons').classList.remove('hidden');
+        navButtons.classList.remove('hidden');
       } else {
-        document.getElementById('navButtons').classList.add('hidden');
+        navButtons.classList.add('hidden');
       }
     }
+    
+    // ========== 应用图标事件处理 ==========
+    let longPressTimer, touchMoved, isClickHandled, currentAppElement;
+    
+    appsContainer.addEventListener('touchstart', (e) => {
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon) return;
+      
+      currentAppElement = appIcon;
+      touchMoved = false;
+      isClickHandled = false;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      
+      longPressTimer = setTimeout(() => {
+        if (!touchMoved) {
+          isClickHandled = true;
+          const file = appIcon.getAttribute('data-file');
+          const app = installedApps.find(a => a.file === file);
+          if (app) showActionMenu(app, appIcon);
+        }
+      }, 500);
+    });
+    
+    appsContainer.addEventListener('touchmove', (e) => {
+      if (Math.abs(e.touches[0].clientX - touchStartX) > TOUCH_THRESHOLD || 
+          Math.abs(e.touches[0].clientY - touchStartY) > TOUCH_THRESHOLD) {
+        touchMoved = true;
+        if (longPressTimer) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
+        }
+      }
+    });
+    
+    appsContainer.addEventListener('touchend', (e) => {
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+      
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon || appIcon !== currentAppElement) return;
+      
+      if (!touchMoved && !isClickHandled) {
+        isClickHandled = true;
+        if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && 
+            Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
+          const file = appIcon.getAttribute('data-file');
+          launchApp(file, appIcon);
+        }
+      }
+    });
+    
+    appsContainer.addEventListener('click', (e) => {
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon || isClickHandled) return;
+      
+      isClickHandled = true;
+      const file = appIcon.getAttribute('data-file');
+      launchApp(file, appIcon);
+    });
+    
+    appsContainer.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon) return;
+      
+      isClickHandled = true;
+      const file = appIcon.getAttribute('data-file');
+      const app = installedApps.find(a => a.file === file);
+      if (app) showActionMenu(app, appIcon);
+    });
     
     // ========== 应用菜单 - 修复自定义图标保存问题 ==========
     function showActionMenu(app, element) {
@@ -2867,10 +3039,10 @@
     // ========== 分页 ==========
     function updatePageInfo(total, perPage) {
       const totalPages = Math.ceil(total/perPage) || 1;
-      document.getElementById('pageInfo').textContent = `第 ${currentPage+1} / ${totalPages} 页`;
+      pageInfo.textContent = `第 ${currentPage+1} / ${totalPages} 页`;
       
-      document.getElementById('prevBtn').disabled = currentPage === 0;
-      document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage >= totalPages - 1;
     }
     
     function prevPage() { 
@@ -2893,23 +3065,22 @@
     
     // ========== 滑动页面优化 ==========
     function setupSwipe() {
-      const container = document.getElementById('mainContainer');
       let sx=0, sy=0, swiping=false, startTime=0;
       
-      container.addEventListener('touchstart', e=>{
+      mainContainer.addEventListener('touchstart', e=>{
         sx=e.touches[0].clientX;
         sy=e.touches[0].clientY;
         swiping=false;
         startTime=Date.now();
       },{passive:true});
       
-      container.addEventListener('touchmove', e=>{
+      mainContainer.addEventListener('touchmove', e=>{
         const dx=Math.abs(e.touches[0].clientX-sx);
         const dy=Math.abs(e.touches[0].clientY-sy);
         if(dx>20 && dx>dy*1.5) swiping=true;
       },{passive:true});
       
-      container.addEventListener('touchend', e=>{
+      mainContainer.addEventListener('touchend', e=>{
         const dx=e.changedTouches[0].clientX-sx;
         const dy=Math.abs(e.changedTouches[0].clientY-sy);
         const deltaTime=Date.now()-startTime;
@@ -2923,11 +3094,9 @@
     
     // ========== 搜索 ==========
     function setupSearch() {
-      const searchInput = document.getElementById('searchApps');
-      searchInput.addEventListener('input', debounce((e) => {
+      searchApps.addEventListener('input', debounce((e) => {
         const term = e.target.value.toLowerCase();
-        const container = document.getElementById('appsContainer');
-        container.innerHTML = '';
+        appsContainer.innerHTML = '';
         
         if (term === '') {
           currentPage = 0;
@@ -2935,12 +3104,12 @@
           return;
         }
         
-        document.getElementById('navButtons').classList.add('hidden');
-        document.getElementById('pageIndicator').style.display = 'none';
+        navButtons.classList.add('hidden');
+        pageIndicator.style.display = 'none';
         
         const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
-        if (filtered.length===0) { container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>'; return; }
+        if (filtered.length===0) { appsContainer.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>'; return; }
         
         const fragment = document.createDocumentFragment();
         
@@ -2948,28 +3117,23 @@
           const div = document.createElement('div');
           div.className=`app-icon size-${app.size||'small'}`;
           div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
+          div.setAttribute('data-file', app.file);
           
           const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
             `<span class="search-highlight">${match}</span>`
           );
           
           div.innerHTML=`<span class="icon-emoji">${app.icon||'📱'}</span><span class="tile-label" title="${app.name}">${highlightedName}</span>`;
-          let lt, tm=false, ic=false;
-          div.ontouchstart=(e)=>{tm=false;ic=false;touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;lt=setTimeout(()=>{if(!tm){ic=true;showActionMenu(app,div);}},500);};
-          div.ontouchmove=(e)=>{if(Math.abs(e.touches[0].clientX-touchStartX)>TOUCH_THRESHOLD||Math.abs(e.touches[0].clientY-touchStartY)>TOUCH_THRESHOLD){tm=true;if(lt){clearTimeout(lt);lt=null;}}};
-          div.ontouchend=(e)=>{if(lt){clearTimeout(lt);lt=null;}if(!tm&&!ic){ic=true;if(Math.abs(e.changedTouches[0].clientX-touchStartX)<TOUCH_THRESHOLD&&Math.abs(e.changedTouches[0].clientY-touchStartY)<TOUCH_THRESHOLD)launchApp(app.file,div);}};
-          div.onclick=()=>{if(!ic){ic=true;launchApp(app.file,div);}};
-          div.oncontextmenu=(e)=>{e.preventDefault();ic=true;showActionMenu(app,div);};
           fragment.appendChild(div);
         });
         
-        container.appendChild(fragment);
+        appsContainer.appendChild(fragment);
       },300));
     }
     
     // ========== 安装应用 ==========
-    function openInstaller() { document.getElementById('installModal').classList.add('show'); }
-    function closeModal() { document.getElementById('installModal').classList.remove('show'); document.getElementById('installProgress').style.display='none'; }
+    function openInstaller() { installModal.classList.add('show'); }
+    function closeModal() { installModal.classList.remove('show'); installProgress.style.display='none'; }
     
     async function showFilePicker() {
       const input = document.createElement('input');
@@ -2997,18 +3161,17 @@
     async function showMultiFilePicker() {
       const input = document.createElement('input');
       input.type='file'; input.multiple=true; input.accept='.html,.htm';
-      const pd=document.getElementById('installProgress'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
-      pd.style.display='block'; pf.style.width='0%'; pt.textContent='正在选择文件...';
+      installProgress.style.display='block'; progressFill.style.width='0%'; progressText.textContent='正在选择文件...';
       
       input.onchange=async(e)=>{
         const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
-        if(files.length===0){showToast('没有选择任何HTML文件','warning');pd.style.display='none';return;}
+        if(files.length===0){showToast('没有选择任何HTML文件','warning');installProgress.style.display='none';return;}
         
         let sc=0,fc=0;
         for(let i=0;i<files.length;i++){
           const file=files[i];
-          pf.style.width=Math.round((i/files.length)*100)+'%';
-          pt.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
+          progressFill.style.width=Math.round((i/files.length)*100)+'%';
+          progressText.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
           
           try{
             await new Promise((resolve,reject)=>{
@@ -3042,13 +3205,13 @@
           }
         }
         
-        pf.style.width='100%'; 
-        pt.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
+        progressFill.style.width='100%'; 
+        progressText.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
         saveApps(); 
         renderApps();
         
         setTimeout(()=>{
-          pd.style.display='none';
+          installProgress.style.display='none';
           closeModal();
           showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
           addLog('info',`多文件安装完成: ${sc}成功, ${fc}失败`);
@@ -3061,18 +3224,17 @@
     async function showFolderPicker() {
       const input=document.createElement('input');
       input.type='file'; input.webkitdirectory=true; input.multiple=true; input.accept='.html,.htm';
-      const pd=document.getElementById('installProgress'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
-      pd.style.display='block'; pf.style.width='0%'; pt.textContent='正在扫描文件夹...';
+      installProgress.style.display='block'; progressFill.style.width='0%'; progressText.textContent='正在扫描文件夹...';
       
       input.onchange=async(e)=>{
         const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
-        if(files.length===0){showToast('文件夹中没有HTML文件','warning');pd.style.display='none';return;}
+        if(files.length===0){showToast('文件夹中没有HTML文件','warning');installProgress.style.display='none';return;}
         
         let sc=0,fc=0;
         for(let i=0;i<files.length;i++){
           const file=files[i];
-          pf.style.width=Math.round((i/files.length)*100)+'%';
-          pt.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
+          progressFill.style.width=Math.round((i/files.length)*100)+'%';
+          progressText.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
           
           try{
             await new Promise((resolve,reject)=>{
@@ -3106,13 +3268,13 @@
           }
         }
         
-        pf.style.width='100%'; 
-        pt.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
+        progressFill.style.width='100%'; 
+        progressText.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
         saveApps(); 
         renderApps();
         
         setTimeout(()=>{
-          pd.style.display='none';
+          installProgress.style.display='none';
           closeModal();
           showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
           addLog('info',`文件夹安装完成: ${sc}成功, ${fc}失败`);
@@ -3127,7 +3289,7 @@
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
       
-      if (document.getElementById('launchAnimToggle').checked && iconElement) {
+      if (launchAnimToggle.checked && iconElement) {
         iconElement.classList.add('launch-anim');
         setTimeout(()=>iconElement.classList.remove('launch-anim'),300);
       }
@@ -3139,62 +3301,69 @@
       await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
       
       runningAppFile = filePath;
-      document.getElementById('runningAppTitle').textContent = (app.icon?app.icon+' ':'') + app.name;
+      runningAppTitle.textContent = (app.icon?app.icon+' ':'') + app.name;
       populateSwitchAppSelect();
-      const frameCont = document.getElementById('appFrameContainer');
-      frameCont.classList.add('show');
-      document.getElementById('mainContainer').style.display = 'none';
-      const appFrame = document.getElementById('appFrame');
+      appFrameContainer.classList.add('show');
+      mainContainer.style.display = 'none';
       
       updateSandboxState();
       
       appFrame.srcdoc = content;
       setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
-      if (document.getElementById('vibrationToggle').checked && navigator.vibrate) navigator.vibrate(30);
+      if (vibrationToggle.checked && navigator.vibrate) navigator.vibrate(30);
       addLog('info','启动应用: '+app.name);
     },300);
     
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
       sendMessageToApp({type:'appClosing',timestamp:Date.now()});
-      const main=document.getElementById('mainContainer'),fc=document.getElementById('appFrameContainer');
-      main.style.display='flex'; main.style.flexDirection='column'; fc.classList.remove('show');
       
-      const oldFrame=document.getElementById('appFrame');
-      const newFrame=document.createElement('iframe');
-      newFrame.id='appFrame';
-      newFrame.allow='camera *; microphone *; accelerometer; geolocation; gyroscope';
-      newFrame.allowfullscreen=true;
+      mainContainer.style.display='flex'; 
+      mainContainer.style.flexDirection='column'; 
+      appFrameContainer.classList.remove('show');
+      
+      // 彻底销毁旧iframe，释放内存
+      const oldFrame = appFrame;
+      oldFrame.srcdoc = '';
+      oldFrame.src = 'about:blank';
+      
+      const newFrame = document.createElement('iframe');
+      newFrame.id = 'appFrame';
+      newFrame.allow = 'camera *; microphone *; accelerometer; geolocation; gyroscope';
+      newFrame.allowfullscreen = true;
+      newFrame.sandbox = oldFrame.sandbox;
+      
       oldFrame.parentNode.replaceChild(newFrame, oldFrame);
+      appFrame = newFrame; // 更新缓存的引用
       
       runningAppFile=null;
       renderApps();
-      addLog('info', '应用已关闭，iframe已销毁');
+      addLog('info', '应用已关闭，iframe已彻底销毁');
     }
     
     function populateSwitchAppSelect() {
-      const sel=document.getElementById('switchAppSelect'); sel.innerHTML='';
-      installedApps.forEach(a=>{const o=document.createElement('option');o.value=a.file;o.textContent=(a.icon?a.icon+' ':'')+a.name;if(a.file===runningAppFile)o.selected=true;sel.appendChild(o);});
+      switchAppSelect.innerHTML='';
+      installedApps.forEach(a=>{const o=document.createElement('option');o.value=a.file;o.textContent=(a.icon?a.icon+' ':'')+a.name;if(a.file===runningAppFile)o.selected=true;switchAppSelect.appendChild(o);});
     }
     
     function switchAppFromSelect() {
-      const nf=document.getElementById('switchAppSelect').value;
+      const nf=switchAppSelect.value;
       if(nf&&nf!==runningAppFile)launchApp(nf);
     }
     
     // ========== 恢复默认设置 ==========
     function triggerResetWarning(){
       closeSettings();
-      document.getElementById('resetPasswordInput').value='';
-      document.getElementById('resetWarningModal').classList.add('show');
+      resetPasswordInput.value='';
+      resetWarningModal.classList.add('show');
     }
     
     function closeResetWarning(){
-      document.getElementById('resetWarningModal').classList.remove('show');
+      resetWarningModal.classList.remove('show');
     }
     
     async function confirmReset(){
-      if(document.getElementById('resetPasswordInput').value!==FORMAT_PASSWORD){
+      if(resetPasswordInput.value!==FORMAT_PASSWORD){
         showToast('密码错误！','error');
         return;
       }
@@ -3225,16 +3394,16 @@
     // ========== 格式化 ==========
     function triggerFormatWarning(){
       closeResetWarning();
-      document.getElementById('formatPasswordInput').value='';
-      document.getElementById('formatWarningModal').classList.add('show');
+      formatPasswordInput.value='';
+      formatWarningModal.classList.add('show');
     }
     
     function closeFormatWarning(){
-      document.getElementById('formatWarningModal').classList.remove('show');
+      formatWarningModal.classList.remove('show');
     }
     
     async function confirmFormat(){
-      if(document.getElementById('formatPasswordInput').value!==FORMAT_PASSWORD){
+      if(formatPasswordInput.value!==FORMAT_PASSWORD){
         showToast('密码错误！','error');
         return;
       }
@@ -3271,7 +3440,7 @@
             const data=JSON.parse(e.target.result);
             if(!data.apps||!Array.isArray(data.apps))throw new Error('无效的备份文件');
             
-            const merge = document.getElementById('mergeBackup').checked;
+            const merge = mergeBackup.checked;
             if (!merge) {
               await dbClear(STORE_APPS);
               await dbClear(STORE_CONTENT);
@@ -3314,13 +3483,13 @@
     // ========== 设置 ==========
     async function openSettings() {
       const bgVal=(await dbGet(STORE_SETTINGS,'bg'))?.value||localStorage.getItem('htmlos_bg')||'';
-      document.getElementById('bgColorPicker').value='#1e5f9e';document.getElementById('bgImageInput').value='';
-      if(bgVal.startsWith('url(')){const m=bgVal.match(/url\(["']?([^"')]+)["']?\)/);if(m&&m[1])document.getElementById('bgImageInput').value=m[1];}
-      else if(bgVal&&!bgVal.startsWith('url('))document.getElementById('bgColorPicker').value=bgVal;
-      document.getElementById('themeSelect').value=(await dbGet(STORE_SETTINGS,'theme'))?.value||localStorage.getItem('htmlos_theme')||'sharp';
-      document.getElementById('colsSelect').value=String(cols);
-      document.getElementById('fpsToggle').checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
-      document.getElementById('pageIndicatorToggle').checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
+      bgColorPicker.value='#1e5f9e';bgImageInput.value='';
+      if(bgVal.startsWith('url(')){const m=bgVal.match(/url\(["']?([^"')]+)["']?\)/);if(m&&m[1])bgImageInput.value=m[1];}
+      else if(bgVal&&!bgVal.startsWith('url('))bgColorPicker.value=bgVal;
+      themeSelect.value=(await dbGet(STORE_SETTINGS,'theme'))?.value||localStorage.getItem('htmlos_theme')||'sharp';
+      colsSelect.value=String(cols);
+      fpsToggle.checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
+      pageIndicatorToggle.checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
       
       let memoryInfo = '不支持';
       if (window.performance && window.performance.memory) {
@@ -3329,18 +3498,18 @@
         memoryInfo = `${usedMB} MB / ${totalMB} MB`;
       }
       
-      document.getElementById('sysInfo').innerHTML=`<p>📊 系统信息</p><p>应用数量: ${installedApps.length}</p><p>内存使用: ${memoryInfo}</p><p>自动优化: ${systemSettings.autoOptimizeMemory ? '已开启' : '已关闭'}</p><p>高级优化: ${systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭'}</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ${systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭'}</p><p>日志条数: ${systemLogs.length}</p><p>版本: <span id="versionText" onclick="activateDevMode()">${VERSION}</span></p>`;
-      document.getElementById('settingsModal').classList.add('show');
+      sysInfo.innerHTML=`<p>📊 系统信息</p><p>应用数量: ${installedApps.length}</p><p>内存使用: ${memoryInfo}</p><p>自动优化: ${systemSettings.autoOptimizeMemory ? '已开启' : '已关闭'}</p><p>高级优化: ${systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭'}</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ${systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭'}</p><p>日志条数: ${systemLogs.length}</p><p>版本: <span id="versionText" onclick="activateDevMode()">${VERSION}</span></p>`;
+      settingsModal.classList.add('show');
     }
-    function closeSettings(){document.getElementById('settingsModal').classList.remove('show');}
+    function closeSettings(){settingsModal.classList.remove('show');}
     
     function updateDateTime(){
       const now=new Date();
       
       if (systemSettings.showDate) {
-        document.getElementById('headerDate').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+        headerDate.textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
       } else {
-        document.getElementById('headerDate').textContent=now.toLocaleDateString('zh-CN',{weekday:'long'});
+        headerDate.textContent=now.toLocaleDateString('zh-CN',{weekday:'long'});
       }
       
       const timeOptions = {
@@ -3349,7 +3518,7 @@
         second: systemSettings.showSeconds ? '2-digit' : undefined,
         hour12: !systemSettings.time24
       };
-      document.getElementById('datetime').textContent=now.toLocaleTimeString('zh-CN', timeOptions);
+      datetime.textContent=now.toLocaleTimeString('zh-CN', timeOptions);
     }
   </script>
 </body>
