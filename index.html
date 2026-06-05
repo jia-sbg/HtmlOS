@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.2.1</title>
+  <title>HTMLOS · v3.2.2</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -490,7 +490,7 @@
       font-size: 22px;
     }
     
-    /* 设置界面 - 全新层级导航 */
+    /* 设置界面 */
     .settings-tabs {
       display: flex;
       gap: 4px;
@@ -502,9 +502,7 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    .settings-tabs::-webkit-scrollbar {
-      display: none;
-    }
+    .settings-tabs::-webkit-scrollbar { display: none; }
     
     .settings-tab {
       padding: 8px 16px;
@@ -563,9 +561,7 @@
       gap: 8px;
     }
     
-    .setting-item:last-child {
-      margin-bottom: 0;
-    }
+    .setting-item:last-child { margin-bottom: 0; }
     
     .setting-item label { 
       font-size: 15px; 
@@ -617,9 +613,7 @@
       flex-shrink: 0;
     }
     
-    .setting-item button:active {
-      background: var(--primary-color);
-    }
+    .setting-item button:active { background: var(--primary-color); }
     
     .modal-actions { 
       display: flex;
@@ -640,19 +634,11 @@
       touch-action: manipulation;
     }
     
-    .modal-actions button:active { 
-      background: var(--primary-color); 
-    }
-    .modal-actions button.primary-btn {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-    .modal-actions button.danger-btn {
-      background: #ff4530;
-      border-color: #ff4530;
-    }
+    .modal-actions button:active { background: var(--primary-color); }
+    .modal-actions button.primary-btn { background: var(--primary-color); border-color: var(--primary-color); }
+    .modal-actions button.danger-btn { background: #ff4530; border-color: #ff4530; }
     
-    /* 壁纸预设面板 */
+    /* 壁纸预设 */
     .wallpaper-presets {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -716,7 +702,7 @@
       transform: scale(0.95);
     }
     
-    /* 应用框架容器 */
+    /* 应用框架 */
     #appFrameContainer {
       position: fixed;
       top: 0; left: 0;
@@ -763,9 +749,7 @@
       touch-action: manipulation;
     }
     
-    .app-navbar button:active {
-      background: var(--primary-color);
-    }
+    .app-navbar button:active { background: var(--primary-color); }
     
     .app-navbar #switchAppSelect {
       background: rgba(255,255,255,0.15);
@@ -912,11 +896,12 @@
       touch-action: manipulation;
     }
     
+    /* 修复：应用操作菜单居中显示 */
     .app-action-modal {
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) translateZ(0);
       background: var(--modal-bg);
       padding: 25px;
       border-radius: var(--card-radius);
@@ -932,7 +917,6 @@
       width: 100%;
       max-width: 350px;
       -webkit-overflow-scrolling: touch;
-      transform: translateZ(0);
     }
     
     .sys-info {
@@ -950,9 +934,7 @@
       cursor: pointer;
       user-select: none;
     }
-    .sys-info #versionText:hover {
-      color: var(--primary-color);
-    }
+    .sys-info #versionText:hover { color: var(--primary-color); }
     
     /* FPS 显示器 */
     #fpsCounter {
@@ -984,9 +966,7 @@
     }
     
     /* 图标选择面板 */
-    .icon-selector {
-      margin: 15px 0;
-    }
+    .icon-selector { margin: 15px 0; }
     
     .icon-grid {
       display: grid;
@@ -1020,10 +1000,7 @@
       transform: scale(1.05);
     }
     
-    .icon-option:active {
-      transform: scale(0.95);
-    }
-    
+    .icon-option:active { transform: scale(0.95); }
     .icon-option.selected {
       border-color: var(--primary-color);
       background: #0a84ff30;
@@ -1059,7 +1036,7 @@
       font-size: 14px;
     }
     
-    /* 离线提示横幅 */
+    /* 离线提示 */
     #offlineBanner {
       display: none;
       position: fixed;
@@ -1095,7 +1072,7 @@
       transition: width 0.3s ease;
     }
     
-    /* 颜色选择器样式 */
+    /* 颜色选择器 */
     .color-palette {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
@@ -1118,7 +1095,6 @@
       transform: scale(1.1);
     }
     
-    /* 系统调色盘按钮 */
     .system-color-picker {
       display: flex;
       align-items: center;
@@ -1136,7 +1112,7 @@
       transform: scale(1.1);
     }
     
-    /* 移动端响应式优化 */
+    /* 移动端响应式 */
     @media (max-width: 480px) {
       .win-header {
         font-size: 13px;
@@ -1150,75 +1126,28 @@
         font-size: 16px;
       }
       
-      h1 {
-        font-size: 24px;
-      }
-      
-      .container {
-        padding: 8px 12px;
-      }
-      
-      .search-box input {
-        padding: 10px 16px;
-        font-size: 14px;
-      }
-      
-      .toolbar button {
-        padding: 6px 10px;
-        font-size: 12px;
-      }
-      
-      .apps-container {
-        gap: 8px;
-      }
-      
+      h1 { font-size: 24px; }
+      .container { padding: 8px 12px; }
+      .search-box input { padding: 10px 16px; font-size: 14px; }
+      .toolbar button { padding: 6px 10px; font-size: 12px; }
+      .apps-container { gap: 8px; }
       .bottom-bar {
         padding: 10px 12px;
         padding-bottom: calc(10px + env(safe-area-inset-bottom, 0));
         gap: 8px;
       }
-      
-      .bottom-bar button {
-        padding: 10px 14px;
-        font-size: 14px;
-        min-width: 100px;
-      }
-      
-      .modal-content {
-        padding: 20px;
-      }
-      
-      .icon-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-      
-      .color-palette {
-        grid-template-columns: repeat(6, 1fr);
-      }
+      .bottom-bar button { padding: 10px 14px; font-size: 14px; min-width: 100px; }
+      .modal-content { padding: 20px; }
+      .icon-grid { grid-template-columns: repeat(5, 1fr); }
+      .color-palette { grid-template-columns: repeat(6, 1fr); }
     }
     
-    /* 小屏幕优化 */
     @media (max-width: 360px) {
-      .apps-container {
-        gap: 6px;
-      }
-      
-      .toolbar {
-        gap: 6px;
-      }
-      
-      .toolbar button {
-        padding: 5px 8px;
-        font-size: 11px;
-      }
-      
-      .icon-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      
-      .color-palette {
-        grid-template-columns: repeat(5, 1fr);
-      }
+      .apps-container { gap: 6px; }
+      .toolbar { gap: 6px; }
+      .toolbar button { padding: 5px 8px; font-size: 11px; }
+      .icon-grid { grid-template-columns: repeat(4, 1fr); }
+      .color-palette { grid-template-columns: repeat(5, 1fr); }
     }
   </style>
 </head>
@@ -1263,7 +1192,7 @@
       <input type="text" id="searchApps" placeholder="🔍 搜索应用..." />
     </div>
     
-    <!-- 普通工具栏 -->
+    <!-- 工具栏 -->
     <div class="toolbar" id="normalToolbar">
       <button onclick="showSortMenu()">🔄 排序</button>
       <button onclick="toggleHiddenApps()">👁️ 显示隐藏</button>
@@ -1325,9 +1254,7 @@
       
       <div style="margin: 15px 0;">
         <label style="font-size:14px;color:var(--text-secondary);">选择头像</label>
-        <div class="icon-grid" id="avatarGrid">
-          <!-- 头像选项将由JavaScript动态生成 -->
-        </div>
+        <div class="icon-grid" id="avatarGrid"></div>
         <div class="custom-icon-input">
           <input type="text" id="customAvatarInput" placeholder="输入自定义头像Emoji" maxlength="4" />
           <button onclick="applyCustomAvatar()">应用</button>
@@ -1341,7 +1268,7 @@
     </div>
   </div>
   
-  <!-- 设置模态框 - 全新标签页设计 -->
+  <!-- 设置模态框 -->
   <div class="modal" id="settingsModal">
     <div class="modal-content">
       <h2>⚙ 系统设置</h2>
@@ -1623,13 +1550,10 @@
     let memoryOptimizeTimer = null;
     let advancedMemoryOptimizeTimer = null;
     
-    // 用户信息变量
-    let currentUser = {
-      name: 'HTMLOS 用户',
-      avatar: '👤'
-    };
+    // 用户信息
+    let currentUser = { name: 'HTMLOS 用户', avatar: '👤' };
     
-    // 系统设置变量
+    // 系统设置
     let systemSettings = {
       showSeconds: true,
       time24: true,
@@ -1644,7 +1568,7 @@
       advancedOptimizeMemory: false
     };
     
-    // 预设壁纸
+    // 预设数据
     const presetWallpapers = [
       { name: '蓝天', url: 'https://picsum.photos/id/1018/1920/1080' },
       { name: '森林', url: 'https://picsum.photos/id/1043/1920/1080' },
@@ -1654,13 +1578,39 @@
       { name: '城市', url: 'https://picsum.photos/id/1067/1920/1080' }
     ];
     
-    // 预设头像库
     const presetAvatars = [
       '👤', '👨', '👩', '🧑', '👦', '👧', '👴', '👵',
       '😀', '😎', '🤩', '🥳', '😇', '🤗', '😺', '🦊',
       '🐱', '🐶', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷',
       '🌟', '🔥', '💎', '🎮', '🎵', '📚', '✈️', '🚀'
     ];
+    
+    const colorPalette = [
+      '#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e',
+      '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#e3008c', '#6e41e2',
+      '#00b294', '#009e49', '#bad80a', '#fff100', '#ff8c00', '#e81123', '#ec008c', '#68217a'
+    ];
+    
+    const iconLibrary = [
+      '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦', 
+      '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡',
+      '🎯', '🎁', '🎪', '🎭', '🎤', '🎧', '🎸', '🎹', '🎺', '🎻', '🥁', '🏆', '🏅', '🎖️', '🥇', '🥈', '🥉', '⚽', '🏀'
+    ];
+    
+    const sizeOptions = ['small', 'medium', 'large', 'wide', 'big'];
+    const sizeLabels = { 'small': '小', 'medium': '中', 'large': '大', 'wide': '宽', 'big': '超大' };
+    
+    // 系统核心变量
+    let currentPage = 0;
+    let installedApps = [];
+    let cols = 4;
+    let touchStartX = 0, touchStartY = 0;
+    let runningAppFile = null;
+    let devModeActive = false;
+    const TOUCH_THRESHOLD = 10;
+    const SWIPE_THRESHOLD = 80;
+    const FORMAT_PASSWORD = '1234';
+    const VERSION = 'HTMLOS 极致优化版 v3.2.2';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1872,7 +1822,7 @@
       }
     }
     
-    // ==================== 电池状态 - 增强版 ====================
+    // ==================== 电池状态 ====================
     function updateBatteryStatus(battery) {
       const level = Math.round(battery.level * 100);
       
@@ -1960,7 +1910,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2.1') {
+            if (name !== 'htmlos-v3.2.2') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2000,16 +1950,19 @@
       }
     }
     
-    // ==================== 沙箱控制 ====================
+    // ==================== 沙箱控制（修复：添加密码验证） ====================
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
-        if (confirm('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n确定要关闭吗？')) {
+        const password = prompt('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n请输入密码确认关闭：');
+        if (password === '1234') {
           systemSettings.sandboxEnabled = false;
           updateSandboxState();
           sandboxToggle.checked = true;
           showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
           addLog('warn', '沙箱已关闭，系统处于不安全状态！');
+        } else if (password !== null) {
+          showToast('密码错误，沙箱未关闭', 'error');
         }
       } else {
         systemSettings.sandboxEnabled = true;
@@ -2032,7 +1985,6 @@
     function openUserInfoModal() {
       userNameInput.value = currentUser.name;
       userAvatarPreview.textContent = currentUser.avatar;
-      // 设置自定义头像输入框的默认值
       customAvatarInput.value = presetAvatars.includes(currentUser.avatar) ? '' : currentUser.avatar;
       
       avatarGrid.innerHTML = '';
@@ -2223,35 +2175,6 @@
       }
       window.fpsControl = { toggle: toggleFPS };
     })();
-    
-    // ==================== 系统核心变量 ====================
-    let currentPage = 0;
-    let installedApps = [];
-    let cols = 4;
-    let touchStartX = 0, touchStartY = 0;
-    let runningAppFile = null;
-    let devModeActive = false;
-    const TOUCH_THRESHOLD = 10;
-    const SWIPE_THRESHOLD = 80;
-    const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 极致优化版 v3.2.1';
-    
-    // 扩展颜色方案
-    const colorPalette = [
-      '#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e',
-      '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#e3008c', '#6e41e2',
-      '#00b294', '#009e49', '#bad80a', '#fff100', '#ff8c00', '#e81123', '#ec008c', '#68217a'
-    ];
-    
-    // 扩展emoji图标库
-    const iconLibrary = [
-      '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦', 
-      '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡',
-      '🎯', '🎁', '🎪', '🎭', '🎤', '🎧', '🎸', '🎹', '🎺', '🎻', '🥁', '🏆', '🏅', '🎖️', '🥇', '🥈', '🥉', '⚽', '🏀'
-    ];
-    
-    const sizeOptions = ['small', 'medium', 'large', 'wide', 'big'];
-    const sizeLabels = { 'small': '小', 'medium': '中', 'large': '大', 'wide': '宽', 'big': '超大' };
     
     // ========== 开发者模式 ==========
     let versionClickCount = 0;
@@ -2550,7 +2473,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v3.2.1 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.2.2 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2700,7 +2623,6 @@
     
     const saveApps = throttle(async function() {
       try {
-        // 移除全表清空，直接put覆盖，性能提升显著
         for (const app of installedApps) {
           await dbPut(STORE_APPS, { 
             name: app.name, 
@@ -2959,7 +2881,7 @@
       if (app) showActionMenu(app, appIcon);
     });
     
-    // ========== 应用菜单 - 修复自定义图标保存问题 ==========
+    // ========== 应用菜单 ==========
     function showActionMenu(app, element) {
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
@@ -2995,7 +2917,7 @@
       document.body.appendChild(modal);
     }
     
-    // 新增：应用自定义图标保存功能
+    // 应用自定义图标保存功能
     function applyCustomIcon(appFile) {
       const input = document.getElementById(`customIconInput_${appFile}`);
       const customIcon = input.value.trim();
@@ -3519,6 +3441,37 @@
         hour12: !systemSettings.time24
       };
       datetime.textContent=now.toLocaleTimeString('zh-CN', timeOptions);
+    }
+    
+    // ========== 应用更新功能（补充缺失） ==========
+    function updateAppFromFile(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      if (app.locked) {
+        showToast('应用已锁定，无法更新', 'error');
+        return;
+      }
+      
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.html,.htm';
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const content = e.target.result;
+          await setContentSafe(fileKey, content);
+          app.lastUpdated = new Date().toISOString();
+          saveApps();
+          document.querySelector('.app-action-modal')?.remove();
+          showToast('应用已更新', 'success');
+          addLog('info', '更新应用: ' + app.name);
+        };
+        reader.readAsText(file);
+      };
+      input.click();
     }
   </script>
 </body>
