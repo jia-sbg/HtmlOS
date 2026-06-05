@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · 稳定版 v3.0</title>
+  <title>HTMLOS · v3.1</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -24,7 +24,7 @@
     }
     
     body {
-      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
       background: var(--bg, #1e5f9e) no-repeat center center fixed;
       background-size: cover;
       color: #fff;
@@ -34,7 +34,6 @@
       flex-direction: column;
       transition: background 0.3s ease;
       overflow: hidden;
-      /* 全局硬件加速 */
       transform: translateZ(0);
       will-change: background;
     }
@@ -57,6 +56,7 @@
       --text-secondary: rgba(255,255,255,0.7);
       --input-bg: #2a2a2c;
       --input-border: 1px solid #3a3a3c;
+      --setting-group-bg: rgba(255,255,255,0.08);
     }
     
     .theme-sharp {
@@ -64,6 +64,7 @@
       --card-radius: 0;
       --transition-speed: 0s;
       --backdrop-blur: none;
+      --setting-group-bg: rgba(255,255,255,0.08);
     }
     
     .theme-glass {
@@ -74,10 +75,11 @@
       --bottom-bg: rgba(255,255,255,0.12);
       --modal-bg: rgba(28,28,30,0.85);
       --btn-bg: rgba(255,255,255,0.22);
-      --backdrop-blur: blur(8px);
+      --backdrop-blur: blur(20px);
       --transition-speed: 0.2s;
       --input-bg: rgba(255,255,255,0.1);
       --input-border: 1px solid rgba(255,255,255,0.2);
+      --setting-group-bg: rgba(255,255,255,0.1);
     }
     
     .theme-dark {
@@ -86,12 +88,13 @@
       --card-radius: 8px;
       --header-bg: rgba(0,0,0,0.6);
       --bottom-bg: rgba(0,0,0,0.7);
-      --modal-bg: #121212;
+      --modal-bg: rgba(18,18,18,0.9);
       --primary-color: #0a84ff;
-      --backdrop-blur: blur(6px);
+      --backdrop-blur: blur(12px);
       --transition-speed: 0.2s;
       --text-color: #e0e0e0;
       --text-secondary: #999;
+      --setting-group-bg: rgba(255,255,255,0.05);
     }
     
     /* 头部 */
@@ -101,16 +104,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 16px;
+      font-size: 14px;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       flex-shrink: 0;
       z-index: 100;
       cursor: pointer;
-      /* 性能优化 */
       transform: translateZ(0);
       will-change: background;
+      min-height: 44px;
+      padding-top: env(safe-area-inset-top, 8px);
     }
     
     .win-user {
@@ -200,6 +204,7 @@
       display: flex !important;
       flex-direction: column !important;
       min-height: 0;
+      padding-bottom: env(safe-area-inset-bottom, 0);
     }
     
     h1 { 
@@ -227,12 +232,13 @@
       margin-left: auto;
       margin-right: auto;
       flex-shrink: 0;
+      width: 100%;
     }
     
     .search-box input {
       width: 100%;
-      padding: 10px 18px;
-      border-radius: 30px;
+      padding: 12px 18px;
+      border-radius: 12px;
       border: var(--card-border);
       background: var(--btn-bg);
       color: var(--text-color);
@@ -263,23 +269,24 @@
     .toolbar {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 12px;
       flex-shrink: 0;
       flex-wrap: wrap;
     }
     
     .toolbar button {
-      padding: 6px 12px;
+      padding: 8px 12px;
       font-size: 13px;
       background: var(--btn-bg);
       border: var(--card-border);
-      border-radius: 20px;
+      border-radius: 8px;
       color: var(--text-color);
       cursor: pointer;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
+      touch-action: manipulation;
     }
     
     .toolbar button:active {
@@ -323,7 +330,6 @@
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
-      /* 性能优化：硬件加速 */
       transform: translateZ(0);
       will-change: scroll-position;
     }
@@ -349,7 +355,6 @@
       width: 100%;
       height: 100%;
       min-height: 0;
-      /* 性能优化：硬件加速 */
       transform: translateZ(0);
       will-change: transform, filter;
     }
@@ -473,12 +478,13 @@
       background: var(--btn-bg);
       border: var(--card-border);
       color: var(--text-color);
-      border-radius: 30px;
+      border-radius: 12px;
       cursor: pointer;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       min-width: 100px;
       transition: all var(--transition-speed) ease;
+      touch-action: manipulation;
     }
     
     .nav-buttons button:active {
@@ -502,6 +508,9 @@
       justify-content: center;
       align-items: center;
       z-index: 250;
+      padding: 20px;
+      padding-top: env(safe-area-inset-top, 20px);
+      padding-bottom: env(safe-area-inset-bottom, 20px);
     }
     
     .modal.show { display: flex; }
@@ -512,18 +521,19 @@
       border-radius: var(--card-radius);
       min-width: 320px;
       max-width: 90vw;
+      max-height: 80vh;
       text-align: left;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      max-height: 80vh;
       overflow-y: auto;
       border: var(--modal-border);
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       color: var(--text-color);
-      /* 性能优化 */
       transform: translateZ(0);
       will-change: transform, opacity;
+      width: 100%;
+      max-width: 400px;
     }
     
     .modal-content h2 { 
@@ -531,6 +541,7 @@
       text-align: center;
       font-weight: 300;
       color: var(--primary-color);
+      font-size: 22px;
     }
     
     /* 警告模态框 - 最高层级 */
@@ -538,12 +549,12 @@
       z-index: 3000 !important;
     }
     
-    /* 设置折叠分组 */
+    /* 设置折叠分组 - 玻璃质感优化 */
     .setting-group {
       margin-bottom: 16px;
       border-radius: 12px;
       overflow: hidden;
-      background: var(--btn-bg);
+      background: var(--setting-group-bg);
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       border: var(--card-border);
@@ -607,17 +618,17 @@
     }
     
     .setting-item input[type="checkbox"] {
-      width: 20px; height: 20px;
+      width: 22px; height: 22px;
       accent-color: var(--primary-color);
       flex-shrink: 0;
     }
     
     .setting-item input[type="color"] {
-      width: 60px; height: 30px;
+      width: 60px; height: 36px;
       border: var(--input-border);
       cursor: pointer;
       background: transparent;
-      border-radius: 4px;
+      border-radius: 8px;
       flex-shrink: 0;
     }
     
@@ -627,16 +638,18 @@
     .setting-item select {
       flex: 1;
       max-width: 200px;
-      padding: 8px 12px;
+      padding: 10px 12px;
       background: var(--input-bg);
       border: var(--input-border);
       color: var(--text-color);
       border-radius: 8px;
       font-size: 14px;
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .setting-item button {
-      padding: 8px 16px;
+      padding: 10px 16px;
       border-radius: 8px;
       border: var(--input-border);
       background: var(--input-bg);
@@ -644,6 +657,7 @@
       cursor: pointer;
       font-size: 14px;
       transition: all 0.2s ease;
+      touch-action: manipulation;
     }
     
     .setting-item button:active {
@@ -659,15 +673,16 @@
     .modal-content .modal-actions button { 
       flex: 1;
       margin: 0;
-      padding: 12px 16px; 
-      border-radius: 8px; 
+      padding: 14px 16px; 
+      border-radius: 12px; 
       border: none; 
       background: var(--input-bg); 
       color: var(--text-color); 
       cursor: pointer;
       border: var(--input-border);
-      font-size: 14px;
+      font-size: 15px;
       transition: all var(--transition-speed) ease;
+      touch-action: manipulation;
     }
     
     .modal-content .modal-actions button:active { 
@@ -712,7 +727,7 @@
     
     /* 底部栏 */
     .bottom-bar { 
-      padding: 8px 15px; 
+      padding: 12px 15px; 
       background: var(--bottom-bg);
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
@@ -723,20 +738,22 @@
       flex-wrap: nowrap;
       flex-shrink: 0;
       transition: all var(--transition-speed) ease;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
     }
     
     .bottom-bar button { 
-      padding: 10px 18px; 
+      padding: 12px 18px; 
       font-size: 15px; 
       border: none; 
       background: var(--btn-bg);
       color: var(--text-color); 
       cursor: pointer;
-      border-radius: 30px;
+      border-radius: 12px;
       transition: all var(--transition-speed) ease;
       min-width: 120px;
       border: var(--card-border);
       flex-shrink: 1;
+      touch-action: manipulation;
     }
     
     .bottom-bar button:active { 
@@ -757,6 +774,7 @@
       transform: scale(0.95);
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
+      padding-top: env(safe-area-inset-top, 0);
     }
     
     #appFrameContainer.show { 
@@ -770,21 +788,23 @@
       align-items: center;
       padding: 10px 15px;
       background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       gap: 10px;
       flex-shrink: 0;
+      min-height: 50px;
     }
     
     .app-navbar button { 
-      padding: 10px 20px; 
-      border-radius: 30px; 
+      padding: 10px 16px; 
+      border-radius: 12px; 
       border: none; 
       background: rgba(255,255,255,0.15); 
       color: #fff; 
       cursor: pointer;
       font-size: 15px;
       flex-shrink: 0;
+      touch-action: manipulation;
     }
     
     .app-navbar button:active {
@@ -796,7 +816,7 @@
       border: 1px solid rgba(255,255,255,0.2);
       color: white;
       padding: 8px 12px;
-      border-radius: 20px;
+      border-radius: 8px;
       cursor: pointer;
       flex-shrink: 0;
       max-width: 150px;
@@ -834,6 +854,9 @@
       justify-content: center;
       align-items: center;
       z-index: 3000;
+      padding: 20px;
+      padding-top: env(safe-area-inset-top, 20px);
+      padding-bottom: env(safe-area-inset-bottom, 20px);
     }
     
     .hidden-modal.show { display: flex; }
@@ -845,20 +868,24 @@
       min-width: 280px;
       text-align: center;
       border: 1px solid #ff4530;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      width: 100%;
+      max-width: 400px;
     }
     
     /* Toast 通知 */
     .toast-container {
       position: fixed;
-      top: 60px;
+      top: calc(60px + env(safe-area-inset-top, 0));
       right: 15px;
+      left: 15px;
       z-index: 9999;
       display: flex;
       flex-direction: column;
       gap: 8px;
       pointer-events: none;
+      align-items: flex-end;
     }
     
     .toast-notification {
@@ -867,7 +894,7 @@
       -webkit-backdrop-filter: blur(20px);
       color: #fff;
       padding: 12px 20px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.15);
       font-size: 14px;
       max-width: 320px;
@@ -897,9 +924,10 @@
     /* 通知中心 */
     .notification-center {
       position: fixed;
-      top: 60px;
+      top: calc(60px + env(safe-area-inset-top, 0));
       right: 15px;
       width: 320px;
+      max-width: calc(100vw - 30px);
       max-height: 60vh;
       background: rgba(30,30,32,0.95);
       backdrop-filter: blur(20px);
@@ -932,7 +960,7 @@
       padding: 10px;
       margin-bottom: 8px;
       background: rgba(255,255,255,0.05);
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 14px;
     }
     
@@ -944,13 +972,14 @@
     
     .clear-notifications {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 10px;
       background: var(--btn-bg);
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: #fff;
       cursor: pointer;
+      touch-action: manipulation;
     }
     
     .app-action-modal {
@@ -971,6 +1000,8 @@
       color: #fff;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
+      width: 100%;
+      max-width: 350px;
     }
     
     .sys-info {
@@ -981,6 +1012,8 @@
       border-radius: 8px;
       font-size: 14px;
       line-height: 1.6;
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     .sys-info #versionText {
       cursor: pointer;
@@ -993,7 +1026,7 @@
     /* FPS 显示器 */
     #fpsCounter {
       position: fixed;
-      top: 50px;
+      top: calc(50px + env(safe-area-inset-top, 0));
       right: 15px;
       background: rgba(0,0,0,0.7);
       color: #0f0;
@@ -1046,6 +1079,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s ease;
+      touch-action: manipulation;
     }
     
     .icon-option:hover {
@@ -1091,6 +1125,7 @@
       font-size: 12px;
       z-index: 10000;
       font-weight: bold;
+      padding-top: env(safe-area-inset-top, 4px);
     }
     #offlineBanner.show { display: block; }
     
@@ -1115,6 +1150,7 @@
       margin: 10px 0;
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     
     .backup-options label {
@@ -1138,6 +1174,8 @@
       flex-direction: column;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
+      padding-top: env(safe-area-inset-top, 0);
+      padding-bottom: env(safe-area-inset-bottom, 0);
     }
     
     .app-info-fullscreen.show {
@@ -1156,16 +1194,18 @@
       padding: 15px;
       background: rgba(0,0,0,0.3);
       gap: 15px;
+      min-height: 60px;
     }
     
     .app-info-header button {
-      padding: 10px 20px;
-      border-radius: 30px;
+      padding: 10px 16px;
+      border-radius: 12px;
       border: none;
       background: rgba(255,255,255,0.15);
       color: #fff;
       cursor: pointer;
       font-size: 15px;
+      touch-action: manipulation;
     }
     
     .app-info-header button:active {
@@ -1189,6 +1229,8 @@
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .app-info-card h3 {
@@ -1202,6 +1244,8 @@
       justify-content: space-between;
       padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+      gap: 5px;
     }
     
     .app-info-item:last-child {
@@ -1234,6 +1278,7 @@
       cursor: pointer;
       font-size: 14px;
       transition: all 0.2s ease;
+      touch-action: manipulation;
     }
     
     .app-info-actions button:active {
@@ -1255,6 +1300,7 @@
     /* 用户信息模态框 */
     .user-info-modal {
       min-width: 350px;
+      max-width: 90vw;
     }
     
     .user-avatar-preview {
@@ -1317,10 +1363,29 @@
       cursor: pointer;
       border: 2px solid transparent;
       transition: all 0.2s ease;
+      touch-action: manipulation;
     }
     
     .color-swatch:hover {
       border-color: #fff;
+      transform: scale(1.1);
+    }
+    
+    /* 系统调色盘按钮 */
+    .system-color-picker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--input-bg);
+      border: var(--input-border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 16px;
+    }
+    
+    .system-color-picker:hover {
+      border-color: var(--primary-color);
       transform: scale(1.1);
     }
     
@@ -1352,6 +1417,97 @@
       background: rgba(255, 159, 10, 0.1);
       border-radius: 8px;
     }
+    
+    /* 移动端响应式优化 */
+    @media (max-width: 480px) {
+      .win-header {
+        font-size: 13px;
+        padding: 6px 12px;
+        padding-top: calc(6px + env(safe-area-inset-top, 0));
+      }
+      
+      .win-user-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .container {
+        padding: 8px 12px;
+      }
+      
+      .search-box input {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .toolbar button {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      
+      .apps-container {
+        gap: 8px;
+      }
+      
+      .bottom-bar {
+        padding: 10px 12px;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0));
+        gap: 8px;
+      }
+      
+      .bottom-bar button {
+        padding: 10px 14px;
+        font-size: 14px;
+        min-width: 100px;
+      }
+      
+      .modal-content {
+        padding: 20px;
+        min-width: auto;
+      }
+      
+      .app-action-modal {
+        padding: 20px;
+        min-width: auto;
+      }
+      
+      .icon-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      
+      .color-palette {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+    
+    /* 小屏幕优化 */
+    @media (max-width: 360px) {
+      .apps-container {
+        gap: 6px;
+      }
+      
+      .toolbar {
+        gap: 6px;
+      }
+      
+      .toolbar button {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
+      
+      .icon-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .color-palette {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
   </style>
 </head>
 <body class="theme-sharp">
@@ -1382,7 +1538,7 @@
         </div>
         <span id="batteryPercent">100%</span>
       </div>
-      <button onclick="toggleNotificationCenter()" style="background:none;border:none;color:white;cursor:pointer;font-size:18px;">🔔</button>
+      <button onclick="toggleNotificationCenter()" style="background:none;border:none;color:white;cursor:pointer;font-size:18px;padding:0 4px;">🔔</button>
     </div>
   </div>
   
@@ -1398,9 +1554,9 @@
     <!-- 普通工具栏 -->
     <div class="toolbar" id="normalToolbar">
       <button onclick="showSortMenu()">🔄 排序</button>
-      <button onclick="toggleHiddenApps()">👁️ 显示隐藏应用</button>
-      <button onclick="scrollToTop()">⬆️ 回到顶部</button>
-      <button onclick="fixTileLayout()">🔧 修复布局</button>
+      <button onclick="toggleHiddenApps()">👁️ 显示隐藏</button>
+      <button onclick="scrollToTop()">⬆️ 顶部</button>
+      <button onclick="fixTileLayout()">🔧 修复</button>
     </div>
     
     <!-- 页面指示器 -->
@@ -1424,13 +1580,13 @@
     <div class="modal-content">
       <h2>📥 安装应用</h2>
       <div style="margin-bottom: 15px;">
-        <button onclick="showFilePicker()" style="width: 100%; padding: 12px; background: #0a84ff; border: none; color: white; font-size: 16px; border-radius: 8px;">📄 选择单个文件</button>
+        <button onclick="showFilePicker()" style="width: 100%; padding: 14px; background: #0a84ff; border: none; color: white; font-size: 16px; border-radius: 12px;">📄 选择单个文件</button>
       </div>
       <div style="margin-bottom: 15px;">
-        <button onclick="showMultiFilePicker()" style="width: 100%; padding: 12px; background: #5e5ce6; border: none; color: white; font-size: 16px; border-radius: 8px;">📑 选择多个文件</button>
+        <button onclick="showMultiFilePicker()" style="width: 100%; padding: 14px; background: #5e5ce6; border: none; color: white; font-size: 16px; border-radius: 12px;">📑 选择多个文件</button>
       </div>
       <div style="margin-bottom: 15px;">
-        <button onclick="showFolderPicker()" style="width: 100%; padding: 12px; background: #30d158; border: none; color: white; font-size: 16px; border-radius: 8px;">📁 从文件夹安装</button>
+        <button onclick="showFolderPicker()" style="width: 100%; padding: 14px; background: #30d158; border: none; color: white; font-size: 16px; border-radius: 12px;">📁 从文件夹安装</button>
       </div>
       <div id="installProgress" style="display: none;">
         <div class="progress-bar">
@@ -1485,7 +1641,7 @@
       </ul>
       <p class="warning-text">关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！</p>
       <p>请输入密码确认关闭：</p>
-      <input type="password" id="sandboxPasswordInput" placeholder="密码：1234" style="width: 100%; padding: 8px; margin: 10px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <input type="password" id="sandboxPasswordInput" placeholder="密码：1234" style="width: 100%; padding: 10px; margin: 10px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <div class="modal-actions">
         <button onclick="confirmDisableSandbox()" class="danger-btn">确认关闭</button>
         <button onclick="closeSandboxWarning()">取消</button>
@@ -1806,12 +1962,6 @@
       avatar: '👤'
     };
     
-    // 预设头像库
-    const presetAvatars = [
-      '👤', '👨', '👩', '🧑', '👦', '👧', '👴', '👵',
-      '😀', '😎', '🤩', '🥳', '😇', '🤗', '😺', '🦊'
-    ];
-    
     // 系统设置变量
     let systemSettings = {
       showSeconds: true,
@@ -1835,6 +1985,12 @@
       { name: '山脉', url: 'https://picsum.photos/id/1036/1920/1080' },
       { name: '星空', url: 'https://picsum.photos/id/1042/1920/1080' },
       { name: '城市', url: 'https://picsum.photos/id/1067/1920/1080' }
+    ];
+    
+    // 预设头像库
+    const presetAvatars = [
+      '👤', '👨', '👩', '🧑', '👦', '👧', '👴', '👵',
+      '😀', '😎', '🤩', '🥳', '😇', '🤗', '😺', '🦊'
     ];
     
     // ==================== 日志系统 ====================
@@ -2002,7 +2158,7 @@
     // ==================== Service Worker - 优化缓存策略 ====================
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'htmlos-v3.0';
+        const CACHE_NAME = 'htmlos-v3.1';
         const CACHE_WHITELIST = ['index.html', './'];
         
         self.addEventListener('install', event => {
@@ -2017,7 +2173,6 @@
         
         self.addEventListener('fetch', event => {
           if (event.request.method !== 'GET') return;
-          // 不缓存API请求和blob
           if (event.request.url.includes('blob:') || event.request.url.includes('api')) return;
           
           event.respondWith(
@@ -2030,7 +2185,6 @@
                 return response;
               }).catch(() => cached);
               
-              // 优先使用缓存，同时更新缓存
               return cached || fetchPromise;
             })
           );
@@ -2058,7 +2212,7 @@
     window.addEventListener('offline', updateOnlineStatus);
     updateOnlineStatus();
     
-    // ==================== 电池状态 - 全浏览器兼容 ====================
+    // ==================== 电池状态 - 完美兼容所有浏览器包括Safari ====================
     function updateBatteryStatus(battery) {
       const level = Math.round(battery.level * 100);
       const levelEl = document.getElementById('batteryLevel');
@@ -2090,9 +2244,9 @@
       addLog('info', `电池状态: ${level}%, ${battery.charging ? '充电中' : '未充电'}`);
     }
     
-    // 初始化电池状态 - 兼容所有浏览器包括Safari
+    // 初始化电池状态 - 完美兼容Safari及所有浏览器
     function initBatteryStatus() {
-      // 标准API
+      // 标准API (Chrome, Edge, Firefox)
       if ('getBattery' in navigator) {
         navigator.getBattery().then(battery => {
           updateBatteryStatus(battery);
@@ -2101,7 +2255,7 @@
           addLog('info', '使用标准电池API');
         }).catch(err => {
           addLog('warn', '标准电池API失败: ' + err.message);
-          document.getElementById('batteryStatus').style.display = 'none';
+          fallbackBatteryDetection();
         });
       } 
       // 旧版API
@@ -2111,10 +2265,44 @@
         navigator.battery.addEventListener('chargingchange', () => updateBatteryStatus(navigator.battery));
         addLog('info', '使用旧版电池API');
       }
-      // 不支持电池API
+      // Safari和其他不支持电池API的浏览器
       else {
-        document.getElementById('batteryStatus').style.display = 'none';
-        addLog('info', '浏览器不支持电池API，已隐藏电池显示');
+        fallbackBatteryDetection();
+      }
+    }
+    
+    // 备用电池检测方案
+    function fallbackBatteryDetection() {
+      addLog('info', '浏览器不支持电池API，尝试使用备用方案');
+      
+      // 尝试使用Navigator.connection作为替代
+      if ('connection' in navigator) {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (connection) {
+          addLog('info', `网络状态: ${connection.effectiveType}, 下行速度: ${connection.downlink} Mbps`);
+        }
+      }
+      
+      // 隐藏电池显示
+      document.getElementById('batteryStatus').style.display = 'none';
+      
+      // 对于iOS设备，尝试使用特殊方法
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        addLog('info', '检测到iOS设备，电池API受限');
+        // iOS 16+ 部分支持，但需要用户交互
+        document.addEventListener('touchstart', function iosBatteryCheck() {
+          if ('getBattery' in navigator) {
+            navigator.getBattery().then(battery => {
+              updateBatteryStatus(battery);
+              battery.addEventListener('levelchange', () => updateBatteryStatus(battery));
+              battery.addEventListener('chargingchange', () => updateBatteryStatus(battery));
+              addLog('info', 'iOS电池API已激活');
+            }).catch(err => {
+              addLog('warn', 'iOS电池API仍不可用: ' + err.message);
+            });
+          }
+          document.removeEventListener('touchstart', iosBatteryCheck);
+        }, { once: true });
       }
     }
     
@@ -2140,7 +2328,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.0') {
+            if (name !== 'htmlos-v3.1') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2301,7 +2489,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 10; // 升级数据库版本
+    const DB_VERSION = 11; // 升级数据库版本
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2451,7 +2639,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 稳定版 v3.0';
+    const VERSION = 'HTMLOS 移动优化版 v3.1';
     
     // 扩展颜色方案
     const colorPalette = [
@@ -2804,6 +2992,30 @@
       addLog('info', '卸载应用: ' + fileKey);
     }
     
+    // ========== 系统原生调色盘功能 ==========
+    function openSystemColorPicker(appFile) {
+      const app = installedApps.find(a => a.file === appFile);
+      if (!app) return;
+      
+      // 创建隐藏的颜色输入框
+      const colorInput = document.createElement('input');
+      colorInput.type = 'color';
+      colorInput.value = app.customColor || app.color || '#0078d7';
+      
+      // 监听颜色变化
+      colorInput.addEventListener('input', (e) => {
+        changeAppColor(appFile, e.target.value);
+      });
+      
+      colorInput.addEventListener('change', (e) => {
+        changeAppColor(appFile, e.target.value);
+        showToast('颜色已更新', 'success', 1500);
+      });
+      
+      // 触发点击
+      colorInput.click();
+    }
+    
     // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', async () => {
       window.addEventListener('error', (e) => {
@@ -2837,7 +3049,7 @@
       await loadInstalledApps();
       await loadSettings();
       initWallpaperPresets();
-      initBatteryStatus(); // 初始化电池状态
+      initBatteryStatus(); // 初始化电池状态（完美兼容Safari）
       
       const devSetting = await dbGet(STORE_SETTINGS, 'dev_mode');
       devModeActive = devSetting && devSetting.value === 'true';
@@ -2908,9 +3120,12 @@
         if (!e.target.closest('#sandboxWarningModal') && !e.target.closest('#sandboxToggle')) {
           document.getElementById('sandboxWarningModal').classList.remove('show');
         }
+        if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
+          document.querySelector('.app-action-modal')?.remove();
+        }
       });
       
-      addLog('info', 'HTMLOS 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.1 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3169,7 +3384,7 @@
     // ========== 应用属性修改 ==========
     function changeAppColor(file, color) {
       const app = installedApps.find(a => a.file === file);
-      if (app) { app.customColor = color; app.color = color; saveApps(); renderApps(); showToast('颜色已更新', 'info', 1500); }
+      if (app) { app.customColor = color; app.color = color; saveApps(); renderApps(); }
     }
     
     function changeAppIcon(file, icon) {
@@ -3329,7 +3544,7 @@
       input.click();
     }
     
-    // ========== 应用菜单 ==========
+    // ========== 应用菜单 - 新增系统调色盘功能 ==========
     function showActionMenu(app, element) {
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
@@ -3343,6 +3558,9 @@
         `<div class="color-swatch" style="background:${c};" onclick="changeAppColor('${app.file}','${c}');document.querySelector('.app-action-modal')?.remove()"></div>`
       ).join('');
       
+      // 添加系统调色盘按钮
+      const systemColorButton = `<div class="color-swatch system-color-picker" onclick="openSystemColorPicker('${app.file}')">🎨</div>`;
+      
       modal.innerHTML = `
         <h3 style="margin-bottom:15px;text-align:center;">${app.icon||'📱'} ${app.name}</h3>
         <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
@@ -3350,7 +3568,7 @@
             <input type="text" id="customIconInput" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
           </div>
         </div>
-        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div></div>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}${systemColorButton}</div></div>
         <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">📐 磁贴大小 (当前: ${sizeLabels[app.size||'small']})</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
         <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
