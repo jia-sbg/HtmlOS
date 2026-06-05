@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.1</title>
+  <title>HTMLOS · v3.2</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -24,21 +24,19 @@
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg, #1e5f9e) no-repeat center center fixed;
       background-size: cover;
       color: #fff;
-      height: 100vh;
       height: 100dvh;
       display: flex;
       flex-direction: column;
       transition: background 0.3s ease;
       overflow: hidden;
       transform: translateZ(0);
-      will-change: background;
     }
     
-    /* 主题变量定义 - 默认直角无动画 */
+    /* 主题变量 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -89,7 +87,6 @@
       --header-bg: rgba(0,0,0,0.6);
       --bottom-bg: rgba(0,0,0,0.7);
       --modal-bg: rgba(18,18,18,0.9);
-      --primary-color: #0a84ff;
       --backdrop-blur: blur(12px);
       --transition-speed: 0.2s;
       --text-color: #e0e0e0;
@@ -110,9 +107,6 @@
       transition: all var(--transition-speed) ease;
       flex-shrink: 0;
       z-index: 100;
-      cursor: pointer;
-      transform: translateZ(0);
-      will-change: background;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
     }
@@ -122,9 +116,9 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
       padding: 4px 8px;
       border-radius: 20px;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
     
     .win-user:hover {
@@ -191,6 +185,14 @@
       animation: charging 1s infinite alternate;
     }
     
+    .battery-charging::before {
+      content: '⚡';
+      position: absolute;
+      left: -18px;
+      top: -2px;
+      font-size: 14px;
+    }
+    
     @keyframes charging {
       from { opacity: 0.7; }
       to { opacity: 1; }
@@ -200,9 +202,8 @@
       flex: 1; 
       padding: 12px 16px; 
       overflow: hidden;
-      position: relative;
-      display: flex !important;
-      flex-direction: column !important;
+      display: flex;
+      flex-direction: column;
       min-height: 0;
       padding-bottom: env(safe-area-inset-bottom, 0);
     }
@@ -317,7 +318,7 @@
       transform: scale(1.2);
     }
     
-    /* 应用网格 - 磁贴系统 */
+    /* 应用网格 */
     .apps-container {
       display: grid;
       grid-template-columns: repeat(var(--cols, 4), 1fr);
@@ -330,8 +331,6 @@
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
-      transform: translateZ(0);
-      will-change: scroll-position;
     }
     
     /* 应用磁贴 */
@@ -344,7 +343,6 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      position: relative;
       transition: all var(--transition-speed) ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       color: var(--text-color);
@@ -354,50 +352,14 @@
       overflow: hidden;
       width: 100%;
       height: 100%;
-      min-height: 0;
-      transform: translateZ(0);
-      will-change: transform, filter;
-    }
-    
-    .app-icon.size-small {
-      grid-column: span 1;
-      grid-row: span 1;
       aspect-ratio: 1 / 1;
-      min-width: 0;
-      min-height: 70px;
     }
     
-    .app-icon.size-medium {
-      grid-column: span 2;
-      grid-row: span 1;
-      aspect-ratio: 2 / 1;
-      min-width: 0;
-      min-height: 70px;
-    }
-    
-    .app-icon.size-large {
-      grid-column: span 2;
-      grid-row: span 2;
-      aspect-ratio: 1 / 1;
-      min-width: 0;
-      min-height: 0;
-    }
-    
-    .app-icon.size-wide {
-      grid-column: span 3;
-      grid-row: span 1;
-      aspect-ratio: 3 / 1;
-      min-width: 0;
-      min-height: 70px;
-    }
-    
-    .app-icon.size-big {
-      grid-column: span 3;
-      grid-row: span 2;
-      aspect-ratio: 3 / 2;
-      min-width: 0;
-      min-height: 0;
-    }
+    .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
+    .app-icon.size-medium { grid-column: span 2; grid-row: span 1; aspect-ratio: 2 / 1; }
+    .app-icon.size-large { grid-column: span 2; grid-row: span 2; }
+    .app-icon.size-wide { grid-column: span 3; grid-row: span 1; aspect-ratio: 3 / 1; }
+    .app-icon.size-big { grid-column: span 3; grid-row: span 2; aspect-ratio: 3 / 2; }
     
     .app-icon:hover {
       transform: scale(1.02);
@@ -409,26 +371,12 @@
       transform: scale(0.98);
     }
     
-    /* 隐藏应用标记 */
-    .app-icon.hidden {
-      opacity: 0.3;
-      filter: grayscale(1);
-    }
+    .app-icon.hidden { opacity: 0.3; filter: grayscale(1); }
+    .app-icon.locked::after { content: '🔒'; position: absolute; top: 4px; right: 4px; font-size: 12px; }
     
-    /* 锁定应用标记 */
-    .app-icon.locked::after {
-      content: '🔒';
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      font-size: 12px;
-    }
-    
-    /* 图标Emoji */
     .app-icon .icon-emoji { 
       flex-shrink: 0;
       filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
-      pointer-events: none;
       line-height: 1;
       text-align: center;
     }
@@ -439,24 +387,21 @@
     .app-icon.size-wide .icon-emoji { font-size: clamp(20px, 3.5vw, 36px); }
     .app-icon.size-big .icon-emoji { font-size: clamp(36px, 8vw, 64px); }
     
-    /* 文字标签 */
     .app-icon .tile-label { 
       flex-shrink: 1;
-      min-height: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      pointer-events: none;
       line-height: 1.3;
       text-align: center;
       width: 100%;
-      max-width: 100%;
+      margin-top: 3px;
     }
     
-    .app-icon.size-small .tile-label { font-size: clamp(10px, 2vw, 13px); margin-top: 3px; }
-    .app-icon.size-medium .tile-label { font-size: clamp(10px, 2vw, 14px); margin-top: 3px; }
+    .app-icon.size-small .tile-label { font-size: clamp(10px, 2vw, 13px); }
+    .app-icon.size-medium .tile-label { font-size: clamp(10px, 2vw, 14px); }
     .app-icon.size-large .tile-label { font-size: clamp(11px, 2.5vw, 15px); margin-top: 5px; }
-    .app-icon.size-wide .tile-label { font-size: clamp(10px, 2vw, 14px); margin-top: 3px; max-width: 80%; }
+    .app-icon.size-wide .tile-label { font-size: clamp(10px, 2vw, 14px); max-width: 80%; }
     .app-icon.size-big .tile-label { font-size: clamp(12px, 3vw, 17px); margin-top: 5px; }
     
     .nav-buttons { 
@@ -468,9 +413,7 @@
       flex-shrink: 0;
     }
     
-    .nav-buttons.hidden {
-      display: none;
-    }
+    .nav-buttons.hidden { display: none; }
     
     .nav-buttons button { 
       padding: 10px 30px; 
@@ -519,19 +462,14 @@
       background: var(--modal-bg);
       padding: 25px;
       border-radius: var(--card-radius);
-      min-width: 320px;
       max-width: 90vw;
       max-height: 80vh;
-      text-align: left;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       border: var(--modal-border);
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
-      transition: all var(--transition-speed) ease;
       color: var(--text-color);
-      transform: translateZ(0);
-      will-change: transform, opacity;
       width: 100%;
       max-width: 400px;
     }
@@ -544,77 +482,79 @@
       font-size: 22px;
     }
     
-    /* 警告模态框 - 最高层级 */
-    .warning-modal {
-      z-index: 3000 !important;
+    /* 设置界面 - 全新层级导航 */
+    .settings-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
     
-    /* 设置折叠分组 - 玻璃质感优化 */
-    .setting-group {
-      margin-bottom: 16px;
-      border-radius: 12px;
-      overflow: hidden;
+    .settings-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .settings-tab {
+      padding: 8px 16px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    
+    .settings-tab.active {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .settings-panel {
+      display: none;
+    }
+    
+    .settings-panel.active {
+      display: block;
+    }
+    
+    .setting-section {
+      margin-bottom: 24px;
+    }
+    
+    .setting-section-title {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      padding-left: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
       background: var(--setting-group-bg);
+      border-radius: 12px;
+      margin-bottom: 8px;
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
       border: var(--card-border);
     }
     
-    .setting-group:last-child {
+    .setting-item:last-child {
       margin-bottom: 0;
     }
     
-    .setting-group-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      padding: 14px 16px;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-color);
-      transition: background 0.2s ease;
-    }
-    
-    .setting-group-header:hover {
-      background: rgba(255,255,255,0.05);
-    }
-    
-    .setting-group-header::after {
-      content: '▼';
-      font-size: 12px;
-      transition: transform 0.2s ease;
-      color: var(--text-secondary);
-    }
-    
-    .setting-group.collapsed .setting-group-header::after {
-      transform: rotate(-90deg);
-    }
-    
-    .setting-group-content {
-      display: block;
-      padding: 0 16px 16px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .setting-group.collapsed .setting-group-content {
-      display: none;
-    }
-    
-    .setting-item {
-      margin: 12px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      min-height: 36px;
-    }
-    
     .setting-item label { 
-      font-size: 14px; 
-      color: var(--text-secondary);
-      flex: 1;
+      font-size: 15px; 
+      color: var(--text-color);
     }
     
     .setting-item input[type="checkbox"] {
@@ -636,8 +576,6 @@
     .setting-item input[type="number"],
     .setting-item input[type="password"],
     .setting-item select {
-      flex: 1;
-      max-width: 200px;
       padding: 10px 12px;
       background: var(--input-bg);
       border: var(--input-border);
@@ -664,18 +602,16 @@
       background: var(--primary-color);
     }
     
-    .modal-content .modal-actions { 
+    .modal-actions { 
       display: flex;
       gap: 10px;
       margin-top: 20px;
     }
     
-    .modal-content .modal-actions button { 
+    .modal-actions button { 
       flex: 1;
-      margin: 0;
       padding: 14px 16px; 
       border-radius: 12px; 
-      border: none; 
       background: var(--input-bg); 
       color: var(--text-color); 
       cursor: pointer;
@@ -685,14 +621,14 @@
       touch-action: manipulation;
     }
     
-    .modal-content .modal-actions button:active { 
+    .modal-actions button:active { 
       background: var(--primary-color); 
     }
-    .modal-content .modal-actions button.primary-btn {
+    .modal-actions button.primary-btn {
       background: var(--primary-color);
       border-color: var(--primary-color);
     }
-    .modal-content .modal-actions button.danger-btn {
+    .modal-actions button.danger-btn {
       background: #ff4530;
       border-color: #ff4530;
     }
@@ -735,7 +671,6 @@
       justify-content: center;
       gap: 12px;
       border-top: 1px solid rgba(255,255,255,0.1);
-      flex-wrap: nowrap;
       flex-shrink: 0;
       transition: all var(--transition-speed) ease;
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
@@ -770,7 +705,6 @@
       z-index: 200;
       display: none;
       flex-direction: column;
-      transform-origin: center center;
       transform: scale(0.95);
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
@@ -842,36 +776,6 @@
       cursor: pointer;
       text-decoration: underline;
       text-align: center;
-    }
-    
-    /* 隐藏模态框 */
-    .hidden-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 3000;
-      padding: 20px;
-      padding-top: env(safe-area-inset-top, 20px);
-      padding-bottom: env(safe-area-inset-bottom, 20px);
-    }
-    
-    .hidden-modal.show { display: flex; }
-    
-    .hidden-modal-content {
-      background: #2c2c2e;
-      padding: 25px;
-      border-radius: 12px;
-      min-width: 280px;
-      text-align: center;
-      border: 1px solid #ff4530;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      width: 100%;
-      max-width: 400px;
     }
     
     /* Toast 通知 */
@@ -991,7 +895,6 @@
       padding: 25px;
       border-radius: var(--card-radius);
       z-index: 1001;
-      min-width: 300px;
       max-width: 90vw;
       max-height: 80vh;
       overflow-y: auto;
@@ -1098,10 +1001,12 @@
     
     .custom-icon-input {
       margin-top: 15px;
+      display: flex;
+      gap: 8px;
     }
     
     .custom-icon-input input {
-      width: 100%;
+      flex: 1;
       padding: 12px;
       background: var(--input-bg);
       border: var(--input-border);
@@ -1109,6 +1014,16 @@
       font-size: 20px;
       text-align: center;
       border-radius: 8px;
+    }
+    
+    .custom-icon-input button {
+      padding: 12px 16px;
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
     }
     
     /* 离线提示横幅 */
@@ -1129,193 +1044,6 @@
     }
     #offlineBanner.show { display: block; }
     
-    /* 日志查看器 */
-    .log-viewer {
-      background: #1a1a1c;
-      border: 1px solid #3a3a3c;
-      border-radius: 8px;
-      padding: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-      font-family: monospace;
-      font-size: 12px;
-      color: #0f0;
-      margin: 10px 0;
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-    
-    /* 备份恢复选项 */
-    .backup-options {
-      margin: 10px 0;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    
-    .backup-options label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-      color: #aaa;
-    }
-    
-    /* 全屏应用信息页面 */
-    .app-info-fullscreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--modal-bg);
-      z-index: 300;
-      display: none;
-      flex-direction: column;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
-      padding-top: env(safe-area-inset-top, 0);
-      padding-bottom: env(safe-area-inset-bottom, 0);
-    }
-    
-    .app-info-fullscreen.show {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .app-info-header {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      background: rgba(0,0,0,0.3);
-      gap: 15px;
-      min-height: 60px;
-    }
-    
-    .app-info-header button {
-      padding: 10px 16px;
-      border-radius: 12px;
-      border: none;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      cursor: pointer;
-      font-size: 15px;
-      touch-action: manipulation;
-    }
-    
-    .app-info-header button:active {
-      background: var(--primary-color);
-    }
-    
-    .app-info-title {
-      flex: 1;
-      font-size: 20px;
-      font-weight: 300;
-    }
-    
-    .app-info-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-    
-    .app-info-card {
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
-    }
-    
-    .app-info-card h3 {
-      color: var(--primary-color);
-      margin-bottom: 15px;
-      font-weight: 300;
-    }
-    
-    .app-info-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-    
-    .app-info-item:last-child {
-      border-bottom: none;
-    }
-    
-    .app-info-label {
-      color: var(--text-secondary);
-    }
-    
-    .app-info-value {
-      font-weight: 500;
-      word-break: break-all;
-      text-align: right;
-      max-width: 60%;
-    }
-    
-    .app-info-actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-    }
-    
-    .app-info-actions button {
-      padding: 15px;
-      border-radius: 8px;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s ease;
-      touch-action: manipulation;
-    }
-    
-    .app-info-actions button:active {
-      transform: scale(0.98);
-    }
-    
-    .app-info-actions .primary {
-      background: var(--primary-color);
-    }
-    
-    .app-info-actions .danger {
-      background: #ff4530;
-    }
-    
-    .app-info-actions .secondary {
-      background: #3a3a3c;
-    }
-    
-    /* 用户信息模态框 */
-    .user-info-modal {
-      min-width: 350px;
-      max-width: 90vw;
-    }
-    
-    .user-avatar-preview {
-      width: 80px;
-      height: 80px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin: 0 auto 20px;
-      border: 2px solid var(--primary-color);
-    }
-    
     /* 进度条 */
     .progress-bar {
       background: var(--input-bg);
@@ -1331,22 +1059,6 @@
       height: 100%;
       width: 0%;
       transition: width 0.3s ease;
-    }
-    
-    /* 警告模态框 */
-    .warning-modal-content {
-      border: 2px solid #ff4530 !important;
-    }
-    
-    .warning-modal-content h3 {
-      color: #ff4530;
-      margin-bottom: 15px;
-    }
-    
-    .warning-text {
-      color: #ff9f0a;
-      font-weight: bold;
-      margin: 10px 0;
     }
     
     /* 颜色选择器样式 */
@@ -1387,35 +1099,6 @@
     .system-color-picker:hover {
       border-color: var(--primary-color);
       transform: scale(1.1);
-    }
-    
-    /* 恢复默认设置模态框样式 */
-    .reset-modal-content {
-      text-align: center;
-      max-width: 400px;
-    }
-    
-    .reset-modal-content .warning-icon {
-      font-size: 60px;
-      margin-bottom: 20px;
-      color: #ff4530;
-    }
-    
-    .reset-modal-content h3 {
-      margin-bottom: 15px;
-      color: #ff4530;
-    }
-    
-    .reset-modal-content p {
-      margin-bottom: 10px;
-      color: var(--text-secondary);
-    }
-    
-    .reset-modal-content .warning-text {
-      margin: 20px 0;
-      padding: 10px;
-      background: rgba(255, 159, 10, 0.1);
-      border-radius: 8px;
     }
     
     /* 移动端响应式优化 */
@@ -1468,12 +1151,6 @@
       
       .modal-content {
         padding: 20px;
-        min-width: auto;
-      }
-      
-      .app-action-modal {
-        padding: 20px;
-        min-width: auto;
       }
       
       .icon-grid {
@@ -1601,8 +1278,8 @@
   </div>
   
   <!-- 用户信息模态框 -->
-  <div class="modal warning-modal" id="userInfoModal">
-    <div class="modal-content user-info-modal">
+  <div class="modal" id="userInfoModal">
+    <div class="modal-content">
       <h2>👤 用户信息</h2>
       <div class="user-avatar-preview" id="userAvatarPreview">👤</div>
       
@@ -1618,6 +1295,7 @@
         </div>
         <div class="custom-icon-input">
           <input type="text" id="customAvatarInput" placeholder="输入自定义头像Emoji" maxlength="4" />
+          <button onclick="applyCustomAvatar()">应用</button>
         </div>
       </div>
       
@@ -1628,52 +1306,24 @@
     </div>
   </div>
   
-  <!-- 关闭沙箱警告模态框 -->
-  <div class="modal warning-modal" id="sandboxWarningModal">
-    <div class="modal-content warning-modal-content">
-      <h3>⚠️ 警告：关闭沙箱</h3>
-      <p>沙箱是HTMLOS的重要安全机制，它可以：</p>
-      <ul style="margin: 10px 0 10px 20px; color: var(--text-secondary);">
-        <li>隔离应用与主系统</li>
-        <li>防止恶意应用访问您的数据</li>
-        <li>限制应用的权限</li>
-        <li>保护您的隐私安全</li>
-      </ul>
-      <p class="warning-text">关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！</p>
-      <p>请输入密码确认关闭：</p>
-      <input type="password" id="sandboxPasswordInput" placeholder="密码：1234" style="width: 100%; padding: 10px; margin: 10px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
-      <div class="modal-actions">
-        <button onclick="confirmDisableSandbox()" class="danger-btn">确认关闭</button>
-        <button onclick="closeSandboxWarning()">取消</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- 设置模态框 -->
+  <!-- 设置模态框 - 全新标签页设计 -->
   <div class="modal" id="settingsModal">
     <div class="modal-content">
       <h2>⚙ 系统设置</h2>
       
-      <!-- 用户信息 -->
-      <div class="setting-group" id="userGroup">
-        <div class="setting-group-header">
-          👤 用户信息
-        </div>
-        <div class="setting-group-content">
-          <div class="setting-item">
-            <label>当前用户</label>
-            <span id="currentUserDisplay">HTMLOS 用户</span>
-          </div>
-          <button onclick="openUserInfoModal()" style="width: 100%;">编辑用户信息</button>
-        </div>
+      <!-- 设置标签页 -->
+      <div class="settings-tabs">
+        <button class="settings-tab active" data-tab="appearance">外观</button>
+        <button class="settings-tab" data-tab="desktop">桌面</button>
+        <button class="settings-tab" data-tab="system">系统</button>
+        <button class="settings-tab" data-tab="backup">备份</button>
+        <button class="settings-tab" data-tab="dev" id="devTab" style="display:none;">开发</button>
       </div>
       
-      <!-- 外观与主题 -->
-      <div class="setting-group" id="appearanceGroup">
-        <div class="setting-group-header">
-          🎨 外观与主题
-        </div>
-        <div class="setting-group-content">
+      <!-- 外观面板 -->
+      <div class="settings-panel active" id="panel-appearance">
+        <div class="setting-section">
+          <div class="setting-section-title">背景设置</div>
           <div class="setting-item">
             <label>背景颜色</label>
             <input type="color" id="bgColorPicker" value="#1e5f9e" />
@@ -1682,13 +1332,19 @@
             <label>背景图片URL</label>
             <input type="text" id="bgImageInput" placeholder="输入图片链接" />
           </div>
+          <div class="setting-item">
+            <label>上传本地壁纸</label>
+            <button onclick="uploadWallpaper()">📤 选择图片</button>
+          </div>
           
-          <!-- 壁纸预设 -->
           <div style="margin: 15px 0;">
             <label style="font-size:14px;color:var(--text-secondary);">快速壁纸</label>
             <div class="wallpaper-presets" id="wallpaperPresets"></div>
           </div>
-          
+        </div>
+        
+        <div class="setting-section">
+          <div class="setting-section-title">主题与布局</div>
           <div class="setting-item">
             <label>系统主题</label>
             <select id="themeSelect">
@@ -1709,22 +1365,18 @@
         </div>
       </div>
       
-      <!-- 桌面与磁贴 -->
-      <div class="setting-group" id="desktopGroup">
-        <div class="setting-group-header">
-          📱 桌面与磁贴
-        </div>
-        <div class="setting-group-content">
+      <!-- 桌面面板 -->
+      <div class="settings-panel" id="panel-desktop">
+        <div class="setting-section">
+          <div class="setting-section-title">桌面效果</div>
           <div class="setting-item">
             <label>启动动画效果</label>
             <input type="checkbox" id="launchAnimToggle" checked />
           </div>
-          
           <div class="setting-item">
             <label>触摸震动反馈</label>
             <input type="checkbox" id="vibrationToggle" />
           </div>
-          
           <div class="setting-item">
             <label>显示页面指示器</label>
             <input type="checkbox" id="pageIndicatorToggle" checked />
@@ -1732,13 +1384,10 @@
         </div>
       </div>
       
-      <!-- 系统设置 -->
-      <div class="setting-group" id="systemGroup">
-        <div class="setting-group-header">
-          ⚙️ 系统设置
-        </div>
-        <div class="setting-group-content">
-          <h3 style="font-size: 16px; color: var(--primary-color); margin-bottom: 15px;">📅 日期与时间</h3>
+      <!-- 系统面板 -->
+      <div class="settings-panel" id="panel-system">
+        <div class="setting-section">
+          <div class="setting-section-title">日期与时间</div>
           <div class="setting-item">
             <label>显示秒数</label>
             <input type="checkbox" id="showSecondsToggle" checked />
@@ -1751,8 +1400,10 @@
             <label>显示日期</label>
             <input type="checkbox" id="showDateToggle" checked />
           </div>
-          
-          <h3 style="font-size: 16px; color: var(--primary-color); margin: 20px 0 15px;">🔔 通知设置</h3>
+        </div>
+        
+        <div class="setting-section">
+          <div class="setting-section-title">通知设置</div>
           <div class="setting-item">
             <label>启用Toast通知</label>
             <input type="checkbox" id="toastEnabledToggle" checked />
@@ -1765,8 +1416,10 @@
             <label>通知声音</label>
             <input type="checkbox" id="notificationSoundToggle" />
           </div>
-          
-          <h3 style="font-size: 16px; color: var(--primary-color); margin: 20px 0 15px;">⚡ 系统性能</h3>
+        </div>
+        
+        <div class="setting-section">
+          <div class="setting-section-title">系统性能</div>
           <div class="setting-item">
             <label>自动优化内存</label>
             <input type="checkbox" id="autoOptimizeMemoryToggle" />
@@ -1774,8 +1427,10 @@
           <div class="setting-item">
             <button onclick="optimizeMemory()">立即优化内存</button>
           </div>
-          
-          <h3 style="font-size: 16px; color: var(--primary-color); margin: 20px 0 15px;">🎯 系统行为</h3>
+        </div>
+        
+        <div class="setting-section">
+          <div class="setting-section-title">系统行为</div>
           <div class="setting-item">
             <label>双击顶部返回顶部</label>
             <input type="checkbox" id="doubleClickTopToggle" checked />
@@ -1787,42 +1442,29 @@
         </div>
       </div>
       
-      <!-- 备份与数据 -->
-      <div class="setting-group" id="backupGroup">
-        <div class="setting-group-header">
-          📦 备份与数据
-        </div>
-        <div class="setting-group-content">
-          <!-- 备份恢复 -->
-          <div style="margin: 15px 0;">
-            <h3 style="font-size: 16px; color: var(--primary-color); margin-bottom: 15px;">📦 数据备份与恢复</h3>
-            <div class="backup-options">
-              <label><input type="checkbox" id="mergeBackup" checked> 合并而非覆盖现有数据</label>
-            </div>
-            <div style="display: flex; gap: 10px;">
-              <button onclick="exportApps()" class="primary-btn" style="flex:1; border-radius: 8px;">📤 导出备份</button>
-              <button onclick="importApps()" style="flex:1; border-radius: 8px;">📥 导入备份</button>
-            </div>
+      <!-- 备份面板 -->
+      <div class="settings-panel" id="panel-backup">
+        <div class="setting-section">
+          <div class="setting-section-title">数据备份与恢复</div>
+          <div class="setting-item">
+            <label>合并而非覆盖现有数据</label>
+            <input type="checkbox" id="mergeBackup" checked />
+          </div>
+          <div class="setting-item">
+            <button onclick="exportApps()">📤 导出备份</button>
+            <button onclick="importApps()">📥 导入备份</button>
           </div>
         </div>
       </div>
       
-      <!-- 开发者选项（默认隐藏，解锁后显示） -->
-      <div class="setting-group" id="devGroup" style="display: none;">
-        <div class="setting-group-header">
-          🔧 开发者选项
-        </div>
-        <div class="setting-group-content">
-          <div class="setting-item">
-            <label>关闭开发者模式</label>
-            <button onclick="deactivateDevMode()">关闭</button>
-          </div>
-          
+      <!-- 开发者面板 -->
+      <div class="settings-panel" id="panel-dev">
+        <div class="setting-section">
+          <div class="setting-section-title">调试工具</div>
           <div class="setting-item">
             <label>显示FPS</label>
             <input type="checkbox" id="fpsToggle" />
           </div>
-          
           <div class="setting-item">
             <label>高级内存优化(Beta)</label>
             <input type="checkbox" id="advancedOptimizeMemoryToggle" />
@@ -1830,29 +1472,28 @@
           <div class="setting-item">
             <button onclick="advancedOptimizeMemory()">立即高级优化</button>
           </div>
-          
+        </div>
+        
+        <div class="setting-section">
+          <div class="setting-section-title">安全与权限</div>
           <div class="setting-item">
-            <label>关闭沙箱</label>
+            <label>关闭沙箱(危险)</label>
             <input type="checkbox" id="sandboxToggle" onchange="toggleSandbox()" />
           </div>
-          
+        </div>
+        
+        <div class="setting-section">
+          <div class="setting-section-title">系统工具</div>
           <div class="setting-item">
-            <button onclick="exportSystemLogs()" style="flex:1;">📋 导出系统日志</button>
-            <button onclick="clearSystemLogs()" style="flex:1;">🗑️ 清空系统日志</button>
+            <button onclick="exportSystemLogs()">📋 导出系统日志</button>
+            <button onclick="clearSystemLogs()">🗑️ 清空系统日志</button>
           </div>
-          
           <div class="setting-item">
-            <button onclick="forceRefreshAllApps()" style="flex:1;">🔄 强制刷新所有应用</button>
+            <button onclick="forceRefreshAllApps()">🔄 强制刷新所有应用</button>
+            <button onclick="fixTileLayout()">🔧 修复磁贴布局</button>
           </div>
-          
           <div class="setting-item">
-            <button onclick="fixTileLayout()" style="flex:1;">🔧 修复磁贴布局</button>
-          </div>
-          
-          <!-- 日志查看器 -->
-          <div id="logViewerContainer" style="display: none;">
-            <div class="log-viewer" id="logViewer"></div>
-            <button onclick="clearLogs()" style="width: 100%; margin-bottom: 10px; border-radius: 8px;">清除日志</button>
+            <button onclick="deactivateDevMode()">关闭开发者模式</button>
           </div>
         </div>
       </div>
@@ -1868,8 +1509,8 @@
   </div>
   
   <!-- 恢复默认设置警告 -->
-  <div class="hidden-modal" id="resetWarningModal">
-    <div class="hidden-modal-content reset-modal-content">
+  <div class="modal" id="resetWarningModal">
+    <div class="modal-content reset-modal-content">
       <div class="warning-icon">⚠️</div>
       <h3>恢复默认设置</h3>
       <p>此操作将重置所有系统设置为出厂状态。</p>
@@ -1888,8 +1529,8 @@
   </div>
   
   <!-- 格式化警告 -->
-  <div class="hidden-modal" id="formatWarningModal">
-    <div class="hidden-modal-content reset-modal-content">
+  <div class="modal" id="formatWarningModal">
+    <div class="modal-content reset-modal-content">
       <div class="warning-icon">🗑️</div>
       <h3>警告：即将格式化系统</h3>
       <p>此操作会删除所有用户应用并恢复默认设置。</p>
@@ -1924,18 +1565,7 @@
       <select id="switchAppSelect" onchange="switchAppFromSelect()"></select>
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
-    <!-- 加固iframe沙箱 -->
-    <iframe id="appFrame" src=""    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads"   allow="camera *; microphone *; accelerometer; geolocation; gyroscope"   allowfullscreen> </iframe>  </div>
-  
-  <!-- 全屏应用信息页面 -->
-  <div class="app-info-fullscreen" id="appInfoFullscreen">
-    <div class="app-info-header">
-      <button onclick="closeAppInfo()">← 返回</button>
-      <span class="app-info-title" id="appInfoTitle">应用信息</span>
-    </div>
-    <div class="app-info-content" id="appInfoContent">
-      <!-- 内容将由JavaScript动态生成 -->
-    </div>
+    <iframe id="appFrame" src="" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads" allow="camera *; microphone *; accelerometer; geolocation; gyroscope" allowfullscreen> </iframe>
   </div>
   
   <!-- 底部栏 -->
@@ -1996,11 +1626,8 @@
     // ==================== 日志系统 ====================
     const systemLogs = [];
     const MAX_LOGS = 200;
-    let currentLogLevel = 'info';
-    const LOG_LEVELS = { debug: 0, info: 1, warn: 2, error: 3 };
     
     function addLog(level, message, data) {
-      if (LOG_LEVELS[level] < LOG_LEVELS[currentLogLevel]) return;
       const entry = {
         timestamp: new Date().toISOString(),
         level: level,
@@ -2010,34 +1637,9 @@
       systemLogs.push(entry);
       if (systemLogs.length > MAX_LOGS) systemLogs.shift();
       
-      const levelColors = { debug: '#bf5af2', info: '#0a84ff', warn: '#ff9f0a', error: '#ff4530' };
-      if (level === 'error') {
-        console.error(`[${level.toUpperCase()}] ${message}`, data || '');
-      } else if (level === 'warn') {
-        console.warn(`[${level.toUpperCase()}] ${message}`, data || '');
-      } else {
-        console.log(`%c[${level.toUpperCase()}]%c ${message}`, `color: ${levelColors[level]}`, '', data || '');
-      }
-    }
-    
-    function openLogViewer() {
-      const container = document.getElementById('logViewerContainer');
-      const viewer = document.getElementById('logViewer');
-      if (container.style.display === 'none' || !container.style.display) {
-        container.style.display = 'block';
-        viewer.textContent = systemLogs.map(l => 
-          `[${l.timestamp.slice(11,19)}] [${l.level.toUpperCase()}] ${l.message}`
-        ).join('\n');
-        viewer.scrollTop = viewer.scrollHeight;
-      } else {
-        container.style.display = 'none';
-      }
-    }
-    
-    function clearLogs() {
-      systemLogs.length = 0;
-      document.getElementById('logViewer').textContent = '日志已清除';
-      addLog('info', '日志已清除');
+      if (level === 'error') console.error(`[${level.toUpperCase()}] ${message}`, data || '');
+      else if (level === 'warn') console.warn(`[${level.toUpperCase()}] ${message}`, data || '');
+      else console.log(`[${level.toUpperCase()}] ${message}`, data || '');
     }
     
     function exportSystemLogs() {
@@ -2062,11 +1664,10 @@
       addLog('info', '系统日志已清空');
     }
     
-    // ==================== Toast 通知系统 + 通知中心 ====================
+    // ==================== Toast 通知系统 ====================
     function showToast(message, type = 'info', duration = systemSettings.toastDuration) {
       if (!systemSettings.toastEnabled) return;
       
-      // 添加到通知中心
       addNotification(message, type);
       
       const container = document.getElementById('toastContainer');
@@ -2082,7 +1683,6 @@
       const timeout = setTimeout(() => removeToast(toast), duration);
       toast._timeout = timeout;
       
-      // 播放通知声音
       if (systemSettings.notificationSound && type !== 'dev') {
         playNotificationSound();
       }
@@ -2093,9 +1693,7 @@
       toast._removing = true;
       clearTimeout(toast._timeout);
       toast.classList.add('removing');
-      setTimeout(() => {
-        if (toast.parentNode) toast.parentNode.removeChild(toast);
-      }, 300);
+      setTimeout(() => toast.parentNode?.removeChild(toast), 300);
     }
     
     function addNotification(message, type) {
@@ -2122,8 +1720,7 @@
     }
     
     function toggleNotificationCenter() {
-      const center = document.getElementById('notificationCenter');
-      center.classList.toggle('show');
+      document.getElementById('notificationCenter').classList.toggle('show');
     }
     
     function clearAllNotifications() {
@@ -2155,64 +1752,7 @@
       }
     }
     
-    // ==================== Service Worker - 优化缓存策略 ====================
-    if ('serviceWorker' in navigator) {
-      const swCode = `
-        const CACHE_NAME = 'htmlos-v3.1';
-        const CACHE_WHITELIST = ['index.html', './'];
-        
-        self.addEventListener('install', event => {
-          event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CACHE_WHITELIST)));
-          self.skipWaiting();
-        });
-        
-        self.addEventListener('activate', event => {
-          event.waitUntil(caches.keys().then(names => Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n)))));
-          self.clients.claim();
-        });
-        
-        self.addEventListener('fetch', event => {
-          if (event.request.method !== 'GET') return;
-          if (event.request.url.includes('blob:') || event.request.url.includes('api')) return;
-          
-          event.respondWith(
-            caches.match(event.request).then(cached => {
-              const fetchPromise = fetch(event.request).then(response => {
-                if (response && response.status === 200) {
-                  const clone = response.clone();
-                  caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-                }
-                return response;
-              }).catch(() => cached);
-              
-              return cached || fetchPromise;
-            })
-          );
-        });
-      `;
-      const swBlob = new Blob([swCode], { type: 'application/javascript' });
-      const swUrl = URL.createObjectURL(swBlob);
-      navigator.serviceWorker.register(swUrl, { scope: './' }).then(reg => {
-        addLog('info', 'Service Worker 已注册');
-      }).catch(err => {
-        addLog('warn', 'SW注册失败(可能本地文件): ' + err.message);
-      });
-    }
-    
-    function updateOnlineStatus() {
-      const banner = document.getElementById('offlineBanner');
-      if (!navigator.onLine) {
-        banner.classList.add('show');
-        showToast('您已离线，部分功能可能受限', 'warning', 5000);
-      } else {
-        banner.classList.remove('show');
-      }
-    }
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-    updateOnlineStatus();
-    
-    // ==================== 电池状态 - 完美兼容所有浏览器包括Safari ====================
+    // ==================== 电池状态 - 增强版 ====================
     function updateBatteryStatus(battery) {
       const level = Math.round(battery.level * 100);
       const levelEl = document.getElementById('batteryLevel');
@@ -2220,7 +1760,6 @@
       const iconEl = document.getElementById('batteryIcon');
       const statusEl = document.getElementById('batteryStatus');
       
-      // 显示电池状态
       statusEl.style.display = 'flex';
       
       levelEl.style.width = level + '%';
@@ -2232,7 +1771,6 @@
         iconEl.classList.remove('battery-charging');
       }
       
-      // 低电量警告
       if (level <= 20 && !battery.charging) {
         levelEl.style.background = '#ff4530';
       } else if (level <= 50) {
@@ -2240,13 +1778,9 @@
       } else {
         levelEl.style.background = '#30d158';
       }
-      
-      addLog('info', `电池状态: ${level}%, ${battery.charging ? '充电中' : '未充电'}`);
     }
     
-    // 初始化电池状态 - 完美兼容Safari及所有浏览器
     function initBatteryStatus() {
-      // 标准API (Chrome, Edge, Firefox)
       if ('getBattery' in navigator) {
         navigator.getBattery().then(battery => {
           updateBatteryStatus(battery);
@@ -2258,38 +1792,22 @@
           fallbackBatteryDetection();
         });
       } 
-      // 旧版API
       else if ('battery' in navigator) {
         updateBatteryStatus(navigator.battery);
         navigator.battery.addEventListener('levelchange', () => updateBatteryStatus(navigator.battery));
         navigator.battery.addEventListener('chargingchange', () => updateBatteryStatus(navigator.battery));
         addLog('info', '使用旧版电池API');
       }
-      // Safari和其他不支持电池API的浏览器
       else {
         fallbackBatteryDetection();
       }
     }
     
-    // 备用电池检测方案
     function fallbackBatteryDetection() {
-      addLog('info', '浏览器不支持电池API，尝试使用备用方案');
-      
-      // 尝试使用Navigator.connection作为替代
-      if ('connection' in navigator) {
-        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (connection) {
-          addLog('info', `网络状态: ${connection.effectiveType}, 下行速度: ${connection.downlink} Mbps`);
-        }
-      }
-      
-      // 隐藏电池显示
+      addLog('info', '浏览器不支持电池API');
       document.getElementById('batteryStatus').style.display = 'none';
       
-      // 对于iOS设备，尝试使用特殊方法
       if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        addLog('info', '检测到iOS设备，电池API受限');
-        // iOS 16+ 部分支持，但需要用户交互
         document.addEventListener('touchstart', function iosBatteryCheck() {
           if ('getBattery' in navigator) {
             navigator.getBattery().then(battery => {
@@ -2309,26 +1827,20 @@
     // ==================== 内存优化系统 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
-      
-      // 强制垃圾回收提示
       if (window.gc) {
         try { window.gc(); } catch (e) {}
       }
-      
       addLog('info', '基础内存优化完成');
     }
     
     function advancedOptimizeMemory() {
       addLog('info', '开始高级内存优化(Beta)');
-      
-      // 基础优化
       optimizeMemory();
       
-      // 清理应用缓存
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.1') {
+            if (name !== 'htmlos-v3.2') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2336,7 +1848,6 @@
         });
       }
       
-      // 强制重绘
       document.body.style.display = 'none';
       setTimeout(() => {
         document.body.style.display = 'flex';
@@ -2345,32 +1856,26 @@
       addLog('info', '高级内存优化完成');
     }
     
-    // 启动自动内存优化
     function startAutoMemoryOptimize() {
-      if (memoryOptimizeTimer) {
-        clearInterval(memoryOptimizeTimer);
-      }
+      if (memoryOptimizeTimer) clearInterval(memoryOptimizeTimer);
       
       if (systemSettings.autoOptimizeMemory) {
         memoryOptimizeTimer = setInterval(() => {
           addLog('info', '执行自动基础内存优化');
           optimizeMemory();
-        }, 5 * 60 * 1000); // 每5分钟执行一次
+        }, 5 * 60 * 1000);
         addLog('info', '自动基础内存优化已启动');
       }
     }
     
-    // 启动高级自动内存优化
     function startAdvancedAutoMemoryOptimize() {
-      if (advancedMemoryOptimizeTimer) {
-        clearInterval(advancedMemoryOptimizeTimer);
-      }
+      if (advancedMemoryOptimizeTimer) clearInterval(advancedMemoryOptimizeTimer);
       
       if (systemSettings.advancedOptimizeMemory) {
         advancedMemoryOptimizeTimer = setInterval(() => {
           addLog('info', '执行自动高级内存优化');
           advancedOptimizeMemory();
-        }, 2 * 60 * 1000); // 每2分钟执行一次
+        }, 2 * 60 * 1000);
         addLog('info', '自动高级内存优化已启动');
       }
     }
@@ -2379,36 +1884,20 @@
     function toggleSandbox() {
       const sandboxToggle = document.getElementById('sandboxToggle');
       if (sandboxToggle.checked) {
-        // 用户想要关闭沙箱
-        sandboxToggle.checked = false; // 先取消勾选
-        document.getElementById('sandboxWarningModal').classList.add('show');
+        sandboxToggle.checked = false;
+        if (confirm('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n确定要关闭吗？')) {
+          systemSettings.sandboxEnabled = false;
+          updateSandboxState();
+          sandboxToggle.checked = true;
+          showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
+          addLog('warn', '沙箱已关闭，系统处于不安全状态！');
+        }
       } else {
-        // 用户想要开启沙箱
         systemSettings.sandboxEnabled = true;
         updateSandboxState();
         showToast('✅ 沙箱已开启', 'success');
         addLog('info', '沙箱已开启');
       }
-    }
-    
-    function closeSandboxWarning() {
-      document.getElementById('sandboxWarningModal').classList.remove('show');
-      document.getElementById('sandboxPasswordInput').value = '';
-    }
-    
-    function confirmDisableSandbox() {
-      const password = document.getElementById('sandboxPasswordInput').value;
-      if (password !== '1234') {
-        showToast('密码错误！', 'error');
-        return;
-      }
-      
-      systemSettings.sandboxEnabled = false;
-      updateSandboxState();
-      document.getElementById('sandboxToggle').checked = true;
-      closeSandboxWarning();
-      showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
-      addLog('warn', '沙箱已关闭，系统处于不安全状态！');
     }
     
     function updateSandboxState() {
@@ -2418,8 +1907,6 @@
       } else {
         appFrame.removeAttribute('sandbox');
       }
-      
-      // 保存设置
       dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
     }
     
@@ -2428,7 +1915,6 @@
       document.getElementById('userNameInput').value = currentUser.name;
       document.getElementById('userAvatarPreview').textContent = currentUser.avatar;
       
-      // 生成预设头像
       const avatarGrid = document.getElementById('avatarGrid');
       avatarGrid.innerHTML = '';
       presetAvatars.forEach(avatar => {
@@ -2439,18 +1925,9 @@
           document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
           div.classList.add('selected');
           document.getElementById('userAvatarPreview').textContent = avatar;
-          // 清空自定义输入框
           document.getElementById('customAvatarInput').value = '';
         };
         avatarGrid.appendChild(div);
-      });
-      
-      // 监听自定义头像输入
-      document.getElementById('customAvatarInput').addEventListener('input', function() {
-        if (this.value.trim()) {
-          document.getElementById('userAvatarPreview').textContent = this.value.trim();
-          document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
-        }
       });
       
       document.getElementById('userInfoModal').classList.add('show');
@@ -2460,9 +1937,17 @@
       document.getElementById('userInfoModal').classList.remove('show');
     }
     
+    function applyCustomAvatar() {
+      const customAvatar = document.getElementById('customAvatarInput').value.trim();
+      if (customAvatar) {
+        document.getElementById('userAvatarPreview').textContent = customAvatar;
+        document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
+        showToast('自定义头像已应用', 'success');
+      }
+    }
+    
     async function saveUserInfo() {
       const newName = document.getElementById('userNameInput').value.trim();
-      // 获取当前预览的头像（可能是预设或自定义）
       let newAvatar = document.getElementById('userAvatarPreview').textContent;
       
       if (!newName) {
@@ -2473,12 +1958,9 @@
       currentUser.name = newName;
       currentUser.avatar = newAvatar;
       
-      // 更新界面
       document.getElementById('userName').textContent = newName;
       document.getElementById('userIcon').textContent = newAvatar;
-      document.getElementById('currentUserDisplay').textContent = newName;
       
-      // 保存到数据库
       await dbPut(STORE_SETTINGS, { key: 'user_name', value: newName });
       await dbPut(STORE_SETTINGS, { key: 'user_avatar', value: newAvatar });
       
@@ -2489,11 +1971,10 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 11; // 升级数据库版本
+    const DB_VERSION = 12;
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
-    const STORE_DEV = 'devOptions';
     const STORE_STATS = 'stats';
     
     let db = null;
@@ -2509,7 +1990,6 @@
           if (!database.objectStoreNames.contains(STORE_APPS)) database.createObjectStore(STORE_APPS, { keyPath: 'file' });
           if (!database.objectStoreNames.contains(STORE_CONTENT)) database.createObjectStore(STORE_CONTENT, { keyPath: 'file' });
           if (!database.objectStoreNames.contains(STORE_SETTINGS)) database.createObjectStore(STORE_SETTINGS, { keyPath: 'key' });
-          if (!database.objectStoreNames.contains(STORE_DEV)) database.createObjectStore(STORE_DEV, { keyPath: 'key' });
           if (!database.objectStoreNames.contains(STORE_STATS)) database.createObjectStore(STORE_STATS, { keyPath: 'key' });
         };
       });
@@ -2593,18 +2073,15 @@
       };
     }
     
-    // ==================== 设置折叠分组功能 ====================
-    function toggleSettingGroup(groupId) {
-      const group = document.getElementById(groupId);
-      group.classList.toggle('collapsed');
-    }
-    
-    // 为所有设置组添加点击事件
+    // ==================== 设置标签页切换 ====================
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.setting-group-header').forEach(header => {
-        header.addEventListener('click', () => {
-          const group = header.parentElement;
-          group.classList.toggle('collapsed');
+      document.querySelectorAll('.settings-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+          
+          tab.classList.add('active');
+          document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
         });
       });
     });
@@ -2639,7 +2116,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 移动优化版 v3.1';
+    const VERSION = 'HTMLOS 极致优化版 v3.2';
     
     // 扩展颜色方案
     const colorPalette = [
@@ -2651,8 +2128,7 @@
     // 扩展emoji图标库
     const iconLibrary = [
       '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦', 
-      '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡', 
-      '💎', '👑', '🎁', '🎈', '🎉', '🎊', '🎓', '🏆', '🥇', '🎯', '🎲', '🎸', '🎹', '🎺', '🎻', '🥁', '🎤', '🎧', '📺', '📻'
+      '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡'
     ];
     
     const sizeOptions = ['small', 'medium', 'large', 'wide', 'big'];
@@ -2665,24 +2141,22 @@
       if (versionClickCount === 7) {
         devModeActive = true;
         dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'true' });
-        document.getElementById('devGroup').style.display = 'block';
+        document.getElementById('devTab').style.display = 'block';
         showToast('✅ 开发者模式已激活！', 'dev', 4000);
         addLog('info', '开发者模式已激活');
         versionClickCount = 0;
       } else if (versionClickCount < 7) {
-        showToast(`再点击 ${7 - versionClickCount} 次激活开发者模式 (${versionClickCount}/7)`, 'dev', 2000);
+        showToast(`再点击 ${7 - versionClickCount} 次激活开发者模式`, 'dev', 2000);
       }
     }
     
     function deactivateDevMode() {
       devModeActive = false;
       dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'false' });
-      document.getElementById('devGroup').style.display = 'none';
-      // 关闭所有调试功能
+      document.getElementById('devTab').style.display = 'none';
       window.fpsControl.toggle(false);
       document.getElementById('fpsToggle').checked = false;
       
-      // 关闭高级内存优化
       systemSettings.advancedOptimizeMemory = false;
       document.getElementById('advancedOptimizeMemoryToggle').checked = false;
       if (advancedMemoryOptimizeTimer) {
@@ -2712,6 +2186,27 @@
       });
     }
     
+    // ========== 本地壁纸上传 ==========
+    function uploadWallpaper() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageUrl = e.target.result;
+          document.getElementById('bgImageInput').value = imageUrl;
+          document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
+          showToast('壁纸已选择，点击保存应用', 'success');
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    }
+    
     // ========== 应用排序 ==========
     function showSortMenu() {
       document.getElementById('sortMenu').style.display = 'block';
@@ -2722,7 +2217,6 @@
       currentPage = 0;
       
       if (sortBy === 'size') {
-        // 按应用大小排序需要先获取所有应用的大小
         for (const app of installedApps) {
           const content = await getContentSafe(app.file);
           app._size = content ? content.length : 0;
@@ -2771,7 +2265,6 @@
       document.getElementById('appsContainer').scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // 双击顶部返回顶部
     let lastHeaderClick = 0;
     document.querySelector('.win-header').addEventListener('click', () => {
       if (!systemSettings.doubleClickTop) return;
@@ -2814,195 +2307,15 @@
       }
     }
     
-    // ========== 全屏应用信息功能 ==========
-    let currentAppInfoFile = null;
-    
-    async function showAppInfo(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) return;
-      
-      currentAppInfoFile = fileKey;
-      document.querySelector('.app-action-modal')?.remove();
-      
-      const content = await getContentSafe(fileKey);
-      const sizeKB = content ? Math.round(content.length / 1024 * 100) / 100 : 0;
-      const sizeBytes = content ? content.length : 0;
-      const usageCount = appUsageStats[fileKey] || 0;
-      
-      document.getElementById('appInfoTitle').textContent = `${app.icon || '📱'} ${app.name}`;
-      
-      const infoContent = document.getElementById('appInfoContent');
-      infoContent.innerHTML = `
-        <div class="app-info-card">
-          <h3>📋 基本信息</h3>
-          <div class="app-info-item">
-            <span class="app-info-label">应用名称</span>
-            <span class="app-info-value">${app.name}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">应用图标</span>
-            <span class="app-info-value">${app.icon || '📱'}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">文件标识</span>
-            <span class="app-info-value">${app.file}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">磁贴大小</span>
-            <span class="app-info-value">${sizeLabels[app.size || 'small']}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">应用颜色</span>
-            <span class="app-info-value" style="background:${app.customColor || app.color};padding:2px 8px;border-radius:4px;">${app.customColor || app.color}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">应用来源</span>
-            <span class="app-info-value">${app.source || '用户安装'}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">隐藏状态</span>
-            <span class="app-info-value">${app.hidden ? '已隐藏' : '正常显示'}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">锁定状态</span>
-            <span class="app-info-value">${app.locked ? '已锁定' : '未锁定'}</span>
-          </div>
-        </div>
-        
-        <div class="app-info-card">
-          <h3>📊 大小与统计</h3>
-          <div class="app-info-item">
-            <span class="app-info-label">文件大小</span>
-            <span class="app-info-value">${sizeKB} KB (${sizeBytes} 字节)</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">启动次数</span>
-            <span class="app-info-value">${usageCount} 次</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">安装时间</span>
-            <span class="app-info-value">${app.installTime ? new Date(app.installTime).toLocaleString() : '未知'}</span>
-          </div>
-          <div class="app-info-item">
-            <span class="app-info-label">最后更新</span>
-            <span class="app-info-value">${app.lastUpdated ? new Date(app.lastUpdated).toLocaleString() : '未知'}</span>
-          </div>
-        </div>
-        
-        <div class="app-info-card">
-          <h3>🛠️ 快捷操作</h3>
-          <div class="app-info-actions">
-            <button class="primary" onclick="launchAppFromInfo('${fileKey}')">🚀 启动应用</button>
-            <button class="secondary" onclick="updateAppFromInfo('${fileKey}')">📦 更新应用</button>
-            <button class="secondary" onclick="renameAppFromInfo('${fileKey}')">✏️ 重命名</button>
-            <button class="secondary" onclick="toggleHideFromInfo('${fileKey}')">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
-            <button class="secondary" onclick="toggleLockFromInfo('${fileKey}')">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
-            <button class="secondary" onclick="exportSingleApp('${fileKey}')">📤 导出应用</button>
-            ${app.source !== 'system' ? '<button class="danger" onclick="deleteAppFromInfo(\'' + fileKey + '\')">🗑️ 卸载应用</button>' : ''}
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('appInfoFullscreen').classList.add('show');
-      addLog('info', `查看应用信息: ${app.name}`);
-    }
-    
-    function closeAppInfo() {
-      document.getElementById('appInfoFullscreen').classList.remove('show');
-      currentAppInfoFile = null;
-    }
-    
-    // 修复：直接传递应用文件路径，避免变量被清空
-    function launchAppFromInfo(fileKey) {
-      closeAppInfo();
-      setTimeout(() => {
-        const element = document.querySelector(`[data-file="${fileKey}"]`);
-        launchApp(fileKey, element);
-      }, 300);
-    }
-    
-    function updateAppFromInfo(fileKey) {
-      updateAppFromFile(fileKey);
-      closeAppInfo();
-    }
-    
-    function renameAppFromInfo(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) return;
-      const newName = prompt('请输入新的应用名称：', app.name);
-      if (newName?.trim()) { 
-        app.name = escapeHtml(newName.trim()); 
-        saveApps(); 
-        showToast('已重命名', 'success', 1500);
-        showAppInfo(fileKey); // 刷新信息页面
-      }
-    }
-    
-    function toggleHideFromInfo(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (app) {
-        app.hidden = !app.hidden;
-        saveApps();
-        showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
-        showAppInfo(fileKey); // 刷新信息页面
-      }
-    }
-    
-    function toggleLockFromInfo(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (app) {
-        app.locked = !app.locked;
-        saveApps();
-        showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
-        showAppInfo(fileKey); // 刷新信息页面
-      }
-    }
-    
-    async function exportSingleApp(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) return;
-      
-      const content = await getContentSafe(app.file);
-      const blob = new Blob([content], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = app.name + '.html';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('✅ 应用已导出', 'success');
-    }
-    
-    async function deleteAppFromInfo(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (app && app.locked) {
-        showToast('应用已锁定，无法卸载', 'error');
-        return;
-      }
-      
-      if (!confirm('确定卸载此应用？')) return;
-      await deleteContentSafe(fileKey);
-      installedApps = installedApps.filter(a => a.file !== fileKey);
-      delete appUsageStats[fileKey];
-      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
-      saveApps();
-      closeAppInfo();
-      renderApps();
-      showToast('应用已卸载', 'info', 2000);
-      addLog('info', '卸载应用: ' + fileKey);
-    }
-    
     // ========== 系统原生调色盘功能 ==========
     function openSystemColorPicker(appFile) {
       const app = installedApps.find(a => a.file === appFile);
       if (!app) return;
       
-      // 创建隐藏的颜色输入框
       const colorInput = document.createElement('input');
       colorInput.type = 'color';
       colorInput.value = app.customColor || app.color || '#0078d7';
       
-      // 监听颜色变化
       colorInput.addEventListener('input', (e) => {
         changeAppColor(appFile, e.target.value);
       });
@@ -3012,7 +2325,6 @@
         showToast('颜色已更新', 'success', 1500);
       });
       
-      // 触发点击
       colorInput.click();
     }
     
@@ -3028,49 +2340,40 @@
       
       try { await openDB(); } catch (err) { addLog('error', '数据库初始化失败', err); }
       
-      // 加载使用统计
       const stats = await dbGet(STORE_STATS, 'appUsage');
       if (stats) appUsageStats = stats.value;
       
-      // 加载用户信息
       const userName = await dbGet(STORE_SETTINGS, 'user_name');
       const userAvatar = await dbGet(STORE_SETTINGS, 'user_avatar');
       if (userName) currentUser.name = userName.value;
       if (userAvatar) currentUser.avatar = userAvatar.value;
       
-      // 更新用户信息显示
       document.getElementById('userName').textContent = currentUser.name;
       document.getElementById('userIcon').textContent = currentUser.avatar;
-      document.getElementById('currentUserDisplay').textContent = currentUser.name;
       
-      // 加载系统设置
       await loadSystemSettings();
-      
       await loadInstalledApps();
       await loadSettings();
       initWallpaperPresets();
-      initBatteryStatus(); // 初始化电池状态（完美兼容Safari）
+      initBatteryStatus();
       
       const devSetting = await dbGet(STORE_SETTINGS, 'dev_mode');
       devModeActive = devSetting && devSetting.value === 'true';
       if (devModeActive) {
-        document.getElementById('devGroup').style.display = 'block';
+        document.getElementById('devTab').style.display = 'block';
       }
       
-      // 恢复调试设置
       const fpsState = await dbGet(STORE_SETTINGS, 'fps');
       if (fpsState?.value === 'on') {
         document.getElementById('fpsToggle').checked = true;
         window.fpsControl.toggle(true);
       }
       
-      // 恢复沙箱设置
       const sandboxState = await dbGet(STORE_SETTINGS, 'sandbox_enabled');
       systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
       document.getElementById('sandboxToggle').checked = !systemSettings.sandboxEnabled;
       updateSandboxState();
       
-      // 恢复内存优化设置
       const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
       systemSettings.autoOptimizeMemory = autoOptimizeState?.value === 'true';
       document.getElementById('autoOptimizeMemoryToggle').checked = systemSettings.autoOptimizeMemory;
@@ -3083,7 +2386,6 @@
         startAdvancedAutoMemoryOptimize();
       }
       
-      // 恢复用户设置
       const launchAnim = await dbGet(STORE_SETTINGS, 'launchAnim');
       if (launchAnim?.value === 'off') {
         document.getElementById('launchAnimToggle').checked = false;
@@ -3098,7 +2400,6 @@
         document.getElementById('pageIndicator').style.display = 'none';
       }
       
-      document.getElementById('mainContainer').style.display = 'flex';
       renderApps();
       setupSwipe();
       updateDateTime();
@@ -3106,7 +2407,6 @@
       setupSearch();
       setupPostMessageListener();
       
-      // 点击空白处关闭通知中心和排序菜单
       document.addEventListener('click', (e) => {
         if (!e.target.closest('#notificationCenter') && !e.target.closest('[onclick="toggleNotificationCenter()"]')) {
           document.getElementById('notificationCenter').classList.remove('show');
@@ -3117,15 +2417,12 @@
         if (!e.target.closest('#userInfoModal') && !e.target.closest('.win-user')) {
           document.getElementById('userInfoModal').classList.remove('show');
         }
-        if (!e.target.closest('#sandboxWarningModal') && !e.target.closest('#sandboxToggle')) {
-          document.getElementById('sandboxWarningModal').classList.remove('show');
-        }
         if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
           document.querySelector('.app-action-modal')?.remove();
         }
       });
       
-      addLog('info', 'HTMLOS v3.1 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.2 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3146,7 +2443,6 @@
       systemSettings.autoOptimizeMemory = map['auto_optimize_memory'] === 'true';
       systemSettings.advancedOptimizeMemory = map['advanced_optimize_memory'] === 'true';
       
-      // 更新设置界面
       document.getElementById('showSecondsToggle').checked = systemSettings.showSeconds;
       document.getElementById('time24Toggle').checked = systemSettings.time24;
       document.getElementById('showDateToggle').checked = systemSettings.showDate;
@@ -3171,7 +2467,6 @@
       systemSettings.autoOptimizeMemory = document.getElementById('autoOptimizeMemoryToggle').checked;
       systemSettings.advancedOptimizeMemory = document.getElementById('advancedOptimizeMemoryToggle').checked;
       
-      // 保存到数据库
       await dbPut(STORE_SETTINGS, { key: 'show_seconds', value: String(systemSettings.showSeconds) });
       await dbPut(STORE_SETTINGS, { key: 'time_24', value: String(systemSettings.time24) });
       await dbPut(STORE_SETTINGS, { key: 'show_date', value: String(systemSettings.showDate) });
@@ -3183,20 +2478,17 @@
       await dbPut(STORE_SETTINGS, { key: 'auto_optimize_memory', value: String(systemSettings.autoOptimizeMemory) });
       await dbPut(STORE_SETTINGS, { key: 'advanced_optimize_memory', value: String(systemSettings.advancedOptimizeMemory) });
       
-      // 启动/停止自动内存优化
       startAutoMemoryOptimize();
       if (devModeActive) {
         startAdvancedAutoMemoryOptimize();
       }
       
-      // 立即更新日期时间显示
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信 - 加固 ==========
+    // ========== iframe postMessage 通信 ==========
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
-        // 验证消息来源
         if (event.source !== document.getElementById('appFrame').contentWindow) return;
         
         const msg = event.data;
@@ -3216,7 +2508,6 @@
           case 'setTitle':
             if (msg.data?.title) document.getElementById('runningAppTitle').textContent = msg.data.title;
             break;
-          case 'notification':
           case 'toast':
             if (msg.data?.message) showToast(msg.data.message, msg.data.type || 'info', msg.data.duration || 3000);
             break;
@@ -3246,8 +2537,6 @@
               window.open(msg.data.url, '_blank', 'noopener,noreferrer');
             }
             break;
-          default:
-            addLog('debug', '未知消息动作: ' + msg.action);
         }
       });
     }
@@ -3259,7 +2548,7 @@
       }
     }
     
-    // ========== 数据加载 (IndexedDB) ==========
+    // ========== 数据加载 ==========
     async function loadInstalledApps() {
       try {
         const apps = await dbGetAll(STORE_APPS);
@@ -3327,12 +2616,10 @@
         document.body.className = `theme-${theme}`;
         await dbPut(STORE_SETTINGS, { key: 'theme', value: theme });
         
-        // 保存开发者设置
         const fpsState = document.getElementById('fpsToggle').checked;
         await dbPut(STORE_SETTINGS, { key: 'fps', value: fpsState ? 'on' : 'off' });
         window.fpsControl.toggle(fpsState);
         
-        // 保存新设置
         const launchAnimState = document.getElementById('launchAnimToggle').checked;
         await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimState ? 'on' : 'off' });
         const vibrationState = document.getElementById('vibrationToggle').checked;
@@ -3340,10 +2627,8 @@
         const pageIndicatorState = document.getElementById('pageIndicatorToggle').checked;
         await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
         
-        // 保存系统设置
         await saveSystemSettings();
         
-        // 更新页面指示器显示
         if (pageIndicatorState) {
           document.getElementById('pageIndicator').style.display = 'flex';
         } else {
@@ -3408,24 +2693,19 @@
       if (!container) return;
       container.innerHTML = '';
       
-      // 过滤隐藏应用
       let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
       
-      // 排序
       if (currentSort === 'name') {
         filteredApps.sort((a, b) => a.name.localeCompare(b.name, 'zh'));
       } else if (currentSort === 'installTime') {
         filteredApps.sort((a, b) => new Date(b.installTime) - new Date(a.installTime));
       } else if (currentSort === 'lastUsed') {
         filteredApps.sort((a, b) => (appUsageStats[b.file] || 0) - (appUsageStats[a.file] || 0));
-      } else if (currentSort === 'size') {
-        // 大小排序已经在sortApps函数中处理
       }
       
       const perPage = cols * 3;
       const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
       
-      // 确保currentPage在有效范围内
       if (currentPage < 0) currentPage = 0;
       if (currentPage >= totalPages) currentPage = totalPages - 1;
       
@@ -3434,7 +2714,6 @@
       const pageApps = filteredApps.slice(start, end);
       
       if (pageApps.length === 0 && filteredApps.length > 0) {
-        // 如果当前页没有应用但总应用数大于0，跳转到第一页
         currentPage = 0;
         renderApps();
         return;
@@ -3442,13 +2721,11 @@
       
       if (pageApps.length === 0) {
         container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>';
-        // 没有应用时隐藏分页按钮
         document.getElementById('navButtons').classList.add('hidden');
         updatePageIndicator(totalPages);
         return;
       }
       
-      // 使用文档片段优化DOM操作
       const fragment = document.createDocumentFragment();
       
       pageApps.forEach(app => {
@@ -3503,7 +2780,6 @@
       updatePageInfo(filteredApps.length, perPage);
       updatePageIndicator(totalPages);
       
-      // 只要有超过1页，就显示分页按钮
       if (totalPages > 1) {
         document.getElementById('navButtons').classList.remove('hidden');
       } else {
@@ -3511,40 +2787,7 @@
       }
     }
     
-    // ========== 应用更新和信息 ==========
-    async function updateAppContent(fileKey, newContent) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) return false;
-      await setContentSafe(fileKey, newContent);
-      app.lastUpdated = new Date().toISOString();
-      saveApps();
-      return true;
-    }
-    
-    async function updateAppFromFile(fileKey) {
-      const app = installedApps.find(a => a.file === fileKey);
-      if (!app) { showToast('应用不存在', 'error'); return; }
-      if (app.locked) { showToast('应用已锁定，无法更新', 'error'); return; }
-      
-      const input = document.createElement('input');
-      input.type='file'; input.accept='.html,.htm';
-      input.onchange=async(e)=>{
-        const file=e.target.files[0];
-        if(!file)return;
-        const reader=new FileReader();
-        reader.onload=async(e)=>{
-          if (await updateAppContent(fileKey, e.target.result)) {
-            showToast(`应用 "${app.name}" 更新成功！`, 'success');
-            document.querySelector('.app-action-modal')?.remove();
-            renderApps();
-          }
-        };
-        reader.readAsText(file);
-      };
-      input.click();
-    }
-    
-    // ========== 应用菜单 - 新增系统调色盘功能 ==========
+    // ========== 应用菜单 - 修复自定义图标保存问题 ==========
     function showActionMenu(app, element) {
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
@@ -3558,14 +2801,14 @@
         `<div class="color-swatch" style="background:${c};" onclick="changeAppColor('${app.file}','${c}');document.querySelector('.app-action-modal')?.remove()"></div>`
       ).join('');
       
-      // 添加系统调色盘按钮
       const systemColorButton = `<div class="color-swatch system-color-picker" onclick="openSystemColorPicker('${app.file}')">🎨</div>`;
       
       modal.innerHTML = `
         <h3 style="margin-bottom:15px;text-align:center;">${app.icon||'📱'} ${app.name}</h3>
         <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
           <div class="custom-icon-input">
-            <input type="text" id="customIconInput" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
+            <input type="text" id="customIconInput_${app.file}" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
+            <button onclick="applyCustomIcon('${app.file}')">应用</button>
           </div>
         </div>
         <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}${systemColorButton}</div></div>
@@ -3573,12 +2816,23 @@
           <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
         <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
         <button onclick="updateAppFromFile('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#0a84ff;border:none;color:#fff;cursor:pointer;border-radius:8px;">📦 更新应用</button>
-        <button onclick="showAppInfo('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">ℹ️ 应用信息</button>
         <button onclick="hideApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
         <button onclick="lockApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
         ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 卸载</button>`:''}
         <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>`;
       document.body.appendChild(modal);
+    }
+    
+    // 新增：应用自定义图标保存功能
+    function applyCustomIcon(appFile) {
+      const input = document.getElementById(`customIconInput_${appFile}`);
+      const customIcon = input.value.trim();
+      if (customIcon) {
+        changeAppIcon(appFile, customIcon);
+        document.querySelector('.app-action-modal')?.remove();
+      } else {
+        showToast('请输入图标', 'warning');
+      }
     }
     
     function renameApp(fileKey) {
@@ -3601,7 +2855,6 @@
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
       installedApps = installedApps.filter(a => a.file !== fileKey);
-      // 删除使用统计
       delete appUsageStats[fileKey];
       await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
       saveApps();
@@ -3616,7 +2869,6 @@
       const totalPages = Math.ceil(total/perPage) || 1;
       document.getElementById('pageInfo').textContent = `第 ${currentPage+1} / ${totalPages} 页`;
       
-      // 禁用/启用分页按钮
       document.getElementById('prevBtn').disabled = currentPage === 0;
       document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
     }
@@ -3654,7 +2906,6 @@
       container.addEventListener('touchmove', e=>{
         const dx=Math.abs(e.touches[0].clientX-sx);
         const dy=Math.abs(e.touches[0].clientY-sy);
-        // 只有当水平滑动距离明显大于垂直滑动距离时才认为是水平滑动
         if(dx>20 && dx>dy*1.5) swiping=true;
       },{passive:true});
       
@@ -3663,10 +2914,9 @@
         const dy=Math.abs(e.changedTouches[0].clientY-sy);
         const deltaTime=Date.now()-startTime;
         
-        // 滑动阈值：距离大于SWIPE_THRESHOLD，垂直距离小于30，时间小于500ms
         if(swiping && Math.abs(dx)>SWIPE_THRESHOLD && dy<30 && deltaTime<500){
-          if(dx>0) prevPage(); // 向右滑，上一页
-          else nextPage(); // 向左滑，下一页
+          if(dx>0) prevPage();
+          else nextPage();
         }
       },{passive:true});
     }
@@ -3680,22 +2930,18 @@
         container.innerHTML = '';
         
         if (term === '') {
-          // 清空搜索，恢复正常显示
           currentPage = 0;
           renderApps();
           return;
         }
         
-        // 搜索时隐藏分页
         document.getElementById('navButtons').classList.add('hidden');
         document.getElementById('pageIndicator').style.display = 'none';
         
-        // 转义正则表达式特殊字符
-        const escapedTerm = escapeRegex(term);
+        const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
         if (filtered.length===0) { container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>'; return; }
         
-        // 使用文档片段优化DOM操作
         const fragment = document.createDocumentFragment();
         
         filtered.forEach(app=>{
@@ -3703,7 +2949,6 @@
           div.className=`app-icon size-${app.size||'small'}`;
           div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
           
-          // 搜索关键词高亮
           const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
             `<span class="search-highlight">${match}</span>`
           );
@@ -3722,11 +2967,7 @@
       },300));
     }
     
-    function escapeRegex(string) {
-      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    
-    // ========== 安装应用 - 恢复v2.9单个文件逻辑 ==========
+    // ========== 安装应用 ==========
     function openInstaller() { document.getElementById('installModal').classList.add('show'); }
     function closeModal() { document.getElementById('installModal').classList.remove('show'); document.getElementById('installProgress').style.display='none'; }
     
@@ -3881,7 +3122,7 @@
       input.click();
     }
     
-    // ========== 应用启动/关闭 - 修复内存泄漏 ==========
+    // ========== 应用启动/关闭 ==========
     const launchApp = debounce(async function(filePath, iconElement) {
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
@@ -3894,7 +3135,6 @@
       const content = await getContentSafe(filePath);
       if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
       
-      // 更新使用统计
       appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
       await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
       
@@ -3906,10 +3146,8 @@
       document.getElementById('mainContainer').style.display = 'none';
       const appFrame = document.getElementById('appFrame');
       
-      // 更新沙箱状态
       updateSandboxState();
       
-      // 直接加载原始内容，不做任何修改
       appFrame.srcdoc = content;
       setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
       if (document.getElementById('vibrationToggle').checked && navigator.vibrate) navigator.vibrate(30);
@@ -3922,7 +3160,6 @@
       const main=document.getElementById('mainContainer'),fc=document.getElementById('appFrameContainer');
       main.style.display='flex'; main.style.flexDirection='column'; fc.classList.remove('show');
       
-      // 彻底销毁iframe，防止内存泄漏
       const oldFrame=document.getElementById('appFrame');
       const newFrame=document.createElement('iframe');
       newFrame.id='appFrame';
@@ -3963,7 +3200,6 @@
       }
       
       try {
-        // 只删除设置相关数据，保留应用和内容
         const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
         
@@ -3976,11 +3212,9 @@
         showToast('✅ 系统设置已恢复默认', 'success');
         addLog('info', '系统设置已恢复默认');
         
-        // 重新加载设置
         await loadSystemSettings();
         await loadSettings();
         
-        // 刷新页面应用更改
         location.reload();
       } catch (e) {
         showToast('恢复默认设置失败: ' + e.message, 'error');
@@ -4008,11 +3242,9 @@
         await dbClear(STORE_APPS);
         await dbClear(STORE_CONTENT);
         await dbClear(STORE_SETTINGS);
-        await dbClear(STORE_DEV);
         await dbClear(STORE_STATS);
       }catch(e){}
       localStorage.clear();
-      // 强制刷新页面，确保所有状态清空
       location.reload(true);
     }
     
@@ -4048,7 +3280,6 @@
             
             for(const app of data.apps){
               if(app.fileContent)await setContentSafe(app.file,app.fileContent);
-              // 合并时跳过已存在的应用
               if (merge && installedApps.find(a => a.file === app.file)) continue;
               installedApps.push({name:escapeHtml(app.name),file:app.file,icon:app.icon||'📱',color:app.color||colorPalette[0],customColor:app.customColor||app.color||colorPalette[0],size:app.size||'small',source:app.source||'user',installTime:app.installTime||new Date().toISOString(),lastUpdated:app.lastUpdated||new Date().toISOString(),hidden:app.hidden||false,locked:app.locked||false});
             }
@@ -4091,7 +3322,6 @@
       document.getElementById('fpsToggle').checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
       document.getElementById('pageIndicatorToggle').checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
       
-      // 获取内存使用信息
       let memoryInfo = '不支持';
       if (window.performance && window.performance.memory) {
         const usedMB = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
@@ -4107,14 +3337,12 @@
     function updateDateTime(){
       const now=new Date();
       
-      // 更新头部日期
       if (systemSettings.showDate) {
         document.getElementById('headerDate').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
       } else {
         document.getElementById('headerDate').textContent=now.toLocaleDateString('zh-CN',{weekday:'long'});
       }
       
-      // 更新时间显示
       const timeOptions = {
         hour: '2-digit',
         minute: '2-digit',
