@@ -2,8 +2,8 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>HTMLOS · Windows 8.1 风格 · 稳定版 v3.2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
+  <title>HTMLOS · 稳定版 v3.0</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -14,7 +14,15 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230078d7'/%3E%3Ctext x='50' y='50' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='40' font-family='sans-serif'%3EH%26lt%3B%26gt%3BO%3C/text%3E%3C/svg%3E">
   
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
     body {
       font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
       background: var(--bg, #1e5f9e) no-repeat center center fixed;
@@ -26,13 +34,12 @@
       flex-direction: column;
       transition: background 0.3s ease;
       overflow: hidden;
-      perspective: 1000px;
       /* 全局硬件加速 */
       transform: translateZ(0);
       will-change: background;
     }
     
-    /* 主题变量定义 - 最新CSS3玻璃质感 */
+    /* 主题变量定义 - 默认直角无动画 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -67,8 +74,8 @@
       --bottom-bg: rgba(255,255,255,0.12);
       --modal-bg: rgba(28,28,30,0.85);
       --btn-bg: rgba(255,255,255,0.22);
-      --backdrop-blur: blur(12px); /* 增强玻璃模糊效果 */
-      --transition-speed: 0.3s; /* 优化动画时长 */
+      --backdrop-blur: blur(8px);
+      --transition-speed: 0.2s;
       --input-bg: rgba(255,255,255,0.1);
       --input-border: 1px solid rgba(255,255,255,0.2);
     }
@@ -96,6 +103,7 @@
       align-items: center;
       font-size: 16px;
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       flex-shrink: 0;
       z-index: 100;
@@ -118,6 +126,10 @@
     .win-user:hover {
       transform: scale(1.02);
       background: rgba(255,255,255,0.1);
+    }
+    
+    .win-user:active {
+      transform: scale(0.98);
     }
     
     .win-user-icon {
@@ -150,6 +162,17 @@
       border: 1px solid var(--text-color);
       border-radius: 2px;
       position: relative;
+    }
+    
+    .battery-icon::after {
+      content: '';
+      position: absolute;
+      right: -3px;
+      top: 2px;
+      width: 2px;
+      height: 8px;
+      background: var(--text-color);
+      border-radius: 0 1px 1px 0;
     }
     
     .battery-level {
@@ -215,6 +238,7 @@
       color: var(--text-color);
       font-size: 15px;
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
     }
     
@@ -254,6 +278,7 @@
       color: var(--text-color);
       cursor: pointer;
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
     }
     
@@ -285,7 +310,7 @@
       transform: scale(1.2);
     }
     
-    /* 应用网格 - 磁贴系统优化 */
+    /* 应用网格 - 磁贴系统 */
     .apps-container {
       display: grid;
       grid-template-columns: repeat(var(--cols, 4), 1fr);
@@ -303,7 +328,7 @@
       will-change: scroll-position;
     }
     
-    /* 应用磁贴 - 深度优化 */
+    /* 应用磁贴 */
     .app-icon {
       background: var(--icon-bg, var(--card-bg));
       border: var(--card-border);
@@ -320,7 +345,6 @@
       padding: 8px;
       touch-action: manipulation;
       user-select: none;
-      -webkit-tap-highlight-color: transparent;
       overflow: hidden;
       width: 100%;
       height: 100%;
@@ -452,6 +476,7 @@
       border-radius: 30px;
       cursor: pointer;
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       min-width: 100px;
       transition: all var(--transition-speed) ease;
     }
@@ -467,7 +492,7 @@
       transform: none;
     }
     
-    /* 模态框 - 统一层级管理 */
+    /* 模态框 */
     .modal {
       display: none;
       position: fixed;
@@ -477,16 +502,9 @@
       justify-content: center;
       align-items: center;
       z-index: 250;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
     }
     
-    .modal.show { 
-      display: flex; 
-      opacity: 1;
-      visibility: visible;
-    }
+    .modal.show { display: flex; }
     
     .modal-content {
       background: var(--modal-bg);
@@ -500,16 +518,12 @@
       overflow-y: auto;
       border: var(--modal-border);
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       color: var(--text-color);
-      transform: scale(0.9);
       /* 性能优化 */
       transform: translateZ(0);
       will-change: transform, opacity;
-    }
-    
-    .modal.show .modal-content {
-      transform: scale(1);
     }
     
     .modal-content h2 { 
@@ -524,13 +538,14 @@
       z-index: 3000 !important;
     }
     
-    /* 设置折叠分组 - 重新设计 */
+    /* 设置折叠分组 */
     .setting-group {
       margin-bottom: 16px;
       border-radius: 12px;
       overflow: hidden;
       background: var(--btn-bg);
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       border: var(--card-border);
     }
     
@@ -700,6 +715,7 @@
       padding: 8px 15px; 
       background: var(--bottom-bg);
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
       display: flex;
       justify-content: center;
       gap: 12px;
@@ -728,7 +744,7 @@
       transform: scale(0.95);
     }
     
-    /* 应用框架容器 - 3D效果 */
+    /* 应用框架容器 */
     #appFrameContainer {
       position: fixed;
       top: 0; left: 0;
@@ -738,13 +754,15 @@
       display: none;
       flex-direction: column;
       transform-origin: center center;
-      transform: rotateY(-90deg) scale(0.8);
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
     
     #appFrameContainer.show { 
       display: flex;
-      transform: rotateY(0) scale(1);
+      transform: scale(1);
+      opacity: 1;
     }
     
     .app-navbar {
@@ -753,6 +771,7 @@
       padding: 10px 15px;
       background: rgba(0,0,0,0.8);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       gap: 10px;
       flex-shrink: 0;
     }
@@ -827,6 +846,7 @@
       text-align: center;
       border: 1px solid #ff4530;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     
     /* Toast 通知 */
@@ -844,6 +864,7 @@
     .toast-notification {
       background: rgba(30,30,32,0.95);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       color: #fff;
       padding: 12px 20px;
       border-radius: 10px;
@@ -882,6 +903,7 @@
       max-height: 60vh;
       background: rgba(30,30,32,0.95);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.15);
       z-index: 9998;
@@ -948,6 +970,7 @@
       border: var(--modal-border);
       color: #fff;
       backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .sys-info {
@@ -995,7 +1018,7 @@
       animation: launchPulse 0.2s ease-in-out;
     }
     
-    /* 图标选择面板 - 优化 */
+    /* 图标选择面板 */
     .icon-selector {
       margin: 15px 0;
     }
@@ -1041,12 +1064,10 @@
     
     .custom-icon-input {
       margin-top: 15px;
-      display: flex;
-      gap: 8px;
     }
     
     .custom-icon-input input {
-      flex: 1;
+      width: 100%;
       padding: 12px;
       background: var(--input-bg);
       border: var(--input-border);
@@ -1054,16 +1075,6 @@
       font-size: 20px;
       text-align: center;
       border-radius: 8px;
-    }
-    
-    .custom-icon-input button {
-      padding: 12px 16px;
-      background: var(--primary-color);
-      border: none;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
     }
     
     /* 离线提示横幅 */
@@ -1126,15 +1137,12 @@
       display: none;
       flex-direction: column;
       backdrop-filter: var(--backdrop-blur);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .app-info-fullscreen.show {
       display: flex;
-      opacity: 1;
-      visibility: visible;
+      animation: fadeIn 0.3s ease;
     }
     
     @keyframes fadeIn {
@@ -1316,33 +1324,6 @@
       transform: scale(1.1);
     }
     
-    /* 自定义颜色输入 */
-    .custom-color-input {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    
-    .custom-color-input input {
-      flex: 1;
-      padding: 8px 12px;
-      background: var(--input-bg);
-      border: var(--input-border);
-      color: white;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    
-    .custom-color-input button {
-      padding: 8px 16px;
-      background: var(--primary-color);
-      border: none;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    
     /* 恢复默认设置模态框样式 */
     .reset-modal-content {
       text-align: center;
@@ -1371,163 +1352,9 @@
       background: rgba(255, 159, 10, 0.1);
       border-radius: 8px;
     }
-    
-    /* 密码输入模态框 */
-    .password-modal {
-      z-index: 3500 !important;
-    }
-    
-    .password-modal-content {
-      text-align: center;
-      max-width: 350px;
-    }
-    
-    .password-modal-content h3 {
-      margin-bottom: 20px;
-      color: var(--primary-color);
-    }
-    
-    .password-modal-content input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      background: var(--input-bg);
-      border: var(--input-border);
-      color: white;
-      border-radius: 8px;
-      font-size: 16px;
-      text-align: center;
-    }
-    
-    /* 安装确认模态框 - 安卓风格 */
-    .install-confirm-modal {
-      z-index: 2800 !important;
-    }
-    
-    .install-confirm-content {
-      max-width: 380px;
-      text-align: center;
-    }
-    
-    .install-confirm-content .app-icon-large {
-      font-size: 64px;
-      margin-bottom: 15px;
-    }
-    
-    .install-confirm-content h3 {
-      margin-bottom: 10px;
-      font-weight: 400;
-    }
-    
-    .install-confirm-content .app-info {
-      margin-bottom: 20px;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-    
-    .install-confirm-content .install-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    
-    .install-confirm-content .install-actions button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    
-    .install-confirm-content .install-actions button.cancel {
-      background: var(--input-bg);
-      color: var(--text-color);
-      border: var(--input-border);
-    }
-    
-    .install-confirm-content .install-actions button.install {
-      background: var(--primary-color);
-      color: white;
-    }
-    
-    /* 安装完成模态框 */
-    .install-complete-modal {
-      z-index: 2800 !important;
-    }
-    
-    .install-complete-content {
-      max-width: 350px;
-      text-align: center;
-    }
-    
-    .install-complete-content .success-icon {
-      font-size: 64px;
-      margin-bottom: 15px;
-      color: #30d158;
-    }
-    
-    .install-complete-content h3 {
-      margin-bottom: 10px;
-      font-weight: 400;
-    }
-    
-    .install-complete-content .complete-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    
-    .install-complete-content .complete-actions button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    
-    .install-complete-content .complete-actions button.done {
-      background: var(--input-bg);
-      color: var(--text-color);
-      border: var(--input-border);
-    }
-    
-    .install-complete-content .complete-actions button.launch {
-      background: var(--primary-color);
-      color: white;
-    }
-    
-    /* 沙箱警告模态框 */
-    .sandbox-warning {
-      background: rgba(255,59,48,0.1);
-      border: 1px solid rgba(255,59,48,0.3);
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 20px;
-    }
-    
-    .sandbox-warning-title {
-      color: #ff3b30;
-      font-weight: 500;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .sandbox-warning-content {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-    
-    .sf-hidden {
-      display: none !important;
-    }
   </style>
 </head>
-<body>
+<body class="theme-sharp">
   <!-- Toast 通知容器 -->
   <div class="toast-container" id="toastContainer"></div>
   
@@ -1635,7 +1462,6 @@
         </div>
         <div class="custom-icon-input">
           <input type="text" id="customAvatarInput" placeholder="输入自定义头像Emoji" maxlength="4" />
-          <button onclick="saveCustomAvatar()">保存</button>
         </div>
       </div>
       
@@ -1646,62 +1472,23 @@
     </div>
   </div>
   
-  <!-- 密码输入模态框 -->
-  <div class="modal password-modal" id="passwordModal">
-    <div class="modal-content password-modal-content">
-      <h3 id="passwordModalTitle">请输入密码</h3>
-      <p id="passwordModalMessage" style="color: var(--text-secondary); margin-bottom: 15px;"></p>
-      <input type="password" id="passwordInput" placeholder="请输入密码" />
-      <div class="modal-actions">
-        <button onclick="closePasswordModal()">取消</button>
-        <button onclick="confirmPassword()" class="primary-btn">确认</button>
-      </div>
-    </div>
-  </div>
-  
   <!-- 关闭沙箱警告模态框 -->
   <div class="modal warning-modal" id="sandboxWarningModal">
     <div class="modal-content warning-modal-content">
       <h3>⚠️ 警告：关闭沙箱</h3>
-      <div class="sandbox-warning">
-        <div class="sandbox-warning-title">
-          <span>⚠️</span> 关闭安全沙箱有风险
-        </div>
-        <div class="sandbox-warning-content">
-          安全沙箱通过隔离应用运行环境来保护您的系统安全。关闭沙箱后，应用将获得完全的系统访问权限，恶意应用可能会窃取您的个人信息、修改系统文件或造成其他损害。
-          <br><br>
-          只有在您完全信任所有已安装和将要安装的应用时，才建议关闭沙箱。
-        </div>
-      </div>
+      <p>沙箱是HTMLOS的重要安全机制，它可以：</p>
+      <ul style="margin: 10px 0 10px 20px; color: var(--text-secondary);">
+        <li>隔离应用与主系统</li>
+        <li>防止恶意应用访问您的数据</li>
+        <li>限制应用的权限</li>
+        <li>保护您的隐私安全</li>
+      </ul>
+      <p class="warning-text">关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！</p>
+      <p>请输入密码确认关闭：</p>
+      <input type="password" id="sandboxPasswordInput" placeholder="密码：1234" style="width: 100%; padding: 8px; margin: 10px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <div class="modal-actions">
+        <button onclick="confirmDisableSandbox()" class="danger-btn">确认关闭</button>
         <button onclick="closeSandboxWarning()">取消</button>
-        <button onclick="requestPasswordForSandbox()" class="danger-btn">确认关闭</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- 安装确认模态框 -->
-  <div class="modal install-confirm-modal" id="installConfirmModal">
-    <div class="modal-content install-confirm-content">
-      <div class="app-icon-large" id="installAppIcon">📱</div>
-      <h3 id="installAppName">应用名称</h3>
-      <div class="app-info" id="installAppInfo">文件大小: 未知</div>
-      <div class="install-actions">
-        <button class="cancel" onclick="closeInstallConfirm()">取消</button>
-        <button class="install" id="installConfirmBtn" onclick="confirmInstall()">安装</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- 安装完成模态框 -->
-  <div class="modal install-complete-modal" id="installCompleteModal">
-    <div class="modal-content install-complete-content">
-      <div class="success-icon">✅</div>
-      <h3 id="installCompleteTitle">安装成功</h3>
-      <p id="installCompleteMessage" style="color: var(--text-secondary);"></p>
-      <div class="complete-actions" id="installCompleteActions">
-        <button class="done" onclick="closeInstallComplete()">完成</button>
-        <button class="launch" onclick="launchInstalledApp()">打开</button>
       </div>
     </div>
   </div>
@@ -1749,7 +1536,7 @@
           <div class="setting-item">
             <label>系统主题</label>
             <select id="themeSelect">
-              <option value="sharp">直角无动画</option>
+              <option value="sharp" selected>直角无动画</option>
               <option value="glass">玻璃质感+丝滑动画</option>
               <option value="dark">纯黑夜间模式</option>
             </select>
@@ -1924,29 +1711,6 @@
     </div>
   </div>
   
-  <!-- 设置密码模态框 -->
-  <div class="modal" id="setPasswordModal">
-    <div class="modal-content" style="max-width: 350px;">
-      <h3>🔑 设置系统密码</h3>
-      <div class="setting-item">
-        <label>当前密码</label>
-        <input type="password" id="currentPasswordInput" placeholder="留空表示无密码" />
-      </div>
-      <div class="setting-item">
-        <label>新密码</label>
-        <input type="password" id="newPasswordInput" placeholder="输入新密码" />
-      </div>
-      <div class="setting-item">
-        <label>确认新密码</label>
-        <input type="password" id="confirmPasswordInput" placeholder="再次输入新密码" />
-      </div>
-      <div class="modal-actions">
-        <button onclick="closeSetPasswordModal()">取消</button>
-        <button onclick="savePassword()" class="primary-btn">保存</button>
-      </div>
-    </div>
-  </div>
-  
   <!-- 恢复默认设置警告 -->
   <div class="hidden-modal" id="resetWarningModal">
     <div class="hidden-modal-content reset-modal-content">
@@ -1957,8 +1721,33 @@
       <div class="warning-text">
         注意：此操作不可撤销！
       </div>
-      <button onclick="requestPasswordForReset()" style="width: 100%; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer; margin-top: 15px;">确认恢复</button>
-      <button onclick="closeResetWarning()" style="width: 100%; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer; margin-top: 10px;">取消</button>
+      <p>请输入密码确认：</p>
+      <input type="password" id="resetPasswordInput" placeholder="默认密码 1234" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <br><br>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="confirmReset()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认恢复</button>
+        <button onclick="closeResetWarning()" style="flex:1; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer;">取消</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 格式化警告 -->
+  <div class="hidden-modal" id="formatWarningModal">
+    <div class="hidden-modal-content reset-modal-content">
+      <div class="warning-icon">🗑️</div>
+      <h3>警告：即将格式化系统</h3>
+      <p>此操作会删除所有用户应用并恢复默认设置。</p>
+      <p>所有数据将被永久删除！</p>
+      <div class="warning-text">
+        警告：此操作不可撤销！
+      </div>
+      <p>请输入密码确认：</p>
+      <input type="password" id="formatPasswordInput" placeholder="默认密码 1234" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <br><br>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="confirmFormat()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认格式化</button>
+        <button onclick="closeFormatWarning()" style="flex:1; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer;">取消</button>
+      </div>
     </div>
   </div>
   
@@ -2016,22 +1805,6 @@
       name: 'HTMLOS 用户',
       avatar: '👤'
     };
-    
-    // 系统安全设置 - 已移除安装密码验证
-    let securitySettings = {
-      systemPassword: '1234', // 默认密码1234
-      installRequirePassword: false, // 永久禁用安装密码
-      openLockedRequirePassword: true,
-      showInstallConfirm: true
-    };
-    
-    // 密码回调函数
-    let passwordCallback = null;
-    
-    // 待安装应用数据
-    let pendingInstallApps = [];
-    let currentInstallApp = null;
-    let isUpdateMode = false;
     
     // 预设头像库
     const presetAvatars = [
@@ -2200,7 +1973,6 @@
     function clearAllNotifications() {
       notifications = [];
       updateNotificationCenter();
-      // 不再添加"已清除所有通知"的通知
     }
     
     // 通知声音
@@ -2230,7 +2002,7 @@
     // ==================== Service Worker - 优化缓存策略 ====================
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'htmlos-v3.2';
+        const CACHE_NAME = 'htmlos-v3.0';
         const CACHE_WHITELIST = ['index.html', './'];
         
         self.addEventListener('install', event => {
@@ -2286,7 +2058,7 @@
     window.addEventListener('offline', updateOnlineStatus);
     updateOnlineStatus();
     
-    // ==================== 电池状态 - 彻底修复，移除模拟功能 ====================
+    // ==================== 电池状态 - 全浏览器兼容 ====================
     function updateBatteryStatus(battery) {
       const level = Math.round(battery.level * 100);
       const levelEl = document.getElementById('batteryLevel');
@@ -2318,9 +2090,9 @@
       addLog('info', `电池状态: ${level}%, ${battery.charging ? '充电中' : '未充电'}`);
     }
     
-    // 初始化电池状态
+    // 初始化电池状态 - 兼容所有浏览器包括Safari
     function initBatteryStatus() {
-      // 尝试使用标准API
+      // 标准API
       if ('getBattery' in navigator) {
         navigator.getBattery().then(battery => {
           updateBatteryStatus(battery);
@@ -2328,45 +2100,27 @@
           battery.addEventListener('chargingchange', () => updateBatteryStatus(battery));
           addLog('info', '使用标准电池API');
         }).catch(err => {
-          addLog('warn', '标准电池API失败，尝试旧API: ' + err.message);
-          // 尝试使用旧API
-          if ('battery' in navigator) {
-            updateBatteryStatus(navigator.battery);
-            navigator.battery.addEventListener('levelchange', () => updateBatteryStatus(navigator.battery));
-            navigator.battery.addEventListener('chargingchange', () => updateBatteryStatus(navigator.battery));
-            addLog('info', '使用旧版电池API');
-          } else {
-            // 不支持电池API，隐藏电池显示
-            document.getElementById('batteryStatus').style.display = 'none';
-            addLog('info', '浏览器不支持电池API，已隐藏电池显示');
-          }
+          addLog('warn', '标准电池API失败: ' + err.message);
+          document.getElementById('batteryStatus').style.display = 'none';
         });
-      } else if ('battery' in navigator) {
-        // 旧版API
+      } 
+      // 旧版API
+      else if ('battery' in navigator) {
         updateBatteryStatus(navigator.battery);
         navigator.battery.addEventListener('levelchange', () => updateBatteryStatus(navigator.battery));
         navigator.battery.addEventListener('chargingchange', () => updateBatteryStatus(navigator.battery));
         addLog('info', '使用旧版电池API');
-      } else {
-        // 不支持电池API，隐藏电池显示
+      }
+      // 不支持电池API
+      else {
         document.getElementById('batteryStatus').style.display = 'none';
         addLog('info', '浏览器不支持电池API，已隐藏电池显示');
       }
     }
     
-    // ==================== 内存优化系统 - 开关式自动运行 ====================
+    // ==================== 内存优化系统 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
-      
-      // 清理未使用的DOM元素
-      const unusedElements = document.querySelectorAll('.unused, [style*="display: none"]');
-      for (let i = 0; i < unusedElements.length; i++) {
-        if (unusedElements[i].id !== 'appFrameContainer' && 
-            unusedElements[i].id !== 'settingsModal' && 
-            unusedElements[i].id !== 'installModal') {
-          // 不删除重要的模态框
-        }
-      }
       
       // 强制垃圾回收提示
       if (window.gc) {
@@ -2386,16 +2140,13 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2') {
+            if (name !== 'htmlos-v3.0') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
           });
         });
       }
-      
-      // 清理IndexedDB中的临时数据
-      // 这里可以添加更多高级优化
       
       // 强制重绘
       document.body.style.display = 'none';
@@ -2436,45 +2187,6 @@
       }
     }
     
-    // ==================== 密码系统 ====================
-    function openPasswordModal(title, message, callback) {
-      document.getElementById('passwordModalTitle').textContent = title;
-      document.getElementById('passwordModalMessage').textContent = message;
-      document.getElementById('passwordInput').value = '';
-      passwordCallback = callback;
-      document.getElementById('passwordModal').classList.add('show');
-      document.getElementById('passwordInput').focus();
-    }
-    
-    function closePasswordModal() {
-      document.getElementById('passwordModal').classList.remove('show');
-      passwordCallback = null;
-    }
-    
-    function confirmPassword() {
-      const inputPassword = document.getElementById('passwordInput').value;
-      if (inputPassword === securitySettings.systemPassword) {
-        closePasswordModal();
-        if (passwordCallback) {
-          passwordCallback(true);
-        }
-      } else {
-        showToast('密码错误！', 'error');
-        document.getElementById('passwordInput').value = '';
-        document.getElementById('passwordInput').focus();
-      }
-    }
-    
-    // 密码验证包装函数
-    function verifyPassword(title, message, callback) {
-      if (securitySettings.systemPassword === '') {
-        // 无密码，直接通过
-        callback(true);
-      } else {
-        openPasswordModal(title, message, callback);
-      }
-    }
-    
     // ==================== 沙箱控制 ====================
     function toggleSandbox() {
       const sandboxToggle = document.getElementById('sandboxToggle');
@@ -2486,7 +2198,6 @@
         // 用户想要开启沙箱
         systemSettings.sandboxEnabled = true;
         updateSandboxState();
-        updateSandboxStatusDisplay();
         showToast('✅ 沙箱已开启', 'success');
         addLog('info', '沙箱已开启');
       }
@@ -2494,20 +2205,22 @@
     
     function closeSandboxWarning() {
       document.getElementById('sandboxWarningModal').classList.remove('show');
+      document.getElementById('sandboxPasswordInput').value = '';
     }
     
-    function requestPasswordForSandbox() {
+    function confirmDisableSandbox() {
+      const password = document.getElementById('sandboxPasswordInput').value;
+      if (password !== '1234') {
+        showToast('密码错误！', 'error');
+        return;
+      }
+      
+      systemSettings.sandboxEnabled = false;
+      updateSandboxState();
+      document.getElementById('sandboxToggle').checked = true;
       closeSandboxWarning();
-      verifyPassword('关闭沙箱', '请输入系统密码以关闭沙箱', (success) => {
-        if (success) {
-          systemSettings.sandboxEnabled = false;
-          updateSandboxState();
-          updateSandboxStatusDisplay();
-          document.getElementById('sandboxToggle').checked = true;
-          showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
-          addLog('warn', '沙箱已关闭，系统处于不安全状态！');
-        }
-      });
+      showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
+      addLog('warn', '沙箱已关闭，系统处于不安全状态！');
     }
     
     function updateSandboxState() {
@@ -2520,49 +2233,6 @@
       
       // 保存设置
       dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
-    }
-    
-    function updateSandboxStatusDisplay() {
-      // 沙箱状态显示已移至开发者选项
-    }
-    
-    // ==================== 密码设置 ====================
-    function openSetPasswordModal() {
-      document.getElementById('currentPasswordInput').value = '';
-      document.getElementById('newPasswordInput').value = '';
-      document.getElementById('confirmPasswordInput').value = '';
-      document.getElementById('setPasswordModal').classList.add('show');
-    }
-    
-    function closeSetPasswordModal() {
-      document.getElementById('setPasswordModal').classList.remove('show');
-    }
-    
-    async function savePassword() {
-      const currentPassword = document.getElementById('currentPasswordInput').value;
-      const newPassword = document.getElementById('newPasswordInput').value;
-      const confirmPassword = document.getElementById('confirmPasswordInput').value;
-      
-      // 验证当前密码
-      if (currentPassword !== securitySettings.systemPassword) {
-        showToast('当前密码错误！', 'error');
-        return;
-      }
-      
-      // 验证新密码
-      if (newPassword !== confirmPassword) {
-        showToast('两次输入的新密码不一致！', 'error');
-        return;
-      }
-      
-      securitySettings.systemPassword = newPassword;
-      
-      // 保存到数据库
-      await dbPut(STORE_SETTINGS, { key: 'system_password', value: newPassword });
-      
-      closeSetPasswordModal();
-      showToast('密码已保存', 'success');
-      addLog('info', '系统密码已更新');
     }
     
     // ==================== 用户信息管理 ====================
@@ -2587,22 +2257,19 @@
         avatarGrid.appendChild(div);
       });
       
+      // 监听自定义头像输入
+      document.getElementById('customAvatarInput').addEventListener('input', function() {
+        if (this.value.trim()) {
+          document.getElementById('userAvatarPreview').textContent = this.value.trim();
+          document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
+        }
+      });
+      
       document.getElementById('userInfoModal').classList.add('show');
     }
     
     function closeUserInfoModal() {
       document.getElementById('userInfoModal').classList.remove('show');
-    }
-    
-    function saveCustomAvatar() {
-      const customAvatar = document.getElementById('customAvatarInput').value.trim();
-      if (customAvatar) {
-        document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
-        document.getElementById('userAvatarPreview').textContent = customAvatar;
-        showToast('自定义头像已设置', 'success');
-      } else {
-        showToast('请输入有效的Emoji', 'error');
-      }
     }
     
     async function saveUserInfo() {
@@ -2634,7 +2301,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 12; // 升级数据库版本
+    const DB_VERSION = 10; // 升级数据库版本
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2782,17 +2449,22 @@
     let runningAppFile = null;
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
-    const SWIPE_THRESHOLD = 80; // 增加滑动阈值，防止误触
-    const VERSION = 'HTMLOS 8.1 风格 · 稳定版 v3.2';
+    const SWIPE_THRESHOLD = 80;
+    const FORMAT_PASSWORD = '1234';
+    const VERSION = 'HTMLOS 稳定版 v3.0';
     
-    // 优化后的颜色方案 - 移除了一个颜色，添加自定义调色板
-    const colorPalette = ['#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e', '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#e3008c'];
+    // 扩展颜色方案
+    const colorPalette = [
+      '#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e',
+      '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#e3008c', '#6e41e2',
+      '#00b294', '#009e49', '#bad80a', '#fff100', '#ff8c00', '#e81123', '#ec008c', '#68217a'
+    ];
     
-    // 大幅扩展emoji图标库
+    // 扩展emoji图标库
     const iconLibrary = [
       '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦', 
       '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡', 
-      '💎', '👑', '🎁', '🎈', '🎉', '🎊', '🎋', '🎍', '🎓', '🏆', '🥇', '🎯', '🎲', '🎸', '🎹', '🎺', '🎻', '🥁', '🎤', '🎧'
+      '💎', '👑', '🎁', '🎈', '🎉', '🎊', '🎓', '🏆', '🥇', '🎯', '🎲', '🎸', '🎹', '🎺', '🎻', '🥁', '🎤', '🎧', '📺', '📻'
     ];
     
     const sizeOptions = ['small', 'medium', 'large', 'wide', 'big'];
@@ -3132,106 +2804,6 @@
       addLog('info', '卸载应用: ' + fileKey);
     }
     
-    // ========== 安卓风格安装器 ==========
-    function closeInstallConfirm() {
-      document.getElementById('installConfirmModal').classList.remove('show');
-      currentInstallApp = null;
-      pendingInstallApps = [];
-    }
-    
-    function closeInstallComplete() {
-      document.getElementById('installCompleteModal').classList.remove('show');
-      currentInstallApp = null;
-      pendingInstallApps = [];
-      renderApps();
-    }
-    
-    function showInstallConfirm(app, isUpdate = false) {
-      document.getElementById('installAppIcon').textContent = app.icon || '📱';
-      document.getElementById('installAppName').textContent = app.name;
-      document.getElementById('installAppInfo').textContent = `文件大小: ${app.sizeKB} KB`;
-      document.getElementById('installConfirmBtn').textContent = isUpdate ? '更新' : '安装';
-      isUpdateMode = isUpdate;
-      
-      document.getElementById('installConfirmModal').classList.add('show');
-    }
-    
-    function showInstallComplete(successCount, totalCount, appName = null) {
-      if (totalCount === 1 && appName) {
-        document.getElementById('installCompleteTitle').textContent = `${isUpdateMode ? '更新' : '安装'}成功`;
-        document.getElementById('installCompleteMessage').textContent = `"${appName}" 已成功${isUpdateMode ? '更新' : '安装'}`;
-        document.getElementById('installCompleteActions').innerHTML = `
-          <button class="done" onclick="closeInstallComplete()">完成</button>
-          <button class="launch" onclick="launchInstalledApp()">打开</button>
-        `;
-      } else {
-        document.getElementById('installCompleteTitle').textContent = `${isUpdateMode ? '更新' : '安装'}完成`;
-        document.getElementById('installCompleteMessage').textContent = `成功: ${successCount} | 失败: ${totalCount - successCount}`;
-        document.getElementById('installCompleteActions').innerHTML = `
-          <button class="done" onclick="closeInstallComplete()">完成</button>
-        `;
-      }
-      
-      document.getElementById('installCompleteModal').classList.add('show');
-    }
-    
-    function launchInstalledApp() {
-      if (currentInstallApp) {
-        closeInstallComplete();
-        setTimeout(() => {
-          const element = document.querySelector(`[data-file="${currentInstallApp.file}"]`);
-          launchApp(currentInstallApp.file, element);
-        }, 300);
-      }
-    }
-    
-    async function confirmInstall() {
-      closeInstallConfirm();
-      
-      if (pendingInstallApps.length > 0) {
-        // 多文件安装
-        let successCount = 0;
-        const totalCount = pendingInstallApps.length;
-        
-        for (let i = 0; i < pendingInstallApps.length; i++) {
-          const app = pendingInstallApps[i];
-          try {
-            await setContentSafe(app.file, app.content);
-            const existingIndex = installedApps.findIndex(a => a.name === app.name);
-            if (existingIndex !== -1) {
-              installedApps[existingIndex].file = app.file;
-              installedApps[existingIndex].lastUpdated = new Date().toISOString();
-            } else {
-              installedApps.push(app);
-            }
-            successCount++;
-          } catch (err) {
-            addLog('error', `安装失败: ${app.name}`, err);
-          }
-        }
-        
-        saveApps();
-        showInstallComplete(successCount, totalCount);
-      } else if (currentInstallApp) {
-        // 单文件安装/更新
-        try {
-          await setContentSafe(currentInstallApp.file, currentInstallApp.content);
-          const existingIndex = installedApps.findIndex(a => a.name === currentInstallApp.name);
-          if (existingIndex !== -1) {
-            installedApps[existingIndex].file = currentInstallApp.file;
-            installedApps[existingIndex].lastUpdated = new Date().toISOString();
-          } else {
-            installedApps.push(currentInstallApp);
-          }
-          saveApps();
-          showInstallComplete(1, 1, currentInstallApp.name);
-        } catch (err) {
-          showToast(`${isUpdateMode ? '更新' : '安装'}失败: ${err.message}`, 'error');
-          addLog('error', `${isUpdateMode ? '更新' : '安装'}失败: ${currentInstallApp.name}`, err);
-        }
-      }
-    }
-    
     // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', async () => {
       window.addEventListener('error', (e) => {
@@ -3253,17 +2825,6 @@
       const userAvatar = await dbGet(STORE_SETTINGS, 'user_avatar');
       if (userName) currentUser.name = userName.value;
       if (userAvatar) currentUser.avatar = userAvatar.value;
-      
-      // 加载安全设置
-      const systemPassword = await dbGet(STORE_SETTINGS, 'system_password');
-      const openLockedRequirePassword = await dbGet(STORE_SETTINGS, 'open_locked_require_password');
-      const showInstallConfirm = await dbGet(STORE_SETTINGS, 'show_install_confirm');
-      
-      // 如果没有保存的密码，使用默认密码1234
-      securitySettings.systemPassword = systemPassword?.value || '1234';
-      securitySettings.installRequirePassword = false; // 永久禁用
-      securitySettings.openLockedRequirePassword = openLockedRequirePassword?.value !== 'false';
-      securitySettings.showInstallConfirm = showInstallConfirm?.value !== 'false';
       
       // 更新用户信息显示
       document.getElementById('userName').textContent = currentUser.name;
@@ -3347,21 +2908,9 @@
         if (!e.target.closest('#sandboxWarningModal') && !e.target.closest('#sandboxToggle')) {
           document.getElementById('sandboxWarningModal').classList.remove('show');
         }
-        if (!e.target.closest('#passwordModal')) {
-          closePasswordModal();
-        }
-        if (!e.target.closest('#setPasswordModal')) {
-          closeSetPasswordModal();
-        }
-        if (!e.target.closest('#installConfirmModal')) {
-          closeInstallConfirm();
-        }
-        if (!e.target.closest('#installCompleteModal')) {
-          closeInstallComplete();
-        }
       });
       
-      addLog('info', 'HTMLOS 3.2 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3762,11 +3311,6 @@
       if (!app) { showToast('应用不存在', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法更新', 'error'); return; }
       
-      // 直接更新，无需密码
-      proceedWithUpdate(fileKey, app);
-    }
-    
-    function proceedWithUpdate(fileKey, app) {
       const input = document.createElement('input');
       input.type='file'; input.accept='.html,.htm';
       input.onchange=async(e)=>{
@@ -3774,28 +3318,9 @@
         if(!file)return;
         const reader=new FileReader();
         reader.onload=async(e)=>{
-          const content = e.target.result;
-          const sizeKB = Math.round(content.length / 1024 * 100) / 100;
-          
-          currentInstallApp = {
-            name: app.name,
-            file: fileKey,
-            icon: app.icon,
-            color: app.color,
-            customColor: app.customColor,
-            size: app.size,
-            source: app.source,
-            installTime: app.installTime,
-            lastUpdated: new Date().toISOString(),
-            content: content,
-            sizeKB: sizeKB
-          };
-          
-          if (securitySettings.showInstallConfirm) {
-            showInstallConfirm(currentInstallApp, true);
-          } else {
-            await updateAppContent(fileKey, content);
+          if (await updateAppContent(fileKey, e.target.result)) {
             showToast(`应用 "${app.name}" 更新成功！`, 'success');
+            document.querySelector('.app-action-modal')?.remove();
             renderApps();
           }
         };
@@ -3804,7 +3329,7 @@
       input.click();
     }
     
-    // ========== 应用菜单 - 添加自定义调色板 ==========
+    // ========== 应用菜单 ==========
     function showActionMenu(app, element) {
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
@@ -3823,15 +3348,9 @@
         <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
           <div class="custom-icon-input">
             <input type="text" id="customIconInput" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
-            <button onclick="saveCustomAppIcon('${app.file}')">保存</button>
           </div>
         </div>
-        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div>
-          <div class="custom-color-input">
-            <input type="text" id="customColorInput" placeholder="输入自定义颜色 #ff0000" maxlength="7" value="${app.customColor||app.color||'#0078d7'}" />
-            <button onclick="saveCustomAppColor('${app.file}')">应用</button>
-          </div>
-        </div>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div></div>
         <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">📐 磁贴大小 (当前: ${sizeLabels[app.size||'small']})</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
         <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
@@ -3842,28 +3361,6 @@
         ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 卸载</button>`:''}
         <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>`;
       document.body.appendChild(modal);
-    }
-    
-    function saveCustomAppIcon(fileKey) {
-      const customIcon = document.getElementById('customIconInput').value.trim();
-      if (customIcon) {
-        changeAppIcon(fileKey, customIcon);
-        document.querySelector('.app-action-modal')?.remove();
-      } else {
-        showToast('请输入有效的Emoji', 'error');
-      }
-    }
-    
-    function saveCustomAppColor(fileKey) {
-      const customColor = document.getElementById('customColorInput').value.trim();
-      // 验证颜色格式
-      const colorRegex = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
-      if (colorRegex.test(customColor)) {
-        changeAppColor(fileKey, customColor);
-        document.querySelector('.app-action-modal')?.remove();
-      } else {
-        showToast('请输入有效的颜色格式 (#ff0000)', 'error');
-      }
     }
     
     function renameApp(fileKey) {
@@ -3924,9 +3421,9 @@
       } 
     }
     
-    // ========== 滑动页面优化 - 扩大滑动区域，调整灵敏度 ==========
+    // ========== 滑动页面优化 ==========
     function setupSwipe() {
-      const container = document.getElementById('mainContainer'); // 改为整个主容器可滑动
+      const container = document.getElementById('mainContainer');
       let sx=0, sy=0, swiping=false, startTime=0;
       
       container.addEventListener('touchstart', e=>{
@@ -4011,19 +3508,11 @@
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
-    // ========== 安装应用 - 安卓风格优化 - 已移除密码验证 ==========
-    function openInstaller() { 
-      // 直接打开安装器，无需密码
-      document.getElementById('installModal').classList.add('show');
-    }
-    
-    function closeModal() { 
-      document.getElementById('installModal').classList.remove('show'); 
-      document.getElementById('installProgress').style.display='none'; 
-    }
+    // ========== 安装应用 - 恢复v2.9单个文件逻辑 ==========
+    function openInstaller() { document.getElementById('installModal').classList.add('show'); }
+    function closeModal() { document.getElementById('installModal').classList.remove('show'); document.getElementById('installProgress').style.display='none'; }
     
     async function showFilePicker() {
-      closeModal();
       const input = document.createElement('input');
       input.type='file'; input.accept='.html,.htm';
       input.onchange=async(e)=>{
@@ -4031,48 +3520,15 @@
         if(!file)return;
         const reader=new FileReader();
         reader.onload=async(e)=>{
-          try {
-            const content=e.target.result;
-            const sizeKB = Math.round(content.length / 1024 * 100) / 100;
-            const fileName='user/apps/'+Date.now()+'_'+file.name;
-            const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-            const now=new Date().toISOString();
-            
-            currentInstallApp = {
-              name: escapeHtml(file.name.replace(/\.html?$/i,'')),
-              file: fileName,
-              icon: '📱',
-              color: color,
-              customColor: color,
-              size: 'small',
-              source: 'user',
-              installTime: now,
-              lastUpdated: now,
-              hidden: false,
-              locked: false,
-              content: content,
-              sizeKB: sizeKB
-            };
-            
-            if (securitySettings.showInstallConfirm) {
-              showInstallConfirm(currentInstallApp, false);
-            } else {
-              await setContentSafe(fileName, content);
-              installedApps.push(currentInstallApp);
-              saveApps();
-              currentPage=0;
-              renderApps();
-              showToast('安装成功！', 'success');
-              addLog('info','安装应用: '+file.name);
-            }
-          } catch (err) {
-            showToast('安装失败: ' + err.message, 'error');
-            addLog('error', '单文件安装失败', err);
-          }
-        };
-        reader.onerror = (err) => {
-          showToast('读取文件失败: ' + err.message, 'error');
-          addLog('error', '读取文件失败', err);
+          const content=e.target.result;
+          const fileName='user/apps/'+Date.now()+'_'+file.name;
+          await setContentSafe(fileName,content);
+          const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+          const now=new Date().toISOString();
+          installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fileName,icon:'📱',color:color,customColor:color,size:'small',source:'user',installTime:now,lastUpdated:now,hidden:false,locked:false});
+          saveApps(); closeModal(); currentPage=0; renderApps();
+          showToast('安装成功！', 'success');
+          addLog('info','安装应用: '+file.name);
         };
         reader.readAsText(file);
       };
@@ -4080,7 +3536,6 @@
     }
     
     async function showMultiFilePicker() {
-      closeModal();
       const input = document.createElement('input');
       input.type='file'; input.multiple=true; input.accept='.html,.htm';
       const pd=document.getElementById('installProgress'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
@@ -4090,12 +3545,11 @@
         const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
         if(files.length===0){showToast('没有选择任何HTML文件','warning');pd.style.display='none';return;}
         
-        pendingInstallApps = [];
-        
+        let sc=0,fc=0;
         for(let i=0;i<files.length;i++){
           const file=files[i];
           pf.style.width=Math.round((i/files.length)*100)+'%';
-          pt.textContent=`正在处理 ${i+1}/${files.length}: ${file.name}`;
+          pt.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
           
           try{
             await new Promise((resolve,reject)=>{
@@ -4104,25 +3558,17 @@
                 try{
                   const c=e.target.result;
                   const fn='user/apps/'+Date.now()+'_'+file.name;
-                  const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-                  const n=new Date().toISOString();
-                  const sizeKB = Math.round(c.length / 1024 * 100) / 100;
-                  
-                  pendingInstallApps.push({
-                    name: escapeHtml(file.name.replace(/\.html?$/i,'')),
-                    file: fn,
-                    icon: '📱',
-                    color: cl,
-                    customColor: cl,
-                    size: 'small',
-                    source: 'user',
-                    installTime: n,
-                    lastUpdated: n,
-                    hidden: false,
-                    locked: false,
-                    content: c,
-                    sizeKB: sizeKB
-                  });
+                  await setContentSafe(fn,c);
+                  const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
+                  if(ex!==-1){
+                    installedApps[ex].file=fn;
+                    installedApps[ex].lastUpdated=new Date().toISOString();
+                  }else{
+                    const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+                    const n=new Date().toISOString();
+                    installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fn,icon:'📱',color:cl,customColor:cl,size:'small',source:'user',installTime:n,lastUpdated:n,hidden:false,locked:false});
+                  }
+                  sc++;
                   resolve();
                 }catch(err){
                   reject(err);
@@ -4132,57 +3578,28 @@
               r.readAsText(file);
             });
           }catch(err){
-            addLog('error', '处理文件失败: ' + file.name, err);
+            fc++;
+            addLog('error', '安装失败: ' + file.name, err);
           }
         }
         
         pf.style.width='100%'; 
-        pd.style.display='none';
+        pt.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
+        saveApps(); 
+        renderApps();
         
-        if (pendingInstallApps.length === 1) {
-          // 单个文件，显示确认对话框
-          currentInstallApp = pendingInstallApps[0];
-          pendingInstallApps = [];
-          if (securitySettings.showInstallConfirm) {
-            showInstallConfirm(currentInstallApp, false);
-          } else {
-            await setContentSafe(currentInstallApp.file, currentInstallApp.content);
-            installedApps.push(currentInstallApp);
-            saveApps();
-            renderApps();
-            showToast('安装成功！', 'success');
-          }
-        } else if (pendingInstallApps.length > 1) {
-          // 多个文件，直接安装
-          let successCount = 0;
-          for (let i = 0; i < pendingInstallApps.length; i++) {
-            const app = pendingInstallApps[i];
-            try {
-              await setContentSafe(app.file, app.content);
-              const existingIndex = installedApps.findIndex(a => a.name === app.name);
-              if (existingIndex !== -1) {
-                installedApps[existingIndex].file = app.file;
-                installedApps[existingIndex].lastUpdated = new Date().toISOString();
-              } else {
-                installedApps.push(app);
-              }
-              successCount++;
-            } catch (err) {
-              addLog('error', '安装失败: ' + app.name, err);
-            }
-          }
-          
-          saveApps();
-          renderApps();
-          showInstallComplete(successCount, pendingInstallApps.length);
-        }
+        setTimeout(()=>{
+          pd.style.display='none';
+          closeModal();
+          showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
+          addLog('info',`多文件安装完成: ${sc}成功, ${fc}失败`);
+        },1500);
       };
       
       input.click();
     }
     
     async function showFolderPicker() {
-      closeModal();
       const input=document.createElement('input');
       input.type='file'; input.webkitdirectory=true; input.multiple=true; input.accept='.html,.htm';
       const pd=document.getElementById('installProgress'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
@@ -4192,12 +3609,11 @@
         const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
         if(files.length===0){showToast('文件夹中没有HTML文件','warning');pd.style.display='none';return;}
         
-        pendingInstallApps = [];
-        
+        let sc=0,fc=0;
         for(let i=0;i<files.length;i++){
           const file=files[i];
           pf.style.width=Math.round((i/files.length)*100)+'%';
-          pt.textContent=`正在处理 ${i+1}/${files.length}: ${file.name}`;
+          pt.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
           
           try{
             await new Promise((resolve,reject)=>{
@@ -4206,25 +3622,17 @@
                 try{
                   const c=e.target.result;
                   const fn='user/apps/'+Date.now()+'_'+file.name;
-                  const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-                  const n=new Date().toISOString();
-                  const sizeKB = Math.round(c.length / 1024 * 100) / 100;
-                  
-                  pendingInstallApps.push({
-                    name: escapeHtml(file.name.replace(/\.html?$/i,'')),
-                    file: fn,
-                    icon: '📱',
-                    color: cl,
-                    customColor: cl,
-                    size: 'small',
-                    source: 'user',
-                    installTime: n,
-                    lastUpdated: n,
-                    hidden: false,
-                    locked: false,
-                    content: c,
-                    sizeKB: sizeKB
-                  });
+                  await setContentSafe(fn,c);
+                  const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
+                  if(ex!==-1){
+                    installedApps[ex].file=fn;
+                    installedApps[ex].lastUpdated=new Date().toISOString();
+                  }else{
+                    const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+                    const n=new Date().toISOString();
+                    installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fn,icon:'📱',color:cl,customColor:cl,size:'small',source:'user',installTime:n,lastUpdated:n,hidden:false,locked:false});
+                  }
+                  sc++;
                   resolve();
                 }catch(err){
                   reject(err);
@@ -4234,103 +3642,61 @@
               r.readAsText(file);
             });
           }catch(err){
-            addLog('error', '处理文件失败: ' + file.name, err);
+            fc++;
+            addLog('error', '安装失败: ' + file.name, err);
           }
         }
         
         pf.style.width='100%'; 
-        pd.style.display='none';
+        pt.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
+        saveApps(); 
+        renderApps();
         
-        if (pendingInstallApps.length === 1) {
-          // 单个文件，显示确认对话框
-          currentInstallApp = pendingInstallApps[0];
-          pendingInstallApps = [];
-          if (securitySettings.showInstallConfirm) {
-            showInstallConfirm(currentInstallApp, false);
-          } else {
-            await setContentSafe(currentInstallApp.file, currentInstallApp.content);
-            installedApps.push(currentInstallApp);
-            saveApps();
-            renderApps();
-            showToast('安装成功！', 'success');
-          }
-        } else if (pendingInstallApps.length > 1) {
-          // 多个文件，直接安装
-          let successCount = 0;
-          for (let i = 0; i < pendingInstallApps.length; i++) {
-            const app = pendingInstallApps[i];
-            try {
-              await setContentSafe(app.file, app.content);
-              const existingIndex = installedApps.findIndex(a => a.name === app.name);
-              if (existingIndex !== -1) {
-                installedApps[existingIndex].file = app.file;
-                installedApps[existingIndex].lastUpdated = new Date().toISOString();
-              } else {
-                installedApps.push(app);
-              }
-              successCount++;
-            } catch (err) {
-              addLog('error', '安装失败: ' + app.name, err);
-            }
-          }
-          
-          saveApps();
-          renderApps();
-          showInstallComplete(successCount, pendingInstallApps.length);
-        }
+        setTimeout(()=>{
+          pd.style.display='none';
+          closeModal();
+          showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
+          addLog('info',`文件夹安装完成: ${sc}成功, ${fc}失败`);
+        },1500);
       };
       
       input.click();
     }
     
-    // ========== 应用启动/关闭 - 彻底修复内存泄漏 ==========
+    // ========== 应用启动/关闭 - 修复内存泄漏 ==========
     const launchApp = debounce(async function(filePath, iconElement) {
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
       
-      // 检查是否是锁定应用且需要密码
-      if (app.locked && securitySettings.openLockedRequirePassword) {
-        verifyPassword('打开应用', `请输入密码以打开"${app.name}"`, (success) => {
-          if (success) {
-            proceedWithLaunch(filePath, iconElement, app);
-          }
-        });
-      } else {
-        proceedWithLaunch(filePath, iconElement, app);
-      }
-    }, 300);
-    
-    function proceedWithLaunch(filePath, iconElement, app) {
       if (document.getElementById('launchAnimToggle').checked && iconElement) {
         iconElement.classList.add('launch-anim');
         setTimeout(()=>iconElement.classList.remove('launch-anim'),300);
       }
       
-      getContentSafe(filePath).then(content => {
-        if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
-        
-        // 更新使用统计
-        appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
-        dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
-        
-        runningAppFile = filePath;
-        document.getElementById('runningAppTitle').textContent = (app.icon?app.icon+' ':'') + app.name;
-        populateSwitchAppSelect();
-        const frameCont = document.getElementById('appFrameContainer');
-        frameCont.classList.add('show');
-        document.getElementById('mainContainer').style.display = 'none';
-        const appFrame = document.getElementById('appFrame');
-        
-        // 更新沙箱状态
-        updateSandboxState();
-        
-        // 直接加载原始内容，不做任何修改
-        appFrame.srcdoc = content;
-        setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
-        if (document.getElementById('vibrationToggle').checked && navigator.vibrate) navigator.vibrate(30);
-        addLog('info','启动应用: '+app.name);
-      });
-    }
+      const content = await getContentSafe(filePath);
+      if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
+      
+      // 更新使用统计
+      appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
+      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
+      
+      runningAppFile = filePath;
+      document.getElementById('runningAppTitle').textContent = (app.icon?app.icon+' ':'') + app.name;
+      populateSwitchAppSelect();
+      const frameCont = document.getElementById('appFrameContainer');
+      frameCont.classList.add('show');
+      document.getElementById('mainContainer').style.display = 'none';
+      const appFrame = document.getElementById('appFrame');
+      
+      // 更新沙箱状态
+      updateSandboxState();
+      
+      // 直接加载原始内容，不做任何修改
+      appFrame.srcdoc = content;
+      setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
+      if (document.getElementById('vibrationToggle').checked && navigator.vibrate) navigator.vibrate(30);
+      addLog('info','启动应用: '+app.name);
+    },300);
     
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
@@ -4344,10 +3710,6 @@
       newFrame.id='appFrame';
       newFrame.allow='camera *; microphone *; accelerometer; geolocation; gyroscope';
       newFrame.allowfullscreen=true;
-      // 重新设置沙箱属性
-      if (systemSettings.sandboxEnabled) {
-        newFrame.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads';
-      }
       oldFrame.parentNode.replaceChild(newFrame, oldFrame);
       
       runningAppFile=null;
@@ -4368,6 +3730,7 @@
     // ========== 恢复默认设置 ==========
     function triggerResetWarning(){
       closeSettings();
+      document.getElementById('resetPasswordInput').value='';
       document.getElementById('resetWarningModal').classList.add('show');
     }
     
@@ -4375,19 +3738,15 @@
       document.getElementById('resetWarningModal').classList.remove('show');
     }
     
-    function requestPasswordForReset() {
-      closeResetWarning();
-      verifyPassword('恢复默认设置', '请输入系统密码以恢复默认设置', (success) => {
-        if (success) {
-          confirmReset();
-        }
-      });
-    }
-    
     async function confirmReset(){
+      if(document.getElementById('resetPasswordInput').value!==FORMAT_PASSWORD){
+        showToast('密码错误！','error');
+        return;
+      }
+      
       try {
         // 只删除设置相关数据，保留应用和内容
-        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'system_password'];
+        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
         
         for (const setting of allSettings) {
@@ -4409,6 +3768,34 @@
         showToast('恢复默认设置失败: ' + e.message, 'error');
         addLog('error', '恢复默认设置失败', e);
       }
+    }
+    
+    // ========== 格式化 ==========
+    function triggerFormatWarning(){
+      closeResetWarning();
+      document.getElementById('formatPasswordInput').value='';
+      document.getElementById('formatWarningModal').classList.add('show');
+    }
+    
+    function closeFormatWarning(){
+      document.getElementById('formatWarningModal').classList.remove('show');
+    }
+    
+    async function confirmFormat(){
+      if(document.getElementById('formatPasswordInput').value!==FORMAT_PASSWORD){
+        showToast('密码错误！','error');
+        return;
+      }
+      try{
+        await dbClear(STORE_APPS);
+        await dbClear(STORE_CONTENT);
+        await dbClear(STORE_SETTINGS);
+        await dbClear(STORE_DEV);
+        await dbClear(STORE_STATS);
+      }catch(e){}
+      localStorage.clear();
+      // 强制刷新页面，确保所有状态清空
+      location.reload(true);
     }
     
     // ========== 导出/导入 ==========
