@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.2.3</title>
+  <title>HTMLOS · v3.2.4</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -36,7 +36,7 @@
       transform: translateZ(0);
     }
     
-    /* 主题变量 - 优化玻璃质感 */
+    /* 主题变量 - 大幅增强玻璃质感 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -66,19 +66,19 @@
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.25); /* 优化磁贴透明度 */
-      --card-border: 1px solid rgba(255,255,255,0.3);
+      --card-bg: rgba(255,255,255,0.2); /* 磁贴更通透 */
+      --card-border: 1px solid rgba(255,255,255,0.35); /* 边框更清晰 */
       --card-radius: 12px;
-      --header-bg: rgba(255,255,255,0.15);
-      --bottom-bg: rgba(255,255,255,0.15);
-      --modal-bg: rgba(28,28,30,0.8);
-      --modal-border: 1px solid rgba(255,255,255,0.2);
-      --btn-bg: rgba(255,255,255,0.25);
-      --backdrop-blur: blur(20px); /* 增强模糊效果 */
-      --transition-speed: 0.25s; /* 优化动画速度 */
-      --input-bg: rgba(255,255,255,0.15);
-      --input-border: 1px solid rgba(255,255,255,0.25);
-      --setting-group-bg: rgba(255,255,255,0.12);
+      --header-bg: rgba(255,255,255,0.12); /* 头部更通透 */
+      --bottom-bg: rgba(255,255,255,0.12); /* 底部栏更通透 */
+      --modal-bg: rgba(28,28,30,0.75); /* 模态框更通透 */
+      --modal-border: 1px solid rgba(255,255,255,0.25);
+      --btn-bg: rgba(255,255,255,0.2); /* 按钮更通透 */
+      --backdrop-blur: blur(30px); /* 模糊效果大幅增强 */
+      --transition-speed: 0.25s;
+      --input-bg: rgba(255,255,255,0.12); /* 输入框更通透 */
+      --input-border: 1px solid rgba(255,255,255,0.2);
+      --setting-group-bg: rgba(255,255,255,0.1); /* 设置组更通透 */
     }
     
     .theme-dark {
@@ -95,6 +95,14 @@
       --setting-group-bg: rgba(255,255,255,0.05);
     }
     
+    /* 全局玻璃效果统一应用 */
+    .win-header, .bottom-bar, .modal-content, .app-icon, .toolbar button, 
+    .search-box input, .nav-buttons button, .setting-item, .app-action-modal,
+    .toast-notification, .notification-center, .app-info-card {
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+    }
+    
     /* 头部 */
     .win-header {
       padding: 8px 16px;
@@ -103,8 +111,6 @@
       justify-content: space-between;
       align-items: center;
       font-size: 14px;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       flex-shrink: 0;
       z-index: 100;
@@ -246,8 +252,6 @@
       background: var(--btn-bg);
       color: var(--text-color);
       font-size: 15px;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
     }
     
@@ -286,8 +290,6 @@
       border-radius: 8px;
       color: var(--text-color);
       cursor: pointer;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       transition: all var(--transition-speed) ease;
       touch-action: manipulation;
     }
@@ -336,7 +338,7 @@
       transform: translateZ(0);
     }
     
-    /* 应用磁贴 */
+    /* 应用磁贴 - 玻璃质感增强 */
     .app-icon {
       background: var(--icon-bg, var(--card-bg));
       border: var(--card-border);
@@ -347,7 +349,7 @@
       justify-content: center;
       cursor: pointer;
       transition: all var(--transition-speed) ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
       color: var(--text-color);
       padding: 8px;
       touch-action: manipulation;
@@ -358,8 +360,6 @@
       aspect-ratio: 1 / 1;
       will-change: transform, filter, box-shadow;
       position: relative;
-      backdrop-filter: var(--backdrop-blur); /* 为磁贴添加模糊效果 */
-      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
@@ -371,7 +371,7 @@
     .app-icon:hover {
       transform: scale(1.02);
       filter: brightness(1.1);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
     
     .app-icon:active {
@@ -430,8 +430,6 @@
       color: var(--text-color);
       border-radius: 12px;
       cursor: pointer;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       min-width: 100px;
       transition: all var(--transition-speed) ease;
       touch-action: manipulation;
@@ -448,13 +446,13 @@
       transform: none;
     }
     
-    /* 模态框 - 增强玻璃质感 */
+    /* 模态框 - 玻璃质感增强 */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.5);
       justify-content: center;
       align-items: center;
       z-index: 250;
@@ -473,10 +471,8 @@
       max-width: 90vw;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
       border: var(--modal-border);
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       color: var(--text-color);
       width: 100%;
       max-width: 400px;
@@ -557,8 +553,6 @@
       background: var(--setting-group-bg);
       border-radius: 12px;
       margin-bottom: 8px;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       border: var(--card-border);
       flex-wrap: wrap;
       gap: 8px;
@@ -598,8 +592,6 @@
       color: var(--text-color);
       border-radius: 8px;
       font-size: 14px;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       flex-shrink: 0;
     }
     
@@ -673,8 +665,6 @@
     .bottom-bar { 
       padding: 12px 15px; 
       background: var(--bottom-bg);
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       display: flex;
       justify-content: center;
       gap: 12px;
@@ -803,8 +793,6 @@
     
     .toast-notification {
       background: rgba(30,30,32,0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       color: #fff;
       padding: 12px 20px;
       border-radius: 12px;
@@ -845,8 +833,6 @@
       max-width: calc(100vw - 30px);
       max-height: 60vh;
       background: rgba(30,30,32,0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.15);
       z-index: 9998;
@@ -899,7 +885,7 @@
       touch-action: manipulation;
     }
     
-    /* 修复：应用操作菜单居中显示 */
+    /* 应用操作菜单 */
     .app-action-modal {
       position: fixed;
       top: 50%;
@@ -915,8 +901,6 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       border: var(--modal-border);
       color: #fff;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
       width: 100%;
       max-width: 350px;
       -webkit-overflow-scrolling: touch;
@@ -930,8 +914,6 @@
       border-radius: 8px;
       font-size: 14px;
       line-height: 1.6;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     .sys-info #versionText {
       cursor: pointer;
@@ -968,13 +950,13 @@
       animation: launchPulse 0.2s ease-in-out;
     }
     
-    /* 图标选择面板 - 修复排版 */
+    /* 图标选择面板 */
     .icon-selector { margin: 15px 0; }
     
     .icon-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr); /* 改为5列，与头像选择器一致 */
-      gap: 10px; /* 增加间距 */
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
       margin: 10px 0;
       max-height: 250px;
       overflow-y: auto;
@@ -984,7 +966,7 @@
     
     .icon-option {
       font-size: 28px;
-      padding: 10px; /* 增加内边距 */
+      padding: 10px;
       background: var(--input-bg);
       text-align: center;
       cursor: pointer;
@@ -1126,8 +1108,6 @@
       z-index: 300;
       display: none;
       flex-direction: column;
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .app-info-fullscreen.show {
@@ -1786,7 +1766,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 极致优化版 v3.2.3';
+    const VERSION = 'HTMLOS 极致优化版 v3.2.4';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -2072,7 +2052,7 @@
       }
     }
     
-    // ==================== 内存优化系统 ====================
+    // ==================== 内存优化系统 - 移除不必要的刷新 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
       const before = window.performance?.memory?.usedJSHeapSize || 0;
@@ -2092,7 +2072,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2.3') {
+            if (name !== 'htmlos-v3.2.4') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2100,12 +2080,8 @@
         });
       }
       
-      document.body.style.display = 'none';
-      setTimeout(() => {
-        document.body.style.display = 'flex';
-      }, 10);
-      
       addLog('info', '高级内存优化完成');
+      showToast('高级内存优化完成', 'success');
     }
     
     function startAutoMemoryOptimize() {
@@ -2132,7 +2108,7 @@
       }
     }
     
-    // ==================== 沙箱控制（修复：添加密码验证） ====================
+    // ==================== 沙箱控制 ====================
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
@@ -2260,8 +2236,7 @@
             <span class="app-info-label">应用颜色</span>
             <span class="app-info-value" style="background:${app.customColor || app.color};padding:2px 8px;border-radius:4px;">${app.customColor || app.color}</span>
           </div>
-          <div class="app-info-item">
-            <span class="app-info-label">应用来源</span>
+          <div class="app-info-label">应用来源</span>
             <span class="app-info-value">${app.source || '用户安装'}</span>
           </div>
           <div class="app-info-item">
@@ -2338,7 +2313,7 @@
         app.name = escapeHtml(newName.trim()); 
         saveApps(); 
         showToast('已重命名', 'success', 1500);
-        showAppInfo(fileKey); // 刷新信息页面
+        showAppInfo(fileKey);
       }
     }
     
@@ -2348,7 +2323,7 @@
         app.hidden = !app.hidden;
         saveApps();
         showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
-        showAppInfo(fileKey); // 刷新信息页面
+        showAppInfo(fileKey);
       }
     }
     
@@ -2358,7 +2333,7 @@
         app.locked = !app.locked;
         saveApps();
         showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
-        showAppInfo(fileKey); // 刷新信息页面
+        showAppInfo(fileKey);
       }
     }
     
@@ -2604,7 +2579,7 @@
       input.click();
     }
     
-    // ========== 应用排序 ==========
+    // ========== 应用排序 - 完全重写逻辑 ==========
     function showSortMenu() {
       sortMenu.style.display = 'block';
     }
@@ -2613,17 +2588,69 @@
       currentSort = sortBy;
       currentPage = 0;
       
-      if (sortBy === 'size') {
-        for (const app of installedApps) {
-          const content = await getContentSafe(app.file);
-          app._size = content ? content.length : 0;
-        }
-        installedApps.sort((a, b) => b._size - a._size);
+      // 保存排序状态到数据库
+      await dbPut(STORE_SETTINGS, { key: 'currentSort', value: sortBy });
+      
+      // 先过滤出要显示的应用
+      let appsToSort = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
+      
+      // 根据不同排序方式处理
+      switch(sortBy) {
+        case 'name':
+          // 按名称排序（支持中文）
+          appsToSort.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+          break;
+          
+        case 'installTime':
+          // 按安装时间排序（最新在前）
+          appsToSort.sort((a, b) => {
+            const timeA = a.installTime ? new Date(a.installTime).getTime() : 0;
+            const timeB = b.installTime ? new Date(b.installTime).getTime() : 0;
+            return timeB - timeA;
+          });
+          break;
+          
+        case 'lastUsed':
+          // 按使用频率排序（使用次数最多在前）
+          appsToSort.sort((a, b) => {
+            const countA = appUsageStats[a.file] || 0;
+            const countB = appUsageStats[b.file] || 0;
+            return countB - countA;
+          });
+          break;
+          
+        case 'size':
+          // 按应用大小排序（最大在前）- 并行计算提升性能
+          showToast('正在计算应用大小...', 'info');
+          const sizePromises = appsToSort.map(async (app) => {
+            const content = await getContentSafe(app.file);
+            return { app, size: content ? content.length : 0 };
+          });
+          
+          const appSizes = await Promise.all(sizePromises);
+          appSizes.sort((a, b) => b.size - a.size);
+          appsToSort = appSizes.map(item => item.app);
+          break;
       }
+      
+      // 更新installedApps数组，保持隐藏应用的顺序
+      const hiddenApps = installedApps.filter(a => a.hidden);
+      installedApps = [...appsToSort, ...hiddenApps];
+      
+      // 保存排序后的应用列表
+      await saveApps();
       
       renderApps();
       sortMenu.style.display = 'none';
-      showToast(`已按${sortBy === 'name' ? '名称' : sortBy === 'installTime' ? '安装时间' : sortBy === 'lastUsed' ? '使用频率' : '应用大小'}排序`, 'info');
+      
+      const sortLabels = {
+        'name': '名称',
+        'installTime': '安装时间',
+        'lastUsed': '使用频率',
+        'size': '应用大小'
+      };
+      showToast(`已按${sortLabels[sortBy]}排序`, 'info');
+      addLog('info', `应用已按${sortLabels[sortBy]}排序`);
     }
     
     // ========== 应用隐藏 ==========
@@ -2807,6 +2834,12 @@
         document.getElementById('pageIndicator').style.display = 'none';
       }
       
+      // 加载保存的排序方式
+      const savedSort = await dbGet(STORE_SETTINGS, 'currentSort');
+      if (savedSort) {
+        currentSort = savedSort.value;
+      }
+      
       renderApps();
       setupSwipe();
       updateDateTime();
@@ -2827,12 +2860,9 @@
         if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
           document.querySelector('.app-action-modal')?.remove();
         }
-        if (!e.target.closest('#appInfoFullscreen') && !e.target.closest('[onclick="showAppInfo()"]')) {
-          // 不自动关闭应用信息页面
-        }
       });
       
-      addLog('info', 'HTMLOS v3.2.3 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.2.4 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2896,14 +2926,39 @@
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信 ==========
+    // ========== iframe postMessage 通信 - 增强沙箱安全 ====================
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
+        // 严格验证消息来源
         if (event.source !== appFrame.contentWindow) return;
         
         const msg = event.data;
-        if (!msg || !msg.type || !msg.from || msg.from !== 'htmlos-app') return;
+        // 严格验证消息格式
+        if (!msg || typeof msg !== 'object' || !msg.type || msg.from !== 'htmlos-app') {
+          addLog('warn', '收到来自应用的无效消息格式，已阻止');
+          return;
+        }
+        
         addLog('debug', '收到应用消息: ' + msg.action);
+        
+        // 白名单机制 - 只允许预定义的安全操作
+        const allowedActions = [
+          'getSystemInfo', 'setTitle', 'toast', 'vibrate', 
+          'saveData', 'getData', 'close', 'openUrl'
+        ];
+        
+        if (!allowedActions.includes(msg.action)) {
+          addLog('warn', `应用尝试执行未授权操作: ${msg.action}，已阻止`);
+          return;
+        }
+        
+        // 防止XSS攻击 - 过滤所有HTML标签
+        if (msg.data?.title) {
+          msg.data.title = escapeHtml(msg.data.title);
+        }
+        if (msg.data?.message) {
+          msg.data.message = escapeHtml(msg.data.message);
+        }
         
         switch (msg.action) {
           case 'getSystemInfo':
@@ -2923,7 +2978,11 @@
             break;
           case 'vibrate':
             if (navigator.vibrate && msg.data?.pattern && vibrationToggle.checked) {
-              navigator.vibrate(msg.data.pattern);
+              // 限制震动模式，防止恶意应用持续震动
+              const safePattern = Array.isArray(msg.data.pattern) 
+                ? msg.data.pattern.slice(0, 10).map(n => Math.min(n, 1000)) 
+                : [Math.min(msg.data.pattern, 1000)];
+              navigator.vibrate(safePattern);
             }
             break;
           case 'saveData':
@@ -3112,14 +3171,6 @@
       appsContainer.innerHTML = '';
       
       let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
-      
-      if (currentSort === 'name') {
-        filteredApps.sort((a, b) => a.name.localeCompare(b.name, 'zh'));
-      } else if (currentSort === 'installTime') {
-        filteredApps.sort((a, b) => new Date(b.installTime) - new Date(a.installTime));
-      } else if (currentSort === 'lastUsed') {
-        filteredApps.sort((a, b) => (appUsageStats[b.file] || 0) - (appUsageStats[a.file] || 0));
-      }
       
       const perPage = cols * 3;
       const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
@@ -3651,7 +3702,7 @@
       }
       
       try {
-        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled'];
+        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'currentSort'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
         
         for (const setting of allSettings) {
@@ -3803,7 +3854,7 @@
       datetime.textContent=now.toLocaleTimeString('zh-CN', timeOptions);
     }
     
-    // ========== 应用更新功能（补充缺失） ==========
+    // ========== 应用更新功能 ==========
     function updateAppFromFile(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
