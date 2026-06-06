@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.2.2</title>
+  <title>HTMLOS · v3.2.3</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -36,7 +36,7 @@
       transform: translateZ(0);
     }
     
-    /* 主题变量 */
+    /* 主题变量 - 优化玻璃质感 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -66,18 +66,19 @@
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.18);
-      --card-border: 1px solid rgba(255,255,255,0.25);
+      --card-bg: rgba(255,255,255,0.25); /* 优化磁贴透明度 */
+      --card-border: 1px solid rgba(255,255,255,0.3);
       --card-radius: 12px;
-      --header-bg: rgba(255,255,255,0.12);
-      --bottom-bg: rgba(255,255,255,0.12);
-      --modal-bg: rgba(28,28,30,0.85);
-      --btn-bg: rgba(255,255,255,0.22);
-      --backdrop-blur: blur(20px);
-      --transition-speed: 0.2s;
-      --input-bg: rgba(255,255,255,0.1);
-      --input-border: 1px solid rgba(255,255,255,0.2);
-      --setting-group-bg: rgba(255,255,255,0.1);
+      --header-bg: rgba(255,255,255,0.15);
+      --bottom-bg: rgba(255,255,255,0.15);
+      --modal-bg: rgba(28,28,30,0.8);
+      --modal-border: 1px solid rgba(255,255,255,0.2);
+      --btn-bg: rgba(255,255,255,0.25);
+      --backdrop-blur: blur(20px); /* 增强模糊效果 */
+      --transition-speed: 0.25s; /* 优化动画速度 */
+      --input-bg: rgba(255,255,255,0.15);
+      --input-border: 1px solid rgba(255,255,255,0.25);
+      --setting-group-bg: rgba(255,255,255,0.12);
     }
     
     .theme-dark {
@@ -357,6 +358,8 @@
       aspect-ratio: 1 / 1;
       will-change: transform, filter, box-shadow;
       position: relative;
+      backdrop-filter: var(--backdrop-blur); /* 为磁贴添加模糊效果 */
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
@@ -445,13 +448,13 @@
       transform: none;
     }
     
-    /* 模态框 */
+    /* 模态框 - 增强玻璃质感 */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.6);
       justify-content: center;
       align-items: center;
       z-index: 250;
@@ -965,13 +968,13 @@
       animation: launchPulse 0.2s ease-in-out;
     }
     
-    /* 图标选择面板 */
+    /* 图标选择面板 - 修复排版 */
     .icon-selector { margin: 15px 0; }
     
     .icon-grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(5, 1fr); /* 改为5列，与头像选择器一致 */
+      gap: 10px; /* 增加间距 */
       margin: 10px 0;
       max-height: 250px;
       overflow-y: auto;
@@ -981,7 +984,7 @@
     
     .icon-option {
       font-size: 28px;
-      padding: 8px;
+      padding: 10px; /* 增加内边距 */
       background: var(--input-bg);
       text-align: center;
       cursor: pointer;
@@ -1112,6 +1115,167 @@
       transform: scale(1.1);
     }
     
+    /* 全屏应用信息页面 */
+    .app-info-fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-bg);
+      z-index: 300;
+      display: none;
+      flex-direction: column;
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+    }
+    
+    .app-info-fullscreen.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .app-info-header {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0,0,0,0.3);
+      gap: 15px;
+      padding-top: calc(15px + env(safe-area-inset-top, 0));
+    }
+    
+    .app-info-header button {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    
+    .app-info-header button:active {
+      background: var(--primary-color);
+    }
+    
+    .app-info-title {
+      flex: 1;
+      font-size: 20px;
+      font-weight: 300;
+    }
+    
+    .app-info-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0));
+    }
+    
+    .app-info-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: var(--card-border);
+    }
+    
+    .app-info-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+    
+    .app-info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .app-info-item:last-child {
+      border-bottom: none;
+    }
+    
+    .app-info-label {
+      color: var(--text-secondary);
+    }
+    
+    .app-info-value {
+      font-weight: 500;
+      word-break: break-all;
+      text-align: right;
+      max-width: 60%;
+    }
+    
+    .app-info-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .app-info-actions button {
+      padding: 15px;
+      border-radius: 8px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    
+    .app-info-actions button:active {
+      transform: scale(0.98);
+    }
+    
+    .app-info-actions .primary {
+      background: var(--primary-color);
+    }
+    
+    .app-info-actions .danger {
+      background: #ff4530;
+    }
+    
+    .app-info-actions .secondary {
+      background: #3a3a3c;
+    }
+    
+    /* 警告模态框 */
+    .reset-modal-content {
+      text-align: center;
+      max-width: 400px;
+    }
+    
+    .reset-modal-content .warning-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #ff4530;
+    }
+    
+    .reset-modal-content h3 {
+      margin-bottom: 15px;
+      color: #ff4530;
+    }
+    
+    .reset-modal-content p {
+      margin-bottom: 10px;
+      color: var(--text-secondary);
+    }
+    
+    .reset-modal-content .warning-text {
+      margin: 20px 0;
+      padding: 10px;
+      background: rgba(255, 159, 10, 0.1);
+      border-radius: 8px;
+      color: #ff9f0a;
+      font-weight: bold;
+    }
+    
     /* 移动端响应式 */
     @media (max-width: 480px) {
       .win-header {
@@ -1138,8 +1302,9 @@
       }
       .bottom-bar button { padding: 10px 14px; font-size: 14px; min-width: 100px; }
       .modal-content { padding: 20px; }
-      .icon-grid { grid-template-columns: repeat(5, 1fr); }
+      .icon-grid { grid-template-columns: repeat(4, 1fr); }
       .color-palette { grid-template-columns: repeat(6, 1fr); }
+      .app-info-actions { grid-template-columns: 1fr; }
     }
     
     @media (max-width: 360px) {
@@ -1245,7 +1410,7 @@
   <div class="modal" id="userInfoModal">
     <div class="modal-content">
       <h2>👤 用户信息</h2>
-      <div class="user-avatar-preview" id="userAvatarPreview">👤</div>
+      <div class="user-avatar-preview" id="userAvatarPreview" style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px; border: 2px solid var(--primary-color);">👤</div>
       
       <div class="setting-item">
         <label>用户名</label>
@@ -1520,6 +1685,17 @@
     <button onclick="document.getElementById('sortMenu').style.display='none'" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>
   </div>
   
+  <!-- 全屏应用信息页面 -->
+  <div class="app-info-fullscreen" id="appInfoFullscreen">
+    <div class="app-info-header">
+      <button onclick="closeAppInfo()">← 返回</button>
+      <span class="app-info-title" id="appInfoTitle">应用信息</span>
+    </div>
+    <div class="app-info-content" id="appInfoContent">
+      <!-- 内容将由JavaScript动态生成 -->
+    </div>
+  </div>
+  
   <!-- 应用框架 -->
   <div id="appFrameContainer">
     <div class="app-navbar">
@@ -1610,7 +1786,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 极致优化版 v3.2.2';
+    const VERSION = 'HTMLOS 极致优化版 v3.2.3';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1679,6 +1855,12 @@
     const batteryLevel = $('batteryLevel');
     const batteryPercent = $('batteryPercent');
     const devTab = $('devTab');
+    const appInfoFullscreen = $('appInfoFullscreen');
+    const appInfoTitle = $('appInfoTitle');
+    const appInfoContent = $('appInfoContent');
+    
+    // 全局应用信息变量
+    let currentAppInfoFile = null;
     
     // ==================== 日志系统 ====================
     const systemLogs = [];
@@ -1910,7 +2092,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2.2') {
+            if (name !== 'htmlos-v3.2.3') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2038,6 +2220,180 @@
       closeUserInfoModal();
       showToast('用户信息已保存', 'success');
       addLog('info', '用户信息已更新');
+    }
+    
+    // ==================== 全屏应用信息功能 ====================
+    async function showAppInfo(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      
+      currentAppInfoFile = fileKey;
+      document.querySelector('.app-action-modal')?.remove();
+      
+      const content = await getContentSafe(fileKey);
+      const sizeKB = content ? Math.round(content.length / 1024 * 100) / 100 : 0;
+      const sizeBytes = content ? content.length : 0;
+      const usageCount = appUsageStats[fileKey] || 0;
+      
+      appInfoTitle.textContent = `${app.icon || '📱'} ${app.name}`;
+      
+      appInfoContent.innerHTML = `
+        <div class="app-info-card">
+          <h3>📋 基本信息</h3>
+          <div class="app-info-item">
+            <span class="app-info-label">应用名称</span>
+            <span class="app-info-value">${app.name}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">应用图标</span>
+            <span class="app-info-value">${app.icon || '📱'}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">文件标识</span>
+            <span class="app-info-value">${app.file}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">磁贴大小</span>
+            <span class="app-info-value">${sizeLabels[app.size || 'small']}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">应用颜色</span>
+            <span class="app-info-value" style="background:${app.customColor || app.color};padding:2px 8px;border-radius:4px;">${app.customColor || app.color}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">应用来源</span>
+            <span class="app-info-value">${app.source || '用户安装'}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">隐藏状态</span>
+            <span class="app-info-value">${app.hidden ? '已隐藏' : '正常显示'}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">锁定状态</span>
+            <span class="app-info-value">${app.locked ? '已锁定' : '未锁定'}</span>
+          </div>
+        </div>
+        
+        <div class="app-info-card">
+          <h3>📊 大小与统计</h3>
+          <div class="app-info-item">
+            <span class="app-info-label">文件大小</span>
+            <span class="app-info-value">${sizeKB} KB (${sizeBytes} 字节)</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">启动次数</span>
+            <span class="app-info-value">${usageCount} 次</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">安装时间</span>
+            <span class="app-info-value">${app.installTime ? new Date(app.installTime).toLocaleString() : '未知'}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">最后更新</span>
+            <span class="app-info-value">${app.lastUpdated ? new Date(app.lastUpdated).toLocaleString() : '未知'}</span>
+          </div>
+        </div>
+        
+        <div class="app-info-card">
+          <h3>🛠️ 快捷操作</h3>
+          <div class="app-info-actions">
+            <button class="primary" onclick="launchAppFromInfo('${fileKey}')">🚀 启动应用</button>
+            <button class="secondary" onclick="updateAppFromInfo('${fileKey}')">📦 更新应用</button>
+            <button class="secondary" onclick="renameAppFromInfo('${fileKey}')">✏️ 重命名</button>
+            <button class="secondary" onclick="toggleHideFromInfo('${fileKey}')">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
+            <button class="secondary" onclick="toggleLockFromInfo('${fileKey}')">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
+            <button class="secondary" onclick="exportSingleApp('${fileKey}')">📤 导出应用</button>
+            ${app.source !== 'system' ? '<button class="danger" onclick="deleteAppFromInfo(\'' + fileKey + '\')">🗑️ 卸载应用</button>' : ''}
+          </div>
+        </div>
+      `;
+      
+      appInfoFullscreen.classList.add('show');
+      addLog('info', `查看应用信息: ${app.name}`);
+    }
+    
+    function closeAppInfo() {
+      appInfoFullscreen.classList.remove('show');
+      currentAppInfoFile = null;
+    }
+    
+    function launchAppFromInfo(fileKey) {
+      closeAppInfo();
+      setTimeout(() => {
+        const element = document.querySelector(`[data-file="${fileKey}"]`);
+        launchApp(fileKey, element);
+      }, 300);
+    }
+    
+    function updateAppFromInfo(fileKey) {
+      updateAppFromFile(fileKey);
+      closeAppInfo();
+    }
+    
+    function renameAppFromInfo(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      const newName = prompt('请输入新的应用名称：', app.name);
+      if (newName?.trim()) { 
+        app.name = escapeHtml(newName.trim()); 
+        saveApps(); 
+        showToast('已重命名', 'success', 1500);
+        showAppInfo(fileKey); // 刷新信息页面
+      }
+    }
+    
+    function toggleHideFromInfo(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (app) {
+        app.hidden = !app.hidden;
+        saveApps();
+        showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
+        showAppInfo(fileKey); // 刷新信息页面
+      }
+    }
+    
+    function toggleLockFromInfo(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (app) {
+        app.locked = !app.locked;
+        saveApps();
+        showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
+        showAppInfo(fileKey); // 刷新信息页面
+      }
+    }
+    
+    async function exportSingleApp(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      
+      const content = await getContentSafe(app.file);
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = app.name + '.html';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('✅ 应用已导出', 'success');
+    }
+    
+    async function deleteAppFromInfo(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (app && app.locked) {
+        showToast('应用已锁定，无法卸载', 'error');
+        return;
+      }
+      
+      if (!confirm('确定卸载此应用？')) return;
+      await deleteContentSafe(fileKey);
+      installedApps = installedApps.filter(a => a.file !== fileKey);
+      delete appUsageStats[fileKey];
+      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
+      saveApps();
+      closeAppInfo();
+      renderApps();
+      showToast('应用已卸载', 'info', 2000);
+      addLog('info', '卸载应用: ' + fileKey);
     }
     
     // ==================== IndexedDB 数据库层 ====================
@@ -2471,9 +2827,12 @@
         if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
           document.querySelector('.app-action-modal')?.remove();
         }
+        if (!e.target.closest('#appInfoFullscreen') && !e.target.closest('[onclick="showAppInfo()"]')) {
+          // 不自动关闭应用信息页面
+        }
       });
       
-      addLog('info', 'HTMLOS v3.2.2 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.2.3 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2910,6 +3269,7 @@
           <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
         <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
         <button onclick="updateAppFromFile('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#0a84ff;border:none;color:#fff;cursor:pointer;border-radius:8px;">📦 更新应用</button>
+        <button onclick="showAppInfo('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">ℹ️ 应用信息</button>
         <button onclick="hideApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
         <button onclick="lockApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
         ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 卸载</button>`:''}
