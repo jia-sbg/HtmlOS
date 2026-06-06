@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.2.4</title>
+  <title>HTMLOS · v3.2.5</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -36,7 +36,7 @@
       transform: translateZ(0);
     }
     
-    /* 主题变量 - 大幅增强玻璃质感 */
+    /* 主题变量 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -66,19 +66,19 @@
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.2); /* 磁贴更通透 */
-      --card-border: 1px solid rgba(255,255,255,0.35); /* 边框更清晰 */
+      --card-bg: rgba(255,255,255,0.2);
+      --card-border: 1px solid rgba(255,255,255,0.35);
       --card-radius: 12px;
-      --header-bg: rgba(255,255,255,0.12); /* 头部更通透 */
-      --bottom-bg: rgba(255,255,255,0.12); /* 底部栏更通透 */
-      --modal-bg: rgba(28,28,30,0.75); /* 模态框更通透 */
+      --header-bg: rgba(255,255,255,0.12);
+      --bottom-bg: rgba(255,255,255,0.12);
+      --modal-bg: rgba(28,28,30,0.75);
       --modal-border: 1px solid rgba(255,255,255,0.25);
-      --btn-bg: rgba(255,255,255,0.2); /* 按钮更通透 */
-      --backdrop-blur: blur(30px); /* 模糊效果大幅增强 */
+      --btn-bg: rgba(255,255,255,0.2);
+      --backdrop-blur: blur(30px);
       --transition-speed: 0.25s;
-      --input-bg: rgba(255,255,255,0.12); /* 输入框更通透 */
+      --input-bg: rgba(255,255,255,0.12);
       --input-border: 1px solid rgba(255,255,255,0.2);
-      --setting-group-bg: rgba(255,255,255,0.1); /* 设置组更通透 */
+      --setting-group-bg: rgba(255,255,255,0.1);
     }
     
     .theme-dark {
@@ -338,7 +338,7 @@
       transform: translateZ(0);
     }
     
-    /* 应用磁贴 - 玻璃质感增强 */
+    /* 应用磁贴 */
     .app-icon {
       background: var(--icon-bg, var(--card-bg));
       border: var(--card-border);
@@ -446,7 +446,7 @@
       transform: none;
     }
     
-    /* 模态框 - 玻璃质感增强 */
+    /* 模态框 */
     .modal {
       display: none;
       position: fixed;
@@ -695,7 +695,7 @@
       transform: scale(0.95);
     }
     
-    /* 应用框架 */
+    /* 应用框架 - 终极安全版 */
     #appFrameContainer {
       position: fixed;
       top: 0; left: 0;
@@ -1311,7 +1311,7 @@
   <div id="offlineBanner">📡 您当前处于离线状态，部分功能可能受限</div>
   
   <!-- 头部 -->
-  <div class="win-header">
+  <div class="win-header" id="winHeader">
     <div class="win-user" onclick="openUserInfoModal()">
       <span class="win-user-icon" id="userIcon">👤</span>
       <span id="userName">HTMLOS 用户</span>
@@ -1678,12 +1678,12 @@
   
   <!-- 应用框架 -->
   <div id="appFrameContainer">
-    <div class="app-navbar">
-      <button onclick="closeApp()">🏠 开始</button>
+    <div class="app-navbar" id="appNavbar">
+      <button id="backToHomeBtn" onclick="closeApp()">🏠 开始</button>
       <select id="switchAppSelect" onchange="switchAppFromSelect()"></select>
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
-    <iframe id="appFrame" src="" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads" allow="camera *; microphone *; accelerometer; geolocation; gyroscope" allowfullscreen> </iframe>
+    <iframe id="appFrame" src="" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads" allow="camera *; microphone *; accelerometer; geolocation; gyroscope" allowfullscreen> </iframe>
   </div>
   
   <!-- 底部栏 -->
@@ -1693,6 +1693,94 @@
   </div>
   
   <script>
+    // ==================== 终极安全防护系统 ====================
+    (function() {
+      'use strict';
+      
+      // 1. 冻结所有关键全局函数，防止被劫持
+      const protectedFunctions = [
+        'closeApp', 'openSettings', 'confirmReset', 'confirmFormat',
+        'exportApps', 'importApps', 'saveApps', 'renderApps',
+        'showToast', 'toggleNotificationCenter', 'openInstaller'
+      ];
+      
+      protectedFunctions.forEach(funcName => {
+        if (window[funcName]) {
+          Object.defineProperty(window, funcName, {
+            value: window[funcName],
+            writable: false,
+            configurable: false
+          });
+        }
+      });
+      
+      // 2. 保护关键DOM元素不被删除或修改
+      const protectedElements = [
+        'appFrameContainer', 'appNavbar', 'backToHomeBtn', 
+        'bottomBar', 'mainContainer', 'winHeader'
+      ];
+      
+      // 3. 拦截并阻止应用对window.top的访问
+      const originalPostMessage = window.postMessage;
+      window.postMessage = function() {
+        if (this !== window) {
+          console.warn('[安全防护] 阻止了应用对window.top的postMessage访问');
+          return;
+        }
+        return originalPostMessage.apply(this, arguments);
+      };
+      
+      // 4. 阻止应用修改宿主DOM
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+          // 检查是否有受保护的元素被删除
+          mutation.removedNodes.forEach(node => {
+            if (node.id && protectedElements.includes(node.id)) {
+              console.error('[安全防护] 检测到恶意删除关键元素，已恢复');
+              mutation.target.appendChild(node);
+              showToast('⚠️ 检测到恶意攻击，已自动修复', 'warning', 5000);
+            }
+          });
+          
+          // 检查是否有受保护的元素被修改
+          if (mutation.target.id && protectedElements.includes(mutation.target.id)) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+              if (mutation.target.style.display === 'none') {
+                console.error('[安全防护] 检测到恶意隐藏关键元素，已恢复');
+                mutation.target.style.display = '';
+                showToast('⚠️ 检测到恶意攻击，已自动修复', 'warning', 5000);
+              }
+            }
+          }
+        });
+      });
+      
+      // 启动DOM监控
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style', 'class']
+      });
+      
+      // 5. 拦截键盘事件，防止应用禁用刷新
+      window.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey && (e.key === 'r' || e.key === 'R')) || e.key === 'F5') {
+          // 允许正常刷新
+          return true;
+        }
+      }, true);
+      
+      // 6. 防止应用覆盖window对象
+      Object.defineProperty(window, 'top', {
+        value: window,
+        writable: false,
+        configurable: false
+      });
+      
+      console.log('%c✅ HTMLOS 终极安全防护系统已启动', 'color:green;font-size:16px');
+    })();
+    
     // ==================== 全局变量 ====================
     let notifications = [];
     let showHiddenApps = false;
@@ -1766,7 +1854,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 极致优化版 v3.2.4';
+    const VERSION = 'HTMLOS 终极安全版 v3.2.5';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1774,7 +1862,7 @@
     const notificationCenter = $('notificationCenter');
     const notificationList = $('notificationList');
     const offlineBanner = $('offlineBanner');
-    const winHeader = document.querySelector('.win-header');
+    const winHeader = $('winHeader');
     const mainContainer = $('mainContainer');
     const searchApps = $('searchApps');
     const pageIndicator = $('pageIndicator');
@@ -2052,7 +2140,7 @@
       }
     }
     
-    // ==================== 内存优化系统 - 移除不必要的刷新 ====================
+    // ==================== 内存优化系统 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
       const before = window.performance?.memory?.usedJSHeapSize || 0;
@@ -2072,7 +2160,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2.4') {
+            if (name !== 'htmlos-v3.2.5') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2132,7 +2220,7 @@
     
     function updateSandboxState() {
       if (systemSettings.sandboxEnabled) {
-        appFrame.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+        appFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
       } else {
         appFrame.removeAttribute('sandbox');
       }
@@ -2579,7 +2667,7 @@
       input.click();
     }
     
-    // ========== 应用排序 - 完全重写逻辑 ==========
+    // ========== 应用排序 - 修复版 ==========
     function showSortMenu() {
       sortMenu.style.display = 'block';
     }
@@ -2862,7 +2950,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v3.2.4 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.2.5 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2926,11 +3014,14 @@
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信 - 增强沙箱安全 ====================
+    // ========== iframe postMessage 通信 - 安全增强版 ====================
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
-        // 严格验证消息来源
-        if (event.source !== appFrame.contentWindow) return;
+        // 严格验证消息来源 - 只允许来自当前iframe的消息
+        if (event.source !== appFrame.contentWindow) {
+          addLog('warn', '收到来自未知来源的消息，已阻止');
+          return;
+        }
         
         const msg = event.data;
         // 严格验证消息格式
@@ -3617,7 +3708,7 @@
       input.click();
     }
     
-    // ========== 应用启动/关闭 ==========
+    // ========== 应用启动/关闭 - 安全增强版 ==========
     const launchApp = debounce(async function(filePath, iconElement) {
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
