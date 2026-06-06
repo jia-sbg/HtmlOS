@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.2.4</title>
+  <title>HTMLOS · v3.3</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -66,39 +66,43 @@
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.2); /* 磁贴更通透 */
-      --card-border: 1px solid rgba(255,255,255,0.35); /* 边框更清晰 */
-      --card-radius: 12px;
-      --header-bg: rgba(255,255,255,0.12); /* 头部更通透 */
-      --bottom-bg: rgba(255,255,255,0.12); /* 底部栏更通透 */
-      --modal-bg: rgba(28,28,30,0.75); /* 模态框更通透 */
-      --modal-border: 1px solid rgba(255,255,255,0.25);
-      --btn-bg: rgba(255,255,255,0.2); /* 按钮更通透 */
-      --backdrop-blur: blur(30px); /* 模糊效果大幅增强 */
-      --transition-speed: 0.25s;
-      --input-bg: rgba(255,255,255,0.12); /* 输入框更通透 */
-      --input-border: 1px solid rgba(255,255,255,0.2);
-      --setting-group-bg: rgba(255,255,255,0.1); /* 设置组更通透 */
+      --card-bg: rgba(255,255,255,0.15); /* 磁贴更通透 */
+      --card-border: 1px solid rgba(255,255,255,0.3); /* 边框更清晰 */
+      --card-radius: 16px;
+      --header-bg: rgba(255,255,255,0.1); /* 头部更通透 */
+      --bottom-bg: rgba(255,255,255,0.1); /* 底部栏更通透 */
+      --modal-bg: rgba(28,28,30,0.7); /* 模态框更通透 */
+      --modal-border: 1px solid rgba(255,255,255,0.2);
+      --btn-bg: rgba(255,255,255,0.18); /* 按钮更通透 */
+      --backdrop-blur: blur(40px); /* 模糊效果大幅增强 */
+      --transition-speed: 0.3s;
+      --input-bg: rgba(255,255,255,0.1); /* 输入框更通透 */
+      --input-border: 1px solid rgba(255,255,255,0.18);
+      --setting-group-bg: rgba(255,255,255,0.08); /* 设置组更通透 */
     }
     
     .theme-dark {
-      --card-bg: rgba(30,30,32,0.95);
-      --card-border: 1px solid #3a3a3c;
-      --card-radius: 8px;
-      --header-bg: rgba(0,0,0,0.6);
-      --bottom-bg: rgba(0,0,0,0.7);
-      --modal-bg: rgba(18,18,18,0.9);
-      --backdrop-blur: blur(12px);
-      --transition-speed: 0.2s;
-      --text-color: #e0e0e0;
-      --text-secondary: #999;
-      --setting-group-bg: rgba(255,255,255,0.05);
+      --card-bg: rgba(20,20,22,0.9);
+      --card-border: 1px solid rgba(255,255,255,0.1);
+      --card-radius: 12px;
+      --header-bg: rgba(0,0,0,0.7);
+      --bottom-bg: rgba(0,0,0,0.8);
+      --modal-bg: rgba(15,15,17,0.95);
+      --modal-border: 1px solid rgba(255,255,255,0.08);
+      --backdrop-blur: blur(20px);
+      --transition-speed: 0.25s;
+      --text-color: #e5e5e5;
+      --text-secondary: #888;
+      --input-bg: rgba(255,255,255,0.05);
+      --input-border: 1px solid rgba(255,255,255,0.1);
+      --setting-group-bg: rgba(255,255,255,0.04);
+      --primary-color: #0a84ff;
     }
     
     /* 全局玻璃效果统一应用 */
     .win-header, .bottom-bar, .modal-content, .app-icon, .toolbar button, 
     .search-box input, .nav-buttons button, .setting-item, .app-action-modal,
-    .toast-notification, .notification-center, .app-info-card {
+    .toast-notification, .notification-center, .app-info-card, .sort-menu {
       backdrop-filter: var(--backdrop-blur);
       -webkit-backdrop-filter: var(--backdrop-blur);
     }
@@ -349,7 +353,7 @@
       justify-content: center;
       cursor: pointer;
       transition: all var(--transition-speed) ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       color: var(--text-color);
       padding: 8px;
       touch-action: manipulation;
@@ -369,13 +373,13 @@
     .app-icon.size-big { grid-column: span 3; grid-row: span 2; aspect-ratio: 3 / 2; }
     
     .app-icon:hover {
-      transform: scale(1.02);
-      filter: brightness(1.1);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      transform: scale(1.03);
+      filter: brightness(1.15);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
     
     .app-icon:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
     
     .app-icon.hidden { opacity: 0.3; filter: grayscale(1); }
@@ -403,6 +407,7 @@
       text-align: center;
       width: 100%;
       margin-top: 3px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
     
     .app-icon.size-small .tile-label { font-size: clamp(10px, 2vw, 13px); }
@@ -452,7 +457,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       justify-content: center;
       align-items: center;
       z-index: 250;
@@ -695,7 +700,7 @@
       transform: scale(0.95);
     }
     
-    /* 应用框架 */
+    /* 应用框架 - 完全隔离 */
     #appFrameContainer {
       position: fixed;
       top: 0; left: 0;
@@ -765,7 +770,14 @@
       white-space: nowrap;
     }
     
-    #appFrame { flex: 1; width: 100%; border: none; min-height: 0; }
+    #appFrame { 
+      flex: 1; 
+      width: 100%; 
+      border: none; 
+      min-height: 0; 
+      /* 完全隔离应用，禁止访问宿主 */
+      sandbox: allow-scripts allow-forms allow-popups allow-modals allow-downloads;
+    }
     
     .danger-link {
       display: block;
@@ -904,6 +916,53 @@
       width: 100%;
       max-width: 350px;
       -webkit-overflow-scrolling: touch;
+    }
+    
+    /* 排序菜单 - 玻璃质感适配 */
+    .sort-menu {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateZ(0);
+      background: var(--modal-bg);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      z-index: 1001;
+      max-width: 90vw;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: var(--modal-border);
+      color: #fff;
+    }
+    
+    .sort-menu h3 {
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 300;
+    }
+    
+    .sort-menu button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      background: var(--btn-bg);
+      border: var(--card-border);
+      color: #fff;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+    
+    .sort-menu button:first-child {
+      background: var(--primary-color);
+      border: none;
+    }
+    
+    .sort-menu button:active {
+      transform: scale(0.95);
     }
     
     .sys-info {
@@ -1626,7 +1685,7 @@
         注意：此操作不可撤销！
       </div>
       <p>请输入密码确认：</p>
-      <input type="password" id="resetPasswordInput" placeholder="默认密码 1234" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <input type="password" id="resetPasswordInput" placeholder="默认密码 htmlos666" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <br><br>
       <div style="display: flex; gap: 10px;">
         <button onclick="confirmReset()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认恢复</button>
@@ -1646,7 +1705,7 @@
         警告：此操作不可撤销！
       </div>
       <p>请输入密码确认：</p>
-      <input type="password" id="formatPasswordInput" placeholder="默认密码 1234" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <input type="password" id="formatPasswordInput" placeholder="默认密码 htmlos666" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <br><br>
       <div style="display: flex; gap: 10px;">
         <button onclick="confirmFormat()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认格式化</button>
@@ -1656,13 +1715,13 @@
   </div>
   
   <!-- 排序菜单 -->
-  <div class="app-action-modal" id="sortMenu" style="display:none;">
-    <h3 style="margin-bottom:15px;text-align:center;">🔄 应用排序</h3>
-    <button onclick="sortApps('name')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#0a84ff;border:none;color:#fff;cursor:pointer;border-radius:8px;">按名称排序</button>
-    <button onclick="sortApps('installTime')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">按安装时间排序</button>
-    <button onclick="sortApps('lastUsed')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">按使用频率排序</button>
-    <button onclick="sortApps('size')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">按应用大小排序</button>
-    <button onclick="document.getElementById('sortMenu').style.display='none'" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>
+  <div class="sort-menu" id="sortMenu" style="display:none;">
+    <h3>🔄 应用排序</h3>
+    <button onclick="sortApps('name')">按名称排序</button>
+    <button onclick="sortApps('installTime')">按安装时间排序</button>
+    <button onclick="sortApps('lastUsed')">按使用频率排序</button>
+    <button onclick="sortApps('size')">按应用大小排序</button>
+    <button onclick="closeSortMenu()">取消</button>
   </div>
   
   <!-- 全屏应用信息页面 -->
@@ -1676,14 +1735,14 @@
     </div>
   </div>
   
-  <!-- 应用框架 -->
+  <!-- 应用框架 - 完全隔离 -->
   <div id="appFrameContainer">
     <div class="app-navbar">
       <button onclick="closeApp()">🏠 开始</button>
       <select id="switchAppSelect" onchange="switchAppFromSelect()"></select>
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
-    <iframe id="appFrame" src="" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads" allow="camera *; microphone *; accelerometer; geolocation; gyroscope" allowfullscreen> </iframe>
+    <iframe id="appFrame" src="" allow="camera *; microphone *; accelerometer; geolocation; gyroscope" allowfullscreen> </iframe>
   </div>
   
   <!-- 底部栏 -->
@@ -1765,8 +1824,8 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const FORMAT_PASSWORD = '1234';
-    const VERSION = 'HTMLOS 极致优化版 v3.2.4';
+    const SYSTEM_PASSWORD = 'htmlos666';
+    const VERSION = 'HTMLOS v3.3';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -2052,7 +2111,7 @@
       }
     }
     
-    // ==================== 内存优化系统 - 移除不必要的刷新 ====================
+    // ==================== 内存优化系统 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
       const before = window.performance?.memory?.usedJSHeapSize || 0;
@@ -2072,7 +2131,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.2.4') {
+            if (name !== 'htmlos-v3.3') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2108,12 +2167,12 @@
       }
     }
     
-    // ==================== 沙箱控制 ====================
+    // ==================== 沙箱控制 - 完全安全 ====================
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
         const password = prompt('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n请输入密码确认关闭：');
-        if (password === '1234') {
+        if (password === SYSTEM_PASSWORD) {
           systemSettings.sandboxEnabled = false;
           updateSandboxState();
           sandboxToggle.checked = true;
@@ -2132,7 +2191,8 @@
     
     function updateSandboxState() {
       if (systemSettings.sandboxEnabled) {
-        appFrame.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+        // 完全隔离模式 - 禁止访问宿主
+        appFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
       } else {
         appFrame.removeAttribute('sandbox');
       }
@@ -2236,7 +2296,8 @@
             <span class="app-info-label">应用颜色</span>
             <span class="app-info-value" style="background:${app.customColor || app.color};padding:2px 8px;border-radius:4px;">${app.customColor || app.color}</span>
           </div>
-          <div class="app-info-label">应用来源</span>
+          <div class="app-info-item">
+            <span class="app-info-label">应用来源</span>
             <span class="app-info-value">${app.source || '用户安装'}</span>
           </div>
           <div class="app-info-item">
@@ -2373,7 +2434,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 12;
+    const DB_VERSION = 13;
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2579,9 +2640,13 @@
       input.click();
     }
     
-    // ========== 应用排序 - 完全重写逻辑 ==========
+    // ========== 排序功能 - 完全重写 ==========
     function showSortMenu() {
       sortMenu.style.display = 'block';
+    }
+    
+    function closeSortMenu() {
+      sortMenu.style.display = 'none';
     }
     
     async function sortApps(sortBy) {
@@ -2641,7 +2706,7 @@
       await saveApps();
       
       renderApps();
-      sortMenu.style.display = 'none';
+      closeSortMenu();
       
       const sortLabels = {
         'name': '名称',
@@ -2862,7 +2927,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v3.2.4 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.3 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2926,11 +2991,14 @@
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信 - 增强沙箱安全 ====================
+    // ========== iframe postMessage 通信 - 完全安全 ====================
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
-        // 严格验证消息来源
-        if (event.source !== appFrame.contentWindow) return;
+        // 严格验证消息来源 - 只接受来自当前iframe的消息
+        if (event.source !== appFrame.contentWindow) {
+          addLog('warn', '收到来自未知来源的消息，已阻止');
+          return;
+        }
         
         const msg = event.data;
         // 严格验证消息格式
@@ -3617,7 +3685,7 @@
       input.click();
     }
     
-    // ========== 应用启动/关闭 ==========
+    // ========== 应用启动/关闭 - 完全安全 ==========
     const launchApp = debounce(async function(filePath, iconElement) {
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
@@ -3639,33 +3707,54 @@
       appFrameContainer.classList.add('show');
       mainContainer.style.display = 'none';
       
+      // 确保沙箱状态正确
       updateSandboxState();
       
+      // 使用srcdoc加载应用内容，完全隔离
       appFrame.srcdoc = content;
-      setTimeout(()=>{sendMessageToApp({type:'appLaunched',appName:app.name,appFile:app.file,timestamp:Date.now()});},500);
+      
+      // 延迟发送启动消息，确保应用已加载
+      setTimeout(()=>{
+        sendMessageToApp({
+          type:'appLaunched',
+          appName:app.name,
+          appFile:app.file,
+          timestamp:Date.now()
+        });
+      },500);
+      
       if (vibrationToggle.checked && navigator.vibrate) navigator.vibrate(30);
       addLog('info','启动应用: '+app.name);
     },300);
     
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
+      
+      // 先发送关闭消息给应用
       sendMessageToApp({type:'appClosing',timestamp:Date.now()});
       
+      // 显示主容器
       mainContainer.style.display='flex'; 
       mainContainer.style.flexDirection='column'; 
       appFrameContainer.classList.remove('show');
       
-      // 彻底销毁旧iframe，释放内存
+      // 彻底销毁旧iframe，释放内存并切断所有连接
       const oldFrame = appFrame;
       oldFrame.srcdoc = '';
       oldFrame.src = 'about:blank';
       
+      // 创建新的干净iframe
       const newFrame = document.createElement('iframe');
       newFrame.id = 'appFrame';
       newFrame.allow = 'camera *; microphone *; accelerometer; geolocation; gyroscope';
       newFrame.allowfullscreen = true;
-      newFrame.sandbox = oldFrame.sandbox;
       
+      // 应用沙箱属性
+      if (systemSettings.sandboxEnabled) {
+        newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+      }
+      
+      // 替换旧iframe
       oldFrame.parentNode.replaceChild(newFrame, oldFrame);
       appFrame = newFrame; // 更新缓存的引用
       
@@ -3696,7 +3785,7 @@
     }
     
     async function confirmReset(){
-      if(resetPasswordInput.value!==FORMAT_PASSWORD){
+      if(resetPasswordInput.value!==SYSTEM_PASSWORD){
         showToast('密码错误！','error');
         return;
       }
@@ -3736,7 +3825,7 @@
     }
     
     async function confirmFormat(){
-      if(formatPasswordInput.value!==FORMAT_PASSWORD){
+      if(formatPasswordInput.value!==SYSTEM_PASSWORD){
         showToast('密码错误！','error');
         return;
       }
