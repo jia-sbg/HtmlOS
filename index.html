@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.3</title>
+  <title>HTMLOS · v3.4</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -33,10 +33,9 @@
       flex-direction: column;
       transition: background 0.3s ease;
       overflow: hidden;
-      transform: translateZ(0);
     }
     
-    /* 主题变量 - 大幅增强玻璃质感 */
+    /* 主题变量 - 增强玻璃质感 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -66,19 +65,71 @@
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.15); /* 磁贴更通透 */
-      --card-border: 1px solid rgba(255,255,255,0.3); /* 边框更清晰 */
-      --card-radius: 16px;
-      --header-bg: rgba(255,255,255,0.1); /* 头部更通透 */
-      --bottom-bg: rgba(255,255,255,0.1); /* 底部栏更通透 */
-      --modal-bg: rgba(28,28,30,0.7); /* 模态框更通透 */
-      --modal-border: 1px solid rgba(255,255,255,0.2);
-      --btn-bg: rgba(255,255,255,0.18); /* 按钮更通透 */
-      --backdrop-blur: blur(40px); /* 模糊效果大幅增强 */
+      --card-bg: rgba(255,255,255,0.22);
+      --card-border: 1px solid rgba(255,255,255,0.35);
+      --card-radius: 20px;
+      --header-bg: rgba(255,255,255,0.12);
+      --bottom-bg: rgba(255,255,255,0.12);
+      --modal-bg: rgba(28,28,30,0.72);
+      --modal-border: 1px solid rgba(255,255,255,0.22);
+      --btn-bg: rgba(255,255,255,0.2);
+      --btn-hover: rgba(255,255,255,0.35);
+      --primary-color: #0a84ff;
       --transition-speed: 0.3s;
-      --input-bg: rgba(255,255,255,0.1); /* 输入框更通透 */
-      --input-border: 1px solid rgba(255,255,255,0.18);
-      --setting-group-bg: rgba(255,255,255,0.08); /* 设置组更通透 */
+      --backdrop-blur: blur(20px) saturate(160%) brightness(1.08);
+      --text-color: #fff;
+      --text-secondary: rgba(255,255,255,0.75);
+      --input-bg: rgba(255,255,255,0.1);
+      --input-border: 1px solid rgba(255,255,255,0.2);
+      --setting-group-bg: rgba(255,255,255,0.08);
+    }
+    
+    /* 玻璃主题增强效果 */
+    .theme-glass .app-icon {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
+    }
+    
+    .theme-glass .win-header {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .theme-glass .bottom-bar {
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .theme-glass .modal-content {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .theme-glass .search-box input {
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    
+    .theme-glass .search-box input:focus {
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 0 3px rgba(10,132,255,0.3);
+    }
+    
+    /* 玻璃效果统一应用 - 仅glass主题 */
+    .theme-glass .win-header,
+    .theme-glass .bottom-bar,
+    .theme-glass .modal-content,
+    .theme-glass .app-icon,
+    .theme-glass .toolbar button,
+    .theme-glass .search-box input,
+    .theme-glass .nav-buttons button,
+    .theme-glass .setting-item,
+    .theme-glass .app-action-modal,
+    .theme-glass .toast-notification,
+    .theme-glass .notification-center,
+    .theme-glass .app-info-card,
+    .theme-glass .sort-menu {
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
     
     .theme-dark {
@@ -99,14 +150,6 @@
       --primary-color: #0a84ff;
     }
     
-    /* 全局玻璃效果统一应用 */
-    .win-header, .bottom-bar, .modal-content, .app-icon, .toolbar button, 
-    .search-box input, .nav-buttons button, .setting-item, .app-action-modal,
-    .toast-notification, .notification-center, .app-info-card, .sort-menu {
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
-    }
-    
     /* 头部 */
     .win-header {
       padding: 8px 16px;
@@ -120,7 +163,6 @@
       z-index: 100;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
-      transform: translateZ(0);
     }
     
     .win-user {
@@ -339,10 +381,9 @@
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
-      transform: translateZ(0);
     }
     
-    /* 应用磁贴 - 玻璃质感增强 */
+    /* 应用磁贴 - 性能优化 */
     .app-icon {
       background: var(--icon-bg, var(--card-bg));
       border: var(--card-border);
@@ -362,8 +403,8 @@
       width: 100%;
       height: 100%;
       aspect-ratio: 1 / 1;
-      will-change: transform, filter, box-shadow;
       position: relative;
+      contain: layout style paint;
     }
     
     .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
@@ -464,7 +505,6 @@
       padding: 20px;
       padding-top: env(safe-area-inset-top, 20px);
       padding-bottom: env(safe-area-inset-bottom, 20px);
-      will-change: opacity;
     }
     
     .modal.show { display: flex; }
@@ -482,8 +522,6 @@
       width: 100%;
       max-width: 400px;
       -webkit-overflow-scrolling: touch;
-      transform: translateZ(0);
-      will-change: transform, opacity;
     }
     
     .modal-content h2 { 
@@ -677,7 +715,6 @@
       flex-shrink: 0;
       transition: all var(--transition-speed) ease;
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
-      transform: translateZ(0);
     }
     
     .bottom-bar button { 
@@ -713,7 +750,6 @@
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
       padding-top: env(safe-area-inset-top, 0);
-      will-change: transform, opacity;
     }
     
     #appFrameContainer.show { 
@@ -732,7 +768,6 @@
       gap: 10px;
       flex-shrink: 0;
       min-height: 50px;
-      transform: translateZ(0);
     }
     
     .app-navbar button { 
@@ -775,8 +810,6 @@
       width: 100%; 
       border: none; 
       min-height: 0; 
-      /* 完全隔离应用，禁止访问宿主 */
-      sandbox: allow-scripts allow-forms allow-popups allow-modals allow-downloads;
     }
     
     .danger-link {
@@ -816,8 +849,6 @@
       cursor: pointer;
       animation: toastIn 0.3s ease;
       transition: opacity 0.3s, transform 0.3s;
-      transform: translateZ(0);
-      will-change: opacity, transform;
     }
     
     .toast-notification.removing {
@@ -852,7 +883,6 @@
       overflow-y: auto;
       padding: 15px;
       -webkit-overflow-scrolling: touch;
-      transform: translateZ(0);
     }
     
     .notification-center.show {
@@ -902,7 +932,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) translateZ(0);
+      transform: translate(-50%, -50%);
       background: var(--modal-bg);
       padding: 25px;
       border-radius: var(--card-radius);
@@ -923,7 +953,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) translateZ(0);
+      transform: translate(-50%, -50%);
       background: var(--modal-bg);
       padding: 20px;
       border-radius: var(--card-radius);
@@ -994,7 +1024,6 @@
       z-index: 9998;
       border: 1px solid #0f0;
       display: none;
-      transform: translateZ(0);
     }
     
     #fpsCounter.show { display: block; }
@@ -1095,7 +1124,6 @@
       z-index: 10000;
       font-weight: bold;
       padding-top: env(safe-area-inset-top, 4px);
-      transform: translateZ(0);
     }
     #offlineBanner.show { display: block; }
     
@@ -1370,7 +1398,7 @@
   <div id="offlineBanner">📡 您当前处于离线状态，部分功能可能受限</div>
   
   <!-- 头部 -->
-  <div class="win-header">
+  <div class="win-header" id="winHeader">
     <div class="win-user" onclick="openUserInfoModal()">
       <span class="win-user-icon" id="userIcon">👤</span>
       <span id="userName">HTMLOS 用户</span>
@@ -1576,7 +1604,7 @@
           </div>
           <div class="setting-item">
             <label>通知显示时长(秒)</label>
-            <input type="number" id="toastDurationInput" min="1" max="10" value="3" />
+            <input type="number" id="toastDurationInput" min="1" max="60" value="3" />
           </div>
           <div class="setting-item">
             <label>通知声音</label>
@@ -1735,14 +1763,18 @@
     </div>
   </div>
   
-  <!-- 应用框架 - 完全隔离 -->
+  <!-- 应用框架 - 安全沙箱配置 -->
   <div id="appFrameContainer">
     <div class="app-navbar">
       <button onclick="closeApp()">🏠 开始</button>
       <select id="switchAppSelect" onchange="switchAppFromSelect()"></select>
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
-    <iframe id="appFrame" src="" allow="camera *; microphone *; accelerometer; geolocation; gyroscope" allowfullscreen> </iframe>
+    <iframe id="appFrame" src="" 
+      allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *" 
+      allowfullscreen
+      sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin">
+    </iframe>
   </div>
   
   <!-- 底部栏 -->
@@ -1825,7 +1857,7 @@
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
     const SYSTEM_PASSWORD = 'htmlos666';
-    const VERSION = 'HTMLOS v3.3';
+    const VERSION = 'HTMLOS v3.4';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1833,7 +1865,7 @@
     const notificationCenter = $('notificationCenter');
     const notificationList = $('notificationList');
     const offlineBanner = $('offlineBanner');
-    const winHeader = document.querySelector('.win-header');
+    const winHeader = $('winHeader');
     const mainContainer = $('mainContainer');
     const searchApps = $('searchApps');
     const pageIndicator = $('pageIndicator');
@@ -1901,6 +1933,121 @@
     // 全局应用信息变量
     let currentAppInfoFile = null;
     
+    // ==================== DOM防护系统 - 防止恶意篡改 ====================
+    const DOMGuard = {
+      observers: [],
+      originalStyles: new Map(),
+      
+      init() {
+        const protectedElements = [
+          { id: 'bottomBar', required: true },
+          { id: 'mainContainer', required: true },
+          { id: 'winHeader', required: true },
+          { id: 'appFrameContainer', required: false }
+        ];
+        
+        protectedElements.forEach(({id}) => {
+          const el = $(id);
+          if (el) {
+            this.originalStyles.set(id, {
+              display: el.style.display,
+              visibility: el.style.visibility,
+              opacity: el.style.opacity,
+              pointerEvents: el.style.pointerEvents,
+              position: el.style.position,
+              zIndex: el.style.zIndex
+            });
+          }
+        });
+        
+        // 监控body的子元素变化
+        const bodyObserver = new MutationObserver((mutations) => {
+          mutations.forEach(mutation => {
+            if (mutation.type === 'childList') {
+              if (!document.body.contains(bottomBar)) {
+                addLog('warn', 'DOMGuard: 底部栏被移除，正在恢复');
+                document.body.appendChild(bottomBar);
+              }
+              if (!document.body.contains(mainContainer)) {
+                addLog('warn', 'DOMGuard: 主容器被移除，正在恢复');
+                document.body.insertBefore(mainContainer, appFrameContainer);
+              }
+            }
+          });
+        });
+        bodyObserver.observe(document.body, { childList: true });
+        this.observers.push(bodyObserver);
+        
+        // 监控关键元素的属性变化
+        const attrObserver = new MutationObserver((mutations) => {
+          mutations.forEach(mutation => {
+            if (mutation.type === 'attributes') {
+              const target = mutation.target;
+              const id = target.id;
+              if (this.originalStyles.has(id)) {
+                const currentDisplay = target.style.display;
+                const currentVisibility = target.style.visibility;
+                const currentOpacity = target.style.opacity;
+                
+                if (currentDisplay === 'none' || currentVisibility === 'hidden' || currentOpacity === '0') {
+                  addLog('warn', `DOMGuard: ${id} 被隐藏，正在恢复`);
+                  const original = this.originalStyles.get(id);
+                  target.style.display = original.display || '';
+                  target.style.visibility = original.visibility || '';
+                  target.style.opacity = original.opacity || '';
+                  target.style.pointerEvents = original.pointerEvents || '';
+                }
+              }
+            }
+          });
+        });
+        
+        protectedElements.forEach(({id}) => {
+          const el = $(id);
+          if (el) attrObserver.observe(el, { attributes: true, attributeFilter: ['style'] });
+        });
+        this.observers.push(attrObserver);
+        
+        addLog('info', 'DOMGuard: 界面防护系统已启动');
+      },
+      
+      disconnect() {
+        this.observers.forEach(obs => obs.disconnect());
+        this.observers = [];
+      }
+    };
+    
+    // ==================== 紧急退出机制 ====================
+    function setupEmergencyExit() {
+      // 键盘快捷键
+      document.addEventListener('keydown', (e) => {
+        if ((e.key === 'Escape' || e.key === 'F12') && appFrameContainer.classList.contains('show')) {
+          addLog('info', '紧急退出：通过键盘快捷键返回主屏幕');
+          const oldConfirm = systemSettings.appCloseConfirm;
+          systemSettings.appCloseConfirm = false;
+          closeApp();
+          systemSettings.appCloseConfirm = oldConfirm;
+        }
+      });
+      
+      // 定期UI完整性检查
+      setInterval(() => {
+        if (appFrameContainer.classList.contains('show')) {
+          // 检查底部栏
+          if (bottomBar && (bottomBar.style.display === 'none' || bottomBar.style.visibility === 'hidden' || getComputedStyle(bottomBar).display === 'none')) {
+            addLog('warn', '紧急退出：底部栏被异常隐藏，强制恢复');
+            bottomBar.style.display = '';
+            bottomBar.style.visibility = '';
+            bottomBar.style.opacity = '';
+          }
+          // 检查主容器
+          if (mainContainer && mainContainer.style.display === 'none' && !appFrameContainer.classList.contains('show')) {
+            mainContainer.style.display = 'flex';
+          }
+        }
+      }, 3000);
+    }
+    
     // ==================== 日志系统 ====================
     const systemLogs = [];
     const MAX_LOGS = 200;
@@ -1946,9 +2093,11 @@
     function showToast(message, type = 'info', duration = systemSettings.toastDuration) {
       if (!systemSettings.toastEnabled) return;
       
-      addNotification(message, type);
+      // 确保duration有效
+      const validDuration = (typeof duration === 'number' && !isNaN(duration) && duration > 0) ? duration : 3000;
       
-      toastQueue.push({ message, type, duration });
+      addNotification(message, type);
+      toastQueue.push({ message, type, duration: validDuration });
       
       if (toastContainer.children.length < MAX_TOASTS) {
         processToastQueue();
@@ -2131,7 +2280,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.3') {
+            if (name !== 'htmlos-v3.4') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2167,7 +2316,7 @@
       }
     }
     
-    // ==================== 沙箱控制 - 完全安全 ====================
+    // ==================== 沙箱控制 - 安全与功能平衡 ====================
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
@@ -2190,11 +2339,11 @@
     }
     
     function updateSandboxState() {
+      const sandboxValue = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
       if (systemSettings.sandboxEnabled) {
-        // 完全隔离模式 - 禁止访问宿主
-        appFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+        if (appFrame) appFrame.sandbox = sandboxValue;
       } else {
-        appFrame.removeAttribute('sandbox');
+        if (appFrame) appFrame.removeAttribute('sandbox');
       }
       dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
     }
@@ -2434,7 +2583,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 13;
+    const DB_VERSION = 14;
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2570,15 +2719,20 @@
     
     // ========== 开发者模式 ==========
     let versionClickCount = 0;
+    let versionClickTimer = null;
     function activateDevMode() {
       versionClickCount++;
+      if (versionClickCount === 1) {
+        versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 3000);
+      }
       if (versionClickCount === 7) {
+        clearTimeout(versionClickTimer);
+        versionClickCount = 0;
         devModeActive = true;
         dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'true' });
         devTab.style.display = 'block';
         showToast('✅ 开发者模式已激活！', 'dev', 4000);
         addLog('info', '开发者模式已激活');
-        versionClickCount = 0;
       } else if (versionClickCount < 7) {
         showToast(`再点击 ${7 - versionClickCount} 次激活开发者模式`, 'dev', 2000);
       }
@@ -2640,7 +2794,7 @@
       input.click();
     }
     
-    // ========== 排序功能 - 完全重写 ==========
+    // ========== 排序功能 ==========
     function showSortMenu() {
       sortMenu.style.display = 'block';
     }
@@ -2653,21 +2807,16 @@
       currentSort = sortBy;
       currentPage = 0;
       
-      // 保存排序状态到数据库
       await dbPut(STORE_SETTINGS, { key: 'currentSort', value: sortBy });
       
-      // 先过滤出要显示的应用
       let appsToSort = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
       
-      // 根据不同排序方式处理
       switch(sortBy) {
         case 'name':
-          // 按名称排序（支持中文）
           appsToSort.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
           break;
           
         case 'installTime':
-          // 按安装时间排序（最新在前）
           appsToSort.sort((a, b) => {
             const timeA = a.installTime ? new Date(a.installTime).getTime() : 0;
             const timeB = b.installTime ? new Date(b.installTime).getTime() : 0;
@@ -2676,7 +2825,6 @@
           break;
           
         case 'lastUsed':
-          // 按使用频率排序（使用次数最多在前）
           appsToSort.sort((a, b) => {
             const countA = appUsageStats[a.file] || 0;
             const countB = appUsageStats[b.file] || 0;
@@ -2685,7 +2833,6 @@
           break;
           
         case 'size':
-          // 按应用大小排序（最大在前）- 并行计算提升性能
           showToast('正在计算应用大小...', 'info');
           const sizePromises = appsToSort.map(async (app) => {
             const content = await getContentSafe(app.file);
@@ -2698,11 +2845,9 @@
           break;
       }
       
-      // 更新installedApps数组，保持隐藏应用的顺序
       const hiddenApps = installedApps.filter(a => a.hidden);
       installedApps = [...appsToSort, ...hiddenApps];
       
-      // 保存排序后的应用列表
       await saveApps();
       
       renderApps();
@@ -2899,11 +3044,14 @@
         document.getElementById('pageIndicator').style.display = 'none';
       }
       
-      // 加载保存的排序方式
       const savedSort = await dbGet(STORE_SETTINGS, 'currentSort');
       if (savedSort) {
         currentSort = savedSort.value;
       }
+      
+      // 启动DOM防护和紧急退出
+      DOMGuard.init();
+      setupEmergencyExit();
       
       renderApps();
       setupSwipe();
@@ -2927,7 +3075,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v3.3 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.4 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -2952,7 +3100,7 @@
       time24Toggle.checked = systemSettings.time24;
       showDateToggle.checked = systemSettings.showDate;
       toastEnabledToggle.checked = systemSettings.toastEnabled;
-      toastDurationInput.value = systemSettings.toastDuration / 1000;
+      toastDurationInput.value = Math.max(1, Math.min(60, Math.round(systemSettings.toastDuration / 1000)));
       notificationSoundToggle.checked = systemSettings.notificationSound;
       doubleClickTopToggle.checked = systemSettings.doubleClickTop;
       appCloseConfirmToggle.checked = systemSettings.appCloseConfirm;
@@ -2965,7 +3113,10 @@
       systemSettings.time24 = time24Toggle.checked;
       systemSettings.showDate = showDateToggle.checked;
       systemSettings.toastEnabled = toastEnabledToggle.checked;
-      systemSettings.toastDuration = parseInt(toastDurationInput.value) * 1000;
+      
+      const durationVal = parseInt(toastDurationInput.value);
+      systemSettings.toastDuration = (isNaN(durationVal) || durationVal < 1 || durationVal > 60) ? 3000 : durationVal * 1000;
+      
       systemSettings.notificationSound = notificationSoundToggle.checked;
       systemSettings.doubleClickTop = doubleClickTopToggle.checked;
       systemSettings.appCloseConfirm = appCloseConfirmToggle.checked;
@@ -2994,14 +3145,15 @@
     // ========== iframe postMessage 通信 - 完全安全 ====================
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
-        // 严格验证消息来源 - 只接受来自当前iframe的消息
-        if (event.source !== appFrame.contentWindow) {
-          addLog('warn', '收到来自未知来源的消息，已阻止');
+        // 严格验证消息来源
+        if (!appFrame || event.source !== appFrame.contentWindow) {
+          if (event.source !== window) {
+            addLog('warn', '收到来自未知来源的消息，已阻止');
+          }
           return;
         }
         
         const msg = event.data;
-        // 严格验证消息格式
         if (!msg || typeof msg !== 'object' || !msg.type || msg.from !== 'htmlos-app') {
           addLog('warn', '收到来自应用的无效消息格式，已阻止');
           return;
@@ -3009,7 +3161,6 @@
         
         addLog('debug', '收到应用消息: ' + msg.action);
         
-        // 白名单机制 - 只允许预定义的安全操作
         const allowedActions = [
           'getSystemInfo', 'setTitle', 'toast', 'vibrate', 
           'saveData', 'getData', 'close', 'openUrl'
@@ -3020,13 +3171,8 @@
           return;
         }
         
-        // 防止XSS攻击 - 过滤所有HTML标签
-        if (msg.data?.title) {
-          msg.data.title = escapeHtml(msg.data.title);
-        }
-        if (msg.data?.message) {
-          msg.data.message = escapeHtml(msg.data.message);
-        }
+        if (msg.data?.title) msg.data.title = escapeHtml(msg.data.title);
+        if (msg.data?.message) msg.data.message = escapeHtml(msg.data.message);
         
         switch (msg.action) {
           case 'getSystemInfo':
@@ -3046,10 +3192,9 @@
             break;
           case 'vibrate':
             if (navigator.vibrate && msg.data?.pattern && vibrationToggle.checked) {
-              // 限制震动模式，防止恶意应用持续震动
               const safePattern = Array.isArray(msg.data.pattern) 
-                ? msg.data.pattern.slice(0, 10).map(n => Math.min(n, 1000)) 
-                : [Math.min(msg.data.pattern, 1000)];
+                ? msg.data.pattern.slice(0, 10).map(n => Math.min(Math.max(0, n), 1000)) 
+                : [Math.min(Math.max(0, msg.data.pattern), 1000)];
               navigator.vibrate(safePattern);
             }
             break;
@@ -3079,8 +3224,12 @@
     }
     
     function sendMessageToApp(data) {
-      if (appFrame?.contentWindow) {
-        appFrame.contentWindow.postMessage({ from: 'htmlos-host', timestamp: Date.now(), ...data }, '*');
+      try {
+        if (appFrame?.contentWindow && appFrame.contentWindow !== window) {
+          appFrame.contentWindow.postMessage({ from: 'htmlos-host', timestamp: Date.now(), ...data }, '*');
+        }
+      } catch (e) {
+        addLog('warn', '发送消息到应用失败: ' + e.message);
       }
     }
     
@@ -3093,21 +3242,28 @@
           const legacyData = localStorage.getItem('htmlos_apps');
           if (legacyData) {
             addLog('info', '正在从 localStorage 迁移数据...');
-            const legacyApps = JSON.parse(legacyData);
-            for (const app of legacyApps) {
-              const content = localStorage.getItem(app.file);
-              await dbPut(STORE_APPS, { name: app.name, file: app.file, icon: app.icon || '📱', color: app.color || colorPalette[0], customColor: app.customColor || app.color || colorPalette[0], size: app.size || 'small', source: app.source || 'user', installTime: app.installTime || new Date().toISOString(), lastUpdated: app.lastUpdated || new Date().toISOString(), hidden: false, locked: false });
-              if (content) await dbPut(STORE_CONTENT, { file: app.file, content: content });
+            try {
+              const legacyApps = JSON.parse(legacyData);
+              for (const app of legacyApps) {
+                const content = localStorage.getItem(app.file);
+                await dbPut(STORE_APPS, { name: app.name, file: app.file, icon: app.icon || '📱', color: app.color || colorPalette[0], customColor: app.customColor || app.color || colorPalette[0], size: app.size || 'small', source: app.source || 'user', installTime: app.installTime || new Date().toISOString(), lastUpdated: app.lastUpdated || new Date().toISOString(), hidden: false, locked: false });
+                if (content) await dbPut(STORE_CONTENT, { file: app.file, content: content });
+              }
+              installedApps = await dbGetAll(STORE_APPS);
+              addLog('info', `迁移完成，共 ${installedApps.length} 个应用`);
+            } catch (e) {
+              addLog('error', 'localStorage 数据迁移失败', e);
             }
-            installedApps = await dbGetAll(STORE_APPS);
-            addLog('info', `迁移完成，共 ${installedApps.length} 个应用`);
           }
         }
         if (installedApps.length === 0) installedApps = [];
-      } catch (e) { addLog('error', '加载应用数据失败', e); installedApps = []; }
+      } catch (e) { 
+        addLog('error', '加载应用数据失败', e); 
+        installedApps = []; 
+      }
     }
     
-    const saveApps = throttle(async function() {
+    const saveApps = debounce(async function() {
       try {
         for (const app of installedApps) {
           await dbPut(STORE_APPS, { 
@@ -3125,7 +3281,7 @@
           });
         }
       } catch (e) { addLog('error', '保存应用数据失败', e); }
-    }, 200);
+    }, 500);
     
     async function loadSettings() {
       try {
@@ -3198,19 +3354,33 @@
     
     // ========== 内容存取兼容层 ==========
     async function getContentSafe(key) {
-      try { const result = await dbGet(STORE_CONTENT, key); if (result) return result.content; }
-      catch (e) {}
+      try { 
+        const result = await dbGet(STORE_CONTENT, key); 
+        if (result && result.content !== undefined) return result.content; 
+      }
+      catch (e) { 
+        addLog('warn', 'IndexedDB读取失败，尝试localStorage: ' + key); 
+      }
       return localStorage.getItem(key);
     }
     
     async function setContentSafe(key, content) {
-      try { await dbPut(STORE_CONTENT, { file: key, content: content }); }
-      catch (e) { localStorage.setItem(key, content); }
+      try { 
+        await dbPut(STORE_CONTENT, { file: key, content: content }); 
+      }
+      catch (e) { 
+        addLog('warn', 'IndexedDB写入失败，回退到localStorage: ' + key); 
+        localStorage.setItem(key, content); 
+      }
     }
     
     async function deleteContentSafe(key) {
-      try { await dbDelete(STORE_CONTENT, key); }
-      catch (e) { localStorage.removeItem(key); }
+      try { 
+        await dbDelete(STORE_CONTENT, key); 
+      }
+      catch (e) { 
+        localStorage.removeItem(key); 
+      }
     }
     
     // ========== 应用属性修改 ==========
@@ -3234,8 +3404,18 @@
       showToast('磁贴大小: ' + sizeLabels[app.size], 'info', 1500);
     }
     
-    // ========== 渲染应用 ==========
+    // ========== 渲染应用 - 性能优化 ==========
     function renderApps() {
+      // 取消之前的渲染帧
+      if (window._renderRaf) cancelAnimationFrame(window._renderRaf);
+      
+      window._renderRaf = requestAnimationFrame(() => {
+        _renderAppsImpl();
+        window._renderRaf = null;
+      });
+    }
+    
+    function _renderAppsImpl() {
       appsContainer.innerHTML = '';
       
       let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
@@ -3257,7 +3437,7 @@
       }
       
       if (pageApps.length === 0) {
-        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>';
+        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>';
         navButtons.classList.add('hidden');
         updatePageIndicator(totalPages);
         return;
@@ -3464,21 +3644,18 @@
       } 
     }
     
-    // ========== 滑动页面优化 ==========
+    // ========== 滑动页面 - 修复检测逻辑 ==========
     function setupSwipe() {
-      let sx=0, sy=0, swiping=false, startTime=0;
+      let sx=0, sy=0, startTime=0;
       
       mainContainer.addEventListener('touchstart', e=>{
         sx=e.touches[0].clientX;
         sy=e.touches[0].clientY;
-        swiping=false;
         startTime=Date.now();
       },{passive:true});
       
       mainContainer.addEventListener('touchmove', e=>{
-        const dx=Math.abs(e.touches[0].clientX-sx);
-        const dy=Math.abs(e.touches[0].clientY-sy);
-        if(dx>20 && dx>dy*1.5) swiping=true;
+        // 仅用于检测，不阻止默认行为
       },{passive:true});
       
       mainContainer.addEventListener('touchend', e=>{
@@ -3486,18 +3663,17 @@
         const dy=Math.abs(e.changedTouches[0].clientY-sy);
         const deltaTime=Date.now()-startTime;
         
-        if(swiping && Math.abs(dx)>SWIPE_THRESHOLD && dy<30 && deltaTime<500){
+        if(Math.abs(dx)>SWIPE_THRESHOLD && dy<<40 && deltaTime<<600){
           if(dx>0) prevPage();
           else nextPage();
         }
       },{passive:true});
     }
     
-    // ========== 搜索 ==========
+    // ========== 搜索 - 性能优化 ==========
     function setupSearch() {
       searchApps.addEventListener('input', debounce((e) => {
-        const term = e.target.value.toLowerCase();
-        appsContainer.innerHTML = '';
+        const term = e.target.value.toLowerCase().trim();
         
         if (term === '') {
           currentPage = 0;
@@ -3505,31 +3681,42 @@
           return;
         }
         
-        navButtons.classList.add('hidden');
-        pageIndicator.style.display = 'none';
-        
-        const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
-        if (filtered.length===0) { appsContainer.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:#aaa;">没有找到应用</div>'; return; }
-        
-        const fragment = document.createDocumentFragment();
-        
-        filtered.forEach(app=>{
-          const div = document.createElement('div');
-          div.className=`app-icon size-${app.size||'small'}`;
-          div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
-          div.setAttribute('data-file', app.file);
-          
-          const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
-            `<span class="search-highlight">${match}</span>`
-          );
-          
-          div.innerHTML=`<span class="icon-emoji">${app.icon||'📱'}</span><span class="tile-label" title="${app.name}">${highlightedName}</span>`;
-          fragment.appendChild(div);
+        requestAnimationFrame(() => {
+          _performSearch(term);
         });
+      }, 300));
+    }
+    
+    function _performSearch(term) {
+      appsContainer.innerHTML = '';
+      navButtons.classList.add('hidden');
+      pageIndicator.style.display = 'none';
+      
+      const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
+      
+      if (filtered.length===0) { 
+        appsContainer.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>'; 
+        return; 
+      }
+      
+      const fragment = document.createDocumentFragment();
+      
+      filtered.forEach(app=>{
+        const div = document.createElement('div');
+        div.className=`app-icon size-${app.size||'small'}`;
+        div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
+        div.setAttribute('data-file', app.file);
         
-        appsContainer.appendChild(fragment);
-      },300));
+        const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
+          `<span class="search-highlight">${match}</span>`
+        );
+        
+        div.innerHTML=`<span class="icon-emoji">${app.icon||'📱'}</span><span class="tile-label" title="${app.name}">${highlightedName}</span>`;
+        fragment.appendChild(div);
+      });
+      
+      appsContainer.appendChild(fragment);
     }
     
     // ========== 安装应用 ==========
@@ -3569,7 +3756,7 @@
         if(files.length===0){showToast('没有选择任何HTML文件','warning');installProgress.style.display='none';return;}
         
         let sc=0,fc=0;
-        for(let i=0;i<files.length;i++){
+        for(let i=0;i<<files.length;i++){
           const file=files[i];
           progressFill.style.width=Math.round((i/files.length)*100)+'%';
           progressText.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
@@ -3632,7 +3819,7 @@
         if(files.length===0){showToast('文件夹中没有HTML文件','warning');installProgress.style.display='none';return;}
         
         let sc=0,fc=0;
-        for(let i=0;i<files.length;i++){
+        for(let i=0;i<<files.length;i++){
           const file=files[i];
           progressFill.style.width=Math.round((i/files.length)*100)+'%';
           progressText.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
@@ -3685,7 +3872,7 @@
       input.click();
     }
     
-    // ========== 应用启动/关闭 - 完全安全 ==========
+    // ========== 应用启动/关闭 - 安全重建iframe ==========
     const launchApp = debounce(async function(filePath, iconElement) {
       const app = installedApps.find(a=>a.file===filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
@@ -3710,10 +3897,10 @@
       // 确保沙箱状态正确
       updateSandboxState();
       
-      // 使用srcdoc加载应用内容，完全隔离
+      // 使用srcdoc加载应用内容
       appFrame.srcdoc = content;
       
-      // 延迟发送启动消息，确保应用已加载
+      // 延迟发送启动消息
       setTimeout(()=>{
         sendMessageToApp({
           type:'appLaunched',
@@ -3731,36 +3918,37 @@
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
       
       // 先发送关闭消息给应用
-      sendMessageToApp({type:'appClosing',timestamp:Date.now()});
+      try {
+        sendMessageToApp({type:'appClosing',timestamp:Date.now()});
+      } catch(e) {}
       
       // 显示主容器
       mainContainer.style.display='flex'; 
       mainContainer.style.flexDirection='column'; 
       appFrameContainer.classList.remove('show');
       
-      // 彻底销毁旧iframe，释放内存并切断所有连接
-      const oldFrame = appFrame;
-      oldFrame.srcdoc = '';
-      oldFrame.src = 'about:blank';
+      // 彻底移除旧iframe并创建全新的
+      const container = appFrame.parentNode;
+      if (appFrame) {
+        appFrame.srcdoc = '';
+        appFrame.src = 'about:blank';
+        container.removeChild(appFrame);
+      }
       
       // 创建新的干净iframe
       const newFrame = document.createElement('iframe');
       newFrame.id = 'appFrame';
-      newFrame.allow = 'camera *; microphone *; accelerometer; geolocation; gyroscope';
-      newFrame.allowfullscreen = true;
-      
-      // 应用沙箱属性
+      newFrame.allow = 'camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *';
+      newFrame.allowFullscreen = true;
       if (systemSettings.sandboxEnabled) {
-        newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+        newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
       }
-      
-      // 替换旧iframe
-      oldFrame.parentNode.replaceChild(newFrame, oldFrame);
-      appFrame = newFrame; // 更新缓存的引用
+      container.appendChild(newFrame);
+      appFrame = newFrame;
       
       runningAppFile=null;
       renderApps();
-      addLog('info', '应用已关闭，iframe已彻底销毁');
+      addLog('info', '应用已关闭，iframe已彻底重建');
     }
     
     function populateSwitchAppSelect() {
@@ -3836,16 +4024,16 @@
         await dbClear(STORE_STATS);
       }catch(e){}
       localStorage.clear();
-      location.reload(true);
+      location.reload();
     }
     
-    // ========== 导出/导入 ==========
+    // ========== 导出/导入 - 修复导入保存逻辑 ==========
     async function exportApps() {
       const awc=[];
       for(const app of installedApps){const c=await getContentSafe(app.file);awc.push({...app,fileContent:c});}
       const st=await dbGetAll(STORE_SETTINGS),so={};st.forEach(s=>so[s.key]=s.value);
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{}},null,2)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.4'},null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');
       a.href=url;a.download='htmlos-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
@@ -3872,9 +4060,37 @@
             for(const app of data.apps){
               if(app.fileContent)await setContentSafe(app.file,app.fileContent);
               if (merge && installedApps.find(a => a.file === app.file)) continue;
-              installedApps.push({name:escapeHtml(app.name),file:app.file,icon:app.icon||'📱',color:app.color||colorPalette[0],customColor:app.customColor||app.color||colorPalette[0],size:app.size||'small',source:app.source||'user',installTime:app.installTime||new Date().toISOString(),lastUpdated:app.lastUpdated||new Date().toISOString(),hidden:app.hidden||false,locked:app.locked||false});
+              installedApps.push({
+                name:escapeHtml(app.name),
+                file:app.file,
+                icon:app.icon||'📱',
+                color:app.color||colorPalette[0],
+                customColor:app.customColor||app.color||colorPalette[0],
+                size:app.size||'small',
+                source:app.source||'user',
+                installTime:app.installTime||new Date().toISOString(),
+                lastUpdated:app.lastUpdated||new Date().toISOString(),
+                hidden:app.hidden||false,
+                locked:app.locked||false
+              });
             }
-            saveApps();
+            
+            // 直接保存到数据库，不依赖debounce
+            for (const app of installedApps) {
+              await dbPut(STORE_APPS, { 
+                name: app.name, 
+                file: app.file, 
+                icon: app.icon || '📱', 
+                color: app.color || colorPalette[0], 
+                customColor: app.customColor || app.color || colorPalette[0], 
+                size: app.size || 'small', 
+                source: app.source || 'user', 
+                installTime: app.installTime || new Date().toISOString(), 
+                lastUpdated: app.lastUpdated || new Date().toISOString(), 
+                hidden: app.hidden || false, 
+                locked: app.locked || false 
+              });
+            }
             
             if(data.settings && !merge) {
               for(const[k,v]of Object.entries(data.settings))if(v)await dbPut(STORE_SETTINGS,{key:k,value:v});
@@ -3887,7 +4103,7 @@
             
             showToast(`✅ 导入成功！${data.apps.length} 个应用`, 'success');
             addLog('info','导入备份完成');
-            location.reload(true);
+            setTimeout(() => location.reload(true), 1000);
           }catch(err){showToast('导入失败：'+err.message,'error');}
         };
         reader.readAsText(e.target.files[0]);
@@ -3937,9 +4153,11 @@
       const timeOptions = {
         hour: '2-digit',
         minute: '2-digit',
-        second: systemSettings.showSeconds ? '2-digit' : undefined,
         hour12: !systemSettings.time24
       };
+      if (systemSettings.showSeconds) {
+        timeOptions.second = '2-digit';
+      }
       datetime.textContent=now.toLocaleTimeString('zh-CN', timeOptions);
     }
     
