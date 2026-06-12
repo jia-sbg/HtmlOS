@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.6</title>
+  <title>HTMLOS · v3.7</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -84,7 +84,6 @@
       --setting-group-bg: rgba(255,255,255,0.08);
     }
     
-    /* 玻璃主题：磁贴直接显示用户选择的颜色（原版逻辑） */
     .theme-glass .app-icon {
       box-shadow: 0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
       border: 1px solid rgba(255,255,255,0.25);
@@ -114,7 +113,6 @@
       box-shadow: 0 0 0 3px rgba(10,132,255,0.35);
     }
     
-    /* 玻璃效果统一应用 */
     .theme-glass .win-header,
     .theme-glass .bottom-bar,
     .theme-glass .modal-content,
@@ -148,6 +146,20 @@
       --input-border: 1px solid rgba(255,255,255,0.1);
       --setting-group-bg: rgba(255,255,255,0.04);
       --primary-color: #0a84ff;
+    }
+    
+    /* 3D 应用切入动画 */
+    body.anim-3d {
+      perspective: 1000px;
+    }
+    body.anim-3d #appFrameContainer {
+      transform: rotateY(-90deg) scale(0.8);
+      transform-origin: center center;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+    }
+    body.anim-3d #appFrameContainer.show {
+      transform: rotateY(0deg) scale(1);
+      opacity: 1;
     }
     
     /* 头部 */
@@ -1568,6 +1580,10 @@
             <input type="checkbox" id="launchAnimToggle" checked />
           </div>
           <div class="setting-item">
+            <label>3D 应用切入动画</label>
+            <input type="checkbox" id="appLaunchAnimToggle" />
+          </div>
+          <div class="setting-item">
             <label>触摸震动反馈</label>
             <input type="checkbox" id="vibrationToggle" />
           </div>
@@ -1859,7 +1875,7 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v3.6';
+    const VERSION = 'HTMLOS v3.7';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1893,6 +1909,7 @@
     const themeSelect = $('themeSelect');
     const colsSelect = $('colsSelect');
     const launchAnimToggle = $('launchAnimToggle');
+    const appLaunchAnimToggle = $('appLaunchAnimToggle');
     const vibrationToggle = $('vibrationToggle');
     const pageIndicatorToggle = $('pageIndicatorToggle');
     const showSecondsToggle = $('showSecondsToggle');
@@ -1936,12 +1953,6 @@
     let currentAppInfoFile = null;
     
     // 性能优化：缓存时间格式化选项
-    const timeFormatOptions = {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      second: '2-digit'
-    };
     const dateFormatOptions = {
       year: 'numeric',
       month: 'long',
@@ -2082,7 +2093,6 @@
       systemLogs.push(entry);
       if (systemLogs.length > MAX_LOGS) systemLogs.shift();
       
-      // 批量刷新到控制台，减少性能开销
       if (!logFlushTimer) {
         logFlushTimer = setTimeout(() => {
           logFlushTimer = null;
@@ -2306,7 +2316,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.6') {
+            if (name !== 'htmlos-v3.7') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2618,7 +2628,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 16;
+    const DB_VERSION = 17;
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2752,24 +2762,35 @@
       window.fpsControl = { toggle: toggleFPS };
     })();
     
-    // ========== 开发者模式 ==========
+    // ========== 开发者模式（优化版）==========
     let versionClickCount = 0;
     let versionClickTimer = null;
     function activateDevMode() {
-      versionClickCount++;
-      if (versionClickCount === 1) {
-        versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 3000);
+      if (devModeActive) {
+        showToast('🔧 开发者模式已开启', 'dev', 2000);
+        return;
       }
-      if (versionClickCount === 7) {
+      
+      versionClickCount++;
+      clearTimeout(versionClickTimer);
+      
+      // 1.5秒内无点击则重置，防止卡顿堆积
+      versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 1500);
+      
+      if (versionClickCount >= 7) {
         clearTimeout(versionClickTimer);
         versionClickCount = 0;
         devModeActive = true;
         dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'true' });
         devTab.style.display = 'block';
-        showToast('✅ 开发者模式已激活！', 'dev', 4000);
+        showToast('✅ 开发者模式已激活！', 'dev', 3000);
         addLog('info', '开发者模式已激活');
-      } else if (versionClickCount < 7) {
-        showToast(`再点击 ${7 - versionClickCount} 次激活开发者模式`, 'dev', 2000);
+      } else if (versionClickCount > 1 && versionClickCount < 7) {
+        const remaining = 7 - versionClickCount;
+        // 只在剩余3次以内提示，减少Toast干扰
+        if (remaining <= 3) {
+          showToast(`再点击 ${remaining} 次激活开发者模式`, 'dev', 1200);
+        }
       }
     }
     
@@ -3113,7 +3134,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v3.6 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.7 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3300,24 +3321,34 @@
       }
     }
     
+    // 优化：使用单事务批量写入，大幅提升性能
     const saveApps = debounce(async function() {
       try {
+        const database = await openDB();
+        const tx = database.transaction(STORE_APPS, 'readwrite');
+        const store = tx.objectStore(STORE_APPS);
         for (const app of installedApps) {
-          await dbPut(STORE_APPS, { 
-            name: app.name, 
-            file: app.file, 
-            icon: app.icon || '📱', 
-            color: app.color || colorPalette[0], 
-            customColor: app.customColor || app.color || colorPalette[0], 
-            size: app.size || 'small', 
-            source: app.source || 'user', 
-            installTime: app.installTime || new Date().toISOString(), 
-            lastUpdated: app.lastUpdated || new Date().toISOString(), 
-            hidden: app.hidden || false, 
-            locked: app.locked || false 
+          store.put({
+            name: app.name,
+            file: app.file,
+            icon: app.icon || '📱',
+            color: app.color || colorPalette[0],
+            customColor: app.customColor || app.color || colorPalette[0],
+            size: app.size || 'small',
+            source: app.source || 'user',
+            installTime: app.installTime || new Date().toISOString(),
+            lastUpdated: app.lastUpdated || new Date().toISOString(),
+            hidden: app.hidden || false,
+            locked: app.locked || false
           });
         }
-      } catch (e) { addLog('error', '保存应用数据失败', e); }
+        return new Promise((resolve, reject) => {
+          tx.oncomplete = resolve;
+          tx.onerror = (e) => reject(e.target.error);
+        });
+      } catch (e) {
+        addLog('error', '保存应用数据失败', e);
+      }
     }, 500);
     
     async function loadSettings() {
@@ -3330,6 +3361,9 @@
         const theme = map['theme'] || 'sharp';
         document.body.className = `theme-${theme}`;
         themeSelect.value = theme;
+        
+        const appLaunchAnim = map['appLaunchAnim'] || 'off';
+        if (appLaunchAnim === 'on') document.body.classList.add('anim-3d');
       } catch (e) {
         addLog('error', '加载设置失败，回退localStorage', e);
         const bg = localStorage.getItem('htmlos_bg');
@@ -3366,6 +3400,14 @@
         await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationState ? 'on' : 'off' });
         const pageIndicatorState = pageIndicatorToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
+        
+        const appLaunchAnimState = appLaunchAnimToggle.checked;
+        await dbPut(STORE_SETTINGS, { key: 'appLaunchAnim', value: appLaunchAnimState ? 'on' : 'off' });
+        if (appLaunchAnimState) {
+          document.body.classList.add('anim-3d');
+        } else {
+          document.body.classList.remove('anim-3d');
+        }
         
         await saveSystemSettings();
         
@@ -3783,133 +3825,77 @@
       input.click();
     }
     
-    // Bug修复：修复 for 循环中的位操作符 << 为 <
-    async function showMultiFilePicker() {
+    // 精简：合并多文件与文件夹安装的公共逻辑
+    async function batchInstall(files, isFolder) {
+      installProgress.style.display='block'; 
+      progressFill.style.width='0%'; 
+      progressText.textContent= isFolder ? '正在扫描文件夹...' : '准备安装...';
+      
+      const htmlFiles=files.filter(f=>/\.html?$/i.test(f.name));
+      if(htmlFiles.length===0){showToast('没有有效的HTML文件','warning');installProgress.style.display='none';return;}
+      
+      let sc=0, fc=0;
+      for(let i=0; i<htmlFiles.length; i++){
+        const file=htmlFiles[i];
+        progressFill.style.width=Math.round((i/htmlFiles.length)*100)+'%';
+        progressText.textContent=`正在安装 ${i+1}/${htmlFiles.length}: ${file.name}`;
+        
+        try{
+          const content=await new Promise((resolve,reject)=>{
+            const r=new FileReader();
+            r.onload=e=>resolve(e.target.result);
+            r.onerror=reject;
+            r.readAsText(file);
+          });
+          
+          const fn='user/apps/'+Date.now()+'_'+file.name;
+          await setContentSafe(fn,content);
+          
+          const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
+          const now=new Date().toISOString();
+          const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+          
+          if(ex!==-1){
+            installedApps[ex].file=fn;
+            installedApps[ex].lastUpdated=now;
+          }else{
+            installedApps.push({
+              name:escapeHtml(file.name.replace(/\.html?$/i,'')),
+              file:fn, icon:'📱', color:cl, customColor:cl, size:'small',
+              source:'user', installTime:now, lastUpdated:now, hidden:false, locked:false
+            });
+          }
+          sc++;
+        }catch(err){
+          fc++;
+          addLog('error', '安装失败: ' + file.name, err);
+        }
+      }
+      
+      progressFill.style.width='100%'; 
+      progressText.textContent=`完成！成功: ${sc}, 失败: ${fc}`;
+      await saveApps(); 
+      renderApps();
+      
+      setTimeout(()=>{
+        installProgress.style.display='none';
+        closeModal();
+        showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
+        addLog('info',`${isFolder ? '文件夹' : '多文件'}安装完成: ${sc}成功, ${fc}失败`);
+      },1500);
+    }
+    
+    function showMultiFilePicker() {
       const input = document.createElement('input');
       input.type='file'; input.multiple=true; input.accept='.html,.htm';
-      installProgress.style.display='block'; progressFill.style.width='0%'; progressText.textContent='正在选择文件...';
-      
-      input.onchange=async(e)=>{
-        const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
-        if(files.length===0){showToast('没有选择任何HTML文件','warning');installProgress.style.display='none';return;}
-        
-        let sc=0,fc=0;
-        // Bug修复：i << files.length 改为 i < files.length
-        for(let i=0;i<<files.length;i++){
-          const file=files[i];
-          progressFill.style.width=Math.round((i/files.length)*100)+'%';
-          progressText.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
-          
-          try{
-            await new Promise((resolve,reject)=>{
-              const r=new FileReader();
-              r.onload=async(e)=>{
-                try{
-                  const c=e.target.result;
-                  const fn='user/apps/'+Date.now()+'_'+file.name;
-                  await setContentSafe(fn,c);
-                  const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
-                  if(ex!==-1){
-                    installedApps[ex].file=fn;
-                    installedApps[ex].lastUpdated=new Date().toISOString();
-                  }else{
-                    const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-                    const n=new Date().toISOString();
-                    installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fn,icon:'📱',color:cl,customColor:cl,size:'small',source:'user',installTime:n,lastUpdated:n,hidden:false,locked:false});
-                  }
-                  sc++;
-                  resolve();
-                }catch(err){
-                  reject(err);
-                }
-              };
-              r.onerror=reject;
-              r.readAsText(file);
-            });
-          }catch(err){
-            fc++;
-            addLog('error', '安装失败: ' + file.name, err);
-          }
-        }
-        
-        progressFill.style.width='100%'; 
-        progressText.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
-        saveApps(); 
-        renderApps();
-        
-        setTimeout(()=>{
-          installProgress.style.display='none';
-          closeModal();
-          showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
-          addLog('info',`多文件安装完成: ${sc}成功, ${fc}失败`);
-        },1500);
-      };
-      
+      input.onchange=e=>batchInstall(Array.from(e.target.files), false);
       input.click();
     }
     
-    // Bug修复：修复 for 循环中的位操作符 << 为 <
-    async function showFolderPicker() {
+    function showFolderPicker() {
       const input=document.createElement('input');
       input.type='file'; input.webkitdirectory=true; input.multiple=true; input.accept='.html,.htm';
-      installProgress.style.display='block'; progressFill.style.width='0%'; progressText.textContent='正在扫描文件夹...';
-      
-      input.onchange=async(e)=>{
-        const files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html')||f.name.toLowerCase().endsWith('.htm'));
-        if(files.length===0){showToast('文件夹中没有HTML文件','warning');installProgress.style.display='none';return;}
-        
-        let sc=0,fc=0;
-        // Bug修复：i << files.length 改为 i < files.length
-        for(let i=0;i<<files.length;i++){
-          const file=files[i];
-          progressFill.style.width=Math.round((i/files.length)*100)+'%';
-          progressText.textContent=`正在安装 ${i+1}/${files.length}: ${file.name}`;
-          
-          try{
-            await new Promise((resolve,reject)=>{
-              const r=new FileReader();
-              r.onload=async(e)=>{
-                try{
-                  const c=e.target.result;
-                  const fn='user/apps/'+Date.now()+'_'+file.name;
-                  await setContentSafe(fn,c);
-                  const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
-                  if(ex!==-1){
-                    installedApps[ex].file=fn;
-                    installedApps[ex].lastUpdated=new Date().toISOString();
-                  }else{
-                    const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-                    const n=new Date().toISOString();
-                    installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fn,icon:'📱',color:cl,customColor:cl,size:'small',source:'user',installTime:n,lastUpdated:n,hidden:false,locked:false});
-                  }
-                  sc++;
-                  resolve();
-                }catch(err){
-                  reject(err);
-                }
-              };
-              r.onerror=reject;
-              r.readAsText(file);
-            });
-          }catch(err){
-            fc++;
-            addLog('error', '安装失败: ' + file.name, err);
-          }
-        }
-        
-        progressFill.style.width='100%'; 
-        progressText.textContent=`安装完成！成功: ${sc}, 失败: ${fc}`;
-        saveApps(); 
-        renderApps();
-        
-        setTimeout(()=>{
-          installProgress.style.display='none';
-          closeModal();
-          showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
-          addLog('info',`文件夹安装完成: ${sc}成功, ${fc}失败`);
-        },1500);
-      };
-      
+      input.onchange=e=>batchInstall(Array.from(e.target.files), true);
       input.click();
     }
     
@@ -3969,11 +3955,10 @@
       appFrameContainer.classList.remove('show');
       
       // 彻底移除旧iframe并创建全新的
-      const container = appFrame.parentNode;
-      if (appFrame) {
+      if (appFrame && appFrame.parentNode) {
         appFrame.srcdoc = '';
         appFrame.src = 'about:blank';
-        container.removeChild(appFrame);
+        appFrame.parentNode.removeChild(appFrame);
       }
       
       // 创建新的干净iframe
@@ -3984,7 +3969,7 @@
       if (systemSettings.sandboxEnabled) {
         newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
       }
-      container.appendChild(newFrame);
+      appFrameContainer.appendChild(newFrame);
       // 更新全局引用
       appFrame = newFrame;
       
@@ -4075,7 +4060,7 @@
       for(const app of installedApps){const c=await getContentSafe(app.file);awc.push({...app,fileContent:c});}
       const st=await dbGetAll(STORE_SETTINGS),so={};st.forEach(s=>so[s.key]=s.value);
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.6'},null,2)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.7'},null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');
       a.href=url;a.download='htmlos-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
@@ -4083,7 +4068,6 @@
       showToast('备份已导出','success');
     }
     
-    // Bug修复：location.reload(true) 改为 location.reload()（移除废弃参数）
     async function importApps() {
       const input=document.createElement('input');input.type='file';input.accept='.json';
       input.onchange=async(e)=>{
@@ -4118,22 +4102,29 @@
               });
             }
             
-            // 直接保存到数据库，不依赖debounce
+            // 使用事务批量保存应用，大幅提升导入性能
+            const database = await openDB();
+            const tx = database.transaction(STORE_APPS, 'readwrite');
+            const store = tx.objectStore(STORE_APPS);
             for (const app of installedApps) {
-              await dbPut(STORE_APPS, { 
-                name: app.name, 
-                file: app.file, 
-                icon: app.icon || '📱', 
-                color: app.color || colorPalette[0], 
-                customColor: app.customColor || app.color || colorPalette[0], 
-                size: app.size || 'small', 
-                source: app.source || 'user', 
-                installTime: app.installTime || new Date().toISOString(), 
-                lastUpdated: app.lastUpdated || new Date().toISOString(), 
-                hidden: app.hidden || false, 
-                locked: app.locked || false 
+              store.put({
+                name: app.name,
+                file: app.file,
+                icon: app.icon || '📱',
+                color: app.color || colorPalette[0],
+                customColor: app.customColor || app.color || colorPalette[0],
+                size: app.size || 'small',
+                source: app.source || 'user',
+                installTime: app.installTime || new Date().toISOString(),
+                lastUpdated: app.lastUpdated || new Date().toISOString(),
+                hidden: app.hidden || false,
+                locked: app.locked || false
               });
             }
+            await new Promise((resolve, reject) => {
+              tx.oncomplete = resolve;
+              tx.onerror = (e) => reject(e.target.error);
+            });
             
             if(data.settings && !merge) {
               for(const[k,v]of Object.entries(data.settings))if(v)await dbPut(STORE_SETTINGS,{key:k,value:v});
@@ -4171,6 +4162,7 @@
       colsSelect.value=String(cols);
       fpsToggle.checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
       pageIndicatorToggle.checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
+      appLaunchAnimToggle.checked=((await dbGet(STORE_SETTINGS,'appLaunchAnim'))?.value||'off')==='on';
       
       let memoryInfo = '不支持';
       if (window.performance && window.performance.memory) {
@@ -4184,7 +4176,7 @@
     }
     function closeSettings(){settingsModal.classList.remove('show');}
     
-    // 性能优化：缓存时间格式化选项，避免每秒重新创建对象
+    // 性能优化：移除全局对象副作用，每次动态构建选项
     function updateDateTime(){
       const now=new Date();
       
@@ -4194,13 +4186,15 @@
         headerDate.textContent=now.toLocaleDateString('zh-CN', shortDateFormatOptions);
       }
       
-      timeFormatOptions.hour12 = !systemSettings.time24;
+      const opts = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: !systemSettings.time24
+      };
       if (systemSettings.showSeconds) {
-        timeFormatOptions.second = '2-digit';
-      } else {
-        delete timeFormatOptions.second;
+        opts.second = '2-digit';
       }
-      datetime.textContent=now.toLocaleTimeString('zh-CN', timeFormatOptions);
+      datetime.textContent=now.toLocaleTimeString('zh-CN', opts);
     }
     
     // ========== 应用更新功能 ==========
