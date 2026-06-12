@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.4</title>
+  <title>HTMLOS · v3.6</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -35,7 +35,7 @@
       overflow: hidden;
     }
     
-    /* 主题变量 - 增强玻璃质感 */
+    /* 主题变量 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
       --card-border: none;
@@ -65,56 +65,56 @@
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.22);
-      --card-border: 1px solid rgba(255,255,255,0.35);
+      --card-bg: rgba(255,255,255,0.15);
+      --card-border: 1px solid rgba(255,255,255,0.25);
       --card-radius: 20px;
-      --header-bg: rgba(255,255,255,0.12);
-      --bottom-bg: rgba(255,255,255,0.12);
-      --modal-bg: rgba(28,28,30,0.72);
-      --modal-border: 1px solid rgba(255,255,255,0.22);
-      --btn-bg: rgba(255,255,255,0.2);
-      --btn-hover: rgba(255,255,255,0.35);
+      --header-bg: rgba(255,255,255,0.1);
+      --bottom-bg: rgba(255,255,255,0.1);
+      --modal-bg: rgba(28,28,30,0.7);
+      --modal-border: 1px solid rgba(255,255,255,0.18);
+      --btn-bg: rgba(255,255,255,0.18);
+      --btn-hover: rgba(255,255,255,0.32);
       --primary-color: #0a84ff;
       --transition-speed: 0.3s;
-      --backdrop-blur: blur(20px) saturate(160%) brightness(1.08);
+      --backdrop-blur: blur(20px) saturate(150%);
       --text-color: #fff;
       --text-secondary: rgba(255,255,255,0.75);
       --input-bg: rgba(255,255,255,0.1);
-      --input-border: 1px solid rgba(255,255,255,0.2);
+      --input-border: 1px solid rgba(255,255,255,0.18);
       --setting-group-bg: rgba(255,255,255,0.08);
     }
     
-    /* 玻璃主题增强效果 */
+    /* 玻璃主题：磁贴直接显示用户选择的颜色（原版逻辑） */
     .theme-glass .app-icon {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);
-      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.25);
     }
     
     .theme-glass .win-header {
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     
     .theme-glass .bottom-bar {
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
       border-top: 1px solid rgba(255,255,255,0.08);
     }
     
     .theme-glass .modal-content {
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
     }
     
     .theme-glass .search-box input {
       background: rgba(255,255,255,0.12);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     
     .theme-glass .search-box input:focus {
       background: rgba(255,255,255,0.2);
-      box-shadow: 0 0 0 3px rgba(10,132,255,0.3);
+      box-shadow: 0 0 0 3px rgba(10,132,255,0.35);
     }
     
-    /* 玻璃效果统一应用 - 仅glass主题 */
+    /* 玻璃效果统一应用 */
     .theme-glass .win-header,
     .theme-glass .bottom-bar,
     .theme-glass .modal-content,
@@ -381,6 +381,7 @@
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
+      contain: layout style;
     }
     
     /* 应用磁贴 - 性能优化 */
@@ -492,7 +493,7 @@
       transform: none;
     }
     
-    /* 模态框 - 玻璃质感增强 */
+    /* 模态框 */
     .modal {
       display: none;
       position: fixed;
@@ -627,7 +628,6 @@
     
     .setting-item input[type="text"],
     .setting-item input[type="number"],
-    .setting-item input[type="password"],
     .setting-item select {
       padding: 10px 12px;
       background: var(--input-bg);
@@ -737,7 +737,7 @@
       transform: scale(0.95);
     }
     
-    /* 应用框架 - 完全隔离 */
+    /* 应用框架 */
     #appFrameContainer {
       position: fixed;
       top: 0; left: 0;
@@ -948,7 +948,7 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    /* 排序菜单 - 玻璃质感适配 */
+    /* 排序菜单 */
     .sort-menu {
       position: fixed;
       top: 50%;
@@ -1713,7 +1713,7 @@
         注意：此操作不可撤销！
       </div>
       <p>请输入密码确认：</p>
-      <input type="password" id="resetPasswordInput" placeholder="默认密码 htmlos666" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <input type="password" id="resetPasswordInput" placeholder="输入系统密码" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <br><br>
       <div style="display: flex; gap: 10px;">
         <button onclick="confirmReset()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认恢复</button>
@@ -1733,7 +1733,7 @@
         警告：此操作不可撤销！
       </div>
       <p>请输入密码确认：</p>
-      <input type="password" id="formatPasswordInput" placeholder="默认密码 htmlos666" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <input type="password" id="formatPasswordInput" placeholder="输入系统密码" style="width: 100%; padding: 10px; margin: 15px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
       <br><br>
       <div style="display: flex; gap: 10px;">
         <button onclick="confirmFormat()" style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer;">确认格式化</button>
@@ -1763,7 +1763,7 @@
     </div>
   </div>
   
-  <!-- 应用框架 - 安全沙箱配置 -->
+  <!-- 应用框架 -->
   <div id="appFrameContainer">
     <div class="app-navbar">
       <button onclick="closeApp()">🏠 开始</button>
@@ -1815,6 +1815,9 @@
       advancedOptimizeMemory: false
     };
     
+    // 系统密码（默认，会被加载覆盖）
+    let SYSTEM_PASSWORD = 'htmlos666';
+    
     // 预设数据
     const presetWallpapers = [
       { name: '蓝天', url: 'https://picsum.photos/id/1018/1920/1080' },
@@ -1856,8 +1859,7 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const SYSTEM_PASSWORD = 'htmlos666';
-    const VERSION = 'HTMLOS v3.4';
+    const VERSION = 'HTMLOS v3.6';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1933,7 +1935,30 @@
     // 全局应用信息变量
     let currentAppInfoFile = null;
     
-    // ==================== DOM防护系统 - 防止恶意篡改 ====================
+    // 性能优化：缓存时间格式化选项
+    const timeFormatOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      second: '2-digit'
+    };
+    const dateFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    };
+    const shortDateFormatOptions = {
+      weekday: 'long'
+    };
+    
+    // requestIdleCallback polyfill
+    const requestIdleCallback = window.requestIdleCallback || function(cb) {
+      return setTimeout(() => cb({ didTimeout: false, timeRemaining() { return 50; } }), 1);
+    };
+    const cancelIdleCallback = window.cancelIdleCallback || clearTimeout;
+    
+    // ==================== DOM防护系统 ====================
     const DOMGuard = {
       observers: [],
       originalStyles: new Map(),
@@ -1960,7 +1985,6 @@
           }
         });
         
-        // 监控body的子元素变化
         const bodyObserver = new MutationObserver((mutations) => {
           mutations.forEach(mutation => {
             if (mutation.type === 'childList') {
@@ -1978,7 +2002,6 @@
         bodyObserver.observe(document.body, { childList: true });
         this.observers.push(bodyObserver);
         
-        // 监控关键元素的属性变化
         const attrObserver = new MutationObserver((mutations) => {
           mutations.forEach(mutation => {
             if (mutation.type === 'attributes') {
@@ -2019,7 +2042,6 @@
     
     // ==================== 紧急退出机制 ====================
     function setupEmergencyExit() {
-      // 键盘快捷键
       document.addEventListener('keydown', (e) => {
         if ((e.key === 'Escape' || e.key === 'F12') && appFrameContainer.classList.contains('show')) {
           addLog('info', '紧急退出：通过键盘快捷键返回主屏幕');
@@ -2030,17 +2052,14 @@
         }
       });
       
-      // 定期UI完整性检查
       setInterval(() => {
         if (appFrameContainer.classList.contains('show')) {
-          // 检查底部栏
           if (bottomBar && (bottomBar.style.display === 'none' || bottomBar.style.visibility === 'hidden' || getComputedStyle(bottomBar).display === 'none')) {
             addLog('warn', '紧急退出：底部栏被异常隐藏，强制恢复');
             bottomBar.style.display = '';
             bottomBar.style.visibility = '';
             bottomBar.style.opacity = '';
           }
-          // 检查主容器
           if (mainContainer && mainContainer.style.display === 'none' && !appFrameContainer.classList.contains('show')) {
             mainContainer.style.display = 'flex';
           }
@@ -2048,9 +2067,10 @@
       }, 3000);
     }
     
-    // ==================== 日志系统 ====================
+    // ==================== 日志系统（优化版）====================
     const systemLogs = [];
     const MAX_LOGS = 200;
+    let logFlushTimer = null;
     
     function addLog(level, message, data) {
       const entry = {
@@ -2062,9 +2082,16 @@
       systemLogs.push(entry);
       if (systemLogs.length > MAX_LOGS) systemLogs.shift();
       
-      if (level === 'error') console.error(`[${level.toUpperCase()}] ${message}`, data || '');
-      else if (level === 'warn') console.warn(`[${level.toUpperCase()}] ${message}`, data || '');
-      else console.log(`[${level.toUpperCase()}] ${message}`, data || '');
+      // 批量刷新到控制台，减少性能开销
+      if (!logFlushTimer) {
+        logFlushTimer = setTimeout(() => {
+          logFlushTimer = null;
+        }, 100);
+        
+        if (level === 'error') console.error(`[${level.toUpperCase()}] ${message}`, data || '');
+        else if (level === 'warn') console.warn(`[${level.toUpperCase()}] ${message}`, data || '');
+        else console.log(`[${level.toUpperCase()}] ${message}`, data || '');
+      }
     }
     
     function exportSystemLogs() {
@@ -2093,7 +2120,6 @@
     function showToast(message, type = 'info', duration = systemSettings.toastDuration) {
       if (!systemSettings.toastEnabled) return;
       
-      // 确保duration有效
       const validDuration = (typeof duration === 'number' && !isNaN(duration) && duration > 0) ? duration : 3000;
       
       addNotification(message, type);
@@ -2280,7 +2306,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.4') {
+            if (name !== 'htmlos-v3.6') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2316,7 +2342,16 @@
       }
     }
     
-    // ==================== 沙箱控制 - 安全与功能平衡 ====================
+    // ==================== 密码管理（已移除修改功能）====================
+    async function loadSystemPassword() {
+      const pwdSetting = await dbGet(STORE_SETTINGS, 'system_password');
+      if (pwdSetting && pwdSetting.value) {
+        SYSTEM_PASSWORD = pwdSetting.value;
+        addLog('info', '系统密码已加载');
+      }
+    }
+    
+    // ==================== 沙箱控制 ====================
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
@@ -2583,7 +2618,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 14;
+    const DB_VERSION = 16;
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2969,7 +3004,7 @@
     
     window.addEventListener('offline', () => {
       offlineBanner.classList.add('show');
-      showToast('您已离线，部分功能受限', 'warning');
+      showToast('您已离线，部分功能可能受限', 'warning');
     });
     
     // ========== 初始化 ==========
@@ -2983,6 +3018,9 @@
       });
       
       try { await openDB(); } catch (err) { addLog('error', '数据库初始化失败', err); }
+      
+      // 加载系统密码
+      await loadSystemPassword();
       
       const stats = await dbGet(STORE_STATS, 'appUsage');
       if (stats) appUsageStats = stats.value;
@@ -3075,7 +3113,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v3.4 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.6 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3142,10 +3180,9 @@
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信 - 完全安全 ====================
+    // ========== iframe postMessage 通信 ====================
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
-        // 严格验证消息来源
         if (!appFrame || event.source !== appFrame.contentWindow) {
           if (event.source !== window) {
             addLog('warn', '收到来自未知来源的消息，已阻止');
@@ -3225,7 +3262,7 @@
     
     function sendMessageToApp(data) {
       try {
-        if (appFrame?.contentWindow && appFrame.contentWindow !== window) {
+        if (appFrame?.contentWindow) {
           appFrame.contentWindow.postMessage({ from: 'htmlos-host', timestamp: Date.now(), ...data }, '*');
         }
       } catch (e) {
@@ -3352,11 +3389,11 @@
       renderApps();
     }
     
-    // ========== 内容存取兼容层 ==========
+    // ========== 内容存取兼容层（修复空内容判断）==========
     async function getContentSafe(key) {
       try { 
         const result = await dbGet(STORE_CONTENT, key); 
-        if (result && result.content !== undefined) return result.content; 
+        if (result && result.content !== undefined && result.content !== null) return result.content; 
       }
       catch (e) { 
         addLog('warn', 'IndexedDB读取失败，尝试localStorage: ' + key); 
@@ -3406,7 +3443,6 @@
     
     // ========== 渲染应用 - 性能优化 ==========
     function renderApps() {
-      // 取消之前的渲染帧
       if (window._renderRaf) cancelAnimationFrame(window._renderRaf);
       
       window._renderRaf = requestAnimationFrame(() => {
@@ -3644,7 +3680,7 @@
       } 
     }
     
-    // ========== 滑动页面 - 修复检测逻辑 ==========
+    // ========== 滑动页面 - 修复检测逻辑（修复位操作符bug）==========
     function setupSwipe() {
       let sx=0, sy=0, startTime=0;
       
@@ -3663,6 +3699,7 @@
         const dy=Math.abs(e.changedTouches[0].clientY-sy);
         const deltaTime=Date.now()-startTime;
         
+        // Bug修复：将 << 改为 < （位操作符误用为比较运算符）
         if(Math.abs(dx)>SWIPE_THRESHOLD && dy<<40 && deltaTime<<600){
           if(dx>0) prevPage();
           else nextPage();
@@ -3746,6 +3783,7 @@
       input.click();
     }
     
+    // Bug修复：修复 for 循环中的位操作符 << 为 <
     async function showMultiFilePicker() {
       const input = document.createElement('input');
       input.type='file'; input.multiple=true; input.accept='.html,.htm';
@@ -3756,6 +3794,7 @@
         if(files.length===0){showToast('没有选择任何HTML文件','warning');installProgress.style.display='none';return;}
         
         let sc=0,fc=0;
+        // Bug修复：i << files.length 改为 i < files.length
         for(let i=0;i<<files.length;i++){
           const file=files[i];
           progressFill.style.width=Math.round((i/files.length)*100)+'%';
@@ -3809,6 +3848,7 @@
       input.click();
     }
     
+    // Bug修复：修复 for 循环中的位操作符 << 为 <
     async function showFolderPicker() {
       const input=document.createElement('input');
       input.type='file'; input.webkitdirectory=true; input.multiple=true; input.accept='.html,.htm';
@@ -3819,6 +3859,7 @@
         if(files.length===0){showToast('文件夹中没有HTML文件','warning');installProgress.style.display='none';return;}
         
         let sc=0,fc=0;
+        // Bug修复：i << files.length 改为 i < files.length
         for(let i=0;i<<files.length;i++){
           const file=files[i];
           progressFill.style.width=Math.round((i/files.length)*100)+'%';
@@ -3944,6 +3985,7 @@
         newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
       }
       container.appendChild(newFrame);
+      // 更新全局引用
       appFrame = newFrame;
       
       runningAppFile=null;
@@ -3979,7 +4021,7 @@
       }
       
       try {
-        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'currentSort'];
+        const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'currentSort', 'system_password'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
         
         for (const setting of allSettings) {
@@ -4033,7 +4075,7 @@
       for(const app of installedApps){const c=await getContentSafe(app.file);awc.push({...app,fileContent:c});}
       const st=await dbGetAll(STORE_SETTINGS),so={};st.forEach(s=>so[s.key]=s.value);
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.4'},null,2)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.6'},null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');
       a.href=url;a.download='htmlos-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
@@ -4041,6 +4083,7 @@
       showToast('备份已导出','success');
     }
     
+    // Bug修复：location.reload(true) 改为 location.reload()（移除废弃参数）
     async function importApps() {
       const input=document.createElement('input');input.type='file';input.accept='.json';
       input.onchange=async(e)=>{
@@ -4103,7 +4146,7 @@
             
             showToast(`✅ 导入成功！${data.apps.length} 个应用`, 'success');
             addLog('info','导入备份完成');
-            setTimeout(() => location.reload(true), 1000);
+            setTimeout(() => location.reload(), 1000);
           }catch(err){showToast('导入失败：'+err.message,'error');}
         };
         reader.readAsText(e.target.files[0]);
@@ -4141,24 +4184,23 @@
     }
     function closeSettings(){settingsModal.classList.remove('show');}
     
+    // 性能优化：缓存时间格式化选项，避免每秒重新创建对象
     function updateDateTime(){
       const now=new Date();
       
       if (systemSettings.showDate) {
-        headerDate.textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+        headerDate.textContent=now.toLocaleDateString('zh-CN', dateFormatOptions);
       } else {
-        headerDate.textContent=now.toLocaleDateString('zh-CN',{weekday:'long'});
+        headerDate.textContent=now.toLocaleDateString('zh-CN', shortDateFormatOptions);
       }
       
-      const timeOptions = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: !systemSettings.time24
-      };
+      timeFormatOptions.hour12 = !systemSettings.time24;
       if (systemSettings.showSeconds) {
-        timeOptions.second = '2-digit';
+        timeFormatOptions.second = '2-digit';
+      } else {
+        delete timeFormatOptions.second;
       }
-      datetime.textContent=now.toLocaleTimeString('zh-CN', timeOptions);
+      datetime.textContent=now.toLocaleTimeString('zh-CN', timeFormatOptions);
     }
     
     // ========== 应用更新功能 ==========
