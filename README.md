@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-v3.8-0a84ff?style=flat-square)
+![版本](https://img.shields.io/badge/版本-v3.7-0a84ff?style=flat-square)
 ![许可](https://img.shields.io/badge/许可-MIT-30d158?style=flat-square)
 ![技术栈](https://img.shields.io/badge/技术栈-HTML%2FCSS%2FJS-ffb900?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-支持-5e5ce6?style=flat-square)
@@ -128,18 +128,6 @@ MutationObserver	DOM 防护系统
 
 ---
 
-📁 文件夹系统（v3.7+ 新增）
-
-HtmlOS 支持类似手机桌面的分组文件夹功能：
-
-- 新建文件夹：点击工具栏「📁 新建文件夹」，命名并选择应用
-- 打开文件夹：点击文件夹磁贴，进入文件夹视图
-- 添加应用：在文件夹属性或菜单中选择「➕ 添加应用」，支持从其他文件夹移动
-- 移除应用：在文件夹内长按/右键应用，确认后移出
-- 查看属性：长按文件夹或点击属性按钮，查看详情、重命名、改颜色、删除
-
----
-
 🛠️ 高级功能
 
 开发者模式（隐藏彩蛋）
@@ -175,26 +163,6 @@ HtmlOS/
 
 > 单文件设计：所有功能（UI、逻辑、样式、PWA）集成在一个 HTML 文件中，无需构建工具，直接部署。
 
----
-
-📝 更新日志
-
-v3.8（最新）
-- 🔧 修复：文件夹内启动应用后自动关闭文件夹视图，返回时无缝回到原文件夹
-- 🔧 修复：文件夹创建后支持添加额外应用，支持跨文件夹移动应用
-- ⚡ 优化：`saveApps` 单事务批量写入，大幅提升性能
-- 🛡️ 优化：DOM 防护系统、iframe 重建机制更稳定
-
-v3.7
-- 📁 新增：文件夹分组系统，支持新建、命名、多选应用加入
-- 🎨 新增：文件夹属性查看、重命名、颜色更改、删除
-- 🔧 修复：滑动检测位操作符 bug、批量安装循环 bug
-- ⚡ 优化：渲染使用 DocumentFragment，减少强制同步布局
-
-v3.6
-- 🚀 新增：开发者模式（连点版本号 7 次激活）
-- 🛡️ 新增：DOM 防护系统、紧急退出机制
-- ⚡ 优化：IndexedDB 单事务批量写入、Toast 队列系统
 
 ---
 
