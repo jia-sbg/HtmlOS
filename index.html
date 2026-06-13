@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.7</title>
+  <title>HTMLOS · v3.8</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -146,20 +146,6 @@
       --input-border: 1px solid rgba(255,255,255,0.1);
       --setting-group-bg: rgba(255,255,255,0.04);
       --primary-color: #0a84ff;
-    }
-    
-    /* 3D 应用切入动画 */
-    body.anim-3d {
-      perspective: 1000px;
-    }
-    body.anim-3d #appFrameContainer {
-      transform: rotateY(-90deg) scale(0.8);
-      transform-origin: center center;
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
-    }
-    body.anim-3d #appFrameContainer.show {
-      transform: rotateY(0deg) scale(1);
-      opacity: 1;
     }
     
     /* 头部 */
@@ -469,6 +455,40 @@
     .app-icon.size-large .tile-label { font-size: clamp(11px, 2.5vw, 15px); margin-top: 5px; }
     .app-icon.size-wide .tile-label { font-size: clamp(10px, 2vw, 14px); max-width: 80%; }
     .app-icon.size-big .tile-label { font-size: clamp(12px, 3vw, 17px); margin-top: 5px; }
+    
+    /* 文件夹磁贴 */
+    .folder-tile .folder-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      width: 60%;
+      height: 60%;
+      place-items: center;
+      margin-bottom: 2px;
+    }
+    .folder-tile .folder-preview .mini-icon {
+      font-size: clamp(14px, 3vw, 24px);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    }
+    .folder-tile .folder-preview.empty::after {
+      content: '📁';
+      font-size: clamp(24px, 5vw, 40px);
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+    }
+    .folder-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
     
     .nav-buttons { 
       display: flex; 
@@ -1324,6 +1344,66 @@
       background: #3a3a3c;
     }
     
+    /* 文件夹视图 */
+    .folder-view-grid {
+      display: grid;
+      grid-template-columns: repeat(var(--cols, 4), 1fr);
+      gap: 12px;
+      padding: 5px;
+    }
+    
+    .folder-empty-tip {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 40px 20px;
+      grid-column: 1 / -1;
+    }
+    
+    /* 多选列表 */
+    .multi-select-list {
+      max-height: 220px;
+      overflow-y: auto;
+      margin: 10px 0;
+      padding: 5px;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .multi-select-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: var(--input-bg);
+      border-radius: 8px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    
+    .multi-select-item:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .multi-select-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary-color);
+      flex-shrink: 0;
+    }
+    
+    .multi-select-item .item-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    
+    .multi-select-item .item-name {
+      flex: 1;
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
     /* 警告模态框 */
     .reset-modal-content {
       text-align: center;
@@ -1384,6 +1464,7 @@
       .icon-grid { grid-template-columns: repeat(4, 1fr); }
       .color-palette { grid-template-columns: repeat(6, 1fr); }
       .app-info-actions { grid-template-columns: 1fr; }
+      .folder-view-grid { grid-template-columns: repeat(var(--cols, 4), 1fr); }
     }
     
     @media (max-width: 360px) {
@@ -1441,7 +1522,7 @@
       <button onclick="showSortMenu()">🔄 排序</button>
       <button onclick="toggleHiddenApps()">👁️ 显示隐藏</button>
       <button onclick="scrollToTop()">⬆️ 顶部</button>
-      <button onclick="fixTileLayout()">🔧 修复</button>
+      <button onclick="openNewFolderModal()">📁 新建文件夹</button>
     </div>
     
     <!-- 页面指示器 -->
@@ -1512,6 +1593,37 @@
     </div>
   </div>
   
+  <!-- 新建文件夹模态框 -->
+  <div class="modal" id="newFolderModal">
+    <div class="modal-content">
+      <h2>📁 新建文件夹</h2>
+      <div class="setting-item">
+        <label>文件夹名称</label>
+        <input type="text" id="folderNameInput" placeholder="例如：工具、游戏" maxlength="20" />
+      </div>
+      <div style="margin: 15px 0;">
+        <label style="font-size:14px;color:var(--text-secondary);">选择要收纳的应用（可多选）</label>
+        <div class="multi-select-list" id="newFolderAppList"></div>
+      </div>
+      <div class="modal-actions">
+        <button onclick="createFolder()" class="primary-btn">创建</button>
+        <button onclick="closeNewFolderModal()">取消</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 文件夹视图全屏 -->
+  <div class="app-info-fullscreen" id="folderViewFullscreen">
+    <div class="app-info-header">
+      <button onclick="closeFolderView()">← 返回</button>
+      <span class="app-info-title" id="folderViewTitle">文件夹</span>
+      <button onclick="showFolderProps(currentFolderFile)">ℹ️ 属性</button>
+    </div>
+    <div class="app-info-content" id="folderViewContent">
+      <!-- 动态生成应用网格 -->
+    </div>
+  </div>
+  
   <!-- 设置模态框 -->
   <div class="modal" id="settingsModal">
     <div class="modal-content">
@@ -1578,10 +1690,6 @@
           <div class="setting-item">
             <label>启动动画效果</label>
             <input type="checkbox" id="launchAnimToggle" checked />
-          </div>
-          <div class="setting-item">
-            <label>3D 应用切入动画</label>
-            <input type="checkbox" id="appLaunchAnimToggle" />
           </div>
           <div class="setting-item">
             <label>触摸震动反馈</label>
@@ -1873,9 +1981,11 @@
     let touchStartX = 0, touchStartY = 0;
     let runningAppFile = null;
     let devModeActive = false;
+    let currentFolderFile = null;
+    let appLaunchContext = null; // 记录应用启动前是否在某个文件夹中
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v3.7';
+    const VERSION = 'HTMLOS v3.8';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1909,7 +2019,6 @@
     const themeSelect = $('themeSelect');
     const colsSelect = $('colsSelect');
     const launchAnimToggle = $('launchAnimToggle');
-    const appLaunchAnimToggle = $('appLaunchAnimToggle');
     const vibrationToggle = $('vibrationToggle');
     const pageIndicatorToggle = $('pageIndicatorToggle');
     const showSecondsToggle = $('showSecondsToggle');
@@ -1948,6 +2057,12 @@
     const appInfoFullscreen = $('appInfoFullscreen');
     const appInfoTitle = $('appInfoTitle');
     const appInfoContent = $('appInfoContent');
+    const newFolderModal = $('newFolderModal');
+    const folderNameInput = $('folderNameInput');
+    const newFolderAppList = $('newFolderAppList');
+    const folderViewFullscreen = $('folderViewFullscreen');
+    const folderViewTitle = $('folderViewTitle');
+    const folderViewContent = $('folderViewContent');
     
     // 全局应用信息变量
     let currentAppInfoFile = null;
@@ -2316,7 +2431,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.7') {
+            if (name !== 'htmlos-v3.8') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2628,7 +2743,7 @@
     
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
-    const DB_VERSION = 17;
+    const DB_VERSION = 19;
     const STORE_APPS = 'apps';
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
@@ -2774,7 +2889,6 @@
       versionClickCount++;
       clearTimeout(versionClickTimer);
       
-      // 1.5秒内无点击则重置，防止卡顿堆积
       versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 1500);
       
       if (versionClickCount >= 7) {
@@ -2787,7 +2901,6 @@
         addLog('info', '开发者模式已激活');
       } else if (versionClickCount > 1 && versionClickCount < 7) {
         const remaining = 7 - versionClickCount;
-        // 只在剩余3次以内提示，减少Toast干扰
         if (remaining <= 3) {
           showToast(`再点击 ${remaining} 次激活开发者模式`, 'dev', 1200);
         }
@@ -2865,7 +2978,10 @@
       
       await dbPut(STORE_SETTINGS, { key: 'currentSort', value: sortBy });
       
-      let appsToSort = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
+      let apps = installedApps.filter(a => a.type !== 'folder');
+      let folders = installedApps.filter(a => a.type === 'folder');
+      
+      let appsToSort = showHiddenApps ? [...apps] : apps.filter(a => !a.hidden && !a.folderId);
       
       switch(sortBy) {
         case 'name':
@@ -2901,8 +3017,8 @@
           break;
       }
       
-      const hiddenApps = installedApps.filter(a => a.hidden);
-      installedApps = [...appsToSort, ...hiddenApps];
+      const hiddenApps = apps.filter(a => a.hidden);
+      installedApps = [...folders, ...appsToSort, ...hiddenApps];
       
       await saveApps();
       
@@ -3028,6 +3144,378 @@
       showToast('您已离线，部分功能可能受限', 'warning');
     });
     
+    // ========== 文件夹系统 ==========
+    function openNewFolderModal() {
+      folderNameInput.value = '';
+      newFolderAppList.innerHTML = '';
+      
+      const availableApps = installedApps.filter(a => a.type !== 'folder' && !a.folderId && !a.hidden);
+      
+      if (availableApps.length === 0) {
+        newFolderAppList.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:20px;">暂无可收纳的应用</div>';
+      } else {
+        availableApps.forEach(app => {
+          const div = document.createElement('div');
+          div.className = 'multi-select-item';
+          div.innerHTML = `
+            <input type="checkbox" value="${app.file}" id="folder_chk_${app.file}" style="cursor:pointer">
+            <span class="item-icon">${app.icon || '📱'}</span>
+            <span class="item-name">${app.name}</span>
+          `;
+          div.onclick = (e) => {
+            if (e.target.tagName !== 'INPUT') {
+              const chk = div.querySelector('input');
+              chk.checked = !chk.checked;
+            }
+          };
+          newFolderAppList.appendChild(div);
+        });
+      }
+      
+      newFolderModal.classList.add('show');
+    }
+    
+    function closeNewFolderModal() {
+      newFolderModal.classList.remove('show');
+    }
+    
+    async function createFolder() {
+      const name = folderNameInput.value.trim();
+      if (!name) {
+        showToast('文件夹名称不能为空', 'error');
+        return;
+      }
+      
+      const checkboxes = newFolderAppList.querySelectorAll('input[type="checkbox"]:checked');
+      const selectedApps = Array.from(checkboxes).map(chk => chk.value);
+      
+      const folderFile = 'folder_' + Date.now();
+      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      const now = new Date().toISOString();
+      
+      selectedApps.forEach(appFile => {
+        const app = installedApps.find(a => a.file === appFile);
+        if (app) app.folderId = folderFile;
+      });
+      
+      installedApps.push({
+        file: folderFile,
+        name: escapeHtml(name),
+        type: 'folder',
+        icon: '📁',
+        color: color,
+        customColor: color,
+        size: 'small',
+        apps: selectedApps,
+        installTime: now,
+        lastUpdated: now
+      });
+      
+      await saveApps();
+      closeNewFolderModal();
+      currentPage = 0;
+      renderApps();
+      showToast(`📁 文件夹「${name}」已创建`, 'success');
+      addLog('info', '创建文件夹: ' + name);
+    }
+    
+    function getFolderPreview(folder) {
+      const apps = ((folder.apps || []).slice(0, 4));
+      if (apps.length === 0) return '<div class="folder-preview empty"></div>';
+      
+      const icons = apps.map(file => {
+        const app = installedApps.find(a => a.file === file);
+        return `<span class="mini-icon">${app?.icon || '📱'}</span>`;
+      }).join('');
+      
+      const emptySlots = Math.max(0, 4 - apps.length);
+      const empty = Array(emptySlots).fill('<span class="mini-icon" style="opacity:0">📱</span>').join('');
+      
+      return `<div class="folder-preview">${icons}${empty}</div>`;
+    }
+    
+    function openFolderView(folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile && a.type === 'folder');
+      if (!folder) return;
+      
+      currentFolderFile = folderFile;
+      folderViewTitle.textContent = `${folder.icon || '📁'} ${folder.name}`;
+      
+      const folderApps = (folder.apps || []).map(file => installedApps.find(a => a.file === file)).filter(Boolean);
+      
+      folderViewContent.innerHTML = '';
+      
+      if (folderApps.length === 0) {
+        folderViewContent.innerHTML = `
+          <div class="folder-empty-tip">
+            <div style="font-size:48px;margin-bottom:10px">📂</div>
+            <div>文件夹是空的</div>
+            <button onclick="addAppsToFolder('${folderFile}')" style="margin-top:15px;padding:10px 20px;background:var(--primary-color);border:none;border-radius:8px;color:white;cursor:pointer;">添加应用</button>
+          </div>
+        `;
+      } else {
+        const grid = document.createElement('div');
+        grid.className = 'folder-view-grid';
+        grid.style.setProperty('--cols', cols);
+        
+        folderApps.forEach(app => {
+          const div = document.createElement('div');
+          div.className = `app-icon size-${app.size || 'small'}`;
+          div.style.setProperty('--icon-bg', app.customColor || app.color || '#0078d7');
+          div.setAttribute('data-file', app.file);
+          div.innerHTML = `<span class="icon-emoji">${app.icon || '📱'}</span><span class="tile-label" title="${app.name}">${app.name}</span>`;
+          
+          div.onclick = (e) => {
+            e.stopPropagation();
+            launchApp(app.file, div);
+          };
+          div.oncontextmenu = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (confirm(`将「${app.name}」从文件夹中移除？`)) {
+              removeAppFromFolder(app.file, folderFile);
+            }
+          };
+          
+          grid.appendChild(div);
+        });
+        
+        folderViewContent.appendChild(grid);
+      }
+      
+      folderViewFullscreen.classList.add('show');
+      addLog('info', '打开文件夹: ' + folder.name);
+    }
+    
+    function closeFolderView() {
+      folderViewFullscreen.classList.remove('show');
+      currentFolderFile = null;
+    }
+    
+    function removeAppFromFolder(appFile, folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile);
+      const app = installedApps.find(a => a.file === appFile);
+      if (!folder || !app) return;
+      
+      folder.apps = (folder.apps || []).filter(f => f !== appFile);
+      app.folderId = null;
+      folder.lastUpdated = new Date().toISOString();
+      
+      saveApps();
+      renderApps();
+      if (folderViewFullscreen.classList.contains('show')) {
+        openFolderView(folderFile);
+      }
+      showToast('应用已移出文件夹', 'info');
+    }
+    
+    function addAppsToFolder(folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile && a.type === 'folder');
+      if (!folder) return;
+      
+      // 放宽过滤：允许从其他文件夹移动应用过来
+      const candidates = installedApps.filter(a => {
+        if (a.type === 'folder') return false;
+        if (a.hidden) return false;
+        if ((folder.apps || []).includes(a.file)) return false;
+        return true;
+      });
+      
+      if (candidates.length === 0) {
+        showToast('没有可添加的应用', 'warning');
+        return;
+      }
+      
+      const modal = document.createElement('div');
+      modal.className = 'app-action-modal';
+      modal.style.zIndex = '1002';
+      
+      let listHtml = '';
+      candidates.forEach(app => {
+        listHtml += `
+          <div class="multi-select-item" onclick="this.querySelector('input').click()">
+            <input type="checkbox" value="${app.file}" style="cursor:pointer" onclick="event.stopPropagation()">
+            <span class="item-icon">${app.icon || '📱'}</span>
+            <span class="item-name">${app.name}</span>
+          </div>
+        `;
+      });
+      
+      modal.innerHTML = `
+        <h3 style="margin-bottom:15px;text-align:center;">📁 添加应用到「${folder.name}」</h3>
+        <div class="multi-select-list" style="max-height:250px;">${listHtml}</div>
+        <div style="display:flex;gap:10px;margin-top:15px;">
+          <button onclick="confirmAddAppsToFolder('${folderFile}', this.closest('.app-action-modal'))" style="flex:1;padding:12px;background:var(--primary-color);border:none;border-radius:8px;color:white;cursor:pointer;">添加</button>
+          <button onclick="this.closest('.app-action-modal').remove()" style="flex:1;padding:12px;background:var(--input-bg);border:var(--input-border);border-radius:8px;color:white;cursor:pointer;">取消</button>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+    }
+    
+    function confirmAddAppsToFolder(folderFile, modal) {
+      const checkboxes = modal.querySelectorAll('input[type="checkbox"]:checked');
+      const selected = Array.from(checkboxes).map(chk => chk.value);
+      if (selected.length === 0) {
+        showToast('未选择任何应用', 'warning');
+        return;
+      }
+      
+      const folder = installedApps.find(a => a.file === folderFile);
+      if (!folder) return;
+      
+      selected.forEach(appFile => {
+        const app = installedApps.find(a => a.file === appFile);
+        if (app) {
+          if (app.folderId && app.folderId !== folderFile) {
+            const oldFolder = installedApps.find(a => a.file === app.folderId);
+            if (oldFolder) {
+              oldFolder.apps = (oldFolder.apps || []).filter(f => f !== appFile);
+            }
+          }
+          app.folderId = folderFile;
+          folder.apps = folder.apps || [];
+          if (!folder.apps.includes(appFile)) folder.apps.push(appFile);
+        }
+      });
+      
+      folder.lastUpdated = new Date().toISOString();
+      saveApps();
+      renderApps();
+      modal.remove();
+      
+      if (folderViewFullscreen.classList.contains('show')) {
+        openFolderView(folderFile);
+      }
+      showToast(`已添加 ${selected.length} 个应用`, 'success');
+    }
+    
+    function showFolderProps(folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile && a.type === 'folder');
+      if (!folder) return;
+      
+      const appCount = (folder.apps || []).length;
+      const sizeInfo = appCount > 0 ? `${appCount} 个应用` : '空文件夹';
+      
+      appInfoTitle.textContent = `${folder.icon || '📁'} ${folder.name}`;
+      appInfoContent.innerHTML = `
+        <div class="app-info-card">
+          <h3>📁 文件夹属性</h3>
+          <div class="app-info-item">
+            <span class="app-info-label">名称</span>
+            <span class="app-info-value">${folder.name}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">标识</span>
+            <span class="app-info-value">${folder.file}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">应用数量</span>
+            <span class="app-info-value">${sizeInfo}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">颜色</span>
+            <span class="app-info-value" style="background:${folder.customColor || folder.color};padding:2px 8px;border-radius:4px;">${folder.customColor || folder.color}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">创建时间</span>
+            <span class="app-info-value">${folder.installTime ? new Date(folder.installTime).toLocaleString() : '未知'}</span>
+          </div>
+          <div class="app-info-item">
+            <span class="app-info-label">最后更新</span>
+            <span class="app-info-value">${folder.lastUpdated ? new Date(folder.lastUpdated).toLocaleString() : '未知'}</span>
+          </div>
+        </div>
+        <div class="app-info-card">
+          <h3>🛠️ 快捷操作</h3>
+          <div class="app-info-actions">
+            <button class="primary" onclick="openFolderView('${folderFile}');closeAppInfo()">📂 打开文件夹</button>
+            <button class="secondary" onclick="renameFolder('${folderFile}')">✏️ 重命名</button>
+            <button class="secondary" onclick="closeAppInfo(); setTimeout(()=>addAppsToFolder('${folderFile}'),50)">➕ 添加应用</button>
+            <button class="secondary" onclick="changeFolderColor('${folderFile}')">🎨 更改颜色</button>
+            <button class="danger" onclick="deleteFolder('${folderFile}');closeAppInfo()">🗑️ 删除文件夹</button>
+          </div>
+        </div>
+      `;
+      
+      appInfoFullscreen.classList.add('show');
+      addLog('info', '查看文件夹属性: ' + folder.name);
+    }
+    
+    function renameFolder(folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile && a.type === 'folder');
+      if (!folder) return;
+      const newName = prompt('请输入新的文件夹名称：', folder.name);
+      if (newName?.trim()) {
+        folder.name = escapeHtml(newName.trim());
+        folder.lastUpdated = new Date().toISOString();
+        saveApps();
+        renderApps();
+        showToast('文件夹已重命名', 'success');
+        if (appInfoFullscreen.classList.contains('show')) showFolderProps(folderFile);
+        if (folderViewFullscreen.classList.contains('show')) openFolderView(folderFile);
+      }
+    }
+    
+    function changeFolderColor(folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile && a.type === 'folder');
+      if (!folder) return;
+      
+      const colorInput = document.createElement('input');
+      colorInput.type = 'color';
+      colorInput.value = folder.customColor || folder.color || '#0078d7';
+      colorInput.addEventListener('change', (e) => {
+        folder.customColor = e.target.value;
+        folder.color = e.target.value;
+        folder.lastUpdated = new Date().toISOString();
+        saveApps();
+        renderApps();
+        showToast('文件夹颜色已更新', 'success', 1500);
+        if (appInfoFullscreen.classList.contains('show')) showFolderProps(folderFile);
+      });
+      colorInput.click();
+    }
+    
+    function deleteFolder(folderFile) {
+      const folder = installedApps.find(a => a.file === folderFile && a.type === 'folder');
+      if (!folder) return;
+      if (!confirm(`确定删除文件夹「${folder.name}」？\n里面的应用将回到主屏幕。`)) return;
+      
+      (folder.apps || []).forEach(appFile => {
+        const app = installedApps.find(a => a.file === appFile);
+        if (app) app.folderId = null;
+      });
+      
+      installedApps = installedApps.filter(a => a.file !== folderFile);
+      saveApps();
+      renderApps();
+      closeFolderView();
+      showToast('文件夹已删除', 'info');
+      addLog('info', '删除文件夹: ' + folderFile);
+    }
+    
+    function showFolderActionMenu(folder, element) {
+      document.querySelector('.app-action-modal')?.remove();
+      const modal = document.createElement('div');
+      modal.className = 'app-action-modal';
+      
+      const colorOptions = colorPalette.map(c=>
+        `<div class="color-swatch" style="background:${c};" onclick="changeFolderColor('${folder.file}');document.querySelector('.app-action-modal')?.remove()"></div>`
+      ).join('');
+      
+      modal.innerHTML = `
+        <h3 style="margin-bottom:15px;text-align:center;">${folder.icon||'📁'} ${folder.name}</h3>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}</div></div>
+        <button onclick="openFolderView('${folder.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--primary-color);border:none;color:#fff;cursor:pointer;border-radius:8px;">📂 打开文件夹</button>
+        <button onclick="renameFolder('${folder.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
+        <button onclick="document.querySelector('.app-action-modal')?.remove(); addAppsToFolder('${folder.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">➕ 添加应用</button>
+        <button onclick="showFolderProps('${folder.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">ℹ️ 文件夹属性</button>
+        <button onclick="deleteFolder('${folder.file}');document.querySelector('.app-action-modal')?.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 删除文件夹</button>
+        <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>
+      `;
+      document.body.appendChild(modal);
+    }
+    
     // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', async () => {
       window.addEventListener('error', (e) => {
@@ -3040,7 +3528,6 @@
       
       try { await openDB(); } catch (err) { addLog('error', '数据库初始化失败', err); }
       
-      // 加载系统密码
       await loadSystemPassword();
       
       const stats = await dbGet(STORE_STATS, 'appUsage');
@@ -3108,7 +3595,6 @@
         currentSort = savedSort.value;
       }
       
-      // 启动DOM防护和紧急退出
       DOMGuard.init();
       setupEmergencyExit();
       
@@ -3129,12 +3615,15 @@
         if (!e.target.closest('#userInfoModal') && !e.target.closest('.win-user')) {
           userInfoModal.classList.remove('show');
         }
+        if (!e.target.closest('#newFolderModal') && !e.target.closest('[onclick="openNewFolderModal()"]')) {
+          newFolderModal.classList.remove('show');
+        }
         if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
           document.querySelector('.app-action-modal')?.remove();
         }
       });
       
-      addLog('info', 'HTMLOS v3.7 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v3.8 初始化完成, 应用数: ' + installedApps.filter(a => a.type !== 'folder').length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3295,7 +3784,12 @@
     async function loadInstalledApps() {
       try {
         const apps = await dbGetAll(STORE_APPS);
-        installedApps = apps.map(app => ({ ...app, name: escapeHtml(app.name), hidden: app.hidden || false, locked: app.locked || false }));
+        installedApps = apps.map(item => {
+          if (item.type === 'folder') {
+            return { ...item, name: escapeHtml(item.name), apps: item.apps || [] };
+          }
+          return { ...item, name: escapeHtml(item.name), hidden: item.hidden || false, locked: item.locked || false, folderId: item.folderId || null };
+        });
         if (installedApps.length === 0) {
           const legacyData = localStorage.getItem('htmlos_apps');
           if (legacyData) {
@@ -3304,7 +3798,7 @@
               const legacyApps = JSON.parse(legacyData);
               for (const app of legacyApps) {
                 const content = localStorage.getItem(app.file);
-                await dbPut(STORE_APPS, { name: app.name, file: app.file, icon: app.icon || '📱', color: app.color || colorPalette[0], customColor: app.customColor || app.color || colorPalette[0], size: app.size || 'small', source: app.source || 'user', installTime: app.installTime || new Date().toISOString(), lastUpdated: app.lastUpdated || new Date().toISOString(), hidden: false, locked: false });
+                await dbPut(STORE_APPS, { name: app.name, file: app.file, icon: app.icon || '📱', color: app.color || colorPalette[0], customColor: app.customColor || app.color || colorPalette[0], size: app.size || 'small', source: app.source || 'user', installTime: app.installTime || new Date().toISOString(), lastUpdated: app.lastUpdated || new Date().toISOString(), hidden: false, locked: false, folderId: null });
                 if (content) await dbPut(STORE_CONTENT, { file: app.file, content: content });
               }
               installedApps = await dbGetAll(STORE_APPS);
@@ -3327,20 +3821,36 @@
         const database = await openDB();
         const tx = database.transaction(STORE_APPS, 'readwrite');
         const store = tx.objectStore(STORE_APPS);
-        for (const app of installedApps) {
-          store.put({
-            name: app.name,
-            file: app.file,
-            icon: app.icon || '📱',
-            color: app.color || colorPalette[0],
-            customColor: app.customColor || app.color || colorPalette[0],
-            size: app.size || 'small',
-            source: app.source || 'user',
-            installTime: app.installTime || new Date().toISOString(),
-            lastUpdated: app.lastUpdated || new Date().toISOString(),
-            hidden: app.hidden || false,
-            locked: app.locked || false
-          });
+        for (const item of installedApps) {
+          if (item.type === 'folder') {
+            store.put({
+              file: item.file,
+              name: item.name,
+              type: 'folder',
+              icon: item.icon || '📁',
+              color: item.color || colorPalette[0],
+              customColor: item.customColor || item.color || colorPalette[0],
+              size: item.size || 'small',
+              apps: item.apps || [],
+              installTime: item.installTime || new Date().toISOString(),
+              lastUpdated: item.lastUpdated || new Date().toISOString()
+            });
+          } else {
+            store.put({
+              name: item.name,
+              file: item.file,
+              icon: item.icon || '📱',
+              color: item.color || colorPalette[0],
+              customColor: item.customColor || item.color || colorPalette[0],
+              size: item.size || 'small',
+              source: item.source || 'user',
+              installTime: item.installTime || new Date().toISOString(),
+              lastUpdated: item.lastUpdated || new Date().toISOString(),
+              hidden: item.hidden || false,
+              locked: item.locked || false,
+              folderId: item.folderId || null
+            });
+          }
         }
         return new Promise((resolve, reject) => {
           tx.oncomplete = resolve;
@@ -3361,9 +3871,6 @@
         const theme = map['theme'] || 'sharp';
         document.body.className = `theme-${theme}`;
         themeSelect.value = theme;
-        
-        const appLaunchAnim = map['appLaunchAnim'] || 'off';
-        if (appLaunchAnim === 'on') document.body.classList.add('anim-3d');
       } catch (e) {
         addLog('error', '加载设置失败，回退localStorage', e);
         const bg = localStorage.getItem('htmlos_bg');
@@ -3400,14 +3907,6 @@
         await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationState ? 'on' : 'off' });
         const pageIndicatorState = pageIndicatorToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
-        
-        const appLaunchAnimState = appLaunchAnimToggle.checked;
-        await dbPut(STORE_SETTINGS, { key: 'appLaunchAnim', value: appLaunchAnimState ? 'on' : 'off' });
-        if (appLaunchAnimState) {
-          document.body.classList.add('anim-3d');
-        } else {
-          document.body.classList.remove('anim-3d');
-        }
         
         await saveSystemSettings();
         
@@ -3496,7 +3995,11 @@
     function _renderAppsImpl() {
       appsContainer.innerHTML = '';
       
-      let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
+      let filteredApps = installedApps.filter(a => {
+        if (a.type === 'folder') return true;
+        if (showHiddenApps) return true;
+        return !a.hidden && !a.folderId;
+      });
       
       const perPage = cols * 3;
       const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
@@ -3506,15 +4009,15 @@
       
       const start = currentPage * perPage;
       const end = start + perPage;
-      const pageApps = filteredApps.slice(start, end);
+      const pageItems = filteredApps.slice(start, end);
       
-      if (pageApps.length === 0 && filteredApps.length > 0) {
+      if (pageItems.length === 0 && filteredApps.length > 0) {
         currentPage = 0;
         renderApps();
         return;
       }
       
-      if (pageApps.length === 0) {
+      if (pageItems.length === 0) {
         appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>';
         navButtons.classList.add('hidden');
         updatePageIndicator(totalPages);
@@ -3523,13 +4026,25 @@
       
       const fragment = document.createDocumentFragment();
       
-      pageApps.forEach(app => {
+      pageItems.forEach(item => {
         const div = document.createElement('div');
-        div.className = `app-icon size-${app.size || 'small'} ${app.hidden ? 'hidden' : ''} ${app.locked ? 'locked' : ''}`;
-        div.style.setProperty('--icon-bg', app.customColor || app.color || '#0078d7');
-        div.setAttribute('data-file', app.file);
-        div.innerHTML = `<span class="icon-emoji">${app.icon || '📱'}</span><span class="tile-label" title="${app.name}">${app.name}</span>`;
-        
+        if (item.type === 'folder') {
+          div.className = `app-icon size-${item.size || 'small'} folder-tile`;
+          div.style.setProperty('--icon-bg', item.customColor || item.color || '#0078d7');
+          div.setAttribute('data-file', item.file);
+          div.setAttribute('data-type', 'folder');
+          div.innerHTML = `
+            ${getFolderPreview(item)}
+            <span class="tile-label" title="${item.name}">${item.name}</span>
+            <span class="folder-badge">${(item.apps || []).length}</span>
+          `;
+        } else {
+          div.className = `app-icon size-${item.size || 'small'} ${item.hidden ? 'hidden' : ''} ${item.locked ? 'locked' : ''}`;
+          div.style.setProperty('--icon-bg', item.customColor || item.color || '#0078d7');
+          div.setAttribute('data-file', item.file);
+          div.setAttribute('data-type', 'app');
+          div.innerHTML = `<span class="icon-emoji">${item.icon || '📱'}</span><span class="tile-label" title="${item.name}">${item.name}</span>`;
+        }
         fragment.appendChild(div);
       });
       
@@ -3561,8 +4076,15 @@
         if (!touchMoved) {
           isClickHandled = true;
           const file = appIcon.getAttribute('data-file');
-          const app = installedApps.find(a => a.file === file);
-          if (app) showActionMenu(app, appIcon);
+          const type = appIcon.getAttribute('data-type');
+          const item = installedApps.find(a => a.file === file);
+          if (item) {
+            if (type === 'folder') {
+              showFolderActionMenu(item, appIcon);
+            } else {
+              showActionMenu(item, appIcon);
+            }
+          }
         }
       }, 500);
     });
@@ -3592,7 +4114,12 @@
         if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && 
             Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
           const file = appIcon.getAttribute('data-file');
-          launchApp(file, appIcon);
+          const type = appIcon.getAttribute('data-type');
+          if (type === 'folder') {
+            openFolderView(file);
+          } else {
+            launchApp(file, appIcon);
+          }
         }
       }
     });
@@ -3603,7 +4130,12 @@
       
       isClickHandled = true;
       const file = appIcon.getAttribute('data-file');
-      launchApp(file, appIcon);
+      const type = appIcon.getAttribute('data-type');
+      if (type === 'folder') {
+        openFolderView(file);
+      } else {
+        launchApp(file, appIcon);
+      }
     });
     
     appsContainer.addEventListener('contextmenu', (e) => {
@@ -3613,8 +4145,15 @@
       
       isClickHandled = true;
       const file = appIcon.getAttribute('data-file');
-      const app = installedApps.find(a => a.file === file);
-      if (app) showActionMenu(app, appIcon);
+      const type = appIcon.getAttribute('data-type');
+      const item = installedApps.find(a => a.file === file);
+      if (item) {
+        if (type === 'folder') {
+          showFolderActionMenu(item, appIcon);
+        } else {
+          showActionMenu(item, appIcon);
+        }
+      }
     });
     
     // ========== 应用菜单 ==========
@@ -3712,7 +4251,10 @@
     }
     
     function nextPage() { 
-      const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
+      const filteredApps = installedApps.filter(a => {
+        if (a.type === 'folder') return true;
+        return showHiddenApps ? true : !a.hidden && !a.folderId;
+      });
       const perPage = cols * 3;
       const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
       
@@ -3741,8 +4283,7 @@
         const dy=Math.abs(e.changedTouches[0].clientY-sy);
         const deltaTime=Date.now()-startTime;
         
-        // Bug修复：将 << 改为 < （位操作符误用为比较运算符）
-        if(Math.abs(dx)>SWIPE_THRESHOLD && dy<<40 && deltaTime<<600){
+        if(Math.abs(dx)>SWIPE_THRESHOLD && dy < 40 && deltaTime < 600){
           if(dx>0) prevPage();
           else nextPage();
         }
@@ -3772,7 +4313,10 @@
       pageIndicator.style.display = 'none';
       
       const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
+      const filtered = installedApps.filter(a => {
+        if (a.type === 'folder') return a.name.toLowerCase().includes(term);
+        return a.name.toLowerCase().includes(term);
+      }).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
       
       if (filtered.length===0) { 
         appsContainer.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>'; 
@@ -3781,17 +4325,28 @@
       
       const fragment = document.createDocumentFragment();
       
-      filtered.forEach(app=>{
+      filtered.forEach(item=>{
         const div = document.createElement('div');
-        div.className=`app-icon size-${app.size||'small'}`;
-        div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
-        div.setAttribute('data-file', app.file);
-        
-        const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
-          `<span class="search-highlight">${match}</span>`
-        );
-        
-        div.innerHTML=`<span class="icon-emoji">${app.icon||'📱'}</span><span class="tile-label" title="${app.name}">${highlightedName}</span>`;
+        if (item.type === 'folder') {
+          div.className = `app-icon size-${item.size || 'small'} folder-tile`;
+          div.style.setProperty('--icon-bg', item.customColor || item.color || '#0078d7');
+          div.setAttribute('data-file', item.file);
+          div.setAttribute('data-type', 'folder');
+          div.innerHTML = `
+            ${getFolderPreview(item)}
+            <span class="tile-label" title="${item.name}">${item.name}</span>
+            <span class="folder-badge">${(item.apps || []).length}</span>
+          `;
+        } else {
+          div.className=`app-icon size-${item.size||'small'}`;
+          div.style.setProperty('--icon-bg',item.customColor||item.color||'#0078d7');
+          div.setAttribute('data-file', item.file);
+          div.setAttribute('data-type', 'app');
+          const highlightedName = item.name.replace(new RegExp(escapedTerm, 'gi'), match => 
+            `<span class="search-highlight">${match}</span>`
+          );
+          div.innerHTML=`<span class="icon-emoji">${item.icon||'📱'}</span><span class="tile-label" title="${item.name}">${highlightedName}</span>`;
+        }
         fragment.appendChild(div);
       });
       
@@ -3815,7 +4370,7 @@
           await setContentSafe(fileName,content);
           const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
           const now=new Date().toISOString();
-          installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fileName,icon:'📱',color:color,customColor:color,size:'small',source:'user',installTime:now,lastUpdated:now,hidden:false,locked:false});
+          installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fileName,icon:'📱',color:color,customColor:color,size:'small',source:'user',installTime:now,lastUpdated:now,hidden:false,locked:false,folderId:null});
           saveApps(); closeModal(); currentPage=0; renderApps();
           showToast('安装成功！', 'success');
           addLog('info','安装应用: '+file.name);
@@ -3835,7 +4390,7 @@
       if(htmlFiles.length===0){showToast('没有有效的HTML文件','warning');installProgress.style.display='none';return;}
       
       let sc=0, fc=0;
-      for(let i=0; i<htmlFiles.length; i++){
+      for(let i=0; i < htmlFiles.length; i++){
         const file=htmlFiles[i];
         progressFill.style.width=Math.round((i/htmlFiles.length)*100)+'%';
         progressText.textContent=`正在安装 ${i+1}/${htmlFiles.length}: ${file.name}`;
@@ -3862,7 +4417,7 @@
             installedApps.push({
               name:escapeHtml(file.name.replace(/\.html?$/i,'')),
               file:fn, icon:'📱', color:cl, customColor:cl, size:'small',
-              source:'user', installTime:now, lastUpdated:now, hidden:false, locked:false
+              source:'user', installTime:now, lastUpdated:now, hidden:false, locked:false, folderId:null
             });
           }
           sc++;
@@ -3909,6 +4464,14 @@
         setTimeout(()=>iconElement.classList.remove('launch-anim'),300);
       }
       
+      // 如果在文件夹中打开应用，记录上下文并关闭文件夹视图，避免遮挡
+      if (folderViewFullscreen.classList.contains('show')) {
+        appLaunchContext = { fromFolder: currentFolderFile };
+        closeFolderView();
+      } else {
+        appLaunchContext = null;
+      }
+      
       const content = await getContentSafe(filePath);
       if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
       
@@ -3921,13 +4484,9 @@
       appFrameContainer.classList.add('show');
       mainContainer.style.display = 'none';
       
-      // 确保沙箱状态正确
       updateSandboxState();
-      
-      // 使用srcdoc加载应用内容
       appFrame.srcdoc = content;
       
-      // 延迟发送启动消息
       setTimeout(()=>{
         sendMessageToApp({
           type:'appLaunched',
@@ -3944,24 +4503,20 @@
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
       
-      // 先发送关闭消息给应用
       try {
         sendMessageToApp({type:'appClosing',timestamp:Date.now()});
       } catch(e) {}
       
-      // 显示主容器
       mainContainer.style.display='flex'; 
       mainContainer.style.flexDirection='column'; 
       appFrameContainer.classList.remove('show');
       
-      // 彻底移除旧iframe并创建全新的
       if (appFrame && appFrame.parentNode) {
         appFrame.srcdoc = '';
         appFrame.src = 'about:blank';
         appFrame.parentNode.removeChild(appFrame);
       }
       
-      // 创建新的干净iframe
       const newFrame = document.createElement('iframe');
       newFrame.id = 'appFrame';
       newFrame.allow = 'camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *';
@@ -3970,11 +4525,20 @@
         newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
       }
       appFrameContainer.appendChild(newFrame);
-      // 更新全局引用
       appFrame = newFrame;
       
       runningAppFile=null;
-      renderApps();
+      
+      // 如果之前是从文件夹打开的应用，关闭后自动回到该文件夹
+      if (appLaunchContext?.fromFolder) {
+        setTimeout(() => {
+          openFolderView(appLaunchContext.fromFolder);
+          appLaunchContext = null;
+        }, 50);
+      } else {
+        renderApps();
+      }
+      
       addLog('info', '应用已关闭，iframe已彻底重建');
     }
     
@@ -4057,10 +4621,17 @@
     // ========== 导出/导入 - 修复导入保存逻辑 ==========
     async function exportApps() {
       const awc=[];
-      for(const app of installedApps){const c=await getContentSafe(app.file);awc.push({...app,fileContent:c});}
+      for(const item of installedApps){
+        if (item.type === 'folder') {
+          awc.push({...item});
+        } else {
+          const c=await getContentSafe(item.file);
+          awc.push({...item,fileContent:c});
+        }
+      }
       const st=await dbGetAll(STORE_SETTINGS),so={};st.forEach(s=>so[s.key]=s.value);
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.7'},null,2)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.8'},null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');
       a.href=url;a.download='htmlos-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
@@ -4084,42 +4655,74 @@
               installedApps=[];
             }
             
-            for(const app of data.apps){
-              if(app.fileContent)await setContentSafe(app.file,app.fileContent);
-              if (merge && installedApps.find(a => a.file === app.file)) continue;
-              installedApps.push({
-                name:escapeHtml(app.name),
-                file:app.file,
-                icon:app.icon||'📱',
-                color:app.color||colorPalette[0],
-                customColor:app.customColor||app.color||colorPalette[0],
-                size:app.size||'small',
-                source:app.source||'user',
-                installTime:app.installTime||new Date().toISOString(),
-                lastUpdated:app.lastUpdated||new Date().toISOString(),
-                hidden:app.hidden||false,
-                locked:app.locked||false
-              });
+            for(const item of data.apps){
+              if (item.type === 'folder') {
+                if (merge && installedApps.find(a => a.file === item.file)) continue;
+                installedApps.push({
+                  file: item.file,
+                  name: escapeHtml(item.name),
+                  type: 'folder',
+                  icon: item.icon || '📁',
+                  color: item.color || colorPalette[0],
+                  customColor: item.customColor || item.color || colorPalette[0],
+                  size: item.size || 'small',
+                  apps: item.apps || [],
+                  installTime: item.installTime || new Date().toISOString(),
+                  lastUpdated: item.lastUpdated || new Date().toISOString()
+                });
+              } else {
+                if(item.fileContent)await setContentSafe(item.file,item.fileContent);
+                if (merge && installedApps.find(a => a.file === item.file)) continue;
+                installedApps.push({
+                  name:escapeHtml(item.name),
+                  file:item.file,
+                  icon:item.icon||'📱',
+                  color:item.color||colorPalette[0],
+                  customColor:item.customColor||item.color||colorPalette[0],
+                  size:item.size||'small',
+                  source:item.source||'user',
+                  installTime:item.installTime||new Date().toISOString(),
+                  lastUpdated:item.lastUpdated||new Date().toISOString(),
+                  hidden:item.hidden||false,
+                  locked:item.locked||false,
+                  folderId:item.folderId||null
+                });
+              }
             }
             
-            // 使用事务批量保存应用，大幅提升导入性能
             const database = await openDB();
             const tx = database.transaction(STORE_APPS, 'readwrite');
             const store = tx.objectStore(STORE_APPS);
-            for (const app of installedApps) {
-              store.put({
-                name: app.name,
-                file: app.file,
-                icon: app.icon || '📱',
-                color: app.color || colorPalette[0],
-                customColor: app.customColor || app.color || colorPalette[0],
-                size: app.size || 'small',
-                source: app.source || 'user',
-                installTime: app.installTime || new Date().toISOString(),
-                lastUpdated: app.lastUpdated || new Date().toISOString(),
-                hidden: app.hidden || false,
-                locked: app.locked || false
-              });
+            for (const item of installedApps) {
+              if (item.type === 'folder') {
+                store.put({
+                  file: item.file,
+                  name: item.name,
+                  type: 'folder',
+                  icon: item.icon || '📁',
+                  color: item.color || colorPalette[0],
+                  customColor: item.customColor || item.color || colorPalette[0],
+                  size: item.size || 'small',
+                  apps: item.apps || [],
+                  installTime: item.installTime || new Date().toISOString(),
+                  lastUpdated: item.lastUpdated || new Date().toISOString()
+                });
+              } else {
+                store.put({
+                  name: item.name,
+                  file: item.file,
+                  icon: item.icon || '📱',
+                  color: item.color || colorPalette[0],
+                  customColor: item.customColor || item.color || colorPalette[0],
+                  size: item.size || 'small',
+                  source: item.source || 'user',
+                  installTime: item.installTime || new Date().toISOString(),
+                  lastUpdated: item.lastUpdated || new Date().toISOString(),
+                  hidden: item.hidden || false,
+                  locked: item.locked || false,
+                  folderId: item.folderId || null
+                });
+              }
             }
             await new Promise((resolve, reject) => {
               tx.oncomplete = resolve;
@@ -4135,7 +4738,7 @@
               await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
             }
             
-            showToast(`✅ 导入成功！${data.apps.length} 个应用`, 'success');
+            showToast(`✅ 导入成功！${data.apps.length} 个项目`, 'success');
             addLog('info','导入备份完成');
             setTimeout(() => location.reload(), 1000);
           }catch(err){showToast('导入失败：'+err.message,'error');}
@@ -4162,7 +4765,6 @@
       colsSelect.value=String(cols);
       fpsToggle.checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
       pageIndicatorToggle.checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
-      appLaunchAnimToggle.checked=((await dbGet(STORE_SETTINGS,'appLaunchAnim'))?.value||'off')==='on';
       
       let memoryInfo = '不支持';
       if (window.performance && window.performance.memory) {
@@ -4171,7 +4773,10 @@
         memoryInfo = `${usedMB} MB / ${totalMB} MB`;
       }
       
-      sysInfo.innerHTML=`<p>📊 系统信息</p><p>应用数量: ${installedApps.length}</p><p>内存使用: ${memoryInfo}</p><p>自动优化: ${systemSettings.autoOptimizeMemory ? '已开启' : '已关闭'}</p><p>高级优化: ${systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭'}</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ${systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭'}</p><p>日志条数: ${systemLogs.length}</p><p>版本: <span id="versionText" onclick="activateDevMode()">${VERSION}</span></p>`;
+      const folderCount = installedApps.filter(a => a.type === 'folder').length;
+      const appCount = installedApps.filter(a => a.type !== 'folder').length;
+      
+      sysInfo.innerHTML=`<p>📊 系统信息</p><p>应用数量: ${appCount}</p><p>文件夹数量: ${folderCount}</p><p>内存使用: ${memoryInfo}</p><p>自动优化: ${systemSettings.autoOptimizeMemory ? '已开启' : '已关闭'}</p><p>高级优化: ${systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭'}</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ${systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭'}</p><p>日志条数: ${systemLogs.length}</p><p>版本: <span id="versionText" onclick="activateDevMode()">${VERSION}</span></p>`;
       settingsModal.classList.add('show');
     }
     function closeSettings(){settingsModal.classList.remove('show');}
