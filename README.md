@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-v3.8-0a84ff?style=flat-square)
+![版本](https://img.shields.io/badge/版本-v3.7-0a84ff?style=flat-square)
 ![许可](https://img.shields.io/badge/许可-MIT-30d158?style=flat-square)
 ![技术栈](https://img.shields.io/badge/技术栈-HTML%2FCSS%2FJS-ffb900?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-支持-5e5ce6?style=flat-square)
@@ -187,7 +187,7 @@ HtmlOS/
 👤 作者
 
 - GitHub：[jia-sbg](https://github.com/jia-sbg)
-- B站：[GoYi-1](https://space.bilibili.com/GoYi-1)（欢迎关注！）
+- B站：[GoYi-1](https://space.bilibili.com/3546866897651966)（欢迎关注！）
 
 ---
 
