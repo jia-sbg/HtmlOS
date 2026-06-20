@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-v3.7.1-0a84ff?style=flat-square)
+![版本](https://img.shields.io/badge/版本-v3.7.2-0a84ff?style=flat-square)
 ![许可](https://img.shields.io/badge/许可-MIT-30d158?style=flat-square)
 ![技术栈](https://img.shields.io/badge/技术栈-HTML%2FCSS%2FJS-ffb900?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-支持-5e5ce6?style=flat-square)
