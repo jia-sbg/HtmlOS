@@ -2753,6 +2753,8 @@
       
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
+      // 修复：同时从 IndexedDB 删除应用元数据
+      await dbDelete(STORE_APPS, fileKey);
       installedApps = installedApps.filter(a => a.file !== fileKey);
       delete appUsageStats[fileKey];
       await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
@@ -3468,6 +3470,7 @@
     }
     
     // 优化：使用单事务批量写入，大幅提升性能
+    // 修复：保存前先清空 store，确保已卸载的应用不会残留
     let _saveAppsPending = false;
     const saveApps = debounce(async function() {
       if (_saveAppsPending) return;
@@ -3477,6 +3480,10 @@
         const database = await openDB();
         const tx = database.transaction(STORE_APPS, 'readwrite');
         const store = tx.objectStore(STORE_APPS);
+        
+        // 修复：先清空所有旧记录，防止已卸载应用残留
+        store.clear();
+        
         for (const app of installedApps) {
           store.put({
             name: app.name,
@@ -3614,7 +3621,7 @@
       }
     }
     
-    // ========== 应用属性修改 ==========
+    // ==================== 应用属性修改 ====================
     function changeAppColor(file, color) {
       const app = installedApps.find(a => a.file === file);
       if (app) { app.customColor = color; app.color = color; saveApps(); renderApps(); }
@@ -3828,6 +3835,7 @@
       document.querySelector('.app-action-modal')?.remove();
     }
     
+    // 修复：卸载时同时从 IndexedDB 删除应用元数据，防止刷新后残留
     async function deleteApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (app && app.locked) {
@@ -3837,6 +3845,8 @@
       
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
+      // 修复：立即从 IndexedDB 删除应用元数据
+      await dbDelete(STORE_APPS, fileKey);
       installedApps = installedApps.filter(a => a.file !== fileKey);
       delete appUsageStats[fileKey];
       await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
