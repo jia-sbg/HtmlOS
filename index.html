@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.7</title>
+  <title>HTMLOS · v3.7.1</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -22,6 +22,10 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+
+    *::before, *::after {
+      box-sizing: border-box;
+    }
     
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -33,8 +37,28 @@
       flex-direction: column;
       transition: background 0.3s ease;
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
     
+        /* GPU加速辅助 */
+    .gpu-layer {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    /* 减少动画偏好支持 */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     /* 主题变量 */
     :root {
       --card-bg: rgba(0,120,215,0.9);
@@ -55,6 +79,12 @@
       --input-border: 1px solid #3a3a3c;
       --setting-group-bg: rgba(255,255,255,0.08);
     }
+
+    /* 全局GPU层优化 */
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
     
     .theme-sharp {
       --card-bg: rgba(0,120,215,0.9);
@@ -63,73 +93,95 @@
       --backdrop-blur: none;
       --setting-group-bg: rgba(255,255,255,0.08);
     }
+
+    .theme-sharp .app-icon {
+      transform: translateZ(0);
+    }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.15);
-      --card-border: 1px solid rgba(255,255,255,0.25);
+      --card-bg: rgba(255,255,255,0.12);
+      --card-border: 1px solid rgba(255,255,255,0.2);
       --card-radius: 20px;
-      --header-bg: rgba(255,255,255,0.1);
-      --bottom-bg: rgba(255,255,255,0.1);
-      --modal-bg: rgba(28,28,30,0.7);
-      --modal-border: 1px solid rgba(255,255,255,0.18);
-      --btn-bg: rgba(255,255,255,0.18);
-      --btn-hover: rgba(255,255,255,0.32);
+      --header-bg: rgba(255,255,255,0.08);
+      --bottom-bg: rgba(255,255,255,0.08);
+      --modal-bg: rgba(28,28,30,0.85);
+      --modal-border: 1px solid rgba(255,255,255,0.15);
+      --btn-bg: rgba(255,255,255,0.15);
+      --btn-hover: rgba(255,255,255,0.28);
       --primary-color: #0a84ff;
-      --transition-speed: 0.3s;
-      --backdrop-blur: blur(20px) saturate(150%);
+      --transition-speed: 0.2s;
+      --backdrop-blur: blur(12px) saturate(130%);
       --text-color: #fff;
-      --text-secondary: rgba(255,255,255,0.75);
-      --input-bg: rgba(255,255,255,0.1);
-      --input-border: 1px solid rgba(255,255,255,0.18);
-      --setting-group-bg: rgba(255,255,255,0.08);
+      --text-secondary: rgba(255,255,255,0.7);
+      --input-bg: rgba(255,255,255,0.08);
+      --input-border: 1px solid rgba(255,255,255,0.15);
+      --setting-group-bg: rgba(255,255,255,0.06);
     }
-    
+
+    .theme-glass body {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) fixed;
+      background-size: cover;
+    }
+
     .theme-glass .app-icon {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
-    
+
+    .theme-glass .app-icon:hover {
+      transform: scale(1.03) translateZ(0);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+
     .theme-glass .win-header {
-      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
-    
+
     .theme-glass .bottom-bar {
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
-      border-top: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
-    
+
     .theme-glass .modal-content {
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
     }
-    
+
     .theme-glass .search-box input {
-      background: rgba(255,255,255,0.12);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.15s ease;
     }
-    
+
     .theme-glass .search-box input:focus {
-      background: rgba(255,255,255,0.2);
-      box-shadow: 0 0 0 3px rgba(10,132,255,0.35);
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 2px rgba(10,132,255,0.3);
     }
-    
-    .theme-glass .win-header,
-    .theme-glass .bottom-bar,
-    .theme-glass .modal-content,
-    .theme-glass .app-icon,
-    .theme-glass .toolbar button,
-    .theme-glass .search-box input,
-    .theme-glass .nav-buttons button,
-    .theme-glass .setting-item,
+
     .theme-glass .app-action-modal,
-    .theme-glass .toast-notification,
-    .theme-glass .notification-center,
-    .theme-glass .app-info-card,
     .theme-glass .sort-menu {
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
     }
-    
+
+    .theme-glass .toast-notification {
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+    }
+
+    .theme-glass .notification-center {
+      backdrop-filter: blur(16px) saturate(130%);
+      -webkit-backdrop-filter: blur(16px) saturate(130%);
+    }
     .theme-dark {
       --card-bg: rgba(20,20,22,0.9);
       --card-border: 1px solid rgba(255,255,255,0.1);
@@ -138,8 +190,8 @@
       --bottom-bg: rgba(0,0,0,0.8);
       --modal-bg: rgba(15,15,17,0.95);
       --modal-border: 1px solid rgba(255,255,255,0.08);
-      --backdrop-blur: blur(20px);
-      --transition-speed: 0.25s;
+      --backdrop-blur: blur(12px);
+      --transition-speed: 0.2s;
       --text-color: #e5e5e5;
       --text-secondary: #888;
       --input-bg: rgba(255,255,255,0.05);
@@ -148,17 +200,19 @@
       --primary-color: #0a84ff;
     }
     
-    /* 3D 应用切入动画 */
+    /* 3D 应用切入动画 - 优化版，使用GPU加速 */
     body.anim-3d {
-      perspective: 1000px;
+      perspective: 800px;
     }
     body.anim-3d #appFrameContainer {
-      transform: rotateY(-90deg) scale(0.8);
+      transform: translateX(-30px) scale(0.92);
       transform-origin: center center;
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
     }
     body.anim-3d #appFrameContainer.show {
-      transform: rotateY(0deg) scale(1);
+      transform: translateX(0) scale(1);
       opacity: 1;
     }
     
@@ -170,11 +224,12 @@
       justify-content: space-between;
       align-items: center;
       font-size: 14px;
-      transition: all var(--transition-speed) ease;
+      transition: background-color var(--transition-speed) ease;
       flex-shrink: 0;
       z-index: 100;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
+      transform: translateZ(0);
     }
     
     .win-user {
@@ -205,12 +260,14 @@
       align-items: center;
       justify-content: center;
       font-size: 18px;
+      transform: translateZ(0);
     }
     
     .win-header-right {
       display: flex;
       align-items: center;
       gap: 12px;
+      transform: translateZ(0);
     }
     
     .battery-status {
@@ -260,8 +317,9 @@
     }
     
     @keyframes charging {
-      from { opacity: 0.7; }
-      to { opacity: 1; }
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
     }
     
     .container { 
@@ -272,6 +330,7 @@
       flex-direction: column;
       min-height: 0;
       padding-bottom: env(safe-area-inset-bottom, 0);
+      transform: translateZ(0);
     }
     
     h1 { 
@@ -321,6 +380,7 @@
       outline: none;
       background: rgba(255,255,255,0.25);
       box-shadow: 0 0 0 2px var(--primary-color);
+      transition: background 0.15s ease, box-shadow 0.15s ease;
     }
     
     .search-highlight {
@@ -328,6 +388,7 @@
       color: white;
       padding: 0 2px;
       border-radius: 2px;
+      transform: translateZ(0);
     }
     
     /* 工具栏 */
@@ -338,6 +399,7 @@
       margin-bottom: 12px;
       flex-shrink: 0;
       flex-wrap: wrap;
+      transform: translateZ(0);
     }
     
     .toolbar button {
@@ -364,6 +426,7 @@
       gap: 8px;
       margin-bottom: 8px;
       flex-shrink: 0;
+      transform: translateZ(0);
     }
     
     .page-dot {
@@ -393,7 +456,8 @@
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
-      contain: layout style;
+      contain: layout style paint;
+      content-visibility: auto;
     }
     
     /* 应用磁贴 - 性能优化 */
@@ -436,14 +500,23 @@
       transform: scale(0.97);
     }
     
-    .app-icon.hidden { opacity: 0.3; filter: grayscale(1); }
-    .app-icon.locked::after { content: '🔒'; position: absolute; top: 4px; right: 4px; font-size: 12px; }
+    .app-icon.hidden { opacity: 0.3; filter: grayscale(1); transform: translateZ(0); }
+    .app-icon.locked::after { 
+      content: '🔒'; 
+      position: absolute; 
+      top: 4px; 
+      right: 4px; 
+      font-size: 12px; 
+      transform: translateZ(0);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    }
     
     .app-icon .icon-emoji { 
       flex-shrink: 0;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
       line-height: 1;
       text-align: center;
+      transform: translateZ(0);
     }
     
     .app-icon.size-small .icon-emoji { font-size: clamp(24px, 5vw, 44px); }
@@ -461,7 +534,8 @@
       text-align: center;
       width: 100%;
       margin-top: 3px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+      transform: translateZ(0);
     }
     
     .app-icon.size-small .tile-label { font-size: clamp(10px, 2vw, 13px); }
@@ -535,6 +609,8 @@
       width: 100%;
       max-width: 400px;
       -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
     
     .modal-content h2 { 
@@ -543,6 +619,7 @@
       font-weight: 300;
       color: var(--primary-color);
       font-size: 22px;
+      transform: translateZ(0);
     }
     
     /* 设置界面 */
@@ -590,6 +667,7 @@
     
     .setting-section {
       margin-bottom: 24px;
+      transform: translateZ(0);
     }
     
     .setting-section-title {
@@ -599,6 +677,7 @@
       padding-left: 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      transform: translateZ(0);
     }
     
     .setting-item {
@@ -612,6 +691,7 @@
       border: var(--card-border);
       flex-wrap: wrap;
       gap: 8px;
+      transform: translateZ(0);
     }
     
     .setting-item:last-child { margin-bottom: 0; }
@@ -621,6 +701,7 @@
       color: var(--text-color);
       flex: 1;
       min-width: 120px;
+      transform: translateZ(0);
     }
     
     .setting-item input[type="checkbox"] {
@@ -648,6 +729,7 @@
       border-radius: 8px;
       font-size: 14px;
       flex-shrink: 0;
+      transform: translateZ(0);
     }
     
     .setting-item button {
@@ -669,6 +751,7 @@
       display: flex;
       gap: 10px;
       margin-top: 20px;
+      transform: translateZ(0);
     }
     
     .modal-actions button { 
@@ -694,6 +777,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin: 10px 0;
+      transform: translateZ(0);
     }
     
     .wallpaper-preset {
@@ -725,8 +809,9 @@
       gap: 12px;
       border-top: 1px solid rgba(255,255,255,0.1);
       flex-shrink: 0;
-      transition: all var(--transition-speed) ease;
+      transition: background-color var(--transition-speed) ease;
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
+      transform: translateZ(0);
     }
     
     .bottom-bar button { 
@@ -774,12 +859,13 @@
       display: flex;
       align-items: center;
       padding: 10px 15px;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
       gap: 10px;
       flex-shrink: 0;
       min-height: 50px;
+      transform: translateZ(0);
     }
     
     .app-navbar button { 
@@ -805,6 +891,7 @@
       cursor: pointer;
       flex-shrink: 0;
       max-width: 150px;
+      transform: translateZ(0);
     }
     
     .app-navbar .app-title { 
@@ -815,6 +902,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      transform: translateZ(0);
     }
     
     #appFrame { 
@@ -822,6 +910,7 @@
       width: 100%; 
       border: none; 
       min-height: 0; 
+      transform: translateZ(0);
     }
     
     .danger-link {
@@ -832,6 +921,11 @@
       cursor: pointer;
       text-decoration: underline;
       text-align: center;
+      transition: color 0.15s ease;
+    }
+
+    .danger-link:hover {
+      color: #ff6b5a;
     }
     
     /* Toast 通知 */
@@ -846,6 +940,7 @@
       gap: 8px;
       pointer-events: none;
       align-items: flex-end;
+      transform: translateZ(0);
     }
     
     .toast-notification {
@@ -875,8 +970,8 @@
     .toast-notification.dev { border-left: 3px solid #bf5af2; }
     
     @keyframes toastIn {
-      from { opacity: 0; transform: translateX(60px) scale(0.9); }
-      to { opacity: 1; transform: translateX(0) scale(1); }
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
     }
     
     /* 通知中心 */
@@ -903,7 +998,7 @@
     }
     
     @keyframes slideIn {
-      from { opacity: 0; transform: translateX(50px); }
+      from { opacity: 0; transform: translateX(30px); }
       to { opacity: 1; transform: translateX(0); }
     }
     
@@ -911,6 +1006,7 @@
       margin-bottom: 10px;
       font-weight: 300;
       color: var(--primary-color);
+      transform: translateZ(0);
     }
     
     .notification-item {
@@ -919,12 +1015,14 @@
       background: rgba(255,255,255,0.05);
       border-radius: 8px;
       font-size: 14px;
+      transform: translateZ(0);
     }
     
     .notification-item .time {
       font-size: 12px;
       color: #999;
       margin-top: 4px;
+      transform: translateZ(0);
     }
     
     .clear-notifications {
@@ -937,6 +1035,14 @@
       color: #fff;
       cursor: pointer;
       touch-action: manipulation;
+      transition: transform 0.1s ease, background-color 0.15s ease;
+      transform: translateZ(0);
+    }
+
+    .clear-notifications:active {
+      transform: scale(0.98) translateZ(0);
+      background: var(--primary-color);
+      transition: transform 0.05s ease;
     }
     
     /* 应用操作菜单 */
@@ -944,7 +1050,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) translateZ(0);
       background: var(--modal-bg);
       padding: 25px;
       border-radius: var(--card-radius);
@@ -958,6 +1064,7 @@
       width: 100%;
       max-width: 350px;
       -webkit-overflow-scrolling: touch;
+      backface-visibility: hidden;
     }
     
     /* 排序菜单 */
@@ -965,7 +1072,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) translateZ(0);
       background: var(--modal-bg);
       padding: 20px;
       border-radius: var(--card-radius);
@@ -976,12 +1083,14 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       border: var(--modal-border);
       color: #fff;
+      backface-visibility: hidden;
     }
     
     .sort-menu h3 {
       margin-bottom: 15px;
       text-align: center;
       font-weight: 300;
+      transform: translateZ(0);
     }
     
     .sort-menu button {
@@ -1019,6 +1128,7 @@
     .sys-info #versionText {
       cursor: pointer;
       user-select: none;
+      transition: color 0.15s ease;
     }
     .sys-info #versionText:hover { color: var(--primary-color); }
     
@@ -1062,6 +1172,7 @@
       overflow-y: auto;
       padding: 5px;
       -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
     }
     
     .icon-option {
@@ -1136,6 +1247,7 @@
       z-index: 10000;
       font-weight: bold;
       padding-top: env(safe-area-inset-top, 4px);
+      transform: translateZ(0);
     }
     #offlineBanner.show { display: block; }
     
@@ -1163,6 +1275,7 @@
       gap: 8px;
       margin: 10px 0;
       -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
     }
     
     .color-swatch {
@@ -1218,6 +1331,10 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    .app-info-fullscreen {
+      will-change: opacity;
+    }
     
     .app-info-header {
       display: flex;
@@ -1226,6 +1343,7 @@
       background: rgba(0,0,0,0.3);
       gap: 15px;
       padding-top: calc(15px + env(safe-area-inset-top, 0));
+      transform: translateZ(0);
     }
     
     .app-info-header button {
@@ -1246,6 +1364,7 @@
       flex: 1;
       font-size: 20px;
       font-weight: 300;
+      transform: translateZ(0);
     }
     
     .app-info-content {
@@ -1253,6 +1372,7 @@
       overflow-y: auto;
       padding: 20px;
       padding-bottom: calc(20px + env(safe-area-inset-bottom, 0));
+      transform: translateZ(0);
     }
     
     .app-info-card {
@@ -1261,12 +1381,14 @@
       padding: 20px;
       margin-bottom: 20px;
       border: var(--card-border);
+      transform: translateZ(0);
     }
     
     .app-info-card h3 {
       color: var(--primary-color);
       margin-bottom: 15px;
       font-weight: 300;
+      transform: translateZ(0);
     }
     
     .app-info-item {
@@ -1296,6 +1418,7 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin-top: 20px;
+      transform: translateZ(0);
     }
     
     .app-info-actions button {
@@ -1875,7 +1998,7 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v3.7';
+    const VERSION = 'HTMLOS v3.7.1';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -1973,6 +2096,16 @@
     const DOMGuard = {
       observers: [],
       originalStyles: new Map(),
+      _logThrottle: new Map(),
+      
+      _throttledLog(level, msg) {
+        const now = Date.now();
+        const last = this._logThrottle.get(msg) || 0;
+        if (now - last > 5000) {
+          this._logThrottle.set(msg, now);
+          addLog(level, msg);
+        }
+      },
       
       init() {
         const protectedElements = [
@@ -2081,8 +2214,10 @@
     // ==================== 日志系统（优化版）====================
     const systemLogs = [];
     const MAX_LOGS = 200;
-    let logFlushTimer = null;
     
+    const _logBuffer = [];
+    let _logFlushTimer = null;
+
     function addLog(level, message, data) {
       const entry = {
         timestamp: new Date().toISOString(),
@@ -2092,19 +2227,21 @@
       };
       systemLogs.push(entry);
       if (systemLogs.length > MAX_LOGS) systemLogs.shift();
-      
-      if (!logFlushTimer) {
-        logFlushTimer = setTimeout(() => {
-          logFlushTimer = null;
-        }, 100);
-        
-        if (level === 'error') console.error(`[${level.toUpperCase()}] ${message}`, data || '');
-        else if (level === 'warn') console.warn(`[${level.toUpperCase()}] ${message}`, data || '');
-        else console.log(`[${level.toUpperCase()}] ${message}`, data || '');
+
+      _logBuffer.push({ level, message, data });
+
+      if (!_logFlushTimer) {
+        _logFlushTimer = setTimeout(() => {
+          _logFlushTimer = null;
+          for (const log of _logBuffer) {
+            if (log.level === 'error') console.error(`[${log.level.toUpperCase()}] ${log.message}`, log.data || '');
+            else if (log.level === 'warn') console.warn(`[${log.level.toUpperCase()}] ${log.message}`, log.data || '');
+            else console.log(`[${log.level.toUpperCase()}] ${log.message}`, log.data || '');
+          }
+          _logBuffer.length = 0;
+        }, 50);
       }
-    }
-    
-    function exportSystemLogs() {
+    }function exportSystemLogs() {
       const logContent = systemLogs.map(l => 
         `[${l.timestamp}] [${l.level.toUpperCase()}] ${l.message}${l.data ? ' - ' + JSON.stringify(l.data) : ''}`
       ).join('\n');
@@ -2168,9 +2305,9 @@
       clearTimeout(toast._timeout);
       toast.classList.add('removing');
       setTimeout(() => {
-        toast.parentNode?.removeChild(toast);
-        processToastQueue();
-      }, 300);
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+        requestAnimationFrame(() => processToastQueue());
+      }, 250);
     }
     
     function addNotification(message, type) {
@@ -2745,7 +2882,7 @@
     
     // ==================== FPS 模块 ====================
     (function() {
-      let frameCount = 0, lastTime = performance.now();
+      let frameCount = 0, lastTime = performance.now(), rafId = null;
       function updateFPS() {
         frameCount++;
         const now = performance.now(), delta = now - lastTime;
@@ -2753,18 +2890,27 @@
           fpsCounter.textContent = `FPS: ${Math.round((frameCount * 1000) / delta)}`;
           frameCount = 0; lastTime = now;
         }
-        requestAnimationFrame(updateFPS);
+        rafId = requestAnimationFrame(updateFPS);
       }
       function toggleFPS(show) {
-        if (show) { fpsCounter.classList.add('show'); if (!window.__fpsRunning) { window.__fpsRunning = true; requestAnimationFrame(updateFPS); } }
-        else { fpsCounter.classList.remove('show'); }
+        if (show) { 
+          fpsCounter.classList.add('show'); 
+          if (!rafId) { 
+            rafId = requestAnimationFrame(updateFPS); 
+          } 
+        }
+        else { 
+          fpsCounter.classList.remove('show'); 
+          if (rafId) { 
+            cancelAnimationFrame(rafId); 
+            rafId = null; 
+          } 
+        }
       }
       window.fpsControl = { toggle: toggleFPS };
     })();
     
     // ========== 开发者模式（优化版）==========
-    let versionClickCount = 0;
-    let versionClickTimer = null;
     function activateDevMode() {
       if (devModeActive) {
         showToast('🔧 开发者模式已开启', 'dev', 2000);
@@ -3322,7 +3468,11 @@
     }
     
     // 优化：使用单事务批量写入，大幅提升性能
+    let _saveAppsPending = false;
     const saveApps = debounce(async function() {
+      if (_saveAppsPending) return;
+      _saveAppsPending = true;
+
       try {
         const database = await openDB();
         const tx = database.transaction(STORE_APPS, 'readwrite');
@@ -3342,14 +3492,16 @@
             locked: app.locked || false
           });
         }
-        return new Promise((resolve, reject) => {
+        await new Promise((resolve, reject) => {
           tx.oncomplete = resolve;
           tx.onerror = (e) => reject(e.target.error);
         });
       } catch (e) {
         addLog('error', '保存应用数据失败', e);
+      } finally {
+        _saveAppsPending = false;
       }
-    }, 500);
+    }, 300);
     
     async function loadSettings() {
       try {
@@ -3742,7 +3894,7 @@
         const deltaTime=Date.now()-startTime;
         
         // Bug修复：将 << 改为 < （位操作符误用为比较运算符）
-        if(Math.abs(dx)>SWIPE_THRESHOLD && dy<<40 && deltaTime<<600){
+        if(Math.abs(dx)>SWIPE_THRESHOLD && dy<40 && deltaTime<600){
           if(dx>0) prevPage();
           else nextPage();
         }
@@ -3979,8 +4131,20 @@
     }
     
     function populateSwitchAppSelect() {
-      switchAppSelect.innerHTML='';
-      installedApps.forEach(a=>{const o=document.createElement('option');o.value=a.file;o.textContent=(a.icon?a.icon+' ':'')+a.name;if(a.file===runningAppFile)o.selected=true;switchAppSelect.appendChild(o);});
+      // 使用更高效的清空方式
+      while (switchAppSelect.firstChild) {
+        switchAppSelect.removeChild(switchAppSelect.firstChild);
+      }
+
+      const fragment = document.createDocumentFragment();
+      for (const a of installedApps) {
+        const o = document.createElement('option');
+        o.value = a.file;
+        o.textContent = (a.icon ? a.icon + ' ' : '') + a.name;
+        if (a.file === runningAppFile) o.selected = true;
+        fragment.appendChild(o);
+      }
+      switchAppSelect.appendChild(fragment);
     }
     
     function switchAppFromSelect() {
