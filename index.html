@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.7.2</title>
+  <title>HTMLOS · v3.7.1</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -35,13 +35,12 @@
       height: 100dvh;
       display: flex;
       flex-direction: column;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       transform: translateZ(0);
       backface-visibility: hidden;
-      contain: layout paint;
     }
     
         /* GPU加速辅助 */
@@ -111,7 +110,7 @@
       --btn-hover: rgba(255,255,255,0.28);
       --primary-color: #0a84ff;
       --transition-speed: 0.2s;
-      --backdrop-blur: blur(10px) saturate(125%);
+      --backdrop-blur: blur(12px) saturate(130%);
       --text-color: #fff;
       --text-secondary: rgba(255,255,255,0.7);
       --input-bg: rgba(255,255,255,0.08);
@@ -140,21 +139,21 @@
     .theme-glass .win-header {
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px) saturate(125%);
-      -webkit-backdrop-filter: blur(10px) saturate(125%);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
 
     .theme-glass .bottom-bar {
       box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
       border-top: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px) saturate(125%);
-      -webkit-backdrop-filter: blur(10px) saturate(125%);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
 
     .theme-glass .modal-content {
       box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-      backdrop-filter: blur(16px) saturate(135%);
-      -webkit-backdrop-filter: blur(16px) saturate(135%);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
     }
 
     .theme-glass .search-box input {
@@ -170,18 +169,18 @@
 
     .theme-glass .app-action-modal,
     .theme-glass .sort-menu {
-      backdrop-filter: blur(16px) saturate(135%);
-      -webkit-backdrop-filter: blur(16px) saturate(135%);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
     }
 
     .theme-glass .toast-notification {
-      backdrop-filter: blur(8px) saturate(115%);
-      -webkit-backdrop-filter: blur(8px) saturate(115%);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
     }
 
     .theme-glass .notification-center {
-      backdrop-filter: blur(12px) saturate(125%);
-      -webkit-backdrop-filter: blur(12px) saturate(125%);
+      backdrop-filter: blur(16px) saturate(130%);
+      -webkit-backdrop-filter: blur(16px) saturate(130%);
     }
     .theme-dark {
       --card-bg: rgba(20,20,22,0.9);
@@ -225,13 +224,12 @@
       justify-content: space-between;
       align-items: center;
       font-size: 14px;
-      transition: background-color 0.15s ease;
+      transition: background-color var(--transition-speed) ease;
       flex-shrink: 0;
       z-index: 100;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
       transform: translateZ(0);
-      contain: layout paint;
     }
     
     .win-user {
@@ -449,16 +447,16 @@
     .apps-container {
       display: grid;
       grid-template-columns: repeat(var(--cols, 4), 1fr);
-      gap: 10px;
+      gap: 12px;
       overflow-y: auto;
-      padding: 4px;
+      padding: 5px;
       flex: 1;
       min-height: 0;
       -webkit-overflow-scrolling: touch;
       scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
-      contain: layout paint;
+      contain: layout style paint;
       content-visibility: auto;
     }
     
@@ -483,7 +481,7 @@
       height: 100%;
       aspect-ratio: 1 / 1;
       position: relative;
-      contain: strict;
+      contain: layout style paint;
     }
     
     .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
@@ -804,17 +802,16 @@
     
     /* 底部栏 */
     .bottom-bar { 
-      padding: 10px 12px; 
+      padding: 12px 15px; 
       background: var(--bottom-bg);
       display: flex;
       justify-content: center;
-      gap: 10px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      gap: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
       flex-shrink: 0;
-      transition: background-color 0.15s ease;
-      padding-bottom: calc(10px + env(safe-area-inset-bottom, 0));
+      transition: background-color var(--transition-speed) ease;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
       transform: translateZ(0);
-      contain: layout paint;
     }
     
     .bottom-bar button { 
@@ -863,8 +860,8 @@
       align-items: center;
       padding: 10px 15px;
       background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(10px) saturate(125%);
-      -webkit-backdrop-filter: blur(10px) saturate(125%);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
       gap: 10px;
       flex-shrink: 0;
       min-height: 50px;
@@ -2001,7 +1998,7 @@
     let devModeActive = false;
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v3.7.2';
+    const VERSION = 'HTMLOS v3.7.1';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -2440,25 +2437,9 @@
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
       const before = window.performance?.memory?.usedJSHeapSize || 0;
-
-      // 清理未使用的DOM引用
-      if (window._renderRaf) cancelAnimationFrame(window._renderRaf);
-      if (window.__fpsRunning) window.fpsControl.toggle(false);
-
-      // 清理缓存
-      if (window.caches) {
-        caches.keys().then(names => {
-          names.forEach(name => {
-            if (name !== 'htmlos-v3.7.2') caches.delete(name);
-          });
-        });
-      }
-
-      // 强制垃圾回收（如果可用）
       if (window.gc) {
         try { window.gc(); } catch (e) {}
       }
-
       const after = window.performance?.memory?.usedJSHeapSize || 0;
       const freed = Math.round((before - after) / 1024 / 1024);
       addLog('info', `基础内存优化完成，释放 ${freed} MB 内存`);
@@ -2769,25 +2750,259 @@
         showToast('应用已锁定，无法卸载', 'error');
         return;
       }
-
+      
       if (!confirm('确定卸载此应用？')) return;
-
+      await deleteContentSafe(fileKey);
       installedApps = installedApps.filter(a => a.file !== fileKey);
       delete appUsageStats[fileKey];
-
-      try {
-        await deleteContentSafe(fileKey);
-        await dbDelete(STORE_APPS, fileKey);
-        await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
-        await _saveAppsImmediate();
-      } catch (e) {
-        addLog('error', '删除应用失败: ' + fileKey, e);
-      }
-
+      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
+      saveApps();
       closeAppInfo();
       renderApps();
       showToast('应用已卸载', 'info', 2000);
       addLog('info', '卸载应用: ' + fileKey);
+    }
+    
+    // ==================== IndexedDB 数据库层 ====================
+    const DB_NAME = 'htmlos_db';
+    const DB_VERSION = 17;
+    const STORE_APPS = 'apps';
+    const STORE_CONTENT = 'appContent';
+    const STORE_SETTINGS = 'settings';
+    const STORE_STATS = 'stats';
+    
+    let db = null;
+    
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (db) return resolve(db);
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = (e) => { addLog('error', 'IndexedDB 打开失败', e.target.error); reject(e.target.error); };
+        request.onsuccess = (e) => { db = e.target.result; addLog('info', 'IndexedDB 已连接'); resolve(db); };
+        request.onupgradeneeded = (e) => {
+          const database = e.target.result;
+          if (!database.objectStoreNames.contains(STORE_APPS)) database.createObjectStore(STORE_APPS, { keyPath: 'file' });
+          if (!database.objectStoreNames.contains(STORE_CONTENT)) database.createObjectStore(STORE_CONTENT, { keyPath: 'file' });
+          if (!database.objectStoreNames.contains(STORE_SETTINGS)) database.createObjectStore(STORE_SETTINGS, { keyPath: 'key' });
+          if (!database.objectStoreNames.contains(STORE_STATS)) database.createObjectStore(STORE_STATS, { keyPath: 'key' });
+        };
+      });
+    }
+    
+    function dbPut(storeName, data) {
+      return openDB().then(database => {
+        return new Promise((resolve, reject) => {
+          const tx = database.transaction(storeName, 'readwrite');
+          const store = tx.objectStore(storeName);
+          const request = store.put(data);
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = (e) => reject(e.target.error);
+        });
+      });
+    }
+    
+    function dbGet(storeName, key) {
+      return openDB().then(database => {
+        return new Promise((resolve, reject) => {
+          const tx = database.transaction(storeName, 'readonly');
+          const store = tx.objectStore(storeName);
+          const request = store.get(key);
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = (e) => reject(e.target.error);
+        });
+      });
+    }
+    
+    function dbGetAll(storeName) {
+      return openDB().then(database => {
+        return new Promise((resolve, reject) => {
+          const tx = database.transaction(storeName, 'readonly');
+          const store = tx.objectStore(storeName);
+          const request = store.getAll();
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = (e) => reject(e.target.error);
+        });
+      });
+    }
+    
+    function dbDelete(storeName, key) {
+      return openDB().then(database => {
+        return new Promise((resolve, reject) => {
+          const tx = database.transaction(storeName, 'readwrite');
+          const store = tx.objectStore(storeName);
+          const request = store.delete(key);
+          request.onsuccess = () => resolve();
+          request.onerror = (e) => reject(e.target.error);
+        });
+      });
+    }
+    
+    function dbClear(storeName) {
+      return openDB().then(database => {
+        return new Promise((resolve, reject) => {
+          const tx = database.transaction(storeName, 'readwrite');
+          const store = tx.objectStore(storeName);
+          const request = store.clear();
+          request.onsuccess = () => resolve();
+          request.onerror = (e) => reject(e.target.error);
+        });
+      });
+    }
+    
+    // ==================== 全局工具函数 ====================
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); };
+    }
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) { func.apply(context, args); inThrottle = true; setTimeout(() => inThrottle = false, limit); }
+      };
+    }
+    
+    // ==================== 设置标签页切换 ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.settings-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+          
+          tab.classList.add('active');
+          document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+        });
+      });
+    });
+    
+    // ==================== FPS 模块 ====================
+    (function() {
+      let frameCount = 0, lastTime = performance.now(), rafId = null;
+      function updateFPS() {
+        frameCount++;
+        const now = performance.now(), delta = now - lastTime;
+        if (delta >= 1000) {
+          fpsCounter.textContent = `FPS: ${Math.round((frameCount * 1000) / delta)}`;
+          frameCount = 0; lastTime = now;
+        }
+        rafId = requestAnimationFrame(updateFPS);
+      }
+      function toggleFPS(show) {
+        if (show) { 
+          fpsCounter.classList.add('show'); 
+          if (!rafId) { 
+            rafId = requestAnimationFrame(updateFPS); 
+          } 
+        }
+        else { 
+          fpsCounter.classList.remove('show'); 
+          if (rafId) { 
+            cancelAnimationFrame(rafId); 
+            rafId = null; 
+          } 
+        }
+      }
+      window.fpsControl = { toggle: toggleFPS };
+    })();
+    
+    // ========== 开发者模式（优化版）==========
+    function activateDevMode() {
+      if (devModeActive) {
+        showToast('🔧 开发者模式已开启', 'dev', 2000);
+        return;
+      }
+      
+      versionClickCount++;
+      clearTimeout(versionClickTimer);
+      
+      // 1.5秒内无点击则重置，防止卡顿堆积
+      versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 1500);
+      
+      if (versionClickCount >= 7) {
+        clearTimeout(versionClickTimer);
+        versionClickCount = 0;
+        devModeActive = true;
+        dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'true' });
+        devTab.style.display = 'block';
+        showToast('✅ 开发者模式已激活！', 'dev', 3000);
+        addLog('info', '开发者模式已激活');
+      } else if (versionClickCount > 1 && versionClickCount < 7) {
+        const remaining = 7 - versionClickCount;
+        // 只在剩余3次以内提示，减少Toast干扰
+        if (remaining <= 3) {
+          showToast(`再点击 ${remaining} 次激活开发者模式`, 'dev', 1200);
+        }
+      }
+    }
+    
+    function deactivateDevMode() {
+      devModeActive = false;
+      dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'false' });
+      devTab.style.display = 'none';
+      window.fpsControl.toggle(false);
+      fpsToggle.checked = false;
+      
+      systemSettings.advancedOptimizeMemory = false;
+      advancedOptimizeMemoryToggle.checked = false;
+      if (advancedMemoryOptimizeTimer) {
+        clearInterval(advancedMemoryOptimizeTimer);
+        advancedMemoryOptimizeTimer = null;
+      }
+      
+      showToast('✅ 开发者模式已关闭', 'success');
+      addLog('info', '开发者模式已关闭');
+    }
+    
+    // ========== 壁纸预设初始化 ==========
+    function initWallpaperPresets() {
+      wallpaperPresets.innerHTML = '';
+      presetWallpapers.forEach(wp => {
+        const div = document.createElement('div');
+        div.className = 'wallpaper-preset';
+        div.style.backgroundImage = `url(${wp.url})`;
+        div.title = wp.name;
+        div.onclick = () => {
+          bgImageInput.value = wp.url;
+          document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
+          div.classList.add('selected');
+        };
+        wallpaperPresets.appendChild(div);
+      });
+    }
+    
+    // ========== 本地壁纸上传 ==========
+    function uploadWallpaper() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageUrl = e.target.result;
+          bgImageInput.value = imageUrl;
+          document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
+          showToast('壁纸已选择，点击保存应用', 'success');
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    }
+    
+    // ========== 排序功能 ==========
+    function showSortMenu() {
+      sortMenu.style.display = 'block';
+    }
+    
+    function closeSortMenu() {
+      sortMenu.style.display = 'none';
     }
     
     async function sortApps(sortBy) {
@@ -3227,22 +3442,6 @@
       try {
         const apps = await dbGetAll(STORE_APPS);
         installedApps = apps.map(app => ({ ...app, name: escapeHtml(app.name), hidden: app.hidden || false, locked: app.locked || false }));
-
-        // 数据一致性检查：清理没有对应内容的应用记录
-        const validApps = [];
-        for (const app of installedApps) {
-          const content = await getContentSafe(app.file);
-          if (content && content.length > 0) {
-            validApps.push(app);
-          } else if (app.source === 'system') {
-            // 系统应用保留
-            validApps.push(app);
-          } else {
-            addLog('warn', '清理孤立应用记录: ' + app.name);
-          }
-        }
-        installedApps = validApps;
-
         if (installedApps.length === 0) {
           const legacyData = localStorage.getItem('htmlos_apps');
           if (legacyData) {
@@ -3278,13 +3477,6 @@
         const database = await openDB();
         const tx = database.transaction(STORE_APPS, 'readwrite');
         const store = tx.objectStore(STORE_APPS);
-        // 先清除所有旧数据，防止删除的应用残留
-        await new Promise((resolve, reject) => {
-          const clearReq = store.clear();
-          clearReq.onsuccess = resolve;
-          clearReq.onerror = (e) => reject(e.target.error);
-        });
-        // 再写入当前所有应用
         for (const app of installedApps) {
           store.put({
             name: app.name,
@@ -3309,7 +3501,479 @@
       } finally {
         _saveAppsPending = false;
       }
-    }, 300);;
+    }, 300);
+    
+    async function loadSettings() {
+      try {
+        const settings = await dbGetAll(STORE_SETTINGS);
+        const map = {};
+        settings.forEach(s => map[s.key] = s.value);
+        if (map['bg']) { document.body.style.setProperty('--bg', map['bg']); document.body.style.background = map['bg']; }
+        if (map['cols']) { cols = parseInt(map['cols']); document.body.style.setProperty('--cols', cols); colsSelect.value = cols; }
+        const theme = map['theme'] || 'sharp';
+        document.body.className = `theme-${theme}`;
+        themeSelect.value = theme;
+        
+        const appLaunchAnim = map['appLaunchAnim'] || 'off';
+        if (appLaunchAnim === 'on') document.body.classList.add('anim-3d');
+      } catch (e) {
+        addLog('error', '加载设置失败，回退localStorage', e);
+        const bg = localStorage.getItem('htmlos_bg');
+        if (bg) { document.body.style.setProperty('--bg', bg); document.body.style.background = bg; }
+        document.body.className = `theme-${localStorage.getItem('htmlos_theme') || 'sharp'}`;
+      }
+    }
+    
+    async function saveSettings() {
+      const color = bgColorPicker.value;
+      const imageUrl = bgImageInput.value.trim();
+      let bgValue = imageUrl ? `url(${imageUrl}) center/cover no-repeat fixed` : color;
+      document.body.style.background = bgValue;
+      document.body.style.setProperty('--bg', bgValue);
+      
+      const newCols = parseInt(colsSelect.value);
+      cols = newCols;
+      document.body.style.setProperty('--cols', cols);
+      
+      try {
+        await dbPut(STORE_SETTINGS, { key: 'bg', value: bgValue });
+        await dbPut(STORE_SETTINGS, { key: 'cols', value: String(cols) });
+        const theme = themeSelect.value;
+        document.body.className = `theme-${theme}`;
+        await dbPut(STORE_SETTINGS, { key: 'theme', value: theme });
+        
+        const fpsState = fpsToggle.checked;
+        await dbPut(STORE_SETTINGS, { key: 'fps', value: fpsState ? 'on' : 'off' });
+        window.fpsControl.toggle(fpsState);
+        
+        const launchAnimState = launchAnimToggle.checked;
+        await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimState ? 'on' : 'off' });
+        const vibrationState = vibrationToggle.checked;
+        await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationState ? 'on' : 'off' });
+        const pageIndicatorState = pageIndicatorToggle.checked;
+        await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
+        
+        const appLaunchAnimState = appLaunchAnimToggle.checked;
+        await dbPut(STORE_SETTINGS, { key: 'appLaunchAnim', value: appLaunchAnimState ? 'on' : 'off' });
+        if (appLaunchAnimState) {
+          document.body.classList.add('anim-3d');
+        } else {
+          document.body.classList.remove('anim-3d');
+        }
+        
+        await saveSystemSettings();
+        
+        if (pageIndicatorState) {
+          pageIndicator.style.display = 'flex';
+        } else {
+          pageIndicator.style.display = 'none';
+        }
+        
+        showToast('设置已保存', 'success');
+        addLog('info', '设置已保存');
+      } catch (e) {
+        addLog('error', '保存设置失败', e);
+        localStorage.setItem('htmlos_bg', bgValue);
+        localStorage.setItem('htmlos_cols', String(cols));
+        localStorage.setItem('htmlos_theme', document.getElementById('themeSelect').value);
+      }
+      
+      closeSettings();
+      currentPage = 0;
+      renderApps();
+    }
+    
+    // ========== 内容存取兼容层（修复空内容判断）==========
+    async function getContentSafe(key) {
+      try { 
+        const result = await dbGet(STORE_CONTENT, key); 
+        if (result && result.content !== undefined && result.content !== null) return result.content; 
+      }
+      catch (e) { 
+        addLog('warn', 'IndexedDB读取失败，尝试localStorage: ' + key); 
+      }
+      return localStorage.getItem(key);
+    }
+    
+    async function setContentSafe(key, content) {
+      try { 
+        await dbPut(STORE_CONTENT, { file: key, content: content }); 
+      }
+      catch (e) { 
+        addLog('warn', 'IndexedDB写入失败，回退到localStorage: ' + key); 
+        localStorage.setItem(key, content); 
+      }
+    }
+    
+    async function deleteContentSafe(key) {
+      try { 
+        await dbDelete(STORE_CONTENT, key); 
+      }
+      catch (e) { 
+        localStorage.removeItem(key); 
+      }
+    }
+    
+    // ========== 应用属性修改 ==========
+    function changeAppColor(file, color) {
+      const app = installedApps.find(a => a.file === file);
+      if (app) { app.customColor = color; app.color = color; saveApps(); renderApps(); }
+    }
+    
+    function changeAppIcon(file, icon) {
+      const app = installedApps.find(a => a.file === file);
+      if (app) { app.icon = icon || '📱'; saveApps(); renderApps(); showToast('图标已更新', 'info', 1500); }
+    }
+    
+    function changeAppSize(file, size) {
+      const app = installedApps.find(a => a.file === file);
+      if (!app) return;
+      if (sizeOptions.includes(size)) app.size = size;
+      else app.size = sizeOptions[(sizeOptions.indexOf(app.size || 'small') + 1) % sizeOptions.length];
+      saveApps();
+      renderApps();
+      showToast('磁贴大小: ' + sizeLabels[app.size], 'info', 1500);
+    }
+    
+    // ========== 渲染应用 - 性能优化 ==========
+    function renderApps() {
+      if (window._renderRaf) cancelAnimationFrame(window._renderRaf);
+      
+      window._renderRaf = requestAnimationFrame(() => {
+        _renderAppsImpl();
+        window._renderRaf = null;
+      });
+    }
+    
+    function _renderAppsImpl() {
+      appsContainer.innerHTML = '';
+      
+      let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
+      
+      const perPage = cols * 3;
+      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
+      
+      if (currentPage < 0) currentPage = 0;
+      if (currentPage >= totalPages) currentPage = totalPages - 1;
+      
+      const start = currentPage * perPage;
+      const end = start + perPage;
+      const pageApps = filteredApps.slice(start, end);
+      
+      if (pageApps.length === 0 && filteredApps.length > 0) {
+        currentPage = 0;
+        renderApps();
+        return;
+      }
+      
+      if (pageApps.length === 0) {
+        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>';
+        navButtons.classList.add('hidden');
+        updatePageIndicator(totalPages);
+        return;
+      }
+      
+      const fragment = document.createDocumentFragment();
+      
+      pageApps.forEach(app => {
+        const div = document.createElement('div');
+        div.className = `app-icon size-${app.size || 'small'} ${app.hidden ? 'hidden' : ''} ${app.locked ? 'locked' : ''}`;
+        div.style.setProperty('--icon-bg', app.customColor || app.color || '#0078d7');
+        div.setAttribute('data-file', app.file);
+        div.innerHTML = `<span class="icon-emoji">${app.icon || '📱'}</span><span class="tile-label" title="${app.name}">${app.name}</span>`;
+        
+        fragment.appendChild(div);
+      });
+      
+      appsContainer.appendChild(fragment);
+      updatePageInfo(filteredApps.length, perPage);
+      updatePageIndicator(totalPages);
+      
+      if (totalPages > 1) {
+        navButtons.classList.remove('hidden');
+      } else {
+        navButtons.classList.add('hidden');
+      }
+    }
+    
+    // ========== 应用图标事件处理 ==========
+    let longPressTimer, touchMoved, isClickHandled, currentAppElement;
+    
+    appsContainer.addEventListener('touchstart', (e) => {
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon) return;
+      
+      currentAppElement = appIcon;
+      touchMoved = false;
+      isClickHandled = false;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      
+      longPressTimer = setTimeout(() => {
+        if (!touchMoved) {
+          isClickHandled = true;
+          const file = appIcon.getAttribute('data-file');
+          const app = installedApps.find(a => a.file === file);
+          if (app) showActionMenu(app, appIcon);
+        }
+      }, 500);
+    });
+    
+    appsContainer.addEventListener('touchmove', (e) => {
+      if (Math.abs(e.touches[0].clientX - touchStartX) > TOUCH_THRESHOLD || 
+          Math.abs(e.touches[0].clientY - touchStartY) > TOUCH_THRESHOLD) {
+        touchMoved = true;
+        if (longPressTimer) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
+        }
+      }
+    });
+    
+    appsContainer.addEventListener('touchend', (e) => {
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+      
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon || appIcon !== currentAppElement) return;
+      
+      if (!touchMoved && !isClickHandled) {
+        isClickHandled = true;
+        if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && 
+            Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
+          const file = appIcon.getAttribute('data-file');
+          launchApp(file, appIcon);
+        }
+      }
+    });
+    
+    appsContainer.addEventListener('click', (e) => {
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon || isClickHandled) return;
+      
+      isClickHandled = true;
+      const file = appIcon.getAttribute('data-file');
+      launchApp(file, appIcon);
+    });
+    
+    appsContainer.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const appIcon = e.target.closest('.app-icon');
+      if (!appIcon) return;
+      
+      isClickHandled = true;
+      const file = appIcon.getAttribute('data-file');
+      const app = installedApps.find(a => a.file === file);
+      if (app) showActionMenu(app, appIcon);
+    });
+    
+    // ========== 应用菜单 ==========
+    function showActionMenu(app, element) {
+      document.querySelector('.app-action-modal')?.remove();
+      const modal = document.createElement('div');
+      modal.className = 'app-action-modal';
+      
+      const iconOptions = iconLibrary.map(icon => 
+        `<div class="icon-option ${app.icon===icon?'selected':''}" onclick="changeAppIcon('${app.file}','${icon}');document.querySelector('.app-action-modal')?.remove()">${icon}</div>`
+      ).join('');
+      
+      const colorOptions = colorPalette.map(c=>
+        `<div class="color-swatch" style="background:${c};" onclick="changeAppColor('${app.file}','${c}');document.querySelector('.app-action-modal')?.remove()"></div>`
+      ).join('');
+      
+      const systemColorButton = `<div class="color-swatch system-color-picker" onclick="openSystemColorPicker('${app.file}')">🎨</div>`;
+      
+      modal.innerHTML = `
+        <h3 style="margin-bottom:15px;text-align:center;">${app.icon||'📱'} ${app.name}</h3>
+        <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
+          <div class="custom-icon-input">
+            <input type="text" id="customIconInput_${app.file}" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
+            <button onclick="applyCustomIcon('${app.file}')">应用</button>
+          </div>
+        </div>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}${systemColorButton}</div></div>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">📐 磁贴大小 (当前: ${sizeLabels[app.size||'small']})</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
+        <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
+        <button onclick="updateAppFromFile('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#0a84ff;border:none;color:#fff;cursor:pointer;border-radius:8px;">📦 更新应用</button>
+        <button onclick="showAppInfo('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">ℹ️ 应用信息</button>
+        <button onclick="hideApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
+        <button onclick="lockApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
+        ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 卸载</button>`:''}
+        <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>`;
+      document.body.appendChild(modal);
+    }
+    
+    // 应用自定义图标保存功能
+    function applyCustomIcon(appFile) {
+      const input = document.getElementById(`customIconInput_${appFile}`);
+      const customIcon = input.value.trim();
+      if (customIcon) {
+        changeAppIcon(appFile, customIcon);
+        document.querySelector('.app-action-modal')?.remove();
+      } else {
+        showToast('请输入图标', 'warning');
+      }
+    }
+    
+    function renameApp(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (!app) return;
+      if (app.locked) { showToast('应用已锁定，无法重命名', 'error'); return; }
+      
+      const newName = prompt('请输入新的应用名称：', app.name);
+      if (newName?.trim()) { app.name = escapeHtml(newName.trim()); saveApps(); renderApps(); showToast('已重命名', 'success', 1500); }
+      document.querySelector('.app-action-modal')?.remove();
+    }
+    
+    async function deleteApp(fileKey) {
+      const app = installedApps.find(a => a.file === fileKey);
+      if (app && app.locked) {
+        showToast('应用已锁定，无法卸载', 'error');
+        return;
+      }
+      
+      if (!confirm('确定卸载此应用？')) return;
+      await deleteContentSafe(fileKey);
+      installedApps = installedApps.filter(a => a.file !== fileKey);
+      delete appUsageStats[fileKey];
+      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
+      saveApps();
+      renderApps();
+      document.querySelector('.app-action-modal')?.remove();
+      showToast('应用已卸载', 'info', 2000);
+      addLog('info', '卸载应用: ' + fileKey);
+    }
+    
+    // ========== 分页 ==========
+    function updatePageInfo(total, perPage) {
+      const totalPages = Math.ceil(total/perPage) || 1;
+      pageInfo.textContent = `第 ${currentPage+1} / ${totalPages} 页`;
+      
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage >= totalPages - 1;
+    }
+    
+    function prevPage() { 
+      if (currentPage > 0) { 
+        currentPage--; 
+        renderApps(); 
+      } 
+    }
+    
+    function nextPage() { 
+      const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
+      const perPage = cols * 3;
+      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
+      
+      if (currentPage < totalPages - 1) { 
+        currentPage++; 
+        renderApps(); 
+      } 
+    }
+    
+    // ========== 滑动页面 - 修复检测逻辑（修复位操作符bug）==========
+    function setupSwipe() {
+      let sx=0, sy=0, startTime=0;
+      
+      mainContainer.addEventListener('touchstart', e=>{
+        sx=e.touches[0].clientX;
+        sy=e.touches[0].clientY;
+        startTime=Date.now();
+      },{passive:true});
+      
+      mainContainer.addEventListener('touchmove', e=>{
+        // 仅用于检测，不阻止默认行为
+      },{passive:true});
+      
+      mainContainer.addEventListener('touchend', e=>{
+        const dx=e.changedTouches[0].clientX-sx;
+        const dy=Math.abs(e.changedTouches[0].clientY-sy);
+        const deltaTime=Date.now()-startTime;
+        
+        // Bug修复：将 << 改为 < （位操作符误用为比较运算符）
+        if(Math.abs(dx)>SWIPE_THRESHOLD && dy<40 && deltaTime<600){
+          if(dx>0) prevPage();
+          else nextPage();
+        }
+      },{passive:true});
+    }
+    
+    // ========== 搜索 - 性能优化 ==========
+    function setupSearch() {
+      searchApps.addEventListener('input', debounce((e) => {
+        const term = e.target.value.toLowerCase().trim();
+        
+        if (term === '') {
+          currentPage = 0;
+          renderApps();
+          return;
+        }
+        
+        requestAnimationFrame(() => {
+          _performSearch(term);
+        });
+      }, 300));
+    }
+    
+    function _performSearch(term) {
+      appsContainer.innerHTML = '';
+      navButtons.classList.add('hidden');
+      pageIndicator.style.display = 'none';
+      
+      const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
+      
+      if (filtered.length===0) { 
+        appsContainer.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>'; 
+        return; 
+      }
+      
+      const fragment = document.createDocumentFragment();
+      
+      filtered.forEach(app=>{
+        const div = document.createElement('div');
+        div.className=`app-icon size-${app.size||'small'}`;
+        div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
+        div.setAttribute('data-file', app.file);
+        
+        const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
+          `<span class="search-highlight">${match}</span>`
+        );
+        
+        div.innerHTML=`<span class="icon-emoji">${app.icon||'📱'}</span><span class="tile-label" title="${app.name}">${highlightedName}</span>`;
+        fragment.appendChild(div);
+      });
+      
+      appsContainer.appendChild(fragment);
+    }
+    
+    // ========== 安装应用 ==========
+    function openInstaller() { installModal.classList.add('show'); }
+    function closeModal() { installModal.classList.remove('show'); installProgress.style.display='none'; }
+    
+    async function showFilePicker() {
+      const input = document.createElement('input');
+      input.type='file'; input.accept='.html,.htm';
+      input.onchange=async(e)=>{
+        const file=e.target.files[0];
+        if(!file)return;
+        const reader=new FileReader();
+        reader.onload=async(e)=>{
+          const content=e.target.result;
+          const fileName='user/apps/'+Date.now()+'_'+file.name;
+          await setContentSafe(fileName,content);
+          const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+          const now=new Date().toISOString();
+          installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fileName,icon:'📱',color:color,customColor:color,size:'small',source:'user',installTime:now,lastUpdated:now,hidden:false,locked:false});
+          saveApps(); closeModal(); currentPage=0; renderApps();
+          showToast('安装成功！', 'success');
+          addLog('info','安装应用: '+file.name);
+        };
+        reader.readAsText(file);
+      };
       input.click();
     }
     
@@ -3677,45 +4341,24 @@
     function closeSettings(){settingsModal.classList.remove('show');}
     
     // 性能优化：移除全局对象副作用，每次动态构建选项
-    let _lastDateStr = '';
-    let _lastTimeStr = '';
-    let _timeUpdateCounter = 0;
-
     function updateDateTime(){
-      const now = new Date();
-      _timeUpdateCounter++;
-
-      // 日期每天只更新一次
+      const now=new Date();
+      
       if (systemSettings.showDate) {
-        const dateStr = now.toLocaleDateString('zh-CN', dateFormatOptions);
-        if (dateStr !== _lastDateStr) {
-          headerDate.textContent = dateStr;
-          _lastDateStr = dateStr;
-        }
+        headerDate.textContent=now.toLocaleDateString('zh-CN', dateFormatOptions);
       } else {
-        const dateStr = now.toLocaleDateString('zh-CN', shortDateFormatOptions);
-        if (dateStr !== _lastDateStr) {
-          headerDate.textContent = dateStr;
-          _lastDateStr = dateStr;
-        }
+        headerDate.textContent=now.toLocaleDateString('zh-CN', shortDateFormatOptions);
       }
-
-      // 时间每5帧更新一次（约200ms），减少DOM操作
-      if (_timeUpdateCounter % 5 === 0 || !systemSettings.showSeconds) {
-        const opts = {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: !systemSettings.time24
-        };
-        if (systemSettings.showSeconds) {
-          opts.second = '2-digit';
-        }
-        const timeStr = now.toLocaleTimeString('zh-CN', opts);
-        if (timeStr !== _lastTimeStr) {
-          datetime.textContent = timeStr;
-          _lastTimeStr = timeStr;
-        }
+      
+      const opts = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: !systemSettings.time24
+      };
+      if (systemSettings.showSeconds) {
+        opts.second = '2-digit';
       }
+      datetime.textContent=now.toLocaleTimeString('zh-CN', opts);
     }
     
     // ========== 应用更新功能 ==========
