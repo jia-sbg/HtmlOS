@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
-  <title>HTMLOS · v3.7.1</title>
+  <meta name="theme-color" content="#0078d7">
+  <title>HTMLOS · v4.0.0</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -35,19 +36,7 @@
       height: 100dvh;
       display: flex;
       flex-direction: column;
-      transition: background 0.3s ease;
       overflow: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-    }
-    
-        /* GPU加速辅助 */
-    .gpu-layer {
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      perspective: 1000px;
     }
 
     /* 减少动画偏好支持 */
@@ -79,12 +68,6 @@
       --input-border: 1px solid #3a3a3c;
       --setting-group-bg: rgba(255,255,255,0.08);
     }
-
-    /* 全局GPU层优化 */
-    html {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
     
     .theme-sharp {
       --card-bg: rgba(0,120,215,0.9);
@@ -92,10 +75,6 @@
       --transition-speed: 0s;
       --backdrop-blur: none;
       --setting-group-bg: rgba(255,255,255,0.08);
-    }
-
-    .theme-sharp .app-icon {
-      transform: translateZ(0);
     }
     
     .theme-glass {
@@ -126,13 +105,10 @@
     .theme-glass .app-icon {
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
       border: 1px solid rgba(255,255,255,0.18);
-      will-change: transform;
-      transform: translateZ(0);
-      backface-visibility: hidden;
     }
 
     .theme-glass .app-icon:hover {
-      transform: scale(1.03) translateZ(0);
+      transform: scale(1.03);
       box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     }
 
@@ -159,7 +135,6 @@
     .theme-glass .search-box input {
       background: rgba(255,255,255,0.1);
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: all 0.15s ease;
     }
 
     .theme-glass .search-box input:focus {
@@ -182,6 +157,7 @@
       backdrop-filter: blur(16px) saturate(130%);
       -webkit-backdrop-filter: blur(16px) saturate(130%);
     }
+
     .theme-dark {
       --card-bg: rgba(20,20,22,0.9);
       --card-border: 1px solid rgba(255,255,255,0.1);
@@ -200,22 +176,6 @@
       --primary-color: #0a84ff;
     }
     
-    /* 3D 应用切入动画 - 优化版，使用GPU加速 */
-    body.anim-3d {
-      perspective: 800px;
-    }
-    body.anim-3d #appFrameContainer {
-      transform: translateX(-30px) scale(0.92);
-      transform-origin: center center;
-      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease;
-      will-change: transform, opacity;
-      backface-visibility: hidden;
-    }
-    body.anim-3d #appFrameContainer.show {
-      transform: translateX(0) scale(1);
-      opacity: 1;
-    }
-    
     /* 头部 */
     .win-header {
       padding: 8px 16px;
@@ -229,7 +189,6 @@
       z-index: 100;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
-      transform: translateZ(0);
     }
     
     .win-user {
@@ -247,9 +206,7 @@
       background: rgba(255,255,255,0.1);
     }
     
-    .win-user:active {
-      transform: scale(0.98);
-    }
+    .win-user:active { transform: scale(0.98); }
     
     .win-user-icon {
       width: 32px;
@@ -260,14 +217,12 @@
       align-items: center;
       justify-content: center;
       font-size: 18px;
-      transform: translateZ(0);
     }
     
     .win-header-right {
       display: flex;
       align-items: center;
       gap: 12px;
-      transform: translateZ(0);
     }
     
     .battery-status {
@@ -330,7 +285,6 @@
       flex-direction: column;
       min-height: 0;
       padding-bottom: env(safe-area-inset-bottom, 0);
-      transform: translateZ(0);
     }
     
     h1 { 
@@ -369,18 +323,15 @@
       background: var(--btn-bg);
       color: var(--text-color);
       font-size: 15px;
-      transition: all var(--transition-speed) ease;
+      transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
     
-    .search-box input::placeholder {
-      color: var(--text-secondary);
-    }
+    .search-box input::placeholder { color: var(--text-secondary); }
     
     .search-box input:focus {
       outline: none;
       background: rgba(255,255,255,0.25);
       box-shadow: 0 0 0 2px var(--primary-color);
-      transition: background 0.15s ease, box-shadow 0.15s ease;
     }
     
     .search-highlight {
@@ -388,7 +339,6 @@
       color: white;
       padding: 0 2px;
       border-radius: 2px;
-      transform: translateZ(0);
     }
     
     /* 工具栏 */
@@ -399,7 +349,6 @@
       margin-bottom: 12px;
       flex-shrink: 0;
       flex-wrap: wrap;
-      transform: translateZ(0);
     }
     
     .toolbar button {
@@ -410,7 +359,7 @@
       border-radius: 8px;
       color: var(--text-color);
       cursor: pointer;
-      transition: all var(--transition-speed) ease;
+      transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
       touch-action: manipulation;
     }
     
@@ -426,7 +375,6 @@
       gap: 8px;
       margin-bottom: 8px;
       flex-shrink: 0;
-      transform: translateZ(0);
     }
     
     .page-dot {
@@ -434,7 +382,7 @@
       height: 8px;
       border-radius: 50%;
       background: rgba(255,255,255,0.3);
-      transition: all 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
       cursor: pointer;
     }
     
@@ -457,10 +405,9 @@
       touch-action: pan-y;
       align-content: start;
       contain: layout style paint;
-      content-visibility: auto;
     }
     
-    /* 应用磁贴 - 性能优化 */
+    /* 应用磁贴 */
     .app-icon {
       background: var(--icon-bg, var(--card-bg));
       border: var(--card-border);
@@ -470,12 +417,13 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all var(--transition-speed) ease;
+      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, filter var(--transition-speed) ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       color: var(--text-color);
       padding: 8px;
       touch-action: manipulation;
       user-select: none;
+      -webkit-user-select: none;
       overflow: hidden;
       width: 100%;
       height: 100%;
@@ -496,18 +444,15 @@
       box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
     
-    .app-icon:active {
-      transform: scale(0.97);
-    }
+    .app-icon:active { transform: scale(0.97); }
     
-    .app-icon.hidden { opacity: 0.3; filter: grayscale(1); transform: translateZ(0); }
+    .app-icon.hidden { opacity: 0.3; filter: grayscale(1); }
     .app-icon.locked::after { 
       content: '🔒'; 
       position: absolute; 
       top: 4px; 
       right: 4px; 
       font-size: 12px; 
-      transform: translateZ(0);
       filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
     }
     
@@ -516,7 +461,6 @@
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
       line-height: 1;
       text-align: center;
-      transform: translateZ(0);
     }
     
     .app-icon.size-small .icon-emoji { font-size: clamp(24px, 5vw, 44px); }
@@ -535,7 +479,6 @@
       width: 100%;
       margin-top: 3px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.35);
-      transform: translateZ(0);
     }
     
     .app-icon.size-small .tile-label { font-size: clamp(10px, 2vw, 13px); }
@@ -564,7 +507,7 @@
       border-radius: 12px;
       cursor: pointer;
       min-width: 100px;
-      transition: all var(--transition-speed) ease;
+      transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
       touch-action: manipulation;
     }
     
@@ -609,8 +552,6 @@
       width: 100%;
       max-width: 400px;
       -webkit-overflow-scrolling: touch;
-      transform: translateZ(0);
-      backface-visibility: hidden;
     }
     
     .modal-content h2 { 
@@ -619,7 +560,6 @@
       font-weight: 300;
       color: var(--primary-color);
       font-size: 22px;
-      transform: translateZ(0);
     }
     
     /* 设置界面 */
@@ -645,7 +585,7 @@
       cursor: pointer;
       font-size: 14px;
       white-space: nowrap;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease, color 0.2s ease;
       flex-shrink: 0;
     }
     
@@ -665,10 +605,7 @@
       opacity: 1;
     }
     
-    .setting-section {
-      margin-bottom: 24px;
-      transform: translateZ(0);
-    }
+    .setting-section { margin-bottom: 24px; }
     
     .setting-section-title {
       font-size: 14px;
@@ -677,7 +614,6 @@
       padding-left: 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      transform: translateZ(0);
     }
     
     .setting-item {
@@ -691,7 +627,6 @@
       border: var(--card-border);
       flex-wrap: wrap;
       gap: 8px;
-      transform: translateZ(0);
     }
     
     .setting-item:last-child { margin-bottom: 0; }
@@ -701,7 +636,6 @@
       color: var(--text-color);
       flex: 1;
       min-width: 120px;
-      transform: translateZ(0);
     }
     
     .setting-item input[type="checkbox"] {
@@ -729,7 +663,6 @@
       border-radius: 8px;
       font-size: 14px;
       flex-shrink: 0;
-      transform: translateZ(0);
     }
     
     .setting-item button {
@@ -740,7 +673,7 @@
       color: var(--text-color);
       cursor: pointer;
       font-size: 14px;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease;
       touch-action: manipulation;
       flex-shrink: 0;
     }
@@ -751,7 +684,6 @@
       display: flex;
       gap: 10px;
       margin-top: 20px;
-      transform: translateZ(0);
     }
     
     .modal-actions button { 
@@ -763,7 +695,7 @@
       cursor: pointer;
       border: var(--input-border);
       font-size: 15px;
-      transition: all var(--transition-speed) ease;
+      transition: background var(--transition-speed) ease;
       touch-action: manipulation;
     }
     
@@ -777,7 +709,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin: 10px 0;
-      transform: translateZ(0);
     }
     
     .wallpaper-preset {
@@ -787,7 +718,7 @@
       border: 2px solid transparent;
       background-size: cover;
       background-position: center;
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
     
     .wallpaper-preset:hover {
@@ -811,18 +742,16 @@
       flex-shrink: 0;
       transition: background-color var(--transition-speed) ease;
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
-      transform: translateZ(0);
     }
     
     .bottom-bar button { 
       padding: 12px 18px; 
       font-size: 15px; 
-      border: none; 
       background: var(--btn-bg);
       color: var(--text-color); 
       cursor: pointer;
       border-radius: 12px;
-      transition: all var(--transition-speed) ease;
+      transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
       min-width: 120px;
       border: var(--card-border);
       flex-shrink: 1;
@@ -846,6 +775,7 @@
       transform: scale(0.95);
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
+      will-change: transform, opacity;
       padding-top: env(safe-area-inset-top, 0);
     }
     
@@ -865,7 +795,6 @@
       gap: 10px;
       flex-shrink: 0;
       min-height: 50px;
-      transform: translateZ(0);
     }
     
     .app-navbar button { 
@@ -891,7 +820,6 @@
       cursor: pointer;
       flex-shrink: 0;
       max-width: 150px;
-      transform: translateZ(0);
     }
     
     .app-navbar .app-title { 
@@ -902,7 +830,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      transform: translateZ(0);
     }
     
     #appFrame { 
@@ -910,7 +837,6 @@
       width: 100%; 
       border: none; 
       min-height: 0; 
-      transform: translateZ(0);
     }
     
     .danger-link {
@@ -924,9 +850,7 @@
       transition: color 0.15s ease;
     }
 
-    .danger-link:hover {
-      color: #ff6b5a;
-    }
+    .danger-link:hover { color: #ff6b5a; }
     
     /* Toast 通知 */
     .toast-container {
@@ -939,8 +863,7 @@
       flex-direction: column;
       gap: 8px;
       pointer-events: none;
-      align-items: flex-end;
-      transform: translateZ(0);
+      align-items: flex-start;
     }
     
     .toast-notification {
@@ -956,6 +879,7 @@
       cursor: pointer;
       animation: toastIn 0.3s ease;
       transition: opacity 0.3s, transform 0.3s;
+      word-break: break-word;
     }
     
     .toast-notification.removing {
@@ -977,12 +901,12 @@
     /* 通知中心 */
     .notification-center {
       position: fixed;
-      top: calc(60px + env(safe-area-inset-top, 0));
+      top: calc(56px + env(safe-area-inset-top, 0));
       right: 15px;
-      width: 320px;
+      width: 340px;
       max-width: calc(100vw - 30px);
-      max-height: 60vh;
-      background: rgba(30,30,32,0.95);
+      max-height: 65vh;
+      background: rgba(30,30,32,0.97);
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.15);
       z-index: 9998;
@@ -990,39 +914,127 @@
       overflow-y: auto;
       padding: 15px;
       -webkit-overflow-scrolling: touch;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
     }
     
     .notification-center.show {
       display: block;
-      animation: slideIn 0.3s ease;
+      animation: slideIn 0.25s ease;
     }
     
     @keyframes slideIn {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .notification-center h3 {
       margin-bottom: 10px;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--primary-color);
-      transform: translateZ(0);
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+
+    .notification-center h3 .notif-count {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    /* 未读角标 */
+    .notif-badge {
+      position: absolute;
+      top: -7px;
+      right: -9px;
+      background: #ff4530;
+      color: #fff;
+      font-size: 10px;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      font-weight: bold;
+      pointer-events: none;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+
+    /* 通知过滤器 */
+    .notif-filters {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .notif-filters button {
+      padding: 4px 12px;
+      font-size: 12px;
+      background: var(--btn-bg);
+      border: none;
+      border-radius: 12px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: background 0.15s ease;
+      touch-action: manipulation;
+    }
+
+    .notif-filters button.active { background: var(--primary-color); }
     
     .notification-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
       padding: 10px;
       margin-bottom: 8px;
       background: rgba(255,255,255,0.05);
       border-radius: 8px;
       font-size: 14px;
-      transform: translateZ(0);
+      border-left: 3px solid #0a84ff;
+      word-break: break-word;
+    }
+
+    .notification-item.success { border-left-color: #30d158; }
+    .notification-item.warning { border-left-color: #ff9f0a; }
+    .notification-item.error { border-left-color: #ff4530; }
+    .notification-item.dev { border-left-color: #bf5af2; }
+
+    .notification-item .notif-icon { flex-shrink: 0; }
+
+    .notification-item .notif-body {
+      flex: 1;
+      min-width: 0;
     }
     
     .notification-item .time {
-      font-size: 12px;
+      font-size: 11px;
       color: #999;
       margin-top: 4px;
-      transform: translateZ(0);
+    }
+
+    .notification-item .notif-del {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0 2px;
+      flex-shrink: 0;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }
+
+    .notification-item .notif-del:hover { color: #ff4530; }
+
+    .notif-empty {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 24px 0;
+      font-size: 13px;
     }
     
     .clear-notifications {
@@ -1035,14 +1047,12 @@
       color: #fff;
       cursor: pointer;
       touch-action: manipulation;
-      transition: transform 0.1s ease, background-color 0.15s ease;
-      transform: translateZ(0);
+      transition: background 0.15s ease, transform 0.1s ease;
     }
 
     .clear-notifications:active {
-      transform: scale(0.98) translateZ(0);
+      transform: scale(0.98);
       background: var(--primary-color);
-      transition: transform 0.05s ease;
     }
     
     /* 应用操作菜单 */
@@ -1050,7 +1060,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) translateZ(0);
+      transform: translate(-50%, -50%);
       background: var(--modal-bg);
       padding: 25px;
       border-radius: var(--card-radius);
@@ -1064,7 +1074,6 @@
       width: 100%;
       max-width: 350px;
       -webkit-overflow-scrolling: touch;
-      backface-visibility: hidden;
     }
     
     /* 排序菜单 */
@@ -1072,7 +1081,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) translateZ(0);
+      transform: translate(-50%, -50%);
       background: var(--modal-bg);
       padding: 20px;
       border-radius: var(--card-radius);
@@ -1083,14 +1092,12 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       border: var(--modal-border);
       color: #fff;
-      backface-visibility: hidden;
     }
     
     .sort-menu h3 {
       margin-bottom: 15px;
       text-align: center;
       font-weight: 300;
-      transform: translateZ(0);
     }
     
     .sort-menu button {
@@ -1103,7 +1110,7 @@
       color: #fff;
       cursor: pointer;
       border-radius: 8px;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
       font-size: 14px;
     }
     
@@ -1112,9 +1119,7 @@
       border: none;
     }
     
-    .sort-menu button:active {
-      transform: scale(0.95);
-    }
+    .sort-menu button:active { transform: scale(0.95); }
     
     .sys-info {
       margin: 15px 0;
@@ -1128,6 +1133,7 @@
     .sys-info #versionText {
       cursor: pointer;
       user-select: none;
+      -webkit-user-select: none;
       transition: color 0.15s ease;
     }
     .sys-info #versionText:hover { color: var(--primary-color); }
@@ -1156,9 +1162,7 @@
       100% { transform: scale(1); opacity: 1; }
     }
     
-    .app-icon.launch-anim {
-      animation: launchPulse 0.2s ease-in-out;
-    }
+    .app-icon.launch-anim { animation: launchPulse 0.2s ease-in-out; }
     
     /* 图标选择面板 */
     .icon-selector { margin: 15px 0; }
@@ -1172,7 +1176,6 @@
       overflow-y: auto;
       padding: 5px;
       -webkit-overflow-scrolling: touch;
-      transform: translateZ(0);
     }
     
     .icon-option {
@@ -1187,7 +1190,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease;
       touch-action: manipulation;
     }
     
@@ -1247,7 +1250,6 @@
       z-index: 10000;
       font-weight: bold;
       padding-top: env(safe-area-inset-top, 4px);
-      transform: translateZ(0);
     }
     #offlineBanner.show { display: block; }
     
@@ -1274,8 +1276,6 @@
       grid-template-columns: repeat(8, 1fr);
       gap: 8px;
       margin: 10px 0;
-      -webkit-overflow-scrolling: touch;
-      transform: translateZ(0);
     }
     
     .color-swatch {
@@ -1283,7 +1283,7 @@
       border-radius: 6px;
       cursor: pointer;
       border: 2px solid transparent;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease;
       touch-action: manipulation;
     }
     
@@ -1300,7 +1300,7 @@
       border: var(--input-border);
       border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease;
       font-size: 16px;
     }
     
@@ -1331,10 +1331,6 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
-    .app-info-fullscreen {
-      will-change: opacity;
-    }
     
     .app-info-header {
       display: flex;
@@ -1343,7 +1339,6 @@
       background: rgba(0,0,0,0.3);
       gap: 15px;
       padding-top: calc(15px + env(safe-area-inset-top, 0));
-      transform: translateZ(0);
     }
     
     .app-info-header button {
@@ -1356,15 +1351,12 @@
       font-size: 15px;
     }
     
-    .app-info-header button:active {
-      background: var(--primary-color);
-    }
+    .app-info-header button:active { background: var(--primary-color); }
     
     .app-info-title {
       flex: 1;
       font-size: 20px;
       font-weight: 300;
-      transform: translateZ(0);
     }
     
     .app-info-content {
@@ -1372,7 +1364,6 @@
       overflow-y: auto;
       padding: 20px;
       padding-bottom: calc(20px + env(safe-area-inset-bottom, 0));
-      transform: translateZ(0);
     }
     
     .app-info-card {
@@ -1381,14 +1372,12 @@
       padding: 20px;
       margin-bottom: 20px;
       border: var(--card-border);
-      transform: translateZ(0);
     }
     
     .app-info-card h3 {
       color: var(--primary-color);
       margin-bottom: 15px;
       font-weight: 300;
-      transform: translateZ(0);
     }
     
     .app-info-item {
@@ -1398,13 +1387,9 @@
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     
-    .app-info-item:last-child {
-      border-bottom: none;
-    }
+    .app-info-item:last-child { border-bottom: none; }
     
-    .app-info-label {
-      color: var(--text-secondary);
-    }
+    .app-info-label { color: var(--text-secondary); }
     
     .app-info-value {
       font-weight: 500;
@@ -1418,7 +1403,6 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin-top: 20px;
-      transform: translateZ(0);
     }
     
     .app-info-actions button {
@@ -1428,24 +1412,13 @@
       color: #fff;
       cursor: pointer;
       font-size: 14px;
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease, filter 0.2s ease;
     }
     
-    .app-info-actions button:active {
-      transform: scale(0.98);
-    }
-    
-    .app-info-actions .primary {
-      background: var(--primary-color);
-    }
-    
-    .app-info-actions .danger {
-      background: #ff4530;
-    }
-    
-    .app-info-actions .secondary {
-      background: #3a3a3c;
-    }
+    .app-info-actions button:active { transform: scale(0.98); }
+    .app-info-actions .primary { background: var(--primary-color); }
+    .app-info-actions .danger { background: #ff4530; }
+    .app-info-actions .secondary { background: #3a3a3c; }
     
     /* 警告模态框 */
     .reset-modal-content {
@@ -1485,13 +1458,11 @@
         padding: 6px 12px;
         padding-top: calc(6px + env(safe-area-inset-top, 0));
       }
-      
       .win-user-icon {
         width: 28px;
         height: 28px;
         font-size: 16px;
       }
-      
       h1 { font-size: 24px; }
       .container { padding: 8px 12px; }
       .search-box input { padding: 10px 16px; font-size: 14px; }
@@ -1524,7 +1495,14 @@
   
   <!-- 通知中心 -->
   <div class="notification-center" id="notificationCenter">
-    <h3>📢 通知中心</h3>
+    <h3>📢 通知中心 <span class="notif-count" id="notifCount"></span></h3>
+    <div class="notif-filters" id="notifFilters">
+      <button data-f="all" class="active">全部</button>
+      <button data-f="info">信息</button>
+      <button data-f="success">成功</button>
+      <button data-f="warning">警告</button>
+      <button data-f="error">错误</button>
+    </div>
     <div id="notificationList"></div>
     <button class="clear-notifications" onclick="clearAllNotifications()">清除所有通知</button>
   </div>
@@ -1546,7 +1524,7 @@
         </div>
         <span id="batteryPercent">100%</span>
       </div>
-      <button onclick="toggleNotificationCenter()" style="background:none;border:none;color:white;cursor:pointer;font-size:18px;padding:0 4px;">🔔</button>
+      <button id="notifBell" onclick="toggleNotificationCenter()" style="background:none;border:none;color:white;cursor:pointer;font-size:18px;padding:0 4px;position:relative;">🔔<span class="notif-badge" id="notifBadge" style="display:none">0</span></button>
     </div>
   </div>
   
@@ -1703,10 +1681,6 @@
             <input type="checkbox" id="launchAnimToggle" checked />
           </div>
           <div class="setting-item">
-            <label>3D 应用切入动画</label>
-            <input type="checkbox" id="appLaunchAnimToggle" />
-          </div>
-          <div class="setting-item">
             <label>触摸震动反馈</label>
             <input type="checkbox" id="vibrationToggle" />
           </div>
@@ -1719,6 +1693,14 @@
       
       <!-- 系统面板 -->
       <div class="settings-panel" id="panel-system">
+        <div class="setting-section">
+          <div class="setting-section-title">系统安全</div>
+          <div class="setting-item">
+            <label>安全中心（防护状态 · 硬件检测）</label>
+            <button onclick="launchSecurityCenter()">🛡️ 打开</button>
+          </div>
+        </div>
+        
         <div class="setting-section">
           <div class="setting-section-title">日期与时间</div>
           <div class="setting-item">
@@ -1838,6 +1820,7 @@
         <button onclick="closeSettings()">关闭</button>
       </div>
       <span class="danger-link" onclick="triggerResetWarning()">恢复默认设置</span>
+      <span class="danger-link" onclick="triggerFormatWarning()">格式化系统</span>
     </div>
   </div>
   
@@ -1902,15 +1885,15 @@
     </div>
   </div>
   
-  <!-- 应用框架 -->
+  <!-- 应用框架（修复：移除空src，防止页面自我嵌套加载） -->
   <div id="appFrameContainer">
     <div class="app-navbar">
       <button onclick="closeApp()">🏠 开始</button>
       <select id="switchAppSelect" onchange="switchAppFromSelect()"></select>
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
-    <iframe id="appFrame" src="" 
-      allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *" 
+    <iframe id="appFrame"
+      allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *; autoplay *; clipboard-write *" 
       allowfullscreen
       sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin">
     </iframe>
@@ -1925,6 +1908,9 @@
   <script>
     // ==================== 全局变量 ====================
     let notifications = [];
+    let unreadCount = 0;
+    let notifFilter = 'all';
+    let notifSeq = 0;
     let showHiddenApps = false;
     let currentSort = 'name';
     let appUsageStats = {};
@@ -1957,14 +1943,14 @@
     // 系统密码（默认，会被加载覆盖）
     let SYSTEM_PASSWORD = 'htmlos666';
     
-    // 预设数据
+    // 预设数据（缩略图使用小尺寸，应用时才加载大图，节省带宽与内存）
     const presetWallpapers = [
-      { name: '蓝天', url: 'https://picsum.photos/id/1018/1920/1080' },
-      { name: '森林', url: 'https://picsum.photos/id/1043/1920/1080' },
-      { name: '海洋', url: 'https://picsum.photos/id/1002/1920/1080' },
-      { name: '山脉', url: 'https://picsum.photos/id/1036/1920/1080' },
-      { name: '星空', url: 'https://picsum.photos/id/1042/1920/1080' },
-      { name: '城市', url: 'https://picsum.photos/id/1067/1920/1080' }
+      { name: '蓝天', url: 'https://picsum.photos/id/1018/1920/1080', thumb: 'https://picsum.photos/id/1018/400/225' },
+      { name: '森林', url: 'https://picsum.photos/id/1043/1920/1080', thumb: 'https://picsum.photos/id/1043/400/225' },
+      { name: '海洋', url: 'https://picsum.photos/id/1002/1920/1080', thumb: 'https://picsum.photos/id/1002/400/225' },
+      { name: '山脉', url: 'https://picsum.photos/id/1036/1920/1080', thumb: 'https://picsum.photos/id/1036/400/225' },
+      { name: '星空', url: 'https://picsum.photos/id/1042/1920/1080', thumb: 'https://picsum.photos/id/1042/400/225' },
+      { name: '城市', url: 'https://picsum.photos/id/1067/1920/1080', thumb: 'https://picsum.photos/id/1067/400/225' }
     ];
     
     const presetAvatars = [
@@ -1996,15 +1982,24 @@
     let touchStartX = 0, touchStartY = 0;
     let runningAppFile = null;
     let devModeActive = false;
+    // 修复：开发者模式计数器从未声明，导致 versionClickCount++ 得到 NaN，永远无法激活
+    let versionClickCount = 0;
+    let versionClickTimer = null;
+    let currentTheme = 'sharp';
+    let authorizedBG = '';
+    let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v3.7.1';
+    const VERSION = 'HTMLOS v4.0.0';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
     const toastContainer = $('toastContainer');
     const notificationCenter = $('notificationCenter');
     const notificationList = $('notificationList');
+    const notifCount = $('notifCount');
+    const notifBadge = $('notifBadge');
+    const notifFilters = $('notifFilters');
     const offlineBanner = $('offlineBanner');
     const winHeader = $('winHeader');
     const mainContainer = $('mainContainer');
@@ -2032,7 +2027,6 @@
     const themeSelect = $('themeSelect');
     const colsSelect = $('colsSelect');
     const launchAnimToggle = $('launchAnimToggle');
-    const appLaunchAnimToggle = $('appLaunchAnimToggle');
     const vibrationToggle = $('vibrationToggle');
     const pageIndicatorToggle = $('pageIndicatorToggle');
     const showSecondsToggle = $('showSecondsToggle');
@@ -2075,112 +2069,154 @@
     // 全局应用信息变量
     let currentAppInfoFile = null;
     
-    // 性能优化：缓存时间格式化选项
-    const dateFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      weekday: 'long'
-    };
-    const shortDateFormatOptions = {
-      weekday: 'long'
-    };
+    // 性能优化：缓存时间格式化器（Intl 对象创建昂贵，避免每秒重建）
+    const dateFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    const shortDateFormatOptions = { weekday: 'long' };
+    let dtfDate = null, dtfTime = null;
     
-    // requestIdleCallback polyfill
-    const requestIdleCallback = window.requestIdleCallback || function(cb) {
-      return setTimeout(() => cb({ didTimeout: false, timeRemaining() { return 50; } }), 1);
-    };
-    const cancelIdleCallback = window.cancelIdleCallback || clearTimeout;
+    function buildDateTimeFormatters() {
+      dtfDate = new Intl.DateTimeFormat('zh-CN', systemSettings.showDate ? dateFormatOptions : shortDateFormatOptions);
+      const opts = { hour: '2-digit', minute: '2-digit', hour12: !systemSettings.time24 };
+      if (systemSettings.showSeconds) opts.second = '2-digit';
+      dtfTime = new Intl.DateTimeFormat('zh-CN', opts);
+    }
     
-    // ==================== DOM防护系统 ====================
+    // ==================== DOM防护系统（增强版）====================
+    // 防护目标：元素被移除/隐藏、head注入样式或脚本、主题类被篡改、
+    // 核心函数被改写、主页背景被篡改、应用iframe被移除
     const DOMGuard = {
       observers: [],
       originalStyles: new Map(),
-      _logThrottle: new Map(),
-      
-      _throttledLog(level, msg) {
-        const now = Date.now();
-        const last = this._logThrottle.get(msg) || 0;
-        if (now - last > 5000) {
-          this._logThrottle.set(msg, now);
-          addLog(level, msg);
-        }
-      },
+      watchedFns: {},
+      _integrityTimer: null,
+      protectedIds: ['bottomBar', 'mainContainer', 'winHeader', 'toastContainer', 'notificationCenter'],
+      watchedFnNames: ['showToast', 'closeApp', 'renderApps', 'openSettings', 'saveSettings', 'addLog', 'deleteApp', 'launchApp', 'confirmReset', 'confirmFormat', 'updateSandboxState', 'toggleNotificationCenter', 'launchSecurityCenter'],
       
       init() {
-        const protectedElements = [
-          { id: 'bottomBar', required: true },
-          { id: 'mainContainer', required: true },
-          { id: 'winHeader', required: true },
-          { id: 'appFrameContainer', required: false }
-        ];
-        
-        protectedElements.forEach(({id}) => {
+        this.protectedIds.forEach(id => {
           const el = $(id);
           if (el) {
             this.originalStyles.set(id, {
               display: el.style.display,
               visibility: el.style.visibility,
               opacity: el.style.opacity,
-              pointerEvents: el.style.pointerEvents,
-              position: el.style.position,
-              zIndex: el.style.zIndex
+              pointerEvents: el.style.pointerEvents
             });
           }
         });
         
-        const bodyObserver = new MutationObserver((mutations) => {
-          mutations.forEach(mutation => {
-            if (mutation.type === 'childList') {
-              if (!document.body.contains(bottomBar)) {
-                addLog('warn', 'DOMGuard: 底部栏被移除，正在恢复');
-                document.body.appendChild(bottomBar);
-              }
-              if (!document.body.contains(mainContainer)) {
-                addLog('warn', 'DOMGuard: 主容器被移除，正在恢复');
-                document.body.insertBefore(mainContainer, appFrameContainer);
-              }
+        // 快照核心函数引用，供周期性比对
+        this.watchedFnNames.forEach(name => {
+          if (typeof window[name] === 'function') this.watchedFns[name] = window[name];
+        });
+        
+        // ① 关键元素被移除 → 自动恢复
+        const bodyObserver = new MutationObserver(() => {
+          this.protectedIds.forEach(id => {
+            const el = $(id);
+            if (el && !document.body.contains(el)) {
+              addLog('warn', 'DOMGuard: ' + id + ' 被移除，正在恢复');
+              document.body.appendChild(el);
             }
           });
         });
         bodyObserver.observe(document.body, { childList: true });
         this.observers.push(bodyObserver);
         
+        // ② 关键元素被隐藏（内联样式）→ 自动恢复
         const attrObserver = new MutationObserver((mutations) => {
           mutations.forEach(mutation => {
-            if (mutation.type === 'attributes') {
-              const target = mutation.target;
-              const id = target.id;
-              if (this.originalStyles.has(id)) {
-                const currentDisplay = target.style.display;
-                const currentVisibility = target.style.visibility;
-                const currentOpacity = target.style.opacity;
-                
-                if (currentDisplay === 'none' || currentVisibility === 'hidden' || currentOpacity === '0') {
-                  addLog('warn', `DOMGuard: ${id} 被隐藏，正在恢复`);
-                  const original = this.originalStyles.get(id);
-                  target.style.display = original.display || '';
-                  target.style.visibility = original.visibility || '';
-                  target.style.opacity = original.opacity || '';
-                  target.style.pointerEvents = original.pointerEvents || '';
-                }
-              }
+            if (mutation.type !== 'attributes') return;
+            const target = mutation.target;
+            const id = target.id;
+            if (!this.originalStyles.has(id)) return;
+            if (target.style.display === 'none' || target.style.visibility === 'hidden' || target.style.opacity === '0') {
+              addLog('warn', 'DOMGuard: ' + id + ' 被隐藏，正在恢复');
+              const original = this.originalStyles.get(id);
+              target.style.display = original.display || '';
+              target.style.visibility = original.visibility || '';
+              target.style.opacity = original.opacity || '';
+              target.style.pointerEvents = original.pointerEvents || '';
             }
           });
         });
-        
-        protectedElements.forEach(({id}) => {
+        this.protectedIds.forEach(id => {
           const el = $(id);
           if (el) attrObserver.observe(el, { attributes: true, attributeFilter: ['style'] });
         });
         this.observers.push(attrObserver);
         
-        addLog('info', 'DOMGuard: 界面防护系统已启动');
+        // ③ head 注入防护：病毒注入的样式表/脚本/框架一律移除
+        const headObserver = new MutationObserver((mutations) => {
+          mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType !== 1) return;
+              const tag = node.tagName;
+              const rel = (node.rel || '').toLowerCase();
+              if (tag === 'STYLE' || tag === 'SCRIPT' || tag === 'IFRAME' || (tag === 'LINK' && rel === 'stylesheet')) {
+                addLog('warn', 'DOMGuard: 检测到非法注入的 ' + tag.toLowerCase() + ' 节点，已移除');
+                node.remove();
+              }
+            });
+          });
+        });
+        headObserver.observe(document.head, { childList: true });
+        this.observers.push(headObserver);
+        
+        // ④ 主题类防篡改
+        const bodyClassObserver = new MutationObserver(() => {
+          if (!/theme-(sharp|glass|dark)/.test(document.body.className)) {
+            addLog('warn', 'DOMGuard: 主题样式被篡改，正在恢复');
+            document.body.className = 'theme-' + currentTheme;
+          }
+        });
+        bodyClassObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        this.observers.push(bodyClassObserver);
+        
+        // ⑤ 周期完整性巡检（每2秒，开销极小）
+        this._integrityTimer = setInterval(() => this.integrityCheck(), 2000);
+        
+        addLog('info', 'DOMGuard: 界面防护系统已启动（增强版）');
+      },
+      
+      integrityCheck() {
+        // 核心函数防篡改
+        for (const name in this.watchedFns) {
+          const ref = this.watchedFns[name];
+          if (window[name] !== ref) {
+            addLog('warn', 'DOMGuard: 核心函数 ' + name + ' 被篡改，已恢复');
+            try { window[name] = ref; } catch (e) {}
+          }
+        }
+        // 主界面可见性（应用运行时主容器允许隐藏）
+        if (!appFrameContainer.classList.contains('show')) {
+          [bottomBar, mainContainer, winHeader].forEach(el => {
+            if (el && (el.style.display === 'none' || el.style.visibility === 'hidden')) {
+              addLog('warn', 'DOMGuard: 界面元素被异常隐藏，强制恢复');
+              el.style.display = '';
+              el.style.visibility = '';
+              el.style.opacity = '';
+            }
+          });
+        }
+        // 主页背景防篡改（与授权快照比对）
+        if (authorizedBGNormalized && document.body.style.background !== authorizedBGNormalized) {
+          addLog('warn', 'DOMGuard: 主页背景被篡改，已恢复');
+          document.body.style.setProperty('--bg', authorizedBG);
+          document.body.style.background = authorizedBG;
+          authorizedBGNormalized = document.body.style.background;
+        }
+        // 应用 iframe 防移除
+        if (appFrameContainer.classList.contains('show') && appFrame && !appFrameContainer.contains(appFrame)) {
+          addLog('warn', 'DOMGuard: 应用框架被异常移除，正在重建');
+          rebuildAppFrame();
+        }
       },
       
       disconnect() {
         this.observers.forEach(obs => obs.disconnect());
         this.observers = [];
+        if (this._integrityTimer) clearInterval(this._integrityTimer);
       }
     };
     
@@ -2195,26 +2231,11 @@
           systemSettings.appCloseConfirm = oldConfirm;
         }
       });
-      
-      setInterval(() => {
-        if (appFrameContainer.classList.contains('show')) {
-          if (bottomBar && (bottomBar.style.display === 'none' || bottomBar.style.visibility === 'hidden' || getComputedStyle(bottomBar).display === 'none')) {
-            addLog('warn', '紧急退出：底部栏被异常隐藏，强制恢复');
-            bottomBar.style.display = '';
-            bottomBar.style.visibility = '';
-            bottomBar.style.opacity = '';
-          }
-          if (mainContainer && mainContainer.style.display === 'none' && !appFrameContainer.classList.contains('show')) {
-            mainContainer.style.display = 'flex';
-          }
-        }
-      }, 3000);
     }
     
-    // ==================== 日志系统（优化版）====================
+    // ==================== 日志系统 ====================
     const systemLogs = [];
     const MAX_LOGS = 200;
-    
     const _logBuffer = [];
     let _logFlushTimer = null;
 
@@ -2234,16 +2255,18 @@
         _logFlushTimer = setTimeout(() => {
           _logFlushTimer = null;
           for (const log of _logBuffer) {
-            if (log.level === 'error') console.error(`[${log.level.toUpperCase()}] ${log.message}`, log.data || '');
-            else if (log.level === 'warn') console.warn(`[${log.level.toUpperCase()}] ${log.message}`, log.data || '');
-            else console.log(`[${log.level.toUpperCase()}] ${log.message}`, log.data || '');
+            if (log.level === 'error') console.error('[' + log.level.toUpperCase() + '] ' + log.message, log.data || '');
+            else if (log.level === 'warn') console.warn('[' + log.level.toUpperCase() + '] ' + log.message, log.data || '');
+            else console.log('[' + log.level.toUpperCase() + '] ' + log.message, log.data || '');
           }
           _logBuffer.length = 0;
         }, 50);
       }
-    }function exportSystemLogs() {
+    }
+
+    function exportSystemLogs() {
       const logContent = systemLogs.map(l => 
-        `[${l.timestamp}] [${l.level.toUpperCase()}] ${l.message}${l.data ? ' - ' + JSON.stringify(l.data) : ''}`
+        '[' + l.timestamp + '] [' + l.level.toUpperCase() + '] ' + l.message + (l.data ? ' - ' + JSON.stringify(l.data) : '')
       ).join('\n');
       
       const blob = new Blob([logContent], { type: 'text/plain' });
@@ -2265,11 +2288,10 @@
     
     // ==================== Toast 通知系统 ====================
     function showToast(message, type = 'info', duration = systemSettings.toastDuration) {
+      addNotification(message, type);
       if (!systemSettings.toastEnabled) return;
       
       const validDuration = (typeof duration === 'number' && !isNaN(duration) && duration > 0) ? duration : 3000;
-      
-      addNotification(message, type);
       toastQueue.push({ message, type, duration: validDuration });
       
       if (toastContainer.children.length < MAX_TOASTS) {
@@ -2283,7 +2305,7 @@
       const { message, type, duration } = toastQueue.shift();
       
       const toast = document.createElement('div');
-      toast.className = `toast-notification ${type}`;
+      toast.className = 'toast-notification ' + type;
       
       const icons = { success: '✅', warning: '⚠️', error: '❌', info: 'ℹ️', dev: '🔧' };
       toast.textContent = (icons[type] || '') + ' ' + message;
@@ -2310,56 +2332,129 @@
       }, 250);
     }
     
+    // ==================== 通知中心（增强版）====================
     function addNotification(message, type) {
       const notification = {
-        id: Date.now(),
-        message: message,
-        type: type,
-        time: new Date().toLocaleTimeString()
+        id: Date.now().toString(36) + (notifSeq++).toString(36),
+        message: String(message),
+        type: type || 'info',
+        time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
       };
       notifications.unshift(notification);
       if (notifications.length > MAX_NOTIFICATIONS) notifications.pop();
-      updateNotificationCenter();
+      unreadCount++;
+      updateNotifBadge();
+      renderNotifications();
+      persistNotifications();
     }
     
-    function updateNotificationCenter() {
+    function updateNotifBadge() {
+      if (unreadCount > 0) {
+        notifBadge.style.display = 'flex';
+        notifBadge.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+      } else {
+        notifBadge.style.display = 'none';
+      }
+    }
+    
+    function renderNotifications() {
       notificationList.innerHTML = '';
-      notifications.forEach(n => {
+      notifCount.textContent = notifications.length > 0 ? '共 ' + notifications.length + ' 条' : '';
+      
+      const icons = { success: '✅', warning: '⚠️', error: '❌', info: 'ℹ️', dev: '🔧' };
+      const list = notifFilter === 'all' ? notifications : notifications.filter(n => n.type === notifFilter);
+      
+      if (list.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'notif-empty';
+        empty.textContent = notifFilter === 'all' ? '暂无通知' : '该分类下暂无通知';
+        notificationList.appendChild(empty);
+        return;
+      }
+      
+      const fragment = document.createDocumentFragment();
+      list.forEach(n => {
         const item = document.createElement('div');
-        item.className = 'notification-item';
-        item.innerHTML = `<div>${n.message}</div><div class="time">${n.time}</div>`;
-        notificationList.appendChild(item);
+        item.className = 'notification-item ' + n.type;
+        
+        const icon = document.createElement('span');
+        icon.className = 'notif-icon';
+        icon.textContent = icons[n.type] || 'ℹ️';
+        
+        const body = document.createElement('div');
+        body.className = 'notif-body';
+        const msg = document.createElement('div');
+        msg.textContent = n.message;
+        const time = document.createElement('div');
+        time.className = 'time';
+        time.textContent = n.time;
+        body.appendChild(msg);
+        body.appendChild(time);
+        
+        const del = document.createElement('button');
+        del.className = 'notif-del';
+        del.textContent = '✕';
+        del.title = '删除此通知';
+        del.onclick = (e) => { e.stopPropagation(); deleteNotification(n.id); };
+        
+        item.appendChild(icon);
+        item.appendChild(body);
+        item.appendChild(del);
+        fragment.appendChild(item);
       });
+      notificationList.appendChild(fragment);
+    }
+    
+    function deleteNotification(id) {
+      notifications = notifications.filter(n => n.id !== id);
+      renderNotifications();
+      persistNotifications();
     }
     
     function toggleNotificationCenter() {
+      const willShow = !notificationCenter.classList.contains('show');
       notificationCenter.classList.toggle('show');
+      if (willShow) {
+        unreadCount = 0;
+        updateNotifBadge();
+        renderNotifications();
+      }
     }
     
     function clearAllNotifications() {
       notifications = [];
-      updateNotificationCenter();
+      unreadCount = 0;
+      updateNotifBadge();
+      renderNotifications();
+      persistNotifications();
     }
     
-    // 通知声音
+    // 通知持久化（防抖写入，避免频繁IO）
+    const persistNotifications = debounce(() => {
+      dbPut(STORE_STATS, { key: 'notifications', value: notifications.slice(0, MAX_NOTIFICATIONS) }).catch(() => {});
+    }, 500);
+    
+    // 通知声音（复用单个 AudioContext，避免超出浏览器上下文数量限制）
+    let _audioCtx = null;
     function playNotificationSound() {
       try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        if (!_audioCtx) _audioCtx = new AC();
+        if (_audioCtx.state === 'suspended') _audioCtx.resume();
         
+        const oscillator = _audioCtx.createOscillator();
+        const gainNode = _audioCtx.createGain();
         oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
+        gainNode.connect(_audioCtx.destination);
         
-        oscillator.frequency.value = 800;
+        oscillator.frequency.value = 880;
         oscillator.type = 'sine';
-        gainNode.gain.value = 0.1;
+        gainNode.gain.setValueAtTime(0.08, _audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, _audioCtx.currentTime + 0.15);
         
         oscillator.start();
-        setTimeout(() => {
-          oscillator.stop();
-          audioContext.close();
-        }, 100);
+        oscillator.stop(_audioCtx.currentTime + 0.15);
       } catch (e) {
         addLog('warn', '通知声音播放失败: ' + e.message);
       }
@@ -2370,23 +2465,14 @@
       const level = Math.round(battery.level * 100);
       
       batteryStatus.style.display = 'flex';
-      
       batteryLevel.style.width = level + '%';
       batteryPercent.textContent = level + '%';
       
-      if (battery.charging) {
-        batteryIcon.classList.add('battery-charging');
-      } else {
-        batteryIcon.classList.remove('battery-charging');
-      }
+      batteryIcon.classList.toggle('battery-charging', !!battery.charging);
       
-      if (level <= 20 && !battery.charging) {
-        batteryLevel.style.background = '#ff4530';
-      } else if (level <= 50) {
-        batteryLevel.style.background = '#ffb900';
-      } else {
-        batteryLevel.style.background = '#30d158';
-      }
+      if (level <= 20 && !battery.charging) batteryLevel.style.background = '#ff4530';
+      else if (level <= 50) batteryLevel.style.background = '#ffb900';
+      else batteryLevel.style.background = '#30d158';
     }
     
     function initBatteryStatus() {
@@ -2398,38 +2484,11 @@
           addLog('info', '使用标准电池API');
         }).catch(err => {
           addLog('warn', '标准电池API失败: ' + err.message);
-          fallbackBatteryDetection();
+          batteryStatus.style.display = 'none';
         });
-      } 
-      else if ('battery' in navigator) {
-        updateBatteryStatus(navigator.battery);
-        navigator.battery.addEventListener('levelchange', () => updateBatteryStatus(navigator.battery));
-        navigator.battery.addEventListener('chargingchange', () => updateBatteryStatus(navigator.battery));
-        addLog('info', '使用旧版电池API');
-      }
-      else {
-        fallbackBatteryDetection();
-      }
-    }
-    
-    function fallbackBatteryDetection() {
-      addLog('info', '浏览器不支持电池API');
-      batteryStatus.style.display = 'none';
-      
-      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        document.addEventListener('touchstart', function iosBatteryCheck() {
-          if ('getBattery' in navigator) {
-            navigator.getBattery().then(battery => {
-              updateBatteryStatus(battery);
-              battery.addEventListener('levelchange', () => updateBatteryStatus(battery));
-              battery.addEventListener('chargingchange', () => updateBatteryStatus(battery));
-              addLog('info', 'iOS电池API已激活');
-            }).catch(err => {
-              addLog('warn', 'iOS电池API仍不可用: ' + err.message);
-            });
-          }
-          document.removeEventListener('touchstart', iosBatteryCheck);
-        }, { once: true });
+      } else {
+        batteryStatus.style.display = 'none';
+        addLog('info', '浏览器不支持电池API');
       }
     }
     
@@ -2437,13 +2496,11 @@
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
       const before = window.performance?.memory?.usedJSHeapSize || 0;
-      if (window.gc) {
-        try { window.gc(); } catch (e) {}
-      }
+      if (window.gc) { try { window.gc(); } catch (e) {} }
       const after = window.performance?.memory?.usedJSHeapSize || 0;
       const freed = Math.round((before - after) / 1024 / 1024);
-      addLog('info', `基础内存优化完成，释放 ${freed} MB 内存`);
-      showToast(`基础内存优化完成，释放 ${freed} MB 内存`, 'success');
+      addLog('info', '基础内存优化完成，释放 ' + freed + ' MB 内存');
+      showToast('基础内存优化完成，释放 ' + freed + ' MB 内存', 'success');
     }
     
     function advancedOptimizeMemory() {
@@ -2453,7 +2510,7 @@
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
-            if (name !== 'htmlos-v3.7') {
+            if (name !== 'htmlos-v4.0') {
               caches.delete(name);
               addLog('info', '删除旧缓存: ' + name);
             }
@@ -2467,7 +2524,6 @@
     
     function startAutoMemoryOptimize() {
       if (memoryOptimizeTimer) clearInterval(memoryOptimizeTimer);
-      
       if (systemSettings.autoOptimizeMemory) {
         memoryOptimizeTimer = setInterval(() => {
           addLog('info', '执行自动基础内存优化');
@@ -2479,7 +2535,6 @@
     
     function startAdvancedAutoMemoryOptimize() {
       if (advancedMemoryOptimizeTimer) clearInterval(advancedMemoryOptimizeTimer);
-      
       if (systemSettings.advancedOptimizeMemory) {
         advancedMemoryOptimizeTimer = setInterval(() => {
           addLog('info', '执行自动高级内存优化');
@@ -2489,7 +2544,7 @@
       }
     }
     
-    // ==================== 密码管理（已移除修改功能）====================
+    // ==================== 密码管理 ====================
     async function loadSystemPassword() {
       const pwdSetting = await dbGet(STORE_SETTINGS, 'system_password');
       if (pwdSetting && pwdSetting.value) {
@@ -2499,13 +2554,15 @@
     }
     
     // ==================== 沙箱控制 ====================
+    const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
+    
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         sandboxToggle.checked = false;
         const password = prompt('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n请输入密码确认关闭：');
         if (password === SYSTEM_PASSWORD) {
           systemSettings.sandboxEnabled = false;
-          updateSandboxState();
+          updateSandboxState(true);
           sandboxToggle.checked = true;
           showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
           addLog('warn', '沙箱已关闭，系统处于不安全状态！');
@@ -2514,20 +2571,22 @@
         }
       } else {
         systemSettings.sandboxEnabled = true;
-        updateSandboxState();
+        updateSandboxState(true);
         showToast('✅ 沙箱已开启', 'success');
         addLog('info', '沙箱已开启');
       }
     }
     
-    function updateSandboxState() {
-      const sandboxValue = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
-      if (systemSettings.sandboxEnabled) {
-        if (appFrame) appFrame.sandbox = sandboxValue;
-      } else {
-        if (appFrame) appFrame.removeAttribute('sandbox');
+    // 修复：仅在状态变化时写DB，避免每次启动应用都产生多余写入
+    function updateSandboxState(persist) {
+      if (appFrame) {
+        if (systemSettings.sandboxEnabled) {
+          if (appFrame.getAttribute('sandbox') !== SANDBOX_TOKENS) appFrame.setAttribute('sandbox', SANDBOX_TOKENS);
+        } else if (appFrame.hasAttribute('sandbox')) {
+          appFrame.removeAttribute('sandbox');
+        }
       }
-      dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
+      if (persist) dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
     }
     
     // ==================== 用户信息管理 ====================
@@ -2539,7 +2598,7 @@
       avatarGrid.innerHTML = '';
       presetAvatars.forEach(avatar => {
         const div = document.createElement('div');
-        div.className = `icon-option ${avatar === currentUser.avatar ? 'selected' : ''}`;
+        div.className = 'icon-option' + (avatar === currentUser.avatar ? ' selected' : '');
         div.textContent = avatar;
         div.onclick = () => {
           document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
@@ -2568,7 +2627,7 @@
     
     async function saveUserInfo() {
       const newName = userNameInput.value.trim();
-      let newAvatar = userAvatarPreview.textContent;
+      const newAvatar = userAvatarPreview.textContent;
       
       if (!newName) {
         showToast('用户名不能为空', 'error');
@@ -2577,7 +2636,6 @@
       
       currentUser.name = newName;
       currentUser.avatar = newAvatar;
-      
       userName.textContent = newName;
       userIcon.textContent = newAvatar;
       
@@ -2601,23 +2659,24 @@
       const sizeKB = content ? Math.round(content.length / 1024 * 100) / 100 : 0;
       const sizeBytes = content ? content.length : 0;
       const usageCount = appUsageStats[fileKey] || 0;
+      const isSystem = app.source === 'system';
       
-      appInfoTitle.textContent = `${app.icon || '📱'} ${app.name}`;
+      appInfoTitle.textContent = (app.icon || '📱') + ' ' + app.name;
       
       appInfoContent.innerHTML = `
         <div class="app-info-card">
           <h3>📋 基本信息</h3>
           <div class="app-info-item">
             <span class="app-info-label">应用名称</span>
-            <span class="app-info-value">${app.name}</span>
+            <span class="app-info-value">${escapeHtml(app.name)}</span>
           </div>
           <div class="app-info-item">
             <span class="app-info-label">应用图标</span>
-            <span class="app-info-value">${app.icon || '📱'}</span>
+            <span class="app-info-value">${escapeHtml(app.icon || '📱')}</span>
           </div>
           <div class="app-info-item">
             <span class="app-info-label">文件标识</span>
-            <span class="app-info-value">${app.file}</span>
+            <span class="app-info-value">${escapeHtml(app.file)}</span>
           </div>
           <div class="app-info-item">
             <span class="app-info-label">磁贴大小</span>
@@ -2629,7 +2688,7 @@
           </div>
           <div class="app-info-item">
             <span class="app-info-label">应用来源</span>
-            <span class="app-info-value">${app.source || '用户安装'}</span>
+            <span class="app-info-value">${isSystem ? '🛡️ 系统核心组件' : (app.source || '用户安装')}</span>
           </div>
           <div class="app-info-item">
             <span class="app-info-label">隐藏状态</span>
@@ -2665,18 +2724,19 @@
           <h3>🛠️ 快捷操作</h3>
           <div class="app-info-actions">
             <button class="primary" onclick="launchAppFromInfo('${fileKey}')">🚀 启动应用</button>
-            <button class="secondary" onclick="updateAppFromInfo('${fileKey}')">📦 更新应用</button>
-            <button class="secondary" onclick="renameAppFromInfo('${fileKey}')">✏️ 重命名</button>
-            <button class="secondary" onclick="toggleHideFromInfo('${fileKey}')">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
-            <button class="secondary" onclick="toggleLockFromInfo('${fileKey}')">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
+            ${!isSystem ? '<button class="secondary" onclick="updateAppFromInfo(\'' + fileKey + '\')">📦 更新应用</button>' : ''}
+            ${!isSystem ? '<button class="secondary" onclick="renameAppFromInfo(\'' + fileKey + '\')">✏️ 重命名</button>' : ''}
+            ${!isSystem ? '<button class="secondary" onclick="toggleHideFromInfo(\'' + fileKey + '\')">👁️ ' + (app.hidden ? '取消隐藏' : '隐藏应用') + '</button>' : ''}
+            ${!isSystem ? '<button class="secondary" onclick="toggleLockFromInfo(\'' + fileKey + '\')">🔒 ' + (app.locked ? '解锁应用' : '锁定应用') + '</button>' : ''}
             <button class="secondary" onclick="exportSingleApp('${fileKey}')">📤 导出应用</button>
-            ${app.source !== 'system' ? '<button class="danger" onclick="deleteAppFromInfo(\'' + fileKey + '\')">🗑️ 卸载应用</button>' : ''}
+            ${!isSystem ? '<button class="danger" onclick="deleteAppFromInfo(\'' + fileKey + '\')">🗑️ 卸载应用</button>' : ''}
           </div>
+          ${isSystem ? '<p style="margin-top:12px;font-size:12px;color:var(--text-secondary);">🛡️ 系统核心应用受保护，无法卸载、隐藏、重命名或更新。</p>' : ''}
         </div>
       `;
       
       appInfoFullscreen.classList.add('show');
-      addLog('info', `查看应用信息: ${app.name}`);
+      addLog('info', '查看应用信息: ' + app.name);
     }
     
     function closeAppInfo() {
@@ -2687,7 +2747,7 @@
     function launchAppFromInfo(fileKey) {
       closeAppInfo();
       setTimeout(() => {
-        const element = document.querySelector(`[data-file="${fileKey}"]`);
+        const element = document.querySelector('[data-file="' + fileKey + '"]');
         launchApp(fileKey, element);
       }, 300);
     }
@@ -2697,12 +2757,18 @@
       closeAppInfo();
     }
     
+    // 系统核心应用保护检查
+    function isSystemApp(app) {
+      return app && app.source === 'system';
+    }
+    
     function renameAppFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
+      if (isSystemApp(app)) { showToast('系统核心应用，无法重命名', 'error'); return; }
       const newName = prompt('请输入新的应用名称：', app.name);
       if (newName?.trim()) { 
-        app.name = escapeHtml(newName.trim()); 
+        app.name = newName.trim().slice(0, 50);
         saveApps(); 
         showToast('已重命名', 'success', 1500);
         showAppInfo(fileKey);
@@ -2711,28 +2777,29 @@
     
     function toggleHideFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
-      if (app) {
-        app.hidden = !app.hidden;
-        saveApps();
-        showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
-        showAppInfo(fileKey);
-      }
+      if (!app) return;
+      if (isSystemApp(app)) { showToast('系统核心应用，无法隐藏', 'error'); return; }
+      app.hidden = !app.hidden;
+      saveApps();
+      renderApps();
+      showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
+      showAppInfo(fileKey);
     }
     
     function toggleLockFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
-      if (app) {
-        app.locked = !app.locked;
-        saveApps();
-        showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
-        showAppInfo(fileKey);
-      }
+      if (!app) return;
+      if (isSystemApp(app)) { showToast('系统核心应用已永久锁定', 'error'); return; }
+      app.locked = !app.locked;
+      saveApps();
+      renderApps();
+      showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
+      showAppInfo(fileKey);
     }
     
     async function exportSingleApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
-      
       const content = await getContentSafe(app.file);
       const blob = new Blob([content], { type: 'text/html' });
       const url = URL.createObjectURL(blob);
@@ -2746,14 +2813,12 @@
     
     async function deleteAppFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
-      if (app && app.locked) {
-        showToast('应用已锁定，无法卸载', 'error');
-        return;
-      }
+      if (!app) return;
+      if (isSystemApp(app)) { showToast('🛡️ 系统核心应用，无法卸载', 'error'); return; }
+      if (app.locked) { showToast('应用已锁定，无法卸载', 'error'); return; }
       
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
-      // 修复：同时从 IndexedDB 删除应用元数据
       await dbDelete(STORE_APPS, fileKey);
       installedApps = installedApps.filter(a => a.file !== fileKey);
       delete appUsageStats[fileKey];
@@ -2792,81 +2857,53 @@
     }
     
     function dbPut(storeName, data) {
-      return openDB().then(database => {
-        return new Promise((resolve, reject) => {
-          const tx = database.transaction(storeName, 'readwrite');
-          const store = tx.objectStore(storeName);
-          const request = store.put(data);
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = (e) => reject(e.target.error);
-        });
-      });
+      return openDB().then(database => new Promise((resolve, reject) => {
+        const request = database.transaction(storeName, 'readwrite').objectStore(storeName).put(data);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = (e) => reject(e.target.error);
+      }));
     }
     
     function dbGet(storeName, key) {
-      return openDB().then(database => {
-        return new Promise((resolve, reject) => {
-          const tx = database.transaction(storeName, 'readonly');
-          const store = tx.objectStore(storeName);
-          const request = store.get(key);
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = (e) => reject(e.target.error);
-        });
-      });
+      return openDB().then(database => new Promise((resolve, reject) => {
+        const request = database.transaction(storeName, 'readonly').objectStore(storeName).get(key);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = (e) => reject(e.target.error);
+      }));
     }
     
     function dbGetAll(storeName) {
-      return openDB().then(database => {
-        return new Promise((resolve, reject) => {
-          const tx = database.transaction(storeName, 'readonly');
-          const store = tx.objectStore(storeName);
-          const request = store.getAll();
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = (e) => reject(e.target.error);
-        });
-      });
+      return openDB().then(database => new Promise((resolve, reject) => {
+        const request = database.transaction(storeName, 'readonly').objectStore(storeName).getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = (e) => reject(e.target.error);
+      }));
     }
     
     function dbDelete(storeName, key) {
-      return openDB().then(database => {
-        return new Promise((resolve, reject) => {
-          const tx = database.transaction(storeName, 'readwrite');
-          const store = tx.objectStore(storeName);
-          const request = store.delete(key);
-          request.onsuccess = () => resolve();
-          request.onerror = (e) => reject(e.target.error);
-        });
-      });
+      return openDB().then(database => new Promise((resolve, reject) => {
+        const request = database.transaction(storeName, 'readwrite').objectStore(storeName).delete(key);
+        request.onsuccess = () => resolve();
+        request.onerror = (e) => reject(e.target.error);
+      }));
     }
     
     function dbClear(storeName) {
-      return openDB().then(database => {
-        return new Promise((resolve, reject) => {
-          const tx = database.transaction(storeName, 'readwrite');
-          const store = tx.objectStore(storeName);
-          const request = store.clear();
-          request.onsuccess = () => resolve();
-          request.onerror = (e) => reject(e.target.error);
-        });
-      });
+      return openDB().then(database => new Promise((resolve, reject) => {
+        const request = database.transaction(storeName, 'readwrite').objectStore(storeName).clear();
+        request.onsuccess = () => resolve();
+        request.onerror = (e) => reject(e.target.error);
+      }));
     }
     
     // ==================== 全局工具函数 ====================
     function escapeHtml(str) {
       if (!str) return '';
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     }
     function debounce(func, wait) {
       let timeout;
       return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); };
-    }
-    function throttle(func, limit) {
-      let inThrottle;
-      return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) { func.apply(context, args); inThrottle = true; setTimeout(() => inThrottle = false, limit); }
-      };
     }
     
     // ==================== 设置标签页切换 ====================
@@ -2875,21 +2912,27 @@
         tab.addEventListener('click', () => {
           document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
           document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
-          
           tab.classList.add('active');
           document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
         });
       });
     });
     
-    // ==================== FPS 模块 ====================
+    // ==================== FPS 模块（自适应屏幕刷新率上限，有多少帧跑多少帧）====================
     (function() {
-      let frameCount = 0, lastTime = performance.now(), rafId = null;
-      function updateFPS() {
+      let frameCount = 0, lastTime = 0, rafId = null, maxFps = 0;
+      function updateFPS(now) {
         frameCount++;
-        const now = performance.now(), delta = now - lastTime;
-        if (delta >= 1000) {
-          fpsCounter.textContent = `FPS: ${Math.round((frameCount * 1000) / delta)}`;
+        const delta = now - lastTime;
+        if (delta >= 500) {
+          const fps = Math.round(frameCount * 1000 / delta);
+          if (fps > maxFps) maxFps = fps;
+          // 显示 当前帧率/设备上限（如 118 / 120）
+          fpsCounter.textContent = 'FPS: ' + fps + (maxFps > 70 ? ' / ' + maxFps : '');
+          // 以设备实际上限为基准着色：接近上限=绿，过半=黄，过低=红
+          const cap = Math.max(60, maxFps);
+          fpsCounter.style.color = fps >= cap * 0.85 ? '#0f0' : (fps >= cap * 0.5 ? '#ffb900' : '#ff4530');
+          fpsCounter.style.borderColor = fpsCounter.style.color;
           frameCount = 0; lastTime = now;
         }
         rafId = requestAnimationFrame(updateFPS);
@@ -2897,22 +2940,27 @@
       function toggleFPS(show) {
         if (show) { 
           fpsCounter.classList.add('show'); 
-          if (!rafId) { 
-            rafId = requestAnimationFrame(updateFPS); 
-          } 
-        }
-        else { 
+          if (!rafId) { lastTime = performance.now(); rafId = requestAnimationFrame(updateFPS); }
+        } else { 
           fpsCounter.classList.remove('show'); 
-          if (rafId) { 
-            cancelAnimationFrame(rafId); 
-            rafId = null; 
-          } 
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; } 
         }
       }
-      window.fpsControl = { toggle: toggleFPS };
+      // 实测屏幕刷新率上限：rAF 与显示器刷新率同步，采样约0.6秒，不设任何帧率上限
+      function measureRefresh(cb) {
+        let frames = 0;
+        const start = performance.now();
+        (function tick() {
+          frames++;
+          const elapsed = performance.now() - start;
+          if (elapsed < 600) requestAnimationFrame(tick);
+          else cb(Math.round(frames * 1000 / elapsed));
+        })();
+      }
+      window.fpsControl = { toggle: toggleFPS, measureRefresh };
     })();
     
-    // ========== 开发者模式（优化版）==========
+    // ========== 开发者模式 ==========
     function activateDevMode() {
       if (devModeActive) {
         showToast('🔧 开发者模式已开启', 'dev', 2000);
@@ -2921,8 +2969,6 @@
       
       versionClickCount++;
       clearTimeout(versionClickTimer);
-      
-      // 1.5秒内无点击则重置，防止卡顿堆积
       versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 1500);
       
       if (versionClickCount >= 7) {
@@ -2933,12 +2979,9 @@
         devTab.style.display = 'block';
         showToast('✅ 开发者模式已激活！', 'dev', 3000);
         addLog('info', '开发者模式已激活');
-      } else if (versionClickCount > 1 && versionClickCount < 7) {
+      } else if (versionClickCount > 1) {
         const remaining = 7 - versionClickCount;
-        // 只在剩余3次以内提示，减少Toast干扰
-        if (remaining <= 3) {
-          showToast(`再点击 ${remaining} 次激活开发者模式`, 'dev', 1200);
-        }
+        if (remaining <= 3) showToast('再点击 ' + remaining + ' 次激活开发者模式', 'dev', 1200);
       }
     }
     
@@ -2960,18 +3003,30 @@
       addLog('info', '开发者模式已关闭');
     }
     
-    // ========== 壁纸预设初始化 ==========
+    // ========== 壁纸预设（含选中状态同步，修复蓝边不消除问题）==========
+    function clearPresetSelection() {
+      document.querySelectorAll('.wallpaper-preset.selected').forEach(p => p.classList.remove('selected'));
+    }
+    
+    function syncPresetSelection() {
+      const cur = bgImageInput.value.trim();
+      document.querySelectorAll('.wallpaper-preset').forEach(p => {
+        p.classList.toggle('selected', cur !== '' && p.dataset.url === cur);
+      });
+    }
+    
     function initWallpaperPresets() {
       wallpaperPresets.innerHTML = '';
       presetWallpapers.forEach(wp => {
         const div = document.createElement('div');
         div.className = 'wallpaper-preset';
-        div.style.backgroundImage = `url(${wp.url})`;
+        div.style.backgroundImage = 'url(' + wp.thumb + ')';
+        div.dataset.url = wp.url;
         div.title = wp.name;
         div.onclick = () => {
           bgImageInput.value = wp.url;
-          document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
-          div.classList.add('selected');
+          syncPresetSelection();
+          showToast('已选择「' + wp.name + '」，点击保存应用', 'info', 1500);
         };
         wallpaperPresets.appendChild(div);
       });
@@ -2985,12 +3040,10 @@
       input.onchange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        
         const reader = new FileReader();
         reader.onload = (e) => {
-          const imageUrl = e.target.result;
-          bgImageInput.value = imageUrl;
-          document.querySelectorAll('.wallpaper-preset').forEach(p => p.classList.remove('selected'));
+          bgImageInput.value = e.target.result;
+          clearPresetSelection();
           showToast('壁纸已选择，点击保存应用', 'success');
         };
         reader.readAsDataURL(file);
@@ -2999,13 +3052,8 @@
     }
     
     // ========== 排序功能 ==========
-    function showSortMenu() {
-      sortMenu.style.display = 'block';
-    }
-    
-    function closeSortMenu() {
-      sortMenu.style.display = 'none';
-    }
+    function showSortMenu() { sortMenu.style.display = 'block'; }
+    function closeSortMenu() { sortMenu.style.display = 'none'; }
     
     async function sortApps(sortBy) {
       currentSort = sortBy;
@@ -3019,7 +3067,6 @@
         case 'name':
           appsToSort.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
           break;
-          
         case 'installTime':
           appsToSort.sort((a, b) => {
             const timeA = a.installTime ? new Date(a.installTime).getTime() : 0;
@@ -3027,47 +3074,37 @@
             return timeB - timeA;
           });
           break;
-          
         case 'lastUsed':
-          appsToSort.sort((a, b) => {
-            const countA = appUsageStats[a.file] || 0;
-            const countB = appUsageStats[b.file] || 0;
-            return countB - countA;
-          });
+          appsToSort.sort((a, b) => (appUsageStats[b.file] || 0) - (appUsageStats[a.file] || 0));
           break;
-          
         case 'size':
           showToast('正在计算应用大小...', 'info');
-          const sizePromises = appsToSort.map(async (app) => {
+          const appSizes = await Promise.all(appsToSort.map(async (app) => {
             const content = await getContentSafe(app.file);
             return { app, size: content ? content.length : 0 };
-          });
-          
-          const appSizes = await Promise.all(sizePromises);
+          }));
           appSizes.sort((a, b) => b.size - a.size);
           appsToSort = appSizes.map(item => item.app);
           break;
       }
       
-      const hiddenApps = installedApps.filter(a => a.hidden);
-      installedApps = [...appsToSort, ...hiddenApps];
+      // 修复：显示隐藏应用时直接采用排序结果，避免隐藏应用被重复拼接
+      if (showHiddenApps) {
+        installedApps = appsToSort;
+      } else {
+        installedApps = [...appsToSort, ...installedApps.filter(a => a.hidden)];
+      }
       
       await saveApps();
-      
       renderApps();
       closeSortMenu();
       
-      const sortLabels = {
-        'name': '名称',
-        'installTime': '安装时间',
-        'lastUsed': '使用频率',
-        'size': '应用大小'
-      };
-      showToast(`已按${sortLabels[sortBy]}排序`, 'info');
-      addLog('info', `应用已按${sortLabels[sortBy]}排序`);
+      const sortLabels = { 'name': '名称', 'installTime': '安装时间', 'lastUsed': '使用频率', 'size': '应用大小' };
+      showToast('已按' + sortLabels[sortBy] + '排序', 'info');
+      addLog('info', '应用已按' + sortLabels[sortBy] + '排序');
     }
     
-    // ========== 应用隐藏 ==========
+    // ========== 应用隐藏/锁定 ==========
     function toggleHiddenApps() {
       showHiddenApps = !showHiddenApps;
       currentPage = 0;
@@ -3077,24 +3114,23 @@
     
     function hideApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
-      if (app) {
-        app.hidden = !app.hidden;
-        saveApps();
-        renderApps();
-        showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
-      }
+      if (!app) return;
+      if (isSystemApp(app)) { showToast('系统核心应用，无法隐藏', 'error'); return; }
+      app.hidden = !app.hidden;
+      saveApps();
+      renderApps();
+      showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
       document.querySelector('.app-action-modal')?.remove();
     }
     
-    // ========== 应用锁定 ==========
     function lockApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
-      if (app) {
-        app.locked = !app.locked;
-        saveApps();
-        renderApps();
-        showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
-      }
+      if (!app) return;
+      if (isSystemApp(app)) { showToast('系统核心应用已永久锁定', 'error'); return; }
+      app.locked = !app.locked;
+      saveApps();
+      renderApps();
+      showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
       document.querySelector('.app-action-modal')?.remove();
     }
     
@@ -3106,11 +3142,8 @@
     let lastHeaderClick = 0;
     winHeader.addEventListener('click', () => {
       if (!systemSettings.doubleClickTop) return;
-      
       const now = Date.now();
-      if (now - lastHeaderClick < 300) {
-        scrollToTop();
-      }
+      if (now - lastHeaderClick < 300) scrollToTop();
       lastHeaderClick = now;
     });
     
@@ -3135,11 +3168,8 @@
       
       for (let i = 0; i < totalPages; i++) {
         const dot = document.createElement('div');
-        dot.className = `page-dot ${i === currentPage ? 'active' : ''}`;
-        dot.onclick = () => {
-          currentPage = i;
-          renderApps();
-        };
+        dot.className = 'page-dot' + (i === currentPage ? ' active' : '');
+        dot.onclick = () => { currentPage = i; renderApps(); };
         pageIndicator.appendChild(dot);
       }
     }
@@ -3152,16 +3182,11 @@
       const colorInput = document.createElement('input');
       colorInput.type = 'color';
       colorInput.value = app.customColor || app.color || '#0078d7';
-      
-      colorInput.addEventListener('input', (e) => {
-        changeAppColor(appFile, e.target.value);
-      });
-      
+      colorInput.addEventListener('input', (e) => changeAppColor(appFile, e.target.value));
       colorInput.addEventListener('change', (e) => {
         changeAppColor(appFile, e.target.value);
         showToast('颜色已更新', 'success', 1500);
       });
-      
       colorInput.click();
     }
     
@@ -3174,115 +3199,6 @@
     window.addEventListener('offline', () => {
       offlineBanner.classList.add('show');
       showToast('您已离线，部分功能可能受限', 'warning');
-    });
-    
-    // ========== 初始化 ==========
-    document.addEventListener('DOMContentLoaded', async () => {
-      window.addEventListener('error', (e) => {
-        addLog('error', '全局错误: ' + (e.error?.message || e.message));
-        if (e.target.tagName === 'IFRAME') addLog('warn', '应用内错误，不影响主系统');
-      });
-      window.addEventListener('unhandledrejection', (e) => {
-        addLog('error', '未处理Promise拒绝: ' + e.rejection);
-      });
-      
-      try { await openDB(); } catch (err) { addLog('error', '数据库初始化失败', err); }
-      
-      // 加载系统密码
-      await loadSystemPassword();
-      
-      const stats = await dbGet(STORE_STATS, 'appUsage');
-      if (stats) appUsageStats = stats.value;
-      
-      const userNameVal = await dbGet(STORE_SETTINGS, 'user_name');
-      const userAvatarVal = await dbGet(STORE_SETTINGS, 'user_avatar');
-      if (userNameVal) currentUser.name = userNameVal.value;
-      if (userAvatarVal) currentUser.avatar = userAvatarVal.value;
-      
-      userName.textContent = currentUser.name;
-      userIcon.textContent = currentUser.avatar;
-      
-      await loadSystemSettings();
-      await loadInstalledApps();
-      await loadSettings();
-      initWallpaperPresets();
-      initBatteryStatus();
-      
-      const devSetting = await dbGet(STORE_SETTINGS, 'dev_mode');
-      devModeActive = devSetting && devSetting.value === 'true';
-      if (devModeActive) {
-        devTab.style.display = 'block';
-      }
-      
-      const fpsState = await dbGet(STORE_SETTINGS, 'fps');
-      if (fpsState?.value === 'on') {
-        fpsToggle.checked = true;
-        window.fpsControl.toggle(true);
-      }
-      
-      const sandboxState = await dbGet(STORE_SETTINGS, 'sandbox_enabled');
-      systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
-      sandboxToggle.checked = !systemSettings.sandboxEnabled;
-      updateSandboxState();
-      
-      const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
-      systemSettings.autoOptimizeMemory = autoOptimizeState?.value === 'true';
-      autoOptimizeMemoryToggle.checked = systemSettings.autoOptimizeMemory;
-      startAutoMemoryOptimize();
-      
-      const advancedOptimizeState = await dbGet(STORE_SETTINGS, 'advanced_optimize_memory');
-      systemSettings.advancedOptimizeMemory = advancedOptimizeState?.value === 'true';
-      advancedOptimizeMemoryToggle.checked = systemSettings.advancedOptimizeMemory;
-      if (devModeActive) {
-        startAdvancedAutoMemoryOptimize();
-      }
-      
-      const launchAnim = await dbGet(STORE_SETTINGS, 'launchAnim');
-      if (launchAnim?.value === 'off') {
-        launchAnimToggle.checked = false;
-      }
-      const vibration = await dbGet(STORE_SETTINGS, 'vibration');
-      if (vibration?.value === 'on') {
-        vibrationToggle.checked = true;
-      }
-      const pageIndicator = await dbGet(STORE_SETTINGS, 'pageIndicator');
-      if (pageIndicator?.value === 'off') {
-        pageIndicatorToggle.checked = false;
-        document.getElementById('pageIndicator').style.display = 'none';
-      }
-      
-      const savedSort = await dbGet(STORE_SETTINGS, 'currentSort');
-      if (savedSort) {
-        currentSort = savedSort.value;
-      }
-      
-      // 启动DOM防护和紧急退出
-      DOMGuard.init();
-      setupEmergencyExit();
-      
-      renderApps();
-      setupSwipe();
-      updateDateTime();
-      setInterval(updateDateTime, 1000);
-      setupSearch();
-      setupPostMessageListener();
-      
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('#notificationCenter') && !e.target.closest('[onclick="toggleNotificationCenter()"]')) {
-          notificationCenter.classList.remove('show');
-        }
-        if (!e.target.closest('#sortMenu') && !e.target.closest('[onclick="showSortMenu()"]')) {
-          sortMenu.style.display = 'none';
-        }
-        if (!e.target.closest('#userInfoModal') && !e.target.closest('.win-user')) {
-          userInfoModal.classList.remove('show');
-        }
-        if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
-          document.querySelector('.app-action-modal')?.remove();
-        }
-      });
-      
-      addLog('info', 'HTMLOS v3.7 初始化完成, 应用数: ' + installedApps.length);
     });
     
     // ========== 系统设置加载与保存 ==========
@@ -3342,20 +3258,27 @@
       await dbPut(STORE_SETTINGS, { key: 'advanced_optimize_memory', value: String(systemSettings.advancedOptimizeMemory) });
       
       startAutoMemoryOptimize();
-      if (devModeActive) {
-        startAdvancedAutoMemoryOptimize();
-      }
+      if (devModeActive) startAdvancedAutoMemoryOptimize();
       
+      buildDateTimeFormatters();
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信 ====================
+    // ========== iframe postMessage 通信（含限流防刷）==========
+    let _msgWindowStart = 0, _msgCount = 0;
+    
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
         if (!appFrame || event.source !== appFrame.contentWindow) {
-          if (event.source !== window) {
-            addLog('warn', '收到来自未知来源的消息，已阻止');
-          }
+          if (event.source !== window) addLog('warn', '收到来自未知来源的消息，已阻止');
+          return;
+        }
+        
+        // 限流：每秒最多30条，防止恶意应用消息洪水攻击拖垮系统
+        const now = Date.now();
+        if (now - _msgWindowStart > 1000) { _msgWindowStart = now; _msgCount = 0; }
+        if (++_msgCount > 30) {
+          if (_msgCount === 31) addLog('warn', '应用消息过于频繁，已触发限流');
           return;
         }
         
@@ -3365,20 +3288,11 @@
           return;
         }
         
-        addLog('debug', '收到应用消息: ' + msg.action);
-        
-        const allowedActions = [
-          'getSystemInfo', 'setTitle', 'toast', 'vibrate', 
-          'saveData', 'getData', 'close', 'openUrl'
-        ];
-        
+        const allowedActions = ['getSystemInfo', 'setTitle', 'toast', 'vibrate', 'saveData', 'getData', 'close', 'openUrl'];
         if (!allowedActions.includes(msg.action)) {
-          addLog('warn', `应用尝试执行未授权操作: ${msg.action}，已阻止`);
+          addLog('warn', '应用尝试执行未授权操作: ' + msg.action + '，已阻止');
           return;
         }
-        
-        if (msg.data?.title) msg.data.title = escapeHtml(msg.data.title);
-        if (msg.data?.message) msg.data.message = escapeHtml(msg.data.message);
         
         switch (msg.action) {
           case 'getSystemInfo':
@@ -3387,14 +3301,16 @@
               version: VERSION, 
               theme: document.body.className, 
               appCount: installedApps.length, 
-              online: navigator.onLine
+              online: navigator.onLine,
+              sandbox: systemSettings.sandboxEnabled,
+              guard: true
             });
             break;
           case 'setTitle':
-            if (msg.data?.title) runningAppTitle.textContent = msg.data.title;
+            if (msg.data?.title) runningAppTitle.textContent = String(msg.data.title).slice(0, 60);
             break;
           case 'toast':
-            if (msg.data?.message) showToast(msg.data.message, msg.data.type || 'info', msg.data.duration || 3000);
+            if (msg.data?.message) showToast(String(msg.data.message).slice(0, 200), msg.data.type || 'info', msg.data.duration || 3000);
             break;
           case 'vibrate':
             if (navigator.vibrate && msg.data?.pattern && vibrationToggle.checked) {
@@ -3406,13 +3322,13 @@
             break;
           case 'saveData':
             if (msg.data?.key && runningAppFile) {
-              dbPut(STORE_SETTINGS, { key: `app_data_${runningAppFile}_${msg.data.key}`, value: msg.data.value });
+              dbPut(STORE_SETTINGS, { key: 'app_data_' + runningAppFile + '_' + msg.data.key, value: msg.data.value });
               sendMessageToApp({ type: 'dataSaved', key: msg.data.key, success: true });
             }
             break;
           case 'getData':
             if (msg.data?.key && runningAppFile) {
-              dbGet(STORE_SETTINGS, `app_data_${runningAppFile}_${msg.data.key}`).then(result => {
+              dbGet(STORE_SETTINGS, 'app_data_' + runningAppFile + '_' + msg.data.key).then(result => {
                 sendMessageToApp({ type: 'dataLoaded', key: msg.data.key, value: result?.value || null });
               });
             }
@@ -3421,7 +3337,7 @@
             closeApp();
             break;
           case 'openUrl':
-            if (msg.data?.url && confirm(`应用想打开外部链接:\n${msg.data.url}\n\n是否允许？`)) {
+            if (msg.data?.url && confirm('应用想打开外部链接:\n' + msg.data.url + '\n\n是否允许？')) {
               window.open(msg.data.url, '_blank', 'noopener,noreferrer');
             }
             break;
@@ -3443,7 +3359,8 @@
     async function loadInstalledApps() {
       try {
         const apps = await dbGetAll(STORE_APPS);
-        installedApps = apps.map(app => ({ ...app, name: escapeHtml(app.name), hidden: app.hidden || false, locked: app.locked || false }));
+        // 修复：名称不再入库前转义（转义只在渲染时做），避免二次转义导致 &amp;lt; 乱码
+        installedApps = apps.map(app => ({ ...app, name: String(app.name || '未命名'), hidden: app.hidden || false, locked: app.locked || false }));
         if (installedApps.length === 0) {
           const legacyData = localStorage.getItem('htmlos_apps');
           if (legacyData) {
@@ -3456,34 +3373,28 @@
                 if (content) await dbPut(STORE_CONTENT, { file: app.file, content: content });
               }
               installedApps = await dbGetAll(STORE_APPS);
-              addLog('info', `迁移完成，共 ${installedApps.length} 个应用`);
+              addLog('info', '迁移完成，共 ' + installedApps.length + ' 个应用');
             } catch (e) {
               addLog('error', 'localStorage 数据迁移失败', e);
             }
           }
         }
-        if (installedApps.length === 0) installedApps = [];
       } catch (e) { 
         addLog('error', '加载应用数据失败', e); 
         installedApps = []; 
       }
     }
     
-    // 优化：使用单事务批量写入，大幅提升性能
-    // 修复：保存前先清空 store，确保已卸载的应用不会残留
+    // 单事务批量写入；先清空 store，确保已卸载应用不残留
     let _saveAppsPending = false;
     const saveApps = debounce(async function() {
       if (_saveAppsPending) return;
       _saveAppsPending = true;
-
       try {
         const database = await openDB();
         const tx = database.transaction(STORE_APPS, 'readwrite');
         const store = tx.objectStore(STORE_APPS);
-        
-        // 修复：先清空所有旧记录，防止已卸载应用残留
         store.clear();
-        
         for (const app of installedApps) {
           store.put({
             name: app.name,
@@ -3510,71 +3421,66 @@
       }
     }, 300);
     
+    // 统一的主题应用入口（供DOMGuard追踪当前主题）
+    function applyTheme(theme) {
+      currentTheme = theme;
+      document.body.className = 'theme-' + theme;
+    }
+    
+    // 统一的背景应用入口（DOMGuard以此值为授权基准）
+    function setAuthorizedBackground(bgValue) {
+      authorizedBG = bgValue;
+      document.body.style.setProperty('--bg', bgValue);
+      document.body.style.background = bgValue;
+      // 存储浏览器规范化后的快照，供巡检精确比对
+      authorizedBGNormalized = document.body.style.background;
+    }
+    
     async function loadSettings() {
       try {
         const settings = await dbGetAll(STORE_SETTINGS);
         const map = {};
         settings.forEach(s => map[s.key] = s.value);
-        if (map['bg']) { document.body.style.setProperty('--bg', map['bg']); document.body.style.background = map['bg']; }
+        if (map['bg']) setAuthorizedBackground(map['bg']);
         if (map['cols']) { cols = parseInt(map['cols']); document.body.style.setProperty('--cols', cols); colsSelect.value = cols; }
         const theme = map['theme'] || 'sharp';
-        document.body.className = `theme-${theme}`;
+        applyTheme(theme);
         themeSelect.value = theme;
-        
-        const appLaunchAnim = map['appLaunchAnim'] || 'off';
-        if (appLaunchAnim === 'on') document.body.classList.add('anim-3d');
       } catch (e) {
         addLog('error', '加载设置失败，回退localStorage', e);
         const bg = localStorage.getItem('htmlos_bg');
-        if (bg) { document.body.style.setProperty('--bg', bg); document.body.style.background = bg; }
-        document.body.className = `theme-${localStorage.getItem('htmlos_theme') || 'sharp'}`;
+        if (bg) setAuthorizedBackground(bg);
+        applyTheme(localStorage.getItem('htmlos_theme') || 'sharp');
       }
     }
     
     async function saveSettings() {
       const color = bgColorPicker.value;
       const imageUrl = bgImageInput.value.trim();
-      let bgValue = imageUrl ? `url(${imageUrl}) center/cover no-repeat fixed` : color;
-      document.body.style.background = bgValue;
-      document.body.style.setProperty('--bg', bgValue);
+      const bgValue = imageUrl ? 'url(' + imageUrl + ') center/cover no-repeat fixed' : color;
+      setAuthorizedBackground(bgValue);
       
-      const newCols = parseInt(colsSelect.value);
-      cols = newCols;
+      cols = parseInt(colsSelect.value);
       document.body.style.setProperty('--cols', cols);
       
       try {
         await dbPut(STORE_SETTINGS, { key: 'bg', value: bgValue });
         await dbPut(STORE_SETTINGS, { key: 'cols', value: String(cols) });
         const theme = themeSelect.value;
-        document.body.className = `theme-${theme}`;
+        applyTheme(theme);
         await dbPut(STORE_SETTINGS, { key: 'theme', value: theme });
         
         const fpsState = fpsToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'fps', value: fpsState ? 'on' : 'off' });
         window.fpsControl.toggle(fpsState);
         
-        const launchAnimState = launchAnimToggle.checked;
-        await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimState ? 'on' : 'off' });
-        const vibrationState = vibrationToggle.checked;
-        await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationState ? 'on' : 'off' });
-        const pageIndicatorState = pageIndicatorToggle.checked;
-        await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorState ? 'on' : 'off' });
-        
-        const appLaunchAnimState = appLaunchAnimToggle.checked;
-        await dbPut(STORE_SETTINGS, { key: 'appLaunchAnim', value: appLaunchAnimState ? 'on' : 'off' });
-        if (appLaunchAnimState) {
-          document.body.classList.add('anim-3d');
-        } else {
-          document.body.classList.remove('anim-3d');
-        }
+        await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimToggle.checked ? 'on' : 'off' });
+        await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationToggle.checked ? 'on' : 'off' });
+        await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorToggle.checked ? 'on' : 'off' });
         
         await saveSystemSettings();
         
-        if (pageIndicatorState) {
-          pageIndicator.style.display = 'flex';
-        } else {
-          pageIndicator.style.display = 'none';
-        }
+        pageIndicator.style.display = pageIndicatorToggle.checked ? 'flex' : 'none';
         
         showToast('设置已保存', 'success');
         addLog('info', '设置已保存');
@@ -3582,7 +3488,7 @@
         addLog('error', '保存设置失败', e);
         localStorage.setItem('htmlos_bg', bgValue);
         localStorage.setItem('htmlos_cols', String(cols));
-        localStorage.setItem('htmlos_theme', document.getElementById('themeSelect').value);
+        localStorage.setItem('htmlos_theme', themeSelect.value);
       }
       
       closeSettings();
@@ -3590,13 +3496,12 @@
       renderApps();
     }
     
-    // ========== 内容存取兼容层（修复空内容判断）==========
+    // ========== 内容存取兼容层 ==========
     async function getContentSafe(key) {
       try { 
         const result = await dbGet(STORE_CONTENT, key); 
         if (result && result.content !== undefined && result.content !== null) return result.content; 
-      }
-      catch (e) { 
+      } catch (e) { 
         addLog('warn', 'IndexedDB读取失败，尝试localStorage: ' + key); 
       }
       return localStorage.getItem(key);
@@ -3605,8 +3510,7 @@
     async function setContentSafe(key, content) {
       try { 
         await dbPut(STORE_CONTENT, { file: key, content: content }); 
-      }
-      catch (e) { 
+      } catch (e) { 
         addLog('warn', 'IndexedDB写入失败，回退到localStorage: ' + key); 
         localStorage.setItem(key, content); 
       }
@@ -3615,8 +3519,7 @@
     async function deleteContentSafe(key) {
       try { 
         await dbDelete(STORE_CONTENT, key); 
-      }
-      catch (e) { 
+      } catch (e) { 
         localStorage.removeItem(key); 
       }
     }
@@ -3642,10 +3545,9 @@
       showToast('磁贴大小: ' + sizeLabels[app.size], 'info', 1500);
     }
     
-    // ========== 渲染应用 - 性能优化 ==========
+    // ========== 渲染应用（rAF合帧）==========
     function renderApps() {
       if (window._renderRaf) cancelAnimationFrame(window._renderRaf);
-      
       window._renderRaf = requestAnimationFrame(() => {
         _renderAppsImpl();
         window._renderRaf = null;
@@ -3655,17 +3557,14 @@
     function _renderAppsImpl() {
       appsContainer.innerHTML = '';
       
-      let filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
-      
+      const filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
       const perPage = cols * 3;
       const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
       
       if (currentPage < 0) currentPage = 0;
       if (currentPage >= totalPages) currentPage = totalPages - 1;
       
-      const start = currentPage * perPage;
-      const end = start + perPage;
-      const pageApps = filteredApps.slice(start, end);
+      const pageApps = filteredApps.slice(currentPage * perPage, currentPage * perPage + perPage);
       
       if (pageApps.length === 0 && filteredApps.length > 0) {
         currentPage = 0;
@@ -3681,14 +3580,13 @@
       }
       
       const fragment = document.createDocumentFragment();
-      
       pageApps.forEach(app => {
         const div = document.createElement('div');
-        div.className = `app-icon size-${app.size || 'small'} ${app.hidden ? 'hidden' : ''} ${app.locked ? 'locked' : ''}`;
+        div.className = 'app-icon size-' + (app.size || 'small') + (app.hidden ? ' hidden' : '') + (app.locked ? ' locked' : '');
         div.style.setProperty('--icon-bg', app.customColor || app.color || '#0078d7');
         div.setAttribute('data-file', app.file);
-        div.innerHTML = `<span class="icon-emoji">${app.icon || '📱'}</span><span class="tile-label" title="${app.name}">${app.name}</span>`;
-        
+        // 修复：名称与图标在渲染时转义，杜绝注入（存储层保持原始文本）
+        div.innerHTML = '<span class="icon-emoji">' + escapeHtml(app.icon || '📱') + '</span><span class="tile-label" title="' + escapeHtml(app.name) + '">' + escapeHtml(app.name) + '</span>';
         fragment.appendChild(div);
       });
       
@@ -3696,15 +3594,11 @@
       updatePageInfo(filteredApps.length, perPage);
       updatePageIndicator(totalPages);
       
-      if (totalPages > 1) {
-        navButtons.classList.remove('hidden');
-      } else {
-        navButtons.classList.add('hidden');
-      }
+      navButtons.classList.toggle('hidden', totalPages <= 1);
     }
     
-    // ========== 应用图标事件处理 ==========
-    let longPressTimer, touchMoved, isClickHandled, currentAppElement;
+    // ========== 应用图标事件处理（修复鼠标二次点击失效bug）==========
+    let longPressTimer, touchMoved, suppressNextClick, currentAppElement;
     
     appsContainer.addEventListener('touchstart', (e) => {
       const appIcon = e.target.closest('.app-icon');
@@ -3712,67 +3606,56 @@
       
       currentAppElement = appIcon;
       touchMoved = false;
-      isClickHandled = false;
+      suppressNextClick = false;
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
       
       longPressTimer = setTimeout(() => {
         if (!touchMoved) {
-          isClickHandled = true;
+          suppressNextClick = true;
           const file = appIcon.getAttribute('data-file');
           const app = installedApps.find(a => a.file === file);
           if (app) showActionMenu(app, appIcon);
         }
       }, 500);
-    });
+    }, { passive: true });
     
     appsContainer.addEventListener('touchmove', (e) => {
       if (Math.abs(e.touches[0].clientX - touchStartX) > TOUCH_THRESHOLD || 
           Math.abs(e.touches[0].clientY - touchStartY) > TOUCH_THRESHOLD) {
         touchMoved = true;
-        if (longPressTimer) {
-          clearTimeout(longPressTimer);
-          longPressTimer = null;
-        }
+        if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
       }
-    });
+    }, { passive: true });
     
     appsContainer.addEventListener('touchend', (e) => {
-      if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-      }
+      if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
       
       const appIcon = e.target.closest('.app-icon');
       if (!appIcon || appIcon !== currentAppElement) return;
       
-      if (!touchMoved && !isClickHandled) {
-        isClickHandled = true;
+      if (!touchMoved && !suppressNextClick) {
         if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && 
             Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
-          const file = appIcon.getAttribute('data-file');
-          launchApp(file, appIcon);
+          suppressNextClick = true; // 抑制紧随其后的合成click，防止重复启动
+          launchApp(appIcon.getAttribute('data-file'), appIcon);
         }
       }
     });
     
     appsContainer.addEventListener('click', (e) => {
       const appIcon = e.target.closest('.app-icon');
-      if (!appIcon || isClickHandled) return;
-      
-      isClickHandled = true;
-      const file = appIcon.getAttribute('data-file');
-      launchApp(file, appIcon);
+      if (!appIcon) return;
+      // 触摸路径已处理过则吞掉这次合成click；鼠标路径每次都正常处理
+      if (suppressNextClick) { suppressNextClick = false; return; }
+      launchApp(appIcon.getAttribute('data-file'), appIcon);
     });
     
     appsContainer.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       const appIcon = e.target.closest('.app-icon');
       if (!appIcon) return;
-      
-      isClickHandled = true;
-      const file = appIcon.getAttribute('data-file');
-      const app = installedApps.find(a => a.file === file);
+      const app = installedApps.find(a => a.file === appIcon.getAttribute('data-file'));
       if (app) showActionMenu(app, appIcon);
     });
     
@@ -3781,41 +3664,43 @@
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
       modal.className = 'app-action-modal';
+      const isSystem = isSystemApp(app);
       
       const iconOptions = iconLibrary.map(icon => 
-        `<div class="icon-option ${app.icon===icon?'selected':''}" onclick="changeAppIcon('${app.file}','${icon}');document.querySelector('.app-action-modal')?.remove()">${icon}</div>`
+        '<div class="icon-option' + (app.icon === icon ? ' selected' : '') + '" onclick="changeAppIcon(\'' + app.file + '\',\'' + icon + '\');document.querySelector(\'.app-action-modal\')?.remove()">' + icon + '</div>'
       ).join('');
       
-      const colorOptions = colorPalette.map(c=>
-        `<div class="color-swatch" style="background:${c};" onclick="changeAppColor('${app.file}','${c}');document.querySelector('.app-action-modal')?.remove()"></div>`
+      const colorOptions = colorPalette.map(c =>
+        '<div class="color-swatch" style="background:' + c + ';" onclick="changeAppColor(\'' + app.file + '\',\'' + c + '\');document.querySelector(\'.app-action-modal\')?.remove()"></div>'
       ).join('');
       
-      const systemColorButton = `<div class="color-swatch system-color-picker" onclick="openSystemColorPicker('${app.file}')">🎨</div>`;
+      const menuBtnStyle = 'display:block;width:100%;margin:8px 0;padding:12px;color:#fff;cursor:pointer;border-radius:8px;';
+      const normalBtn = menuBtnStyle + 'background:var(--input-bg);border:var(--input-border);';
       
       modal.innerHTML = `
-        <h3 style="margin-bottom:15px;text-align:center;">${app.icon||'📱'} ${app.name}</h3>
+        <h3 style="margin-bottom:15px;text-align:center;">${escapeHtml(app.icon || '📱')} ${escapeHtml(app.name)}${isSystem ? ' 🛡️' : ''}</h3>
         <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
           <div class="custom-icon-input">
-            <input type="text" id="customIconInput_${app.file}" placeholder="输入自定义Emoji" maxlength="2" value="${app.icon||'📱'}" />
+            <input type="text" id="customIconInput_${app.file}" placeholder="输入自定义Emoji" maxlength="2" value="${escapeHtml(app.icon || '📱')}" />
             <button onclick="applyCustomIcon('${app.file}')">应用</button>
           </div>
         </div>
-        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}${systemColorButton}</div></div>
-        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">📐 磁贴大小 (当前: ${sizeLabels[app.size||'small']})</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s=>`<button style="flex:1;min-width:50px;padding:10px;background:${app.size===s?'#0a84ff':'var(--input-bg)'};border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize('${app.file}','${s}');document.querySelector('.app-action-modal')?.remove()">${sizeLabels[s]}</button>`).join('')}</div></div>
-        <button onclick="renameApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">✏️ 重命名</button>
-        <button onclick="updateAppFromFile('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#0a84ff;border:none;color:#fff;cursor:pointer;border-radius:8px;">📦 更新应用</button>
-        <button onclick="showAppInfo('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">ℹ️ 应用信息</button>
-        <button onclick="hideApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">👁️ ${app.hidden ? '取消隐藏' : '隐藏应用'}</button>
-        <button onclick="lockApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">🔒 ${app.locked ? '解锁应用' : '锁定应用'}</button>
-        ${app.source!=='system' && !app.locked?`<button onclick="deleteApp('${app.file}')" style="display:block;width:100%;margin:8px 0;padding:12px;background:#c44;border:none;color:#fff;cursor:pointer;border-radius:8px;">🗑️ 卸载</button>`:''}
-        <button onclick="this.parentElement.remove()" style="display:block;width:100%;margin:8px 0;padding:12px;background:var(--input-bg);border:var(--input-border);color:#fff;cursor:pointer;border-radius:8px;">取消</button>`;
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 颜色方案</div><div class="color-palette">${colorOptions}<div class="color-swatch system-color-picker" onclick="openSystemColorPicker('${app.file}')">🎨</div></div></div>
+        <div style="margin:15px 0;"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">📐 磁贴大小 (当前: ${sizeLabels[app.size || 'small']})</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">${sizeOptions.map(s => '<button style="flex:1;min-width:50px;padding:10px;background:' + (app.size === s ? '#0a84ff' : 'var(--input-bg)') + ';border:var(--input-border);color:#fff;margin:2px;cursor:pointer;border-radius:8px;" onclick="changeAppSize(\'' + app.file + '\',\'' + s + '\');document.querySelector(\'.app-action-modal\')?.remove()">' + sizeLabels[s] + '</button>').join('')}</div></div>
+        ${!isSystem ? '<button onclick="renameApp(\'' + app.file + '\')" style="' + normalBtn + '">✏️ 重命名</button>' : ''}
+        ${!isSystem ? '<button onclick="updateAppFromFile(\'' + app.file + '\')" style="' + menuBtnStyle + 'background:#0a84ff;border:none;">📦 更新应用</button>' : ''}
+        <button onclick="showAppInfo('${app.file}')" style="${normalBtn}">ℹ️ 应用信息</button>
+        ${!isSystem ? '<button onclick="hideApp(\'' + app.file + '\')" style="' + normalBtn + '">👁️ ' + (app.hidden ? '取消隐藏' : '隐藏应用') + '</button>' : ''}
+        ${!isSystem ? '<button onclick="lockApp(\'' + app.file + '\')" style="' + normalBtn + '">🔒 ' + (app.locked ? '解锁应用' : '锁定应用') + '</button>' : ''}
+        ${!isSystem && !app.locked ? '<button onclick="deleteApp(\'' + app.file + '\')" style="' + menuBtnStyle + 'background:#c44;border:none;">🗑️ 卸载</button>' : ''}
+        ${isSystem ? '<p style="margin:8px 0;font-size:12px;color:var(--text-secondary);text-align:center;">🛡️ 系统核心应用受保护</p>' : ''}
+        <button onclick="this.parentElement.remove()" style="${normalBtn}">取消</button>`;
       document.body.appendChild(modal);
     }
     
-    // 应用自定义图标保存功能
     function applyCustomIcon(appFile) {
-      const input = document.getElementById(`customIconInput_${appFile}`);
+      const input = document.getElementById('customIconInput_' + appFile);
       const customIcon = input.value.trim();
       if (customIcon) {
         changeAppIcon(appFile, customIcon);
@@ -3828,24 +3713,22 @@
     function renameApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
+      if (isSystemApp(app)) { showToast('系统核心应用，无法重命名', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法重命名', 'error'); return; }
       
       const newName = prompt('请输入新的应用名称：', app.name);
-      if (newName?.trim()) { app.name = escapeHtml(newName.trim()); saveApps(); renderApps(); showToast('已重命名', 'success', 1500); }
+      if (newName?.trim()) { app.name = newName.trim().slice(0, 50); saveApps(); renderApps(); showToast('已重命名', 'success', 1500); }
       document.querySelector('.app-action-modal')?.remove();
     }
     
-    // 修复：卸载时同时从 IndexedDB 删除应用元数据，防止刷新后残留
     async function deleteApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
-      if (app && app.locked) {
-        showToast('应用已锁定，无法卸载', 'error');
-        return;
-      }
+      if (!app) return;
+      if (isSystemApp(app)) { showToast('🛡️ 系统核心应用，无法卸载', 'error'); return; }
+      if (app.locked) { showToast('应用已锁定，无法卸载', 'error'); return; }
       
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
-      // 修复：立即从 IndexedDB 删除应用元数据
       await dbDelete(STORE_APPS, fileKey);
       installedApps = installedApps.filter(a => a.file !== fileKey);
       delete appUsageStats[fileKey];
@@ -3859,72 +3742,52 @@
     
     // ========== 分页 ==========
     function updatePageInfo(total, perPage) {
-      const totalPages = Math.ceil(total/perPage) || 1;
-      pageInfo.textContent = `第 ${currentPage+1} / ${totalPages} 页`;
-      
+      const totalPages = Math.ceil(total / perPage) || 1;
+      pageInfo.textContent = '第 ' + (currentPage + 1) + ' / ' + totalPages + ' 页';
       prevBtn.disabled = currentPage === 0;
       nextBtn.disabled = currentPage >= totalPages - 1;
     }
     
     function prevPage() { 
-      if (currentPage > 0) { 
-        currentPage--; 
-        renderApps(); 
-      } 
+      if (currentPage > 0) { currentPage--; renderApps(); } 
     }
     
     function nextPage() { 
       const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
-      const perPage = cols * 3;
-      const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
-      
-      if (currentPage < totalPages - 1) { 
-        currentPage++; 
-        renderApps(); 
-      } 
+      const totalPages = Math.ceil(filteredApps.length / (cols * 3)) || 1;
+      if (currentPage < totalPages - 1) { currentPage++; renderApps(); } 
     }
     
-    // ========== 滑动页面 - 修复检测逻辑（修复位操作符bug）==========
+    // ========== 滑动翻页 ==========
     function setupSwipe() {
-      let sx=0, sy=0, startTime=0;
+      let sx = 0, sy = 0, startTime = 0;
       
-      mainContainer.addEventListener('touchstart', e=>{
-        sx=e.touches[0].clientX;
-        sy=e.touches[0].clientY;
-        startTime=Date.now();
-      },{passive:true});
+      mainContainer.addEventListener('touchstart', e => {
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+        startTime = Date.now();
+      }, { passive: true });
       
-      mainContainer.addEventListener('touchmove', e=>{
-        // 仅用于检测，不阻止默认行为
-      },{passive:true});
-      
-      mainContainer.addEventListener('touchend', e=>{
-        const dx=e.changedTouches[0].clientX-sx;
-        const dy=Math.abs(e.changedTouches[0].clientY-sy);
-        const deltaTime=Date.now()-startTime;
-        
-        // Bug修复：将 << 改为 < （位操作符误用为比较运算符）
-        if(Math.abs(dx)>SWIPE_THRESHOLD && dy<40 && deltaTime<600){
-          if(dx>0) prevPage();
+      mainContainer.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = Math.abs(e.changedTouches[0].clientY - sy);
+        if (Math.abs(dx) > SWIPE_THRESHOLD && dy < 40 && (Date.now() - startTime) < 600) {
+          if (dx > 0) prevPage();
           else nextPage();
         }
-      },{passive:true});
+      }, { passive: true });
     }
     
-    // ========== 搜索 - 性能优化 ==========
+    // ========== 搜索 ==========
     function setupSearch() {
       searchApps.addEventListener('input', debounce((e) => {
         const term = e.target.value.toLowerCase().trim();
-        
         if (term === '') {
           currentPage = 0;
           renderApps();
           return;
         }
-        
-        requestAnimationFrame(() => {
-          _performSearch(term);
-        });
+        requestAnimationFrame(() => _performSearch(term));
       }, 300));
     }
     
@@ -3934,26 +3797,29 @@
       pageIndicator.style.display = 'none';
       
       const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const filtered = installedApps.filter(a=>a.name.toLowerCase().includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'zh'));
+      // 修复：搜索默认不显示隐藏应用（除非已开启"显示隐藏"）
+      const filtered = installedApps
+        .filter(a => (showHiddenApps || !a.hidden) && a.name.toLowerCase().includes(term))
+        .sort((a, b) => a.name.localeCompare(b.name, 'zh'));
       
-      if (filtered.length===0) { 
-        appsContainer.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>'; 
+      if (filtered.length === 0) { 
+        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>'; 
         return; 
       }
       
       const fragment = document.createDocumentFragment();
-      
-      filtered.forEach(app=>{
+      filtered.forEach(app => {
         const div = document.createElement('div');
-        div.className=`app-icon size-${app.size||'small'}`;
-        div.style.setProperty('--icon-bg',app.customColor||app.color||'#0078d7');
+        div.className = 'app-icon size-' + (app.size || 'small');
+        div.style.setProperty('--icon-bg', app.customColor || app.color || '#0078d7');
         div.setAttribute('data-file', app.file);
         
-        const highlightedName = app.name.replace(new RegExp(escapedTerm, 'gi'), match => 
-          `<span class="search-highlight">${match}</span>`
+        const safeName = escapeHtml(app.name);
+        const highlightedName = safeName.replace(new RegExp(escapedTerm, 'gi'), match => 
+          '<span class="search-highlight">' + match + '</span>'
         );
         
-        div.innerHTML=`<span class="icon-emoji">${app.icon||'📱'}</span><span class="tile-label" title="${app.name}">${highlightedName}</span>`;
+        div.innerHTML = '<span class="icon-emoji">' + escapeHtml(app.icon || '📱') + '</span><span class="tile-label" title="' + safeName + '">' + highlightedName + '</span>';
         fragment.appendChild(div);
       });
       
@@ -3962,190 +3828,195 @@
     
     // ========== 安装应用 ==========
     function openInstaller() { installModal.classList.add('show'); }
-    function closeModal() { installModal.classList.remove('show'); installProgress.style.display='none'; }
+    function closeModal() { installModal.classList.remove('show'); installProgress.style.display = 'none'; }
+    
+    // 净化文件名，防止引号破坏内联事件与选择器
+    function safeFileName(name) {
+      return String(name).replace(/['"\\<>]/g, '_');
+    }
     
     async function showFilePicker() {
       const input = document.createElement('input');
-      input.type='file'; input.accept='.html,.htm';
-      input.onchange=async(e)=>{
-        const file=e.target.files[0];
-        if(!file)return;
-        const reader=new FileReader();
-        reader.onload=async(e)=>{
-          const content=e.target.result;
-          const fileName='user/apps/'+Date.now()+'_'+file.name;
-          await setContentSafe(fileName,content);
-          const color=colorPalette[Math.floor(Math.random()*colorPalette.length)];
-          const now=new Date().toISOString();
-          installedApps.push({name:escapeHtml(file.name.replace(/\.html?$/i,'')),file:fileName,icon:'📱',color:color,customColor:color,size:'small',source:'user',installTime:now,lastUpdated:now,hidden:false,locked:false});
-          saveApps(); closeModal(); currentPage=0; renderApps();
+      input.type = 'file';
+      input.accept = '.html,.htm';
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const content = e.target.result;
+          const fileName = 'user/apps/' + Date.now() + '_' + safeFileName(file.name);
+          await setContentSafe(fileName, content);
+          const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+          const now = new Date().toISOString();
+          installedApps.push({ name: file.name.replace(/\.html?$/i, '').slice(0, 50), file: fileName, icon: '📱', color: color, customColor: color, size: 'small', source: 'user', installTime: now, lastUpdated: now, hidden: false, locked: false });
+          saveApps(); closeModal(); currentPage = 0; renderApps();
           showToast('安装成功！', 'success');
-          addLog('info','安装应用: '+file.name);
+          addLog('info', '安装应用: ' + file.name);
         };
+        reader.onerror = () => showToast('读取文件失败', 'error');
         reader.readAsText(file);
       };
       input.click();
     }
     
-    // 精简：合并多文件与文件夹安装的公共逻辑
     async function batchInstall(files, isFolder) {
-      installProgress.style.display='block'; 
-      progressFill.style.width='0%'; 
-      progressText.textContent= isFolder ? '正在扫描文件夹...' : '准备安装...';
+      installProgress.style.display = 'block'; 
+      progressFill.style.width = '0%'; 
+      progressText.textContent = isFolder ? '正在扫描文件夹...' : '准备安装...';
       
-      const htmlFiles=files.filter(f=>/\.html?$/i.test(f.name));
-      if(htmlFiles.length===0){showToast('没有有效的HTML文件','warning');installProgress.style.display='none';return;}
+      const htmlFiles = files.filter(f => /\.html?$/i.test(f.name));
+      if (htmlFiles.length === 0) { showToast('没有有效的HTML文件', 'warning'); installProgress.style.display = 'none'; return; }
       
-      let sc=0, fc=0;
-      for(let i=0; i<htmlFiles.length; i++){
-        const file=htmlFiles[i];
-        progressFill.style.width=Math.round((i/htmlFiles.length)*100)+'%';
-        progressText.textContent=`正在安装 ${i+1}/${htmlFiles.length}: ${file.name}`;
+      let sc = 0, fc = 0;
+      for (let i = 0; i < htmlFiles.length; i++) {
+        const file = htmlFiles[i];
+        progressFill.style.width = Math.round((i / htmlFiles.length) * 100) + '%';
+        progressText.textContent = '正在安装 ' + (i + 1) + '/' + htmlFiles.length + ': ' + file.name;
         
-        try{
-          const content=await new Promise((resolve,reject)=>{
-            const r=new FileReader();
-            r.onload=e=>resolve(e.target.result);
-            r.onerror=reject;
+        try {
+          const content = await new Promise((resolve, reject) => {
+            const r = new FileReader();
+            r.onload = e => resolve(e.target.result);
+            r.onerror = reject;
             r.readAsText(file);
           });
           
-          const fn='user/apps/'+Date.now()+'_'+file.name;
-          await setContentSafe(fn,content);
+          const fn = 'user/apps/' + Date.now() + '_' + safeFileName(file.name);
+          await setContentSafe(fn, content);
           
-          const ex=installedApps.findIndex(a=>a.name===file.name.replace(/\.html?$/i,''));
-          const now=new Date().toISOString();
-          const cl=colorPalette[Math.floor(Math.random()*colorPalette.length)];
+          const ex = installedApps.findIndex(a => a.name === file.name.replace(/\.html?$/i, ''));
+          const now = new Date().toISOString();
+          const cl = colorPalette[Math.floor(Math.random() * colorPalette.length)];
           
-          if(ex!==-1){
-            installedApps[ex].file=fn;
-            installedApps[ex].lastUpdated=now;
-          }else{
+          if (ex !== -1) {
+            // 修复：覆盖安装时清理旧内容文件与统计，避免残留
+            const oldFile = installedApps[ex].file;
+            if (oldFile && oldFile !== fn) {
+              await deleteContentSafe(oldFile);
+              delete appUsageStats[oldFile];
+            }
+            installedApps[ex].file = fn;
+            installedApps[ex].lastUpdated = now;
+          } else {
             installedApps.push({
-              name:escapeHtml(file.name.replace(/\.html?$/i,'')),
-              file:fn, icon:'📱', color:cl, customColor:cl, size:'small',
-              source:'user', installTime:now, lastUpdated:now, hidden:false, locked:false
+              name: file.name.replace(/\.html?$/i, '').slice(0, 50),
+              file: fn, icon: '📱', color: cl, customColor: cl, size: 'small',
+              source: 'user', installTime: now, lastUpdated: now, hidden: false, locked: false
             });
           }
           sc++;
-        }catch(err){
+        } catch (err) {
           fc++;
           addLog('error', '安装失败: ' + file.name, err);
         }
       }
       
-      progressFill.style.width='100%'; 
-      progressText.textContent=`完成！成功: ${sc}, 失败: ${fc}`;
+      progressFill.style.width = '100%'; 
+      progressText.textContent = '完成！成功: ' + sc + ', 失败: ' + fc;
+      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
       await saveApps(); 
       renderApps();
       
-      setTimeout(()=>{
-        installProgress.style.display='none';
+      setTimeout(() => {
+        installProgress.style.display = 'none';
         closeModal();
-        showToast(`✅ 安装完成\n成功: ${sc} | 失败: ${fc}`,'success',4000);
-        addLog('info',`${isFolder ? '文件夹' : '多文件'}安装完成: ${sc}成功, ${fc}失败`);
-      },1500);
+        showToast('✅ 安装完成 成功: ' + sc + ' | 失败: ' + fc, 'success', 4000);
+        addLog('info', (isFolder ? '文件夹' : '多文件') + '安装完成: ' + sc + '成功, ' + fc + '失败');
+      }, 1500);
     }
     
     function showMultiFilePicker() {
       const input = document.createElement('input');
-      input.type='file'; input.multiple=true; input.accept='.html,.htm';
-      input.onchange=e=>batchInstall(Array.from(e.target.files), false);
+      input.type = 'file';
+      input.multiple = true;
+      input.accept = '.html,.htm';
+      input.onchange = e => batchInstall(Array.from(e.target.files), false);
       input.click();
     }
     
     function showFolderPicker() {
-      const input=document.createElement('input');
-      input.type='file'; input.webkitdirectory=true; input.multiple=true; input.accept='.html,.htm';
-      input.onchange=e=>batchInstall(Array.from(e.target.files), true);
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.webkitdirectory = true;
+      input.multiple = true;
+      input.onchange = e => batchInstall(Array.from(e.target.files), true);
       input.click();
     }
     
-    // ========== 应用启动/关闭 - 安全重建iframe ==========
-    const launchApp = debounce(async function(filePath, iconElement) {
-      const app = installedApps.find(a=>a.file===filePath);
+    // ========== 应用启动/关闭 ==========
+    let _lastLaunchTime = 0;
+    async function launchApp(filePath, iconElement) {
+      // 防连点（不延迟首次启动，比防抖更跟手）
+      const now = Date.now();
+      if (now - _lastLaunchTime < 300) return;
+      _lastLaunchTime = now;
+      
+      const app = installedApps.find(a => a.file === filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
       
       if (launchAnimToggle.checked && iconElement) {
         iconElement.classList.add('launch-anim');
-        setTimeout(()=>iconElement.classList.remove('launch-anim'),300);
+        setTimeout(() => iconElement.classList.remove('launch-anim'), 300);
       }
       
       const content = await getContentSafe(filePath);
       if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
       
       appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
-      await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
+      dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
       
       runningAppFile = filePath;
-      runningAppTitle.textContent = (app.icon?app.icon+' ':'') + app.name;
+      runningAppTitle.textContent = (app.icon ? app.icon + ' ' : '') + app.name;
       populateSwitchAppSelect();
       appFrameContainer.classList.add('show');
       mainContainer.style.display = 'none';
       
-      // 确保沙箱状态正确
-      updateSandboxState();
-      
-      // 使用srcdoc加载应用内容
+      // 确保沙箱状态正确后再注入内容
+      updateSandboxState(false);
       appFrame.srcdoc = content;
       
-      // 延迟发送启动消息
-      setTimeout(()=>{
-        sendMessageToApp({
-          type:'appLaunched',
-          appName:app.name,
-          appFile:app.file,
-          timestamp:Date.now()
-        });
-      },500);
+      setTimeout(() => {
+        sendMessageToApp({ type: 'appLaunched', appName: app.name, appFile: app.file, timestamp: Date.now() });
+      }, 500);
       
       if (vibrationToggle.checked && navigator.vibrate) navigator.vibrate(30);
-      addLog('info','启动应用: '+app.name);
-    },300);
+      addLog('info', '启动应用: ' + app.name);
+    }
+    
+    // 重建全新干净的iframe（防残留、防逃逸）
+    function rebuildAppFrame() {
+      if (appFrame && appFrame.parentNode) {
+        appFrame.srcdoc = '';
+        appFrame.parentNode.removeChild(appFrame);
+      }
+      const newFrame = document.createElement('iframe');
+      newFrame.id = 'appFrame';
+      newFrame.allow = 'camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *; autoplay *; clipboard-write *';
+      newFrame.allowFullscreen = true;
+      if (systemSettings.sandboxEnabled) newFrame.setAttribute('sandbox', SANDBOX_TOKENS);
+      appFrameContainer.appendChild(newFrame);
+      appFrame = newFrame;
+    }
     
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
       
-      // 先发送关闭消息给应用
-      try {
-        sendMessageToApp({type:'appClosing',timestamp:Date.now()});
-      } catch(e) {}
+      try { sendMessageToApp({ type: 'appClosing', timestamp: Date.now() }); } catch (e) {}
       
-      // 显示主容器
-      mainContainer.style.display='flex'; 
-      mainContainer.style.flexDirection='column'; 
+      mainContainer.style.display = 'flex';
+      mainContainer.style.flexDirection = 'column';
       appFrameContainer.classList.remove('show');
       
-      // 彻底移除旧iframe并创建全新的
-      if (appFrame && appFrame.parentNode) {
-        appFrame.srcdoc = '';
-        appFrame.src = 'about:blank';
-        appFrame.parentNode.removeChild(appFrame);
-      }
+      rebuildAppFrame();
       
-      // 创建新的干净iframe
-      const newFrame = document.createElement('iframe');
-      newFrame.id = 'appFrame';
-      newFrame.allow = 'camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *';
-      newFrame.allowFullscreen = true;
-      if (systemSettings.sandboxEnabled) {
-        newFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
-      }
-      appFrameContainer.appendChild(newFrame);
-      // 更新全局引用
-      appFrame = newFrame;
-      
-      runningAppFile=null;
+      runningAppFile = null;
       renderApps();
       addLog('info', '应用已关闭，iframe已彻底重建');
     }
     
     function populateSwitchAppSelect() {
-      // 使用更高效的清空方式
-      while (switchAppSelect.firstChild) {
-        switchAppSelect.removeChild(switchAppSelect.firstChild);
-      }
-
+      while (switchAppSelect.firstChild) switchAppSelect.removeChild(switchAppSelect.firstChild);
       const fragment = document.createDocumentFragment();
       for (const a of installedApps) {
         const o = document.createElement('option');
@@ -4158,43 +4029,37 @@
     }
     
     function switchAppFromSelect() {
-      const nf=switchAppSelect.value;
-      if(nf&&nf!==runningAppFile)launchApp(nf);
+      const nf = switchAppSelect.value;
+      if (nf && nf !== runningAppFile) {
+        _lastLaunchTime = 0; // 切换应用不受连点限制
+        launchApp(nf);
+      }
     }
     
     // ========== 恢复默认设置 ==========
-    function triggerResetWarning(){
+    function triggerResetWarning() {
       closeSettings();
-      resetPasswordInput.value='';
+      resetPasswordInput.value = '';
       resetWarningModal.classList.add('show');
     }
     
-    function closeResetWarning(){
-      resetWarningModal.classList.remove('show');
-    }
+    function closeResetWarning() { resetWarningModal.classList.remove('show'); }
     
-    async function confirmReset(){
-      if(resetPasswordInput.value!==SYSTEM_PASSWORD){
-        showToast('密码错误！','error');
+    async function confirmReset() {
+      if (resetPasswordInput.value !== SYSTEM_PASSWORD) {
+        showToast('密码错误！', 'error');
         return;
       }
       
       try {
         const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'currentSort', 'system_password'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
-        
         for (const setting of allSettings) {
-          if (!settingsToKeep.includes(setting.key)) {
-            await dbDelete(STORE_SETTINGS, setting.key);
-          }
+          if (!settingsToKeep.includes(setting.key)) await dbDelete(STORE_SETTINGS, setting.key);
         }
         
         showToast('✅ 系统设置已恢复默认', 'success');
         addLog('info', '系统设置已恢复默认');
-        
-        await loadSystemSettings();
-        await loadSettings();
-        
         location.reload();
       } catch (e) {
         showToast('恢复默认设置失败: ' + e.message, 'error');
@@ -4203,96 +4068,100 @@
     }
     
     // ========== 格式化 ==========
-    function triggerFormatWarning(){
+    function triggerFormatWarning() {
+      closeSettings();
       closeResetWarning();
-      formatPasswordInput.value='';
+      formatPasswordInput.value = '';
       formatWarningModal.classList.add('show');
     }
     
-    function closeFormatWarning(){
-      formatWarningModal.classList.remove('show');
-    }
+    function closeFormatWarning() { formatWarningModal.classList.remove('show'); }
     
-    async function confirmFormat(){
-      if(formatPasswordInput.value!==SYSTEM_PASSWORD){
-        showToast('密码错误！','error');
+    async function confirmFormat() {
+      if (formatPasswordInput.value !== SYSTEM_PASSWORD) {
+        showToast('密码错误！', 'error');
         return;
       }
-      try{
+      try {
         await dbClear(STORE_APPS);
         await dbClear(STORE_CONTENT);
         await dbClear(STORE_SETTINGS);
         await dbClear(STORE_STATS);
-      }catch(e){}
+      } catch (e) {}
       localStorage.clear();
       location.reload();
     }
     
-    // ========== 导出/导入 - 修复导入保存逻辑 ==========
+    // ========== 导出/导入 ==========
     async function exportApps() {
-      const awc=[];
-      for(const app of installedApps){const c=await getContentSafe(app.file);awc.push({...app,fileContent:c});}
-      const st=await dbGetAll(STORE_SETTINGS),so={};st.forEach(s=>so[s.key]=s.value);
+      const awc = [];
+      for (const app of installedApps) {
+        const c = await getContentSafe(app.file);
+        awc.push({ ...app, fileContent: c });
+      }
+      const st = await dbGetAll(STORE_SETTINGS), so = {};
+      st.forEach(s => { if (s.key !== 'system_password') so[s.key] = s.value; });
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob=new Blob([JSON.stringify({apps:awc,settings:so,stats:stats?.value||{},version:'3.7'},null,2)],{type:'application/json'});
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement('a');
-      a.href=url;a.download='htmlos-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+      const blob = new Blob([JSON.stringify({ apps: awc, settings: so, stats: stats?.value || {}, version: '4.0' }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'htmlos-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      a.click();
       URL.revokeObjectURL(url);
-      showToast('备份已导出','success');
+      showToast('备份已导出', 'success');
     }
     
     async function importApps() {
-      const input=document.createElement('input');input.type='file';input.accept='.json';
-      input.onchange=async(e)=>{
-        const reader=new FileReader();
-        reader.onload=async(e)=>{
-          try{
-            const data=JSON.parse(e.target.result);
-            if(!data.apps||!Array.isArray(data.apps))throw new Error('无效的备份文件');
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = async (e) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const data = JSON.parse(e.target.result);
+            if (!data.apps || !Array.isArray(data.apps)) throw new Error('无效的备份文件');
             
             const merge = mergeBackup.checked;
             if (!merge) {
               await dbClear(STORE_APPS);
               await dbClear(STORE_CONTENT);
-              installedApps=[];
+              installedApps = [];
             }
             
-            for(const app of data.apps){
-              if(app.fileContent)await setContentSafe(app.file,app.fileContent);
-              if (merge && installedApps.find(a => a.file === app.file)) continue;
+            for (const app of data.apps) {
+              // 系统核心应用不通过备份导入，启动时由系统自动安装最新版
+              if (app.file && String(app.file).startsWith('system/')) continue;
+              const safeFile = String(app.file || '').replace(/['"\\]/g, '_');
+              if (app.fileContent) await setContentSafe(safeFile, app.fileContent);
+              if (merge && installedApps.find(a => a.file === safeFile)) continue;
               installedApps.push({
-                name:escapeHtml(app.name),
-                file:app.file,
-                icon:app.icon||'📱',
-                color:app.color||colorPalette[0],
-                customColor:app.customColor||app.color||colorPalette[0],
-                size:app.size||'small',
-                source:app.source||'user',
-                installTime:app.installTime||new Date().toISOString(),
-                lastUpdated:app.lastUpdated||new Date().toISOString(),
-                hidden:app.hidden||false,
-                locked:app.locked||false
+                name: String(app.name || '未命名').slice(0, 50),
+                file: safeFile,
+                icon: app.icon || '📱',
+                color: app.color || colorPalette[0],
+                customColor: app.customColor || app.color || colorPalette[0],
+                size: app.size || 'small',
+                source: 'user',
+                installTime: app.installTime || new Date().toISOString(),
+                lastUpdated: app.lastUpdated || new Date().toISOString(),
+                hidden: app.hidden || false,
+                locked: app.locked || false
               });
             }
             
-            // 使用事务批量保存应用，大幅提升导入性能
             const database = await openDB();
             const tx = database.transaction(STORE_APPS, 'readwrite');
             const store = tx.objectStore(STORE_APPS);
             for (const app of installedApps) {
               store.put({
-                name: app.name,
-                file: app.file,
-                icon: app.icon || '📱',
-                color: app.color || colorPalette[0],
-                customColor: app.customColor || app.color || colorPalette[0],
-                size: app.size || 'small',
-                source: app.source || 'user',
+                name: app.name, file: app.file, icon: app.icon || '📱',
+                color: app.color || colorPalette[0], customColor: app.customColor || app.color || colorPalette[0],
+                size: app.size || 'small', source: app.source || 'user',
                 installTime: app.installTime || new Date().toISOString(),
                 lastUpdated: app.lastUpdated || new Date().toISOString(),
-                hidden: app.hidden || false,
-                locked: app.locked || false
+                hidden: app.hidden || false, locked: app.locked || false
               });
             }
             await new Promise((resolve, reject) => {
@@ -4300,19 +4169,21 @@
               tx.onerror = (e) => reject(e.target.error);
             });
             
-            if(data.settings && !merge) {
-              for(const[k,v]of Object.entries(data.settings))if(v)await dbPut(STORE_SETTINGS,{key:k,value:v});
+            if (data.settings && !merge) {
+              for (const [k, v] of Object.entries(data.settings)) {
+                if (v && k !== 'system_password') await dbPut(STORE_SETTINGS, { key: k, value: v });
+              }
             }
             
-            if(data.stats) {
+            if (data.stats) {
               appUsageStats = data.stats;
               await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
             }
             
-            showToast(`✅ 导入成功！${data.apps.length} 个应用`, 'success');
-            addLog('info','导入备份完成');
+            showToast('✅ 导入成功！' + data.apps.length + ' 个应用', 'success');
+            addLog('info', '导入备份完成');
             setTimeout(() => location.reload(), 1000);
-          }catch(err){showToast('导入失败：'+err.message,'error');}
+          } catch (err) { showToast('导入失败：' + err.message, 'error'); }
         };
         reader.readAsText(e.target.files[0]);
       };
@@ -4328,57 +4199,51 @@
     
     // ========== 设置 ==========
     async function openSettings() {
-      const bgVal=(await dbGet(STORE_SETTINGS,'bg'))?.value||localStorage.getItem('htmlos_bg')||'';
-      bgColorPicker.value='#1e5f9e';bgImageInput.value='';
-      if(bgVal.startsWith('url(')){const m=bgVal.match(/url\(["']?([^"')]+)["']?\)/);if(m&&m[1])bgImageInput.value=m[1];}
-      else if(bgVal&&!bgVal.startsWith('url('))bgColorPicker.value=bgVal;
-      themeSelect.value=(await dbGet(STORE_SETTINGS,'theme'))?.value||localStorage.getItem('htmlos_theme')||'sharp';
-      colsSelect.value=String(cols);
-      fpsToggle.checked=((await dbGet(STORE_SETTINGS,'fps'))?.value||localStorage.getItem('htmlos_fps'))==='on';
-      pageIndicatorToggle.checked=((await dbGet(STORE_SETTINGS,'pageIndicator'))?.value||'on')==='on';
-      appLaunchAnimToggle.checked=((await dbGet(STORE_SETTINGS,'appLaunchAnim'))?.value||'off')==='on';
+      const bgVal = (await dbGet(STORE_SETTINGS, 'bg'))?.value || localStorage.getItem('htmlos_bg') || '';
+      bgColorPicker.value = '#1e5f9e';
+      bgImageInput.value = '';
+      if (bgVal.startsWith('url(')) {
+        const m = bgVal.match(/url\(["']?([^"')]+)["']?\)/);
+        if (m && m[1]) bgImageInput.value = m[1];
+      } else if (bgVal) {
+        bgColorPicker.value = bgVal;
+      }
+      syncPresetSelection();
+      
+      themeSelect.value = (await dbGet(STORE_SETTINGS, 'theme'))?.value || localStorage.getItem('htmlos_theme') || 'sharp';
+      colsSelect.value = String(cols);
+      fpsToggle.checked = ((await dbGet(STORE_SETTINGS, 'fps'))?.value || localStorage.getItem('htmlos_fps')) === 'on';
+      pageIndicatorToggle.checked = ((await dbGet(STORE_SETTINGS, 'pageIndicator'))?.value || 'on') === 'on';
       
       let memoryInfo = '不支持';
-      if (window.performance && window.performance.memory) {
+      if (window.performance?.memory) {
         const usedMB = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
         const totalMB = Math.round(window.performance.memory.totalJSHeapSize / 1024 / 1024);
-        memoryInfo = `${usedMB} MB / ${totalMB} MB`;
+        memoryInfo = usedMB + ' MB / ' + totalMB + ' MB';
       }
       
-      sysInfo.innerHTML=`<p>📊 系统信息</p><p>应用数量: ${installedApps.length}</p><p>内存使用: ${memoryInfo}</p><p>自动优化: ${systemSettings.autoOptimizeMemory ? '已开启' : '已关闭'}</p><p>高级优化: ${systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭'}</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ${systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭'}</p><p>日志条数: ${systemLogs.length}</p><p>版本: <span id="versionText" onclick="activateDevMode()">${VERSION}</span></p>`;
+      sysInfo.innerHTML = '<p>📊 系统信息</p><p>应用数量: ' + installedApps.length + '</p><p>内存使用: ' + memoryInfo + '</p><p>自动优化: ' + (systemSettings.autoOptimizeMemory ? '已开启' : '已关闭') + '</p><p>高级优化: ' + (systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭') + '</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ' + (systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭') + '</p><p>界面防护: ✅ DOMGuard 运行中</p><p>屏幕刷新率: <span id="refreshRateText">测量中…</span></p><p>日志条数: ' + systemLogs.length + '</p><p>版本: <span id="versionText" onclick="activateDevMode()">' + VERSION + '</span></p>';
       settingsModal.classList.add('show');
+      // 实测屏幕刷新率上限（120Hz 屏会显示约 120）
+      window.fpsControl.measureRefresh(f => {
+        const el = $('refreshRateText');
+        if (el) el.textContent = '约 ' + f + ' Hz（帧率按此上限跑满）';
+      });
     }
-    function closeSettings(){settingsModal.classList.remove('show');}
+    function closeSettings() { settingsModal.classList.remove('show'); }
     
-    // 性能优化：移除全局对象副作用，每次动态构建选项
-    function updateDateTime(){
-      const now=new Date();
-      
-      if (systemSettings.showDate) {
-        headerDate.textContent=now.toLocaleDateString('zh-CN', dateFormatOptions);
-      } else {
-        headerDate.textContent=now.toLocaleDateString('zh-CN', shortDateFormatOptions);
-      }
-      
-      const opts = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: !systemSettings.time24
-      };
-      if (systemSettings.showSeconds) {
-        opts.second = '2-digit';
-      }
-      datetime.textContent=now.toLocaleTimeString('zh-CN', opts);
+    function updateDateTime() {
+      const now = new Date();
+      headerDate.textContent = dtfDate.format(now);
+      datetime.textContent = dtfTime.format(now);
     }
     
     // ========== 应用更新功能 ==========
     function updateAppFromFile(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
-      if (app.locked) {
-        showToast('应用已锁定，无法更新', 'error');
-        return;
-      }
+      if (isSystemApp(app)) { showToast('系统核心应用由系统自动维护', 'error'); return; }
+      if (app.locked) { showToast('应用已锁定，无法更新', 'error'); return; }
       
       const input = document.createElement('input');
       input.type = 'file';
@@ -4386,11 +4251,9 @@
       input.onchange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        
         const reader = new FileReader();
         reader.onload = async (e) => {
-          const content = e.target.result;
-          await setContentSafe(fileKey, content);
+          await setContentSafe(fileKey, e.target.result);
           app.lastUpdated = new Date().toISOString();
           saveApps();
           document.querySelector('.app-action-modal')?.remove();
@@ -4401,6 +4264,268 @@
       };
       input.click();
     }
+    
+    // ==================== 系统核心应用：安全中心（不可删除）====================
+    const SYSTEM_APP_FILE = 'system/apps/security-center';
+    const SECURITY_CENTER_HTML = `<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安全中心</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+  body { background: linear-gradient(135deg, #0c2d1a 0%, #103d22 100%); color: #e8f5e9; min-height: 100vh; padding: 20px; }
+  .header { text-align: center; margin-bottom: 20px; }
+  .header .shield { font-size: 56px; }
+  .header h1 { font-weight: 300; font-size: 24px; margin: 8px 0 4px; }
+  .header p { color: #a5d6a7; font-size: 13px; }
+  .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  .card h2 { font-size: 15px; font-weight: 500; margin-bottom: 12px; color: #c8e6c9; }
+  .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
+  .row:last-child { border-bottom: none; }
+  .ok { color: #69f0ae; font-weight: 600; }
+  .warn { color: #ffd54f; font-weight: 600; }
+  button { width: 100%; padding: 12px; margin-top: 8px; border: none; border-radius: 10px; background: #2e7d32; color: #fff; font-size: 14px; cursor: pointer; }
+  button:active { background: #1b5e20; }
+  button.gray { background: rgba(255,255,255,0.12); }
+  video { width: 100%; border-radius: 10px; margin-top: 10px; background: #000; display: none; }
+  .note { font-size: 12px; color: #a5d6a7; margin-top: 10px; line-height: 1.6; }
+  .result { font-size: 13px; margin-top: 8px; min-height: 18px; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="shield">🛡️</div>
+    <h1>安全中心</h1>
+    <p>HTMLOS 系统核心组件 · 无法卸载</p>
+  </div>
+  <div class="card">
+    <h2>🔒 防护状态</h2>
+    <div class="row"><span>沙箱隔离</span><span id="sb" class="ok">查询中...</span></div>
+    <div class="row"><span>界面防护 (DOMGuard)</span><span id="gd" class="ok">查询中...</span></div>
+    <div class="row"><span>系统版本</span><span id="ver">-</span></div>
+    <div class="row"><span>容器环境</span><span id="env" class="ok">✅ 沙箱容器内运行</span></div>
+  </div>
+  <div class="card">
+    <h2>📷 硬件检测（验证应用可正常调用硬件）</h2>
+    <button id="camBtn">测试摄像头</button>
+    <video id="cam" autoplay playsinline muted></video>
+    <button id="micBtn" class="gray">测试麦克风</button>
+    <button id="vibBtn" class="gray">测试震动</button>
+    <div class="result" id="hwResult"></div>
+  </div>
+  <div class="card">
+    <h2>ℹ️ 说明</h2>
+    <div class="note">安全中心内置于系统（设置 → 系统 → 系统安全），内容随系统版本更新，无法被卸载或篡改。系统通过沙箱隔离、DOMGuard 界面防护、消息鉴权与限流等多重机制，防止恶意应用篡改主页样式或逃逸容器。</div>
+  </div>
+<script>
+(function(){
+  window.addEventListener('message', function(e){
+    var d = e.data;
+    if (!d || d.from !== 'htmlos-host') return;
+    if (d.type === 'systemInfo') {
+      document.getElementById('sb').textContent = d.sandbox ? '✅ 已开启' : '⚠️ 已关闭';
+      document.getElementById('sb').className = d.sandbox ? 'ok' : 'warn';
+      document.getElementById('gd').textContent = d.guard ? '✅ 运行中' : '⚠️ 未运行';
+      document.getElementById('ver').textContent = d.version || '-';
+    }
+  });
+  parent.postMessage({ from: 'htmlos-app', type: 'req', action: 'getSystemInfo' }, '*');
+  if (window.self === window.top) document.getElementById('env').textContent = '⚠️ 独立运行';
+
+  var stream = null;
+  function stopStream(){
+    if (stream) { stream.getTracks().forEach(function(t){ t.stop(); }); stream = null; }
+    var v = document.getElementById('cam'); v.style.display = 'none'; v.srcObject = null;
+  }
+  function report(msg, ok){ var r = document.getElementById('hwResult'); r.textContent = msg; r.style.color = ok ? '#69f0ae' : '#ff8a80'; }
+  var camBtn = document.getElementById('camBtn');
+  camBtn.onclick = function(){
+    if (stream) {
+      stopStream();
+      camBtn.textContent = '测试摄像头';
+      report('摄像头已关闭', true);
+      return;
+    }
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(s){
+      stream = s;
+      var v = document.getElementById('cam');
+      v.srcObject = s; v.style.display = 'block';
+      camBtn.textContent = '关闭摄像头';
+      report('✅ 摄像头调用成功', true);
+    }).catch(function(err){ report('❌ 摄像头不可用: ' + err.message, false); });
+  };
+  document.getElementById('micBtn').onclick = function(){
+    stopStream();
+    camBtn.textContent = '测试摄像头';
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function(s){
+      report('✅ 麦克风调用成功', true);
+      s.getTracks().forEach(function(t){ t.stop(); });
+    }).catch(function(err){ report('❌ 麦克风不可用: ' + err.message, false); });
+  };
+  document.getElementById('vibBtn').onclick = function(){
+    if (navigator.vibrate) { navigator.vibrate(120); report('✅ 震动指令已发送', true); }
+    else report('❌ 当前设备不支持震动', false);
+  };
+})();
+<\/script>
+</body>
+</html>`;
+    
+    // 从设置中打开安全中心（不占桌面磁贴；内容内置于系统代码，天然无法卸载/篡改）
+    function launchSecurityCenter() {
+      closeSettings();
+      runningAppFile = SYSTEM_APP_FILE;
+      runningAppTitle.textContent = '🛡️ 安全中心';
+      populateSwitchAppSelect();
+      appFrameContainer.classList.add('show');
+      mainContainer.style.display = 'none';
+      updateSandboxState(false);
+      appFrame.srcdoc = SECURITY_CENTER_HTML;
+      setTimeout(() => {
+        sendMessageToApp({ type: 'appLaunched', appName: '安全中心', appFile: SYSTEM_APP_FILE, timestamp: Date.now() });
+      }, 500);
+      addLog('info', '打开安全中心');
+    }
+    
+    // 迁移旧版本：清理桌面上遗留的安全中心磁贴
+    async function removeLegacySystemApp() {
+      const legacy = installedApps.filter(a => String(a.file).startsWith('system/'));
+      if (legacy.length === 0) return;
+      installedApps = installedApps.filter(a => !String(a.file).startsWith('system/'));
+      for (const app of legacy) {
+        try { await dbDelete(STORE_APPS, app.file); await deleteContentSafe(app.file); } catch (e) {}
+      }
+      await saveApps();
+      addLog('info', '安全中心已迁移至设置，桌面磁贴已移除');
+    }
+    
+    // ========== 初始化 ==========
+    document.addEventListener('DOMContentLoaded', async () => {
+      window.addEventListener('error', (e) => {
+        addLog('error', '全局错误: ' + (e.error?.message || e.message));
+        if (e.target?.tagName === 'IFRAME') addLog('warn', '应用内错误，不影响主系统');
+      });
+      window.addEventListener('unhandledrejection', (e) => {
+        addLog('error', '未处理Promise拒绝: ' + e.rejection);
+      });
+      
+      try { await openDB(); } catch (err) { addLog('error', '数据库初始化失败', err); }
+      
+      await loadSystemPassword();
+      
+      const stats = await dbGet(STORE_STATS, 'appUsage');
+      if (stats) appUsageStats = stats.value;
+      
+      // 恢复持久化通知
+      try {
+        const savedNotifs = await dbGet(STORE_STATS, 'notifications');
+        if (savedNotifs?.value && Array.isArray(savedNotifs.value)) {
+          notifications = savedNotifs.value.slice(0, MAX_NOTIFICATIONS);
+          notifSeq = notifications.length;
+        }
+      } catch (e) {}
+      
+      const userNameVal = await dbGet(STORE_SETTINGS, 'user_name');
+      const userAvatarVal = await dbGet(STORE_SETTINGS, 'user_avatar');
+      if (userNameVal) currentUser.name = userNameVal.value;
+      if (userAvatarVal) currentUser.avatar = userAvatarVal.value;
+      userName.textContent = currentUser.name;
+      userIcon.textContent = currentUser.avatar;
+      
+      await loadSystemSettings();
+      await loadInstalledApps();
+      await removeLegacySystemApp();
+      await loadSettings();
+      initWallpaperPresets();
+      initBatteryStatus();
+      
+      const devSetting = await dbGet(STORE_SETTINGS, 'dev_mode');
+      devModeActive = devSetting && devSetting.value === 'true';
+      if (devModeActive) devTab.style.display = 'block';
+      
+      const fpsState = await dbGet(STORE_SETTINGS, 'fps');
+      if (fpsState?.value === 'on') {
+        fpsToggle.checked = true;
+        window.fpsControl.toggle(true);
+      }
+      
+      const sandboxState = await dbGet(STORE_SETTINGS, 'sandbox_enabled');
+      systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
+      sandboxToggle.checked = !systemSettings.sandboxEnabled;
+      updateSandboxState(false);
+      
+      const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
+      systemSettings.autoOptimizeMemory = autoOptimizeState?.value === 'true';
+      autoOptimizeMemoryToggle.checked = systemSettings.autoOptimizeMemory;
+      startAutoMemoryOptimize();
+      
+      const advancedOptimizeState = await dbGet(STORE_SETTINGS, 'advanced_optimize_memory');
+      systemSettings.advancedOptimizeMemory = advancedOptimizeState?.value === 'true';
+      advancedOptimizeMemoryToggle.checked = systemSettings.advancedOptimizeMemory;
+      if (devModeActive) startAdvancedAutoMemoryOptimize();
+      
+      const launchAnim = await dbGet(STORE_SETTINGS, 'launchAnim');
+      if (launchAnim?.value === 'off') launchAnimToggle.checked = false;
+      
+      const vibration = await dbGet(STORE_SETTINGS, 'vibration');
+      if (vibration?.value === 'on') vibrationToggle.checked = true;
+      
+      const pageIndicatorSetting = await dbGet(STORE_SETTINGS, 'pageIndicator');
+      if (pageIndicatorSetting?.value === 'off') {
+        pageIndicatorToggle.checked = false;
+        pageIndicator.style.display = 'none';
+      }
+      
+      const savedSort = await dbGet(STORE_SETTINGS, 'currentSort');
+      if (savedSort) currentSort = savedSort.value;
+      
+      // 启动界面防护与紧急退出
+      DOMGuard.init();
+      setupEmergencyExit();
+      
+      renderApps();
+      renderNotifications();
+      updateNotifBadge();
+      setupSwipe();
+      buildDateTimeFormatters();
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+      setupSearch();
+      setupPostMessageListener();
+      
+      // 壁纸输入变化时清除快速壁纸选中态（修复蓝边不消除）
+      bgImageInput.addEventListener('input', clearPresetSelection);
+      bgColorPicker.addEventListener('input', clearPresetSelection);
+      
+      // 通知过滤器
+      notifFilters.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        notifFilters.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        notifFilter = btn.dataset.f;
+        renderNotifications();
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#notificationCenter') && !e.target.closest('#notifBell')) {
+          notificationCenter.classList.remove('show');
+        }
+        if (!e.target.closest('#sortMenu') && !e.target.closest('[onclick="showSortMenu()"]')) {
+          sortMenu.style.display = 'none';
+        }
+        if (!e.target.closest('#userInfoModal') && !e.target.closest('.win-user')) {
+          userInfoModal.classList.remove('show');
+        }
+        if (!e.target.closest('.app-action-modal') && !e.target.closest('.app-icon')) {
+          document.querySelector('.app-action-modal')?.remove();
+        }
+      });
+      
+      addLog('info', 'HTMLOS v4.0 初始化完成, 应用数: ' + installedApps.length);
+    });
   </script>
 </body>
 </html>
