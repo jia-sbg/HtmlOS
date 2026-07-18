@@ -159,35 +159,36 @@
     /* 修复：玻璃质感下窗口/面板背景直接透出下层内容（看起来"通透"而非"模糊毛玻璃"）。
        之前的性能修复移除了所有 backdrop-filter，只靠预模糊壁纸撑场面——但这些面板
        很多时候叠在其他界面元素（图标、列表、其它窗口）之上而不是直接叠在壁纸上，
-       此时半透明色块下面透出的是清晰未模糊的内容。这里只给"数量固定的少数几个
-       容器级"面板（头部栏、底部栏、弹窗、操作菜单、搜索框）恢复 backdrop-filter，
-       不涉及会随列表/磁贴数量增长的元素，因此不会重新引入之前滑动卡顿的问题。 */
+       此时半透明色块下面透出的是清晰未模糊的内容，所以这几个"会盖在别的界面
+       元素之上"的面板（头部栏、底部栏、弹窗、操作菜单、排序菜单、通知中心、
+       toast）需要真正的实时 backdrop-filter 才能糊住下面的内容。
+       模糊半径从 20px 降到 14px：肉眼几乎看不出差别，但每多一个实时模糊层，
+       GPU 合成开销都不小，这一步能明显降低同屏模糊层的总开销。 */
     @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
       .theme-glass .win-header,
       .theme-glass .bottom-bar,
       .theme-glass .modal-content,
       .theme-glass .app-action-modal,
       .theme-glass .sort-menu,
-      .theme-glass .search-box input,
       .theme-glass .notification-center,
-      .theme-glass .toast-notification,
-      .theme-glass .toolbar,
-      .theme-glass .nav-buttons {
-        backdrop-filter: blur(20px) saturate(150%);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
+      .theme-glass .toast-notification {
+        backdrop-filter: blur(14px) saturate(140%);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
       }
     }
 
-    .theme-glass .toolbar {
+    /* 搜索框 + 工具栏 4 个按钮 + 翻页 2 个按钮：这 7 个控件在页面里从不叠在图标、
+       列表或其它窗口之上，它们身后永远只有 body::before 那张已经一次性预模糊
+       好的壁纸（见上方注释）。既然背景本来就是糊的，再给它们逐个套实时
+       backdrop-filter 纯属多花 GPU 开销、不产生任何肉眼可见的额外效果——
+       所以这里完全不用 backdrop-filter，只靠半透明底色 + 细边框 + 投影撑出
+       "独立的一块玻璃"的观感，和 .app-icon 是同一个思路。这样六个按钮既各自
+       独立（不再共用一个大背景容器），又是全页面里最"便宜"的玻璃元素，
+       是这次卡顿优化里收益最大的一步。 */
+    .theme-glass .toolbar button,
+    .theme-glass .nav-buttons button {
       background: var(--card-bg);
-      border-radius: 14px;
-      padding: 6px;
-    }
-
-    .theme-glass .nav-buttons {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 6px 10px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
     }
 
     .theme-dark {
