@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
   <meta name="theme-color" content="#0078d7">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline' https:; img-src * data: blob:; connect-src *; media-src blob:;">
-  <title>HTMLOS · v4.1.0</title>
+  <title>HTMLOS · v4.2.0</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -75,7 +75,6 @@
       --btn-hover: rgba(255,255,255,0.3);
       --primary-color: #0a84ff;
       --transition-speed: 0s;
-      --backdrop-blur: none;
       --text-color: #fff;
       --text-secondary: rgba(255,255,255,0.7);
       --input-bg: #2a2a2c;
@@ -87,43 +86,45 @@
       --card-bg: rgba(0,120,215,0.9);
       --card-radius: 0;
       --transition-speed: 0s;
-      --backdrop-blur: none;
       --setting-group-bg: rgba(255,255,255,0.08);
     }
     
     .theme-glass {
-      --card-bg: rgba(255,255,255,0.12);
+      --card-bg: rgba(255,255,255,0.14);
       --card-border: 1px solid rgba(255,255,255,0.2);
       --card-radius: 20px;
-      --header-bg: rgba(255,255,255,0.08);
-      --bottom-bg: rgba(255,255,255,0.08);
-      --modal-bg: rgba(28,28,30,0.85);
+      --header-bg: rgba(255,255,255,0.1);
+      --bottom-bg: rgba(255,255,255,0.1);
+      --modal-bg: rgba(28,28,30,0.78);
       --modal-border: 1px solid rgba(255,255,255,0.15);
       --btn-bg: rgba(255,255,255,0.15);
       --btn-hover: rgba(255,255,255,0.28);
       --primary-color: #0a84ff;
       --transition-speed: 0.2s;
-      --backdrop-blur: blur(20px) saturate(150%);
       --text-color: #fff;
       --text-secondary: rgba(255,255,255,0.7);
-      --input-bg: rgba(255,255,255,0.08);
+      --input-bg: rgba(255,255,255,0.1);
       --input-border: 1px solid rgba(255,255,255,0.15);
-      --setting-group-bg: rgba(255,255,255,0.06);
+      --setting-group-bg: rgba(255,255,255,0.08);
     }
 
-    /* 玻璃主题默认背景仅作为"无壁纸时"的兜底，用户设置了壁纸(--bg)后应正常显示壁纸供毛玻璃卡片透视模糊 */
+    /* 性能修复：玻璃质感不再对每张磁贴/每个列表项单独做 backdrop-filter 实时模糊——
+       元素一多、一滑动就会逐帧重算，这正是移动端严重卡顿的根源。
+       改为对壁纸做一次性预模糊（见下方 body::before），所有玻璃控件只叠加半透明
+       颜色，视觉上仍是模糊的毛玻璃背景（而非直接透出清晰壁纸），但运算量与元素数量、
+       滑动帧率完全无关，从根源上彻底消除卡顿。 */
     .theme-glass body::before {
       background: var(--bg, linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%));
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
+      filter: blur(38px) saturate(160%);
+      transform: scale(1.15) translateZ(0);
     }
 
     .theme-glass .app-icon {
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
       border: 1px solid rgba(255,255,255,0.18);
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
     }
 
     .theme-glass .app-icon:hover {
@@ -131,29 +132,18 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     }
 
-    .theme-glass .setting-item {
-      backdrop-filter: var(--backdrop-blur);
-      -webkit-backdrop-filter: var(--backdrop-blur);
-    }
-
     .theme-glass .win-header {
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(12px) saturate(130%);
-      -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
 
     .theme-glass .bottom-bar {
       box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
       border-top: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(12px) saturate(130%);
-      -webkit-backdrop-filter: blur(12px) saturate(130%);
     }
 
     .theme-glass .modal-content {
       box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-      backdrop-filter: blur(20px) saturate(140%);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
     }
 
     .theme-glass .search-box input {
@@ -166,22 +156,6 @@
       box-shadow: 0 0 0 2px rgba(10,132,255,0.3);
     }
 
-    .theme-glass .app-action-modal,
-    .theme-glass .sort-menu {
-      backdrop-filter: blur(20px) saturate(140%);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
-    }
-
-    .theme-glass .toast-notification {
-      backdrop-filter: blur(10px) saturate(120%);
-      -webkit-backdrop-filter: blur(10px) saturate(120%);
-    }
-
-    .theme-glass .notification-center {
-      backdrop-filter: blur(16px) saturate(130%);
-      -webkit-backdrop-filter: blur(16px) saturate(130%);
-    }
-
     .theme-dark {
       --card-bg: rgba(20,20,22,0.9);
       --card-border: 1px solid rgba(255,255,255,0.1);
@@ -190,7 +164,6 @@
       --bottom-bg: rgba(0,0,0,0.8);
       --modal-bg: rgba(15,15,17,0.95);
       --modal-border: 1px solid rgba(255,255,255,0.08);
-      --backdrop-blur: blur(12px);
       --transition-speed: 0.2s;
       --text-color: #e5e5e5;
       --text-secondary: #888;
@@ -242,6 +215,8 @@
       align-items: center;
       justify-content: center;
       font-size: 18px;
+      overflow: hidden;
+      flex-shrink: 0;
     }
     
     .win-header-right {
@@ -1626,12 +1601,17 @@
   <div class="modal" id="userInfoModal">
     <div class="modal-content">
       <h2>👤 用户信息</h2>
-      <div class="user-avatar-preview" id="userAvatarPreview" style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px; border: 2px solid var(--primary-color);">👤</div>
+      <div class="user-avatar-preview" id="userAvatarPreview" onclick="triggerAvatarUpload()" title="点击上传头像图片" style="cursor:pointer; width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 8px; border: 2px solid var(--primary-color); overflow: hidden;">👤</div>
+      <div style="text-align:center; margin-bottom:15px;">
+        <button style="width:auto; display:inline-block; font-size:12px; padding:6px 12px; margin-top:0; background:var(--btn-bg); border:var(--input-border); border-radius:8px; color:var(--text-color);" onclick="triggerAvatarUpload()">🖼️ 上传图片头像</button>
+        <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)" />
+      </div>
       
       <div class="setting-item">
         <label>用户名</label>
-        <input type="text" id="userNameInput" placeholder="输入用户名" maxlength="20" />
+        <input type="text" id="userNameInput" placeholder="输入用户名" maxlength="20" oninput="updateUserNameCounter()" />
       </div>
+      <div style="text-align:right; font-size:12px; color:var(--text-secondary); margin-top:-8px;" id="userNameCounter">0/20</div>
       
       <div style="margin: 15px 0;">
         <label style="font-size:14px;color:var(--text-secondary);">选择头像</label>
@@ -1797,6 +1777,10 @@
       <div class="settings-panel" id="panel-backup">
         <div class="setting-section">
           <div class="setting-section-title">数据备份与恢复</div>
+          <div class="setting-item">
+            <label>导出时包含系统设置</label>
+            <input type="checkbox" id="exportSettingsToggle" checked />
+          </div>
           <div class="setting-item">
             <label>合并而非覆盖现有数据</label>
             <input type="checkbox" id="mergeBackup" checked />
@@ -2004,6 +1988,19 @@
     
     // 用户信息
     let currentUser = { name: 'HTMLOS 用户', avatar: '👤' };
+    // 头像可以是 emoji 文本，也可以是用户上传的图片(dataURL)；统一用此函数渲染，避免两种格式混淆
+    function renderAvatar(el, value) {
+      if (!el) return;
+      if (typeof value === 'string' && value.startsWith('data:image')) {
+        el.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = value;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+        el.appendChild(img);
+      } else {
+        el.textContent = value || '👤';
+      }
+    }
     
     // 系统设置
     let systemSettings = {
@@ -2070,7 +2067,7 @@
     let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v4.1.1';
+    const VERSION = 'HTMLOS v4.2.0';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -2119,6 +2116,7 @@
     const doubleClickTopToggle = $('doubleClickTopToggle');
     const appCloseConfirmToggle = $('appCloseConfirmToggle');
     const mergeBackup = $('mergeBackup');
+    const exportSettingsToggle = $('exportSettingsToggle');
     const fpsToggle = $('fpsToggle');
     const advancedOptimizeMemoryToggle = $('advancedOptimizeMemoryToggle');
     const sandboxToggle = $('sandboxToggle');
@@ -2139,6 +2137,8 @@
     const datetime = $('datetime');
     const userIcon = $('userIcon');
     const userName = $('userName');
+    const avatarFileInput = $('avatarFileInput');
+    const userNameCounter = $('userNameCounter');
     const batteryStatus = $('batteryStatus');
     const batteryIcon = $('batteryIcon');
     const batteryLevel = $('batteryLevel');
@@ -2806,10 +2806,55 @@
     }
     
     // ==================== 用户信息管理 ====================
+    // 头像的"当前选中值"单独用变量跟踪(而不是从预览元素的 textContent 读取)，
+    // 因为图片头像渲染成 <img> 后 textContent 为空，之前的写法会导致保存图片头像失败
+    let pendingAvatarValue = currentUser.avatar;
+
+    function updateUserNameCounter() {
+      const len = userNameInput.value.length;
+      userNameCounter.textContent = len + '/20';
+      userNameCounter.style.color = len >= 20 ? '#ff8a80' : 'var(--text-secondary)';
+    }
+
+    function triggerAvatarUpload() { avatarFileInput.click(); }
+
+    function handleAvatarUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { showToast('请选择图片文件', 'error'); return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          // 压缩裁剪为 160x160 方形头像，避免原图过大占用存储
+          const size = 160;
+          const canvas = document.createElement('canvas');
+          canvas.width = size; canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          const scale = Math.max(size / img.width, size / img.height);
+          const w = img.width * scale, h = img.height * scale;
+          ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+          pendingAvatarValue = canvas.toDataURL('image/jpeg', 0.85);
+          renderAvatar(userAvatarPreview, pendingAvatarValue);
+          document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
+          customAvatarInput.value = '';
+          showToast('头像图片已选择', 'success');
+        };
+        img.onerror = () => showToast('图片读取失败', 'error');
+        img.src = reader.result;
+      };
+      reader.onerror = () => showToast('图片读取失败', 'error');
+      reader.readAsDataURL(file);
+    }
+
     function openUserInfoModal() {
       userNameInput.value = currentUser.name;
-      userAvatarPreview.textContent = currentUser.avatar;
-      customAvatarInput.value = presetAvatars.includes(currentUser.avatar) ? '' : currentUser.avatar;
+      updateUserNameCounter();
+      pendingAvatarValue = currentUser.avatar;
+      renderAvatar(userAvatarPreview, currentUser.avatar);
+      const isImageAvatar = typeof currentUser.avatar === 'string' && currentUser.avatar.startsWith('data:image');
+      customAvatarInput.value = (isImageAvatar || presetAvatars.includes(currentUser.avatar)) ? '' : currentUser.avatar;
       
       avatarGrid.innerHTML = '';
       presetAvatars.forEach(avatar => {
@@ -2819,7 +2864,8 @@
         div.onclick = () => {
           document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
           div.classList.add('selected');
-          userAvatarPreview.textContent = avatar;
+          pendingAvatarValue = avatar;
+          renderAvatar(userAvatarPreview, avatar);
           customAvatarInput.value = '';
         };
         avatarGrid.appendChild(div);
@@ -2835,7 +2881,8 @@
     function applyCustomAvatar() {
       const customAvatar = customAvatarInput.value.trim();
       if (customAvatar) {
-        userAvatarPreview.textContent = customAvatar;
+        pendingAvatarValue = customAvatar;
+        renderAvatar(userAvatarPreview, customAvatar);
         document.querySelectorAll('#avatarGrid .icon-option').forEach(opt => opt.classList.remove('selected'));
         showToast('自定义头像已应用', 'success');
       }
@@ -2843,7 +2890,7 @@
     
     async function saveUserInfo() {
       const newName = userNameInput.value.trim();
-      const newAvatar = userAvatarPreview.textContent;
+      const newAvatar = pendingAvatarValue;
       
       if (!newName) {
         showToast('用户名不能为空', 'error');
@@ -2853,7 +2900,7 @@
       currentUser.name = newName;
       currentUser.avatar = newAvatar;
       userName.textContent = newName;
-      userIcon.textContent = newAvatar;
+      renderAvatar(userIcon, newAvatar);
       
       await dbPut(STORE_SETTINGS, { key: 'user_name', value: newName });
       await dbPut(STORE_SETTINGS, { key: 'user_avatar', value: newAvatar });
@@ -4393,10 +4440,14 @@
         const c = await getContentSafe(app.file);
         awc.push({ ...app, fileContent: c });
       }
-      const st = await dbGetAll(STORE_SETTINGS), so = {};
-      st.forEach(s => { if (s.key !== 'system_password') so[s.key] = s.value; });
+      const includeSettings = exportSettingsToggle ? exportSettingsToggle.checked : true;
+      let so = {};
+      if (includeSettings) {
+        const st = await dbGetAll(STORE_SETTINGS);
+        st.forEach(s => { if (s.key !== 'system_password') so[s.key] = s.value; });
+      }
       const stats = await dbGet(STORE_STATS, 'appUsage');
-      const blob = new Blob([JSON.stringify({ apps: awc, settings: so, stats: stats?.value || {}, version: '4.0' }, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify({ apps: awc, settings: so, stats: stats?.value || {}, version: VERSION }, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -4726,7 +4777,7 @@
       if (userNameVal) currentUser.name = userNameVal.value;
       if (userAvatarVal) currentUser.avatar = userAvatarVal.value;
       userName.textContent = currentUser.name;
-      userIcon.textContent = currentUser.avatar;
+      renderAvatar(userIcon, currentUser.avatar);
       
       await loadSystemSettings();
       await loadInstalledApps();
@@ -4818,7 +4869,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v4.1 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v4.2 初始化完成, 应用数: ' + installedApps.length);
     });
   </script>
 </body>
