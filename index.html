@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
   <meta name="theme-color" content="#0078d7">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline' https:; img-src * data: blob:; connect-src *; media-src blob:;">
-  <title>HTMLOS · v4.2.0</title>
-  
+  <title>HTMLOS · v4.3.0</title>
+
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
-  
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="HTMLOS">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230078d7'/%3E%3Ctext x='50' y='50' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='40' font-family='sans-serif'%3EH%26lt%3B%26gt%3BO%3C/text%3E%3C/svg%3E">
-  
+
   <style>
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       -webkit-tap-highlight-color: transparent;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -28,7 +28,7 @@
     *::before, *::after {
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: #fff;
@@ -37,9 +37,9 @@
       flex-direction: column;
       overflow: hidden;
     }
-    
+
     /* 壁纸单独用 fixed 定位伪元素承载，使其成为独立合成层，
-       完全脱离主层重绘路径，消除 background-attachment:fixed 
+       完全脱离主层重绘路径，消除 background-attachment:fixed
        在移动端每帧触发整页 repaint 的性能问题 */
     body::before {
       content: '';
@@ -81,14 +81,14 @@
       --input-border: 1px solid #3a3a3c;
       --setting-group-bg: rgba(255,255,255,0.08);
     }
-    
+
     .theme-sharp {
       --card-bg: rgba(0,120,215,0.9);
       --card-radius: 0;
       --transition-speed: 0s;
       --setting-group-bg: rgba(255,255,255,0.08);
     }
-    
+
     .theme-glass {
       --card-bg: rgba(255,255,255,0.14);
       --card-border: 1px solid rgba(255,255,255,0.2);
@@ -168,7 +168,9 @@
       .theme-glass .modal-content,
       .theme-glass .app-action-modal,
       .theme-glass .sort-menu,
-      .theme-glass .search-box input {
+      .theme-glass .search-box input,
+      .theme-glass .notification-center,
+      .theme-glass .toast-notification {
         backdrop-filter: blur(20px) saturate(150%);
         -webkit-backdrop-filter: blur(20px) saturate(150%);
       }
@@ -190,7 +192,7 @@
       --setting-group-bg: rgba(255,255,255,0.04);
       --primary-color: #0a84ff;
     }
-    
+
     /* 头部 */
     .win-header {
       padding: 8px 16px;
@@ -206,7 +208,7 @@
       padding-top: env(safe-area-inset-top, 8px);
       transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
-    
+
     .win-user {
       display: flex;
       align-items: center;
@@ -216,14 +218,14 @@
       border-radius: 20px;
       transition: transform 0.2s ease, background 0.2s ease;
     }
-    
+
     .win-user:hover {
       transform: scale(1.02);
       background: rgba(255,255,255,0.1);
     }
-    
+
     .win-user:active { transform: scale(0.98); }
-    
+
     .win-user-icon {
       width: 32px;
       height: 32px;
@@ -236,20 +238,20 @@
       overflow: hidden;
       flex-shrink: 0;
     }
-    
+
     .win-header-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    
+
     .battery-status {
       display: flex;
       align-items: center;
       gap: 4px;
       font-size: 14px;
     }
-    
+
     .battery-icon {
       width: 24px;
       height: 12px;
@@ -257,7 +259,7 @@
       border-radius: 2px;
       position: relative;
     }
-    
+
     .battery-icon::after {
       content: '';
       position: absolute;
@@ -268,19 +270,19 @@
       background: var(--text-color);
       border-radius: 0 1px 1px 0;
     }
-    
+
     .battery-level {
       height: 100%;
       background: #30d158;
       border-radius: 1px;
       transition: width 0.3s ease;
     }
-    
+
     .battery-charging .battery-level {
       background: #ffb900;
       animation: charging 1s infinite alternate;
     }
-    
+
     .battery-charging::before {
       content: '⚡';
       position: absolute;
@@ -288,42 +290,42 @@
       top: -2px;
       font-size: 14px;
     }
-    
+
     @keyframes charging {
       0% { opacity: 0.7; }
       50% { opacity: 1; }
       100% { opacity: 0.7; }
     }
-    
-    .container { 
-      flex: 1; 
-      padding: 12px 16px; 
+
+    .container {
+      flex: 1;
+      padding: 12px 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       min-height: 0;
       padding-bottom: env(safe-area-inset-bottom, 0);
     }
-    
-    h1 { 
-      text-align: center; 
-      margin-bottom: 4px; 
+
+    h1 {
+      text-align: center;
+      margin-bottom: 4px;
       font-weight: 300;
       font-size: 28px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       flex-shrink: 0;
       color: var(--text-color);
     }
-    
-    .datetime { 
-      text-align: center; 
-      font-size: 13px; 
-      margin-bottom: 12px; 
-      opacity: 0.9; 
+
+    .datetime {
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 12px;
+      opacity: 0.9;
       flex-shrink: 0;
       color: var(--text-secondary);
     }
-    
+
     .search-box {
       margin-bottom: 12px;
       max-width: 400px;
@@ -332,7 +334,7 @@
       flex-shrink: 0;
       width: 100%;
     }
-    
+
     .search-box input {
       width: 100%;
       padding: 12px 18px;
@@ -343,22 +345,22 @@
       font-size: 15px;
       transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
-    
+
     .search-box input::placeholder { color: var(--text-secondary); }
-    
+
     .search-box input:focus {
       outline: none;
       background: rgba(255,255,255,0.25);
       box-shadow: 0 0 0 2px var(--primary-color);
     }
-    
+
     .search-highlight {
       background: var(--primary-color);
       color: white;
       padding: 0 2px;
       border-radius: 2px;
     }
-    
+
     /* 工具栏 */
     .toolbar {
       display: flex;
@@ -368,7 +370,7 @@
       flex-shrink: 0;
       flex-wrap: wrap;
     }
-    
+
     .toolbar button {
       padding: 8px 12px;
       font-size: 13px;
@@ -380,12 +382,12 @@
       transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
       touch-action: manipulation;
     }
-    
+
     .toolbar button:active {
       background: var(--primary-color);
       transform: scale(0.95);
     }
-    
+
     /* 页面指示器 */
     .page-indicator {
       display: flex;
@@ -394,7 +396,7 @@
       margin-bottom: 8px;
       flex-shrink: 0;
     }
-    
+
     .page-dot {
       width: 8px;
       height: 8px;
@@ -403,12 +405,12 @@
       transition: background 0.2s ease, transform 0.2s ease;
       cursor: pointer;
     }
-    
+
     .page-dot.active {
       background: var(--primary-color);
       transform: scale(1.2);
     }
-    
+
     /* 应用网格 */
     .apps-container {
       display: grid;
@@ -425,7 +427,7 @@
       overscroll-behavior: contain;
       will-change: scroll-position;
     }
-    
+
     /* 应用磁贴 */
     .app-icon {
       background: var(--icon-bg, var(--card-bg));
@@ -450,13 +452,13 @@
       position: relative;
       contain: layout style paint;
     }
-    
+
     .app-icon.size-small { grid-column: span 1; grid-row: span 1; }
     .app-icon.size-medium { grid-column: span 2; grid-row: span 1; aspect-ratio: 2 / 1; }
     .app-icon.size-large { grid-column: span 2; grid-row: span 2; }
     .app-icon.size-wide { grid-column: span 3; grid-row: span 1; aspect-ratio: 3 / 1; }
     .app-icon.size-big { grid-column: span 3; grid-row: span 2; aspect-ratio: 3 / 2; }
-    
+
     /* 移动端无 hover，只保留 active 状态，避免 filter 产生额外合成层 */
     @media (hover: hover) {
       .app-icon:hover {
@@ -464,34 +466,34 @@
         box-shadow: 0 8px 25px rgba(0,0,0,0.3);
       }
     }
-    
+
     .app-icon:active { transform: scale(0.97); }
-    
+
     .app-icon.hidden { opacity: 0.3; filter: grayscale(1); }
-    .app-icon.locked::after { 
-      content: '🔒'; 
-      position: absolute; 
-      top: 4px; 
-      right: 4px; 
-      font-size: 12px; 
+    .app-icon.locked::after {
+      content: '🔒';
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 12px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
-    
-    .app-icon .icon-emoji { 
+
+    .app-icon .icon-emoji {
       flex-shrink: 0;
       line-height: 1;
       text-align: center;
       /* 移除 drop-shadow filter：大量图标时每个均创建独立合成层，严重影响帧率 */
       text-shadow: 0 1px 3px rgba(0,0,0,0.25);
     }
-    
+
     .app-icon.size-small .icon-emoji { font-size: clamp(24px, 5vw, 44px); }
     .app-icon.size-medium .icon-emoji { font-size: clamp(22px, 4vw, 40px); }
     .app-icon.size-large .icon-emoji { font-size: clamp(32px, 7vw, 56px); }
     .app-icon.size-wide .icon-emoji { font-size: clamp(20px, 3.5vw, 36px); }
     .app-icon.size-big .icon-emoji { font-size: clamp(36px, 8vw, 64px); }
-    
-    .app-icon .tile-label { 
+
+    .app-icon .tile-label {
       flex-shrink: 1;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -502,26 +504,26 @@
       margin-top: 3px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.35);
     }
-    
+
     .app-icon.size-small .tile-label { font-size: clamp(10px, 2vw, 13px); }
     .app-icon.size-medium .tile-label { font-size: clamp(10px, 2vw, 14px); }
     .app-icon.size-large .tile-label { font-size: clamp(11px, 2.5vw, 15px); margin-top: 5px; }
     .app-icon.size-wide .tile-label { font-size: clamp(10px, 2vw, 14px); max-width: 80%; }
     .app-icon.size-big .tile-label { font-size: clamp(12px, 3vw, 17px); margin-top: 5px; }
-    
-    .nav-buttons { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      gap: 15px; 
-      margin: 15px 0 8px; 
+
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin: 15px 0 8px;
       flex-shrink: 0;
     }
-    
+
     .nav-buttons.hidden { display: none; }
-    
-    .nav-buttons button { 
-      padding: 10px 30px; 
+
+    .nav-buttons button {
+      padding: 10px 30px;
       font-size: 16px;
       background: var(--btn-bg);
       border: var(--card-border);
@@ -532,18 +534,18 @@
       transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
       touch-action: manipulation;
     }
-    
+
     .nav-buttons button:active {
       background: var(--primary-color);
       transform: scale(0.95);
     }
-    
+
     .nav-buttons button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
     }
-    
+
     /* 模态框 */
     .modal {
       display: none;
@@ -560,9 +562,9 @@
       /* modal 是 fixed 层，确保独立合成不影响主界面 */
       isolation: isolate;
     }
-    
+
     .modal.show { display: flex; }
-    
+
     .modal-content {
       background: var(--modal-bg);
       padding: 25px;
@@ -577,15 +579,15 @@
       max-width: 400px;
       -webkit-overflow-scrolling: touch;
     }
-    
-    .modal-content h2 { 
-      margin-bottom: 20px; 
+
+    .modal-content h2 {
+      margin-bottom: 20px;
       text-align: center;
       font-weight: 300;
       color: var(--primary-color);
       font-size: 22px;
     }
-    
+
     /* 设置界面 */
     .settings-tabs {
       display: flex;
@@ -597,9 +599,9 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
-    
+
     .settings-tabs::-webkit-scrollbar { display: none; }
-    
+
     .settings-tab {
       padding: 8px 16px;
       background: transparent;
@@ -612,25 +614,25 @@
       transition: background 0.2s ease, color 0.2s ease;
       flex-shrink: 0;
     }
-    
+
     .settings-tab.active {
       background: var(--primary-color);
       color: white;
     }
-    
+
     .settings-panel {
       display: none;
       opacity: 0;
       transition: opacity 0.2s ease;
     }
-    
+
     .settings-panel.active {
       display: block;
       opacity: 1;
     }
-    
+
     .setting-section { margin-bottom: 24px; }
-    
+
     .setting-section-title {
       font-size: 14px;
       color: var(--text-secondary);
@@ -639,7 +641,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    
+
     .setting-item {
       display: flex;
       justify-content: space-between;
@@ -652,22 +654,22 @@
       flex-wrap: wrap;
       gap: 8px;
     }
-    
+
     .setting-item:last-child { margin-bottom: 0; }
-    
-    .setting-item label { 
-      font-size: 15px; 
+
+    .setting-item label {
+      font-size: 15px;
       color: var(--text-color);
       flex: 1;
       min-width: 120px;
     }
-    
+
     .setting-item input[type="checkbox"] {
       width: 22px; height: 22px;
       accent-color: var(--primary-color);
       flex-shrink: 0;
     }
-    
+
     .setting-item input[type="color"] {
       width: 60px; height: 36px;
       border: var(--input-border);
@@ -676,7 +678,7 @@
       border-radius: 8px;
       flex-shrink: 0;
     }
-    
+
     .setting-item input[type="text"],
     .setting-item input[type="number"],
     .setting-item select {
@@ -688,7 +690,7 @@
       font-size: 14px;
       flex-shrink: 0;
     }
-    
+
     .setting-item button {
       padding: 10px 16px;
       border-radius: 8px;
@@ -701,32 +703,32 @@
       touch-action: manipulation;
       flex-shrink: 0;
     }
-    
+
     .setting-item button:active { background: var(--primary-color); }
-    
-    .modal-actions { 
+
+    .modal-actions {
       display: flex;
       gap: 10px;
       margin-top: 20px;
     }
-    
-    .modal-actions button { 
+
+    .modal-actions button {
       flex: 1;
-      padding: 14px 16px; 
-      border-radius: 12px; 
-      background: var(--input-bg); 
-      color: var(--text-color); 
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--input-bg);
+      color: var(--text-color);
       cursor: pointer;
       border: var(--input-border);
       font-size: 15px;
       transition: background var(--transition-speed) ease;
       touch-action: manipulation;
     }
-    
+
     .modal-actions button:active { background: var(--primary-color); }
     .modal-actions button.primary-btn { background: var(--primary-color); border-color: var(--primary-color); }
     .modal-actions button.danger-btn { background: #ff4530; border-color: #ff4530; }
-    
+
     /* 壁纸预设 */
     .wallpaper-presets {
       display: grid;
@@ -734,7 +736,7 @@
       gap: 8px;
       margin: 10px 0;
     }
-    
+
     .wallpaper-preset {
       height: 60px;
       border-radius: 8px;
@@ -744,20 +746,20 @@
       background-position: center;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
-    
+
     .wallpaper-preset:hover {
       border-color: var(--primary-color);
       transform: scale(1.05);
     }
-    
+
     .wallpaper-preset.selected {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 2px var(--primary-color);
     }
-    
+
     /* 底部栏 */
-    .bottom-bar { 
-      padding: 12px 15px; 
+    .bottom-bar {
+      padding: 12px 15px;
       background: var(--bottom-bg);
       display: flex;
       justify-content: center;
@@ -768,12 +770,12 @@
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
       transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
-    
-    .bottom-bar button { 
-      padding: 12px 18px; 
-      font-size: 15px; 
+
+    .bottom-bar button {
+      padding: 12px 18px;
+      font-size: 15px;
       background: var(--btn-bg);
-      color: var(--text-color); 
+      color: var(--text-color);
       cursor: pointer;
       border-radius: 12px;
       transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
@@ -782,12 +784,12 @@
       flex-shrink: 1;
       touch-action: manipulation;
     }
-    
-    .bottom-bar button:active { 
+
+    .bottom-bar button:active {
       background: var(--primary-color);
       transform: scale(0.95);
     }
-    
+
     /* 应用框架 */
     #appFrameContainer {
       position: fixed;
@@ -805,15 +807,15 @@
       will-change: transform, opacity;
       padding-top: env(safe-area-inset-top, 0);
     }
-    
-    #appFrameContainer.show { 
+
+    #appFrameContainer.show {
       transform: scale(1);
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
       transition: transform 0.25s ease, opacity 0.25s ease, visibility 0s linear 0s;
     }
-    
+
     .app-navbar {
       display: flex;
       align-items: center;
@@ -825,21 +827,21 @@
       flex-shrink: 0;
       min-height: 50px;
     }
-    
-    .app-navbar button { 
-      padding: 10px 16px; 
-      border-radius: 12px; 
-      border: none; 
-      background: rgba(255,255,255,0.15); 
-      color: #fff; 
+
+    .app-navbar button {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
       cursor: pointer;
       font-size: 15px;
       flex-shrink: 0;
       touch-action: manipulation;
     }
-    
+
     .app-navbar button:active { background: var(--primary-color); }
-    
+
     .app-navbar #switchAppSelect {
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.2);
@@ -850,24 +852,24 @@
       flex-shrink: 0;
       max-width: 150px;
     }
-    
-    .app-navbar .app-title { 
-      flex: 1; 
-      text-align: center; 
-      font-size: 16px; 
+
+    .app-navbar .app-title {
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
       font-weight: 300;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    
-    #appFrame { 
-      flex: 1; 
-      width: 100%; 
-      border: none; 
-      min-height: 0; 
+
+    #appFrame {
+      flex: 1;
+      width: 100%;
+      border: none;
+      min-height: 0;
     }
-    
+
     .danger-link {
       display: block;
       margin-top: 15px;
@@ -880,7 +882,7 @@
     }
 
     .danger-link:hover { color: #ff6b5a; }
-    
+
     /* Toast 通知 */
     .toast-container {
       position: fixed;
@@ -894,13 +896,13 @@
       pointer-events: none;
       align-items: flex-start;
     }
-    
+
     .toast-notification {
-      background: rgba(30,30,32,0.95);
-      color: #fff;
+      background: var(--modal-bg, rgba(30,30,32,0.95));
+      color: var(--text-color, #fff);
       padding: 12px 20px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: var(--modal-border, 1px solid rgba(255,255,255,0.15));
       font-size: 14px;
       max-width: 320px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.5);
@@ -910,23 +912,23 @@
       transition: opacity 0.3s, transform 0.3s;
       word-break: break-word;
     }
-    
+
     .toast-notification.removing {
       opacity: 0;
       transform: translateX(50px);
     }
-    
+
     .toast-notification.success { border-left: 3px solid #30d158; }
     .toast-notification.warning { border-left: 3px solid #ff9f0a; }
     .toast-notification.error { border-left: 3px solid #ff4530; }
     .toast-notification.info { border-left: 3px solid #0a84ff; }
     .toast-notification.dev { border-left: 3px solid #bf5af2; }
-    
+
     @keyframes toastIn {
       from { opacity: 0; transform: translateX(40px); }
       to { opacity: 1; transform: translateX(0); }
     }
-    
+
     /* 通知中心 */
     .notification-center {
       position: fixed;
@@ -935,9 +937,9 @@
       width: 340px;
       max-width: calc(100vw - 30px);
       max-height: 65vh;
-      background: rgba(30,30,32,0.97);
+      background: var(--modal-bg, rgba(30,30,32,0.97));
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: var(--modal-border, 1px solid rgba(255,255,255,0.15));
       z-index: 9998;
       display: none;
       overflow-y: auto;
@@ -945,17 +947,17 @@
       -webkit-overflow-scrolling: touch;
       box-shadow: 0 12px 40px rgba(0,0,0,0.5);
     }
-    
+
     .notification-center.show {
       display: block;
       animation: slideIn 0.25s ease;
     }
-    
+
     @keyframes slideIn {
       from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     .notification-center h3 {
       margin-bottom: 10px;
       font-weight: 400;
@@ -1013,7 +1015,7 @@
     }
 
     .notif-filters button.active { background: var(--primary-color); }
-    
+
     .notification-item {
       display: flex;
       gap: 8px;
@@ -1038,7 +1040,7 @@
       flex: 1;
       min-width: 0;
     }
-    
+
     .notification-item .time {
       font-size: 11px;
       color: #999;
@@ -1065,7 +1067,7 @@
       padding: 24px 0;
       font-size: 13px;
     }
-    
+
     .clear-notifications {
       width: 100%;
       padding: 10px;
@@ -1083,7 +1085,7 @@
       transform: scale(0.98);
       background: var(--primary-color);
     }
-    
+
     /* 应用操作菜单 */
     .app-action-modal {
       position: fixed;
@@ -1104,7 +1106,7 @@
       max-width: 350px;
       -webkit-overflow-scrolling: touch;
     }
-    
+
     /* 排序菜单 */
     .sort-menu {
       position: fixed;
@@ -1122,13 +1124,13 @@
       border: var(--modal-border);
       color: #fff;
     }
-    
+
     .sort-menu h3 {
       margin-bottom: 15px;
       text-align: center;
       font-weight: 300;
     }
-    
+
     .sort-menu button {
       display: block;
       width: 100%;
@@ -1142,14 +1144,14 @@
       transition: background 0.2s ease, transform 0.2s ease;
       font-size: 14px;
     }
-    
+
     .sort-menu button:first-child {
       background: var(--primary-color);
       border: none;
     }
-    
+
     .sort-menu button:active { transform: scale(0.95); }
-    
+
     .sys-info {
       margin: 15px 0;
       padding: 12px;
@@ -1166,7 +1168,7 @@
       transition: color 0.15s ease;
     }
     .sys-info #versionText:hover { color: var(--primary-color); }
-    
+
     /* FPS 显示器 */
     #fpsCounter {
       position: fixed;
@@ -1182,20 +1184,20 @@
       border: 1px solid #0f0;
       display: none;
     }
-    
+
     #fpsCounter.show { display: block; }
-    
+
     @keyframes launchPulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.08); opacity: 0.9; }
       100% { transform: scale(1); opacity: 1; }
     }
-    
+
     .app-icon.launch-anim { animation: launchPulse 0.2s ease-in-out; }
-    
+
     /* 图标选择面板 */
     .icon-selector { margin: 15px 0; }
-    
+
     .icon-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -1206,7 +1208,7 @@
       padding: 5px;
       -webkit-overflow-scrolling: touch;
     }
-    
+
     .icon-option {
       font-size: 28px;
       padding: 10px;
@@ -1222,25 +1224,25 @@
       transition: border-color 0.2s ease, transform 0.2s ease;
       touch-action: manipulation;
     }
-    
+
     .icon-option:hover {
       border-color: var(--primary-color);
       transform: scale(1.05);
     }
-    
+
     .icon-option:active { transform: scale(0.95); }
     .icon-option.selected {
       border-color: var(--primary-color);
       background: #0a84ff30;
     }
-    
+
     .custom-icon-input {
       margin-top: 15px;
       display: flex;
       gap: 8px;
       align-items: center;
     }
-    
+
     .custom-icon-input input {
       flex: 1;
       min-width: 0;
@@ -1252,7 +1254,7 @@
       text-align: center;
       border-radius: 8px;
     }
-    
+
     .custom-icon-input button {
       flex-shrink: 0;
       padding: 12px 16px;
@@ -1263,7 +1265,7 @@
       cursor: pointer;
       font-size: 14px;
     }
-    
+
     /* 离线提示 */
     #offlineBanner {
       display: none;
@@ -1281,7 +1283,7 @@
       padding-top: env(safe-area-inset-top, 4px);
     }
     #offlineBanner.show { display: block; }
-    
+
     /* 进度条 */
     .progress-bar {
       background: var(--input-bg);
@@ -1291,14 +1293,14 @@
       overflow: hidden;
       border: var(--input-border);
     }
-    
+
     .progress-fill {
       background: var(--primary-color);
       height: 100%;
       width: 0%;
       transition: width 0.3s ease;
     }
-    
+
     /* 颜色选择器 */
     .color-palette {
       display: grid;
@@ -1306,7 +1308,7 @@
       gap: 8px;
       margin: 10px 0;
     }
-    
+
     .color-swatch {
       height: 30px;
       border-radius: 6px;
@@ -1315,12 +1317,12 @@
       transition: border-color 0.2s ease, transform 0.2s ease;
       touch-action: manipulation;
     }
-    
+
     .color-swatch:hover {
       border-color: #fff;
       transform: scale(1.1);
     }
-    
+
     .system-color-picker {
       display: flex;
       align-items: center;
@@ -1332,12 +1334,12 @@
       transition: border-color 0.2s ease, transform 0.2s ease;
       font-size: 16px;
     }
-    
+
     .system-color-picker:hover {
       border-color: var(--primary-color);
       transform: scale(1.1);
     }
-    
+
     /* 全屏应用信息页面 */
     .app-info-fullscreen {
       position: fixed;
@@ -1350,17 +1352,17 @@
       display: none;
       flex-direction: column;
     }
-    
+
     .app-info-fullscreen.show {
       display: flex;
       animation: fadeIn 0.3s ease;
     }
-    
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    
+
     .app-info-header {
       display: flex;
       align-items: center;
@@ -1369,7 +1371,7 @@
       gap: 15px;
       padding-top: calc(15px + env(safe-area-inset-top, 0));
     }
-    
+
     .app-info-header button {
       padding: 10px 20px;
       border-radius: 12px;
@@ -1379,22 +1381,22 @@
       cursor: pointer;
       font-size: 15px;
     }
-    
+
     .app-info-header button:active { background: var(--primary-color); }
-    
+
     .app-info-title {
       flex: 1;
       font-size: 20px;
       font-weight: 300;
     }
-    
+
     .app-info-content {
       flex: 1;
       overflow-y: auto;
       padding: 20px;
       padding-bottom: calc(20px + env(safe-area-inset-bottom, 0));
     }
-    
+
     .app-info-card {
       background: rgba(255,255,255,0.05);
       border-radius: 12px;
@@ -1402,38 +1404,38 @@
       margin-bottom: 20px;
       border: var(--card-border);
     }
-    
+
     .app-info-card h3 {
       color: var(--primary-color);
       margin-bottom: 15px;
       font-weight: 300;
     }
-    
+
     .app-info-item {
       display: flex;
       justify-content: space-between;
       padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
+
     .app-info-item:last-child { border-bottom: none; }
-    
+
     .app-info-label { color: var(--text-secondary); }
-    
+
     .app-info-value {
       font-weight: 500;
       word-break: break-all;
       text-align: right;
       max-width: 60%;
     }
-    
+
     .app-info-actions {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin-top: 20px;
     }
-    
+
     .app-info-actions button {
       padding: 15px;
       border-radius: 8px;
@@ -1443,34 +1445,34 @@
       font-size: 14px;
       transition: transform 0.2s ease, filter 0.2s ease;
     }
-    
+
     .app-info-actions button:active { transform: scale(0.98); }
     .app-info-actions .primary { background: var(--primary-color); }
     .app-info-actions .danger { background: #ff4530; }
     .app-info-actions .secondary { background: #3a3a3c; }
-    
+
     /* 警告模态框 */
     .reset-modal-content {
       text-align: center;
       max-width: 400px;
     }
-    
+
     .reset-modal-content .warning-icon {
       font-size: 60px;
       margin-bottom: 20px;
       color: #ff4530;
     }
-    
+
     .reset-modal-content h3 {
       margin-bottom: 15px;
       color: #ff4530;
     }
-    
+
     .reset-modal-content p {
       margin-bottom: 10px;
       color: var(--text-secondary);
     }
-    
+
     .reset-modal-content .warning-text {
       margin: 20px 0;
       padding: 10px;
@@ -1479,7 +1481,7 @@
       color: #ff9f0a;
       font-weight: bold;
     }
-    
+
     /* 移动端响应式 */
     @media (max-width: 480px) {
       .win-header {
@@ -1508,7 +1510,7 @@
       .color-palette { grid-template-columns: repeat(6, 1fr); }
       .app-info-actions { grid-template-columns: 1fr; }
     }
-    
+
     @media (max-width: 360px) {
       .apps-container { gap: 6px; }
       .toolbar { gap: 6px; }
@@ -1521,7 +1523,7 @@
 <body class="theme-sharp">
   <!-- Toast 通知容器 -->
   <div class="toast-container" id="toastContainer"></div>
-  
+
   <!-- 通知中心 -->
   <div class="notification-center" id="notificationCenter">
     <h3>📢 通知中心 <span class="notif-count" id="notifCount"></span></h3>
@@ -1535,10 +1537,10 @@
     <div id="notificationList"></div>
     <button class="clear-notifications" onclick="clearAllNotifications()">清除所有通知</button>
   </div>
-  
+
   <!-- 离线提示 -->
   <div id="offlineBanner">📡 您当前处于离线状态，部分功能可能受限</div>
-  
+
   <!-- 头部 -->
   <div class="win-header" id="winHeader">
     <div class="win-user" onclick="openUserInfoModal()">
@@ -1556,16 +1558,16 @@
       <button id="notifBell" onclick="toggleNotificationCenter()" style="background:none;border:none;color:white;cursor:pointer;font-size:18px;padding:0 4px;position:relative;">🔔<span class="notif-badge" id="notifBadge" style="display:none">0</span></button>
     </div>
   </div>
-  
+
   <div class="container" id="mainContainer" oncontextmenu="return false;">
     <h1>开始</h1>
     <div class="datetime" id="datetime"></div>
-    
+
     <!-- 搜索框 -->
     <div class="search-box">
       <input type="text" id="searchApps" placeholder="🔍 搜索应用..." />
     </div>
-    
+
     <!-- 工具栏 -->
     <div class="toolbar" id="normalToolbar">
       <button onclick="showSortMenu()">🔄 排序</button>
@@ -1573,13 +1575,13 @@
       <button onclick="scrollToTop()">⬆️ 顶部</button>
       <button onclick="fixTileLayout()">🔧 修复</button>
     </div>
-    
+
     <!-- 页面指示器 -->
     <div class="page-indicator" id="pageIndicator"></div>
-    
+
     <!-- 应用网格 -->
     <div class="apps-container" id="appsContainer"></div>
-    
+
     <!-- 分页按钮 -->
     <div class="nav-buttons" id="navButtons">
       <button onclick="prevPage()" id="prevBtn">◀ 上一页</button>
@@ -1589,11 +1591,14 @@
   </div>
   <!-- FPS 显示器 -->
   <div id="fpsCounter"></div>
-  
+
   <!-- 安装模态框 -->
   <div class="modal" id="installModal">
     <div class="modal-content">
       <h2>📥 安装应用</h2>
+      <div id="installDropZone" style="margin-bottom: 15px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 12px; padding: 18px; text-align: center; font-size: 13px; color: var(--text-secondary); transition: background 0.15s, border-color 0.15s;">
+        🗃️ 将 .html 文件拖拽到此处安装
+      </div>
       <div style="margin-bottom: 15px;">
         <button onclick="showFilePicker()" style="width: 100%; padding: 14px; background: #0a84ff; border: none; color: white; font-size: 16px; border-radius: 12px;">📄 选择单个文件</button>
       </div>
@@ -1614,7 +1619,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- 用户信息模态框 -->
   <div class="modal" id="userInfoModal">
     <div class="modal-content">
@@ -1624,13 +1629,13 @@
         <button style="width:auto; display:inline-block; font-size:12px; padding:6px 12px; margin-top:0; background:var(--btn-bg); border:var(--input-border); border-radius:8px; color:var(--text-color);" onclick="triggerAvatarUpload()">🖼️ 上传图片头像</button>
         <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)" />
       </div>
-      
+
       <div class="setting-item">
         <label>用户名</label>
         <input type="text" id="userNameInput" placeholder="输入用户名" maxlength="20" oninput="updateUserNameCounter()" />
       </div>
       <div style="text-align:right; font-size:12px; color:var(--text-secondary); margin-top:-8px;" id="userNameCounter">0/20</div>
-      
+
       <div style="margin: 15px 0;">
         <label style="font-size:14px;color:var(--text-secondary);">选择头像</label>
         <div class="icon-grid" id="avatarGrid"></div>
@@ -1639,19 +1644,19 @@
           <button onclick="applyCustomAvatar()">应用</button>
         </div>
       </div>
-      
+
       <div class="modal-actions">
         <button onclick="saveUserInfo()" class="primary-btn">保存</button>
         <button onclick="closeUserInfoModal()">取消</button>
       </div>
     </div>
   </div>
-  
+
   <!-- 设置模态框 -->
   <div class="modal" id="settingsModal">
     <div class="modal-content">
       <h2>⚙ 系统设置</h2>
-      
+
       <!-- 设置标签页 -->
       <div class="settings-tabs">
         <button class="settings-tab active" data-tab="appearance">外观</button>
@@ -1660,7 +1665,7 @@
         <button class="settings-tab" data-tab="backup">备份</button>
         <button class="settings-tab" data-tab="dev" id="devTab" style="display:none;">开发</button>
       </div>
-      
+
       <!-- 外观面板 -->
       <div class="settings-panel active" id="panel-appearance">
         <div class="setting-section">
@@ -1671,19 +1676,22 @@
           </div>
           <div class="setting-item">
             <label>背景图片URL</label>
-            <input type="text" id="bgImageInput" placeholder="输入图片链接" />
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input type="text" id="bgImageInput" placeholder="输入图片链接" style="flex:1;" />
+              <button type="button" id="clearBgImageBtn" title="清除地址" style="flex-shrink:0; padding:8px 10px; border-radius:8px; border:none; background:var(--btn-bg); color:var(--text-color); cursor:pointer;">✕</button>
+            </div>
           </div>
           <div class="setting-item">
             <label>上传本地壁纸</label>
             <button onclick="uploadWallpaper()">📤 选择图片</button>
           </div>
-          
+
           <div style="margin: 15px 0;">
             <label style="font-size:14px;color:var(--text-secondary);">快速壁纸</label>
             <div class="wallpaper-presets" id="wallpaperPresets"></div>
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">主题与布局</div>
           <div class="setting-item">
@@ -1705,7 +1713,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 桌面面板 -->
       <div class="settings-panel" id="panel-desktop">
         <div class="setting-section">
@@ -1724,7 +1732,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 系统面板 -->
       <div class="settings-panel" id="panel-system">
         <div class="setting-section">
@@ -1734,7 +1742,7 @@
             <button onclick="launchSecurityCenter()">🛡️ 打开</button>
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">日期与时间</div>
           <div class="setting-item">
@@ -1750,7 +1758,7 @@
             <input type="checkbox" id="showDateToggle" checked />
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">通知设置</div>
           <div class="setting-item">
@@ -1766,7 +1774,7 @@
             <input type="checkbox" id="notificationSoundToggle" />
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">系统性能</div>
           <div class="setting-item">
@@ -1777,7 +1785,7 @@
             <button onclick="optimizeMemory()">立即优化内存</button>
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">系统行为</div>
           <div class="setting-item">
@@ -1790,7 +1798,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 备份面板 -->
       <div class="settings-panel" id="panel-backup">
         <div class="setting-section">
@@ -1809,7 +1817,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 开发者面板 -->
       <div class="settings-panel" id="panel-dev">
         <div class="setting-section">
@@ -1826,7 +1834,7 @@
             <button onclick="advancedOptimizeMemory()">立即高级优化</button>
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">安全与权限</div>
           <div class="setting-item">
@@ -1838,7 +1846,7 @@
             <button onclick="triggerChangePassword()">🔑 修改密码</button>
           </div>
         </div>
-        
+
         <div class="setting-section">
           <div class="setting-section-title">系统工具</div>
           <div class="setting-item">
@@ -1854,9 +1862,9 @@
           </div>
         </div>
       </div>
-      
+
       <div class="sys-info" id="sysInfo"></div>
-      
+
       <div class="modal-actions">
         <button onclick="saveSettings()" class="primary-btn">保存设置</button>
         <button onclick="closeSettings()">关闭</button>
@@ -1865,7 +1873,7 @@
       <span class="danger-link" onclick="triggerFormatWarning()">格式化系统</span>
     </div>
   </div>
-  
+
   <!-- 恢复默认设置警告 -->
   <div class="modal" id="resetWarningModal">
     <div class="modal-content reset-modal-content">
@@ -1885,7 +1893,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- 格式化警告 -->
   <div class="modal" id="formatWarningModal">
     <div class="modal-content reset-modal-content">
@@ -1905,7 +1913,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- 关闭沙箱：多重确认 -->
   <div class="modal" id="sandboxWarningModal">
     <div class="modal-content reset-modal-content">
@@ -1955,7 +1963,7 @@
     <button onclick="sortApps('size')">按应用大小排序</button>
     <button onclick="closeSortMenu()">取消</button>
   </div>
-  
+
   <!-- 全屏应用信息页面 -->
   <div class="app-info-fullscreen" id="appInfoFullscreen">
     <div class="app-info-header">
@@ -1966,7 +1974,7 @@
       <!-- 内容将由JavaScript动态生成 -->
     </div>
   </div>
-  
+
   <!-- 应用框架（修复：移除空src，防止页面自我嵌套加载） -->
   <div id="appFrameContainer">
     <div class="app-navbar">
@@ -1975,18 +1983,18 @@
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
     <iframe id="appFrame"
-      allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *; autoplay *; clipboard-write *" 
+      allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *; autoplay *; clipboard-write *"
       allowfullscreen
       sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin">
     </iframe>
   </div>
-  
+
   <!-- 底部栏 -->
   <div class="bottom-bar" id="bottomBar">
     <button onclick="openInstaller()">➕ 安装应用</button>
     <button onclick="openSettings()">⚙ 设置</button>
   </div>
-  
+
   <script>
     // ==================== 全局变量 ====================
     let notifications = [];
@@ -1999,11 +2007,11 @@
     const MAX_NOTIFICATIONS = 50;
     const MAX_TOASTS = 3;
     const toastQueue = [];
-    
+
     // 内存优化定时器
     let memoryOptimizeTimer = null;
     let advancedMemoryOptimizeTimer = null;
-    
+
     // 用户信息
     let currentUser = { name: 'HTMLOS 用户', avatar: '👤' };
     // 头像可以是 emoji 文本，也可以是用户上传的图片(dataURL)；统一用此函数渲染，避免两种格式混淆
@@ -2019,7 +2027,7 @@
         el.textContent = value || '👤';
       }
     }
-    
+
     // 系统设置
     let systemSettings = {
       showSeconds: true,
@@ -2034,10 +2042,10 @@
       autoOptimizeMemory: false,
       advancedOptimizeMemory: false
     };
-    
+
     // 系统密码（默认，会被加载覆盖）
     let SYSTEM_PASSWORD = 'htmlos666';
-    
+
     // 预设数据（缩略图使用小尺寸，应用时才加载大图，节省带宽与内存）
     const presetWallpapers = [
       { name: '蓝天', url: 'https://picsum.photos/id/1018/1920/1080', thumb: 'https://picsum.photos/id/1018/400/225' },
@@ -2047,29 +2055,29 @@
       { name: '星空', url: 'https://picsum.photos/id/1042/1920/1080', thumb: 'https://picsum.photos/id/1042/400/225' },
       { name: '城市', url: 'https://picsum.photos/id/1067/1920/1080', thumb: 'https://picsum.photos/id/1067/400/225' }
     ];
-    
+
     const presetAvatars = [
       '👤', '👨', '👩', '🧑', '👦', '👧', '👴', '👵',
       '😀', '😎', '🤩', '🥳', '😇', '🤗', '😺', '🦊',
       '🐱', '🐶', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷',
       '🌟', '🔥', '💎', '🎮', '🎵', '📚', '✈️', '🚀'
     ];
-    
+
     const colorPalette = [
       '#0078d7', '#00bcf2', '#00cc6a', '#ffb900', '#ff8c00', '#f7630c', '#e81123', '#ea005e',
       '#b4009e', '#5c2d91', '#008272', '#107c10', '#7fba00', '#00a4ef', '#e3008c', '#6e41e2',
       '#00b294', '#009e49', '#bad80a', '#fff100', '#ff8c00', '#e81123', '#ec008c', '#68217a'
     ];
-    
+
     const iconLibrary = [
-      '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦', 
+      '📱', '📸', '🎬', '🎵', '📝', '🎙️', '⏰', '📅', '🌤️', '🎨', '📁', '🔍', '⚙️', '💾', '📧', '🌐', '🎮', '📊', '💰', '🏦',
       '🏠', '🚗', '✈️', '🚀', '💡', '🔔', '📌', '📍', '❤️', '⭐', '🔥', '🌈', '🍎', '📚', '✏️', '📏', '🧮', '🔬', '🔭', '⚡',
       '🎯', '🎁', '🎪', '🎭', '🎤', '🎧', '🎸', '🎹', '🎺', '🎻', '🥁', '🏆', '🏅', '🎖️', '🥇', '🥈', '🥉', '⚽', '🏀'
     ];
-    
+
     const sizeOptions = ['small', 'medium', 'large', 'wide', 'big'];
     const sizeLabels = { 'small': '小', 'medium': '中', 'large': '大', 'wide': '宽', 'big': '超大' };
-    
+
     // 系统核心变量
     let currentPage = 0;
     let installedApps = [];
@@ -2085,8 +2093,8 @@
     let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v4.2.0';
-    
+    const VERSION = 'HTMLOS v4.3.0';
+
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
     const toastContainer = $('toastContainer');
@@ -2165,22 +2173,22 @@
     const appInfoFullscreen = $('appInfoFullscreen');
     const appInfoTitle = $('appInfoTitle');
     const appInfoContent = $('appInfoContent');
-    
+
     // 全局应用信息变量
     let currentAppInfoFile = null;
-    
+
     // 性能优化：缓存时间格式化器（Intl 对象创建昂贵，避免每秒重建）
     const dateFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
     const shortDateFormatOptions = { weekday: 'long' };
     let dtfDate = null, dtfTime = null;
-    
+
     function buildDateTimeFormatters() {
       dtfDate = new Intl.DateTimeFormat('zh-CN', systemSettings.showDate ? dateFormatOptions : shortDateFormatOptions);
       const opts = { hour: '2-digit', minute: '2-digit', hour12: !systemSettings.time24 };
       if (systemSettings.showSeconds) opts.second = '2-digit';
       dtfTime = new Intl.DateTimeFormat('zh-CN', opts);
     }
-    
+
     // ==================== DOM防护系统（增强版）====================
     // 防护目标：元素被移除/隐藏、head注入样式或脚本、主题类被篡改、
     // 核心函数被改写、主页背景被篡改、应用iframe被移除
@@ -2191,7 +2199,7 @@
       _integrityTimer: null,
       protectedIds: ['bottomBar', 'mainContainer', 'winHeader', 'toastContainer', 'notificationCenter'],
       watchedFnNames: ['showToast', 'closeApp', 'renderApps', 'openSettings', 'saveSettings', 'addLog', 'deleteApp', 'launchApp', 'confirmReset', 'confirmFormat', 'updateSandboxState', 'toggleSandbox', 'confirmDisableSandbox', 'sanitizeAppSource', 'isSystemApp', 'toggleNotificationCenter', 'launchSecurityCenter'],
-      
+
       init() {
         this.protectedIds.forEach(id => {
           const el = $(id);
@@ -2204,12 +2212,12 @@
             });
           }
         });
-        
+
         // 快照核心函数引用，供周期性比对
         this.watchedFnNames.forEach(name => {
           if (typeof window[name] === 'function') this.watchedFns[name] = window[name];
         });
-        
+
         // ① 关键元素被移除 → 自动恢复
         const bodyObserver = new MutationObserver(() => {
           this.protectedIds.forEach(id => {
@@ -2222,7 +2230,7 @@
         });
         bodyObserver.observe(document.body, { childList: true });
         this.observers.push(bodyObserver);
-        
+
         // ② 关键元素被隐藏（内联样式）→ 自动恢复
         const attrObserver = new MutationObserver((mutations) => {
           mutations.forEach(mutation => {
@@ -2245,7 +2253,7 @@
           if (el) attrObserver.observe(el, { attributes: true, attributeFilter: ['style'] });
         });
         this.observers.push(attrObserver);
-        
+
         // ③ head 注入防护：病毒注入的样式表/脚本/框架一律移除
         const headObserver = new MutationObserver((mutations) => {
           mutations.forEach(mutation => {
@@ -2262,7 +2270,7 @@
         });
         headObserver.observe(document.head, { childList: true });
         this.observers.push(headObserver);
-        
+
         // ④ 主题类防篡改
         const bodyClassObserver = new MutationObserver(() => {
           if (!/theme-(sharp|glass|dark)/.test(document.body.className)) {
@@ -2272,13 +2280,13 @@
         });
         bodyClassObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
         this.observers.push(bodyClassObserver);
-        
+
         // ⑤ 周期完整性巡检（每2秒，开销极小）
         this._integrityTimer = setInterval(() => this.integrityCheck(), 2000);
-        
+
         addLog('info', 'DOMGuard: 界面防护系统已启动（增强版）');
       },
-      
+
       integrityCheck() {
         // 核心函数防篡改
         for (const name in this.watchedFns) {
@@ -2313,14 +2321,14 @@
           rebuildAppFrame();
         }
       },
-      
+
       disconnect() {
         this.observers.forEach(obs => obs.disconnect());
         this.observers = [];
         if (this._integrityTimer) clearInterval(this._integrityTimer);
       }
     };
-    
+
     // ==================== 紧急退出机制 ====================
     function setupEmergencyExit() {
       document.addEventListener('keydown', (e) => {
@@ -2333,7 +2341,7 @@
         }
       });
     }
-    
+
     // ==================== 日志系统 ====================
     const systemLogs = [];
     const MAX_LOGS = 200;
@@ -2366,10 +2374,10 @@
     }
 
     function exportSystemLogs() {
-      const logContent = systemLogs.map(l => 
+      const logContent = systemLogs.map(l =>
         '[' + l.timestamp + '] [' + l.level.toUpperCase() + '] ' + l.message + (l.data ? ' - ' + JSON.stringify(l.data) : '')
       ).join('\n');
-      
+
       const blob = new Blob([logContent], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -2379,49 +2387,49 @@
       URL.revokeObjectURL(url);
       showToast('系统日志已导出', 'dev');
     }
-    
+
     function clearSystemLogs() {
       if (!confirm('确定要清空所有系统日志吗？')) return;
       systemLogs.length = 0;
       showToast('系统日志已清空', 'success');
       addLog('info', '系统日志已清空');
     }
-    
+
     // ==================== Toast 通知系统 ====================
     function showToast(message, type = 'info', duration = systemSettings.toastDuration) {
       addNotification(message, type);
       if (!systemSettings.toastEnabled) return;
-      
+
       const validDuration = (typeof duration === 'number' && !isNaN(duration) && duration > 0) ? duration : 3000;
       toastQueue.push({ message, type, duration: validDuration });
-      
+
       if (toastContainer.children.length < MAX_TOASTS) {
         processToastQueue();
       }
     }
-    
+
     function processToastQueue() {
       if (toastQueue.length === 0) return;
-      
+
       const { message, type, duration } = toastQueue.shift();
-      
+
       const toast = document.createElement('div');
       toast.className = 'toast-notification ' + type;
-      
+
       const icons = { success: '✅', warning: '⚠️', error: '❌', info: 'ℹ️', dev: '🔧' };
       toast.textContent = (icons[type] || '') + ' ' + message;
-      
+
       toast.onclick = () => removeToast(toast);
       toastContainer.appendChild(toast);
-      
+
       const timeout = setTimeout(() => removeToast(toast), duration);
       toast._timeout = timeout;
-      
+
       if (systemSettings.notificationSound && type !== 'dev') {
         playNotificationSound();
       }
     }
-    
+
     function removeToast(toast) {
       if (toast._removing) return;
       toast._removing = true;
@@ -2432,7 +2440,7 @@
         requestAnimationFrame(() => processToastQueue());
       }, 250);
     }
-    
+
     // ==================== 通知中心（增强版）====================
     function addNotification(message, type) {
       const notification = {
@@ -2448,7 +2456,7 @@
       renderNotifications();
       persistNotifications();
     }
-    
+
     function updateNotifBadge() {
       if (unreadCount > 0) {
         notifBadge.style.display = 'flex';
@@ -2457,14 +2465,14 @@
         notifBadge.style.display = 'none';
       }
     }
-    
+
     function renderNotifications() {
       notificationList.innerHTML = '';
       notifCount.textContent = notifications.length > 0 ? '共 ' + notifications.length + ' 条' : '';
-      
+
       const icons = { success: '✅', warning: '⚠️', error: '❌', info: 'ℹ️', dev: '🔧' };
       const list = notifFilter === 'all' ? notifications : notifications.filter(n => n.type === notifFilter);
-      
+
       if (list.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'notif-empty';
@@ -2472,16 +2480,16 @@
         notificationList.appendChild(empty);
         return;
       }
-      
+
       const fragment = document.createDocumentFragment();
       list.forEach(n => {
         const item = document.createElement('div');
         item.className = 'notification-item ' + n.type;
-        
+
         const icon = document.createElement('span');
         icon.className = 'notif-icon';
         icon.textContent = icons[n.type] || 'ℹ️';
-        
+
         const body = document.createElement('div');
         body.className = 'notif-body';
         const msg = document.createElement('div');
@@ -2491,13 +2499,13 @@
         time.textContent = n.time;
         body.appendChild(msg);
         body.appendChild(time);
-        
+
         const del = document.createElement('button');
         del.className = 'notif-del';
         del.textContent = '✕';
         del.title = '删除此通知';
         del.onclick = (e) => { e.stopPropagation(); deleteNotification(n.id); };
-        
+
         item.appendChild(icon);
         item.appendChild(body);
         item.appendChild(del);
@@ -2505,13 +2513,13 @@
       });
       notificationList.appendChild(fragment);
     }
-    
+
     function deleteNotification(id) {
       notifications = notifications.filter(n => n.id !== id);
       renderNotifications();
       persistNotifications();
     }
-    
+
     function toggleNotificationCenter() {
       const willShow = !notificationCenter.classList.contains('show');
       notificationCenter.classList.toggle('show');
@@ -2521,7 +2529,7 @@
         renderNotifications();
       }
     }
-    
+
     function clearAllNotifications() {
       notifications = [];
       unreadCount = 0;
@@ -2529,12 +2537,12 @@
       renderNotifications();
       persistNotifications();
     }
-    
+
     // 通知持久化（防抖写入，避免频繁IO）
     const persistNotifications = debounce(() => {
       dbPut(STORE_STATS, { key: 'notifications', value: notifications.slice(0, MAX_NOTIFICATIONS) }).catch(() => {});
     }, 500);
-    
+
     // 通知声音（复用单个 AudioContext，避免超出浏览器上下文数量限制）
     let _audioCtx = null;
     function playNotificationSound() {
@@ -2543,39 +2551,39 @@
         if (!AC) return;
         if (!_audioCtx) _audioCtx = new AC();
         if (_audioCtx.state === 'suspended') _audioCtx.resume();
-        
+
         const oscillator = _audioCtx.createOscillator();
         const gainNode = _audioCtx.createGain();
         oscillator.connect(gainNode);
         gainNode.connect(_audioCtx.destination);
-        
+
         oscillator.frequency.value = 880;
         oscillator.type = 'sine';
         gainNode.gain.setValueAtTime(0.08, _audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.001, _audioCtx.currentTime + 0.15);
-        
+
         oscillator.start();
         oscillator.stop(_audioCtx.currentTime + 0.15);
       } catch (e) {
         addLog('warn', '通知声音播放失败: ' + e.message);
       }
     }
-    
+
     // ==================== 电池状态 ====================
     function updateBatteryStatus(battery) {
       const level = Math.round(battery.level * 100);
-      
+
       batteryStatus.style.display = 'flex';
       batteryLevel.style.width = level + '%';
       batteryPercent.textContent = level + '%';
-      
+
       batteryIcon.classList.toggle('battery-charging', !!battery.charging);
-      
+
       if (level <= 20 && !battery.charging) batteryLevel.style.background = '#ff4530';
       else if (level <= 50) batteryLevel.style.background = '#ffb900';
       else batteryLevel.style.background = '#30d158';
     }
-    
+
     function initBatteryStatus() {
       if ('getBattery' in navigator) {
         navigator.getBattery().then(battery => {
@@ -2592,7 +2600,7 @@
         addLog('info', '浏览器不支持电池API');
       }
     }
-    
+
     // ==================== 内存优化系统 ====================
     function optimizeMemory() {
       addLog('info', '开始基础内存优化');
@@ -2603,11 +2611,11 @@
       addLog('info', '基础内存优化完成，释放 ' + freed + ' MB 内存');
       showToast('基础内存优化完成，释放 ' + freed + ' MB 内存', 'success');
     }
-    
+
     function advancedOptimizeMemory() {
       addLog('info', '开始高级内存优化(Beta)');
       optimizeMemory();
-      
+
       if ('caches' in window) {
         caches.keys().then(names => {
           names.forEach(name => {
@@ -2618,11 +2626,11 @@
           });
         });
       }
-      
+
       addLog('info', '高级内存优化完成');
       showToast('高级内存优化完成', 'success');
     }
-    
+
     function startAutoMemoryOptimize() {
       if (memoryOptimizeTimer) clearInterval(memoryOptimizeTimer);
       if (systemSettings.autoOptimizeMemory) {
@@ -2633,7 +2641,7 @@
         addLog('info', '自动基础内存优化已启动');
       }
     }
-    
+
     function startAdvancedAutoMemoryOptimize() {
       if (advancedMemoryOptimizeTimer) clearInterval(advancedMemoryOptimizeTimer);
       if (systemSettings.advancedOptimizeMemory) {
@@ -2644,7 +2652,7 @@
         addLog('info', '自动高级内存优化已启动');
       }
     }
-    
+
     // ==================== 密码管理（加密存储） ====================
     // 说明：HTMLOS 完全运行在客户端浏览器内，无法做到服务器级别的绝对保密；
     // 这里使用 Web Crypto AES-GCM 对密码做"数据落盘加密"，避免密码以明文形式
@@ -2753,14 +2761,14 @@
         showToast('密码修改失败，请重试', 'error');
       }
     }
-    
+
     // ==================== 沙箱控制 ====================
     const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
     // 关闭沙箱后依然保留的最小防护集合：绝不允许 iframe 变为完全无限制状态。
     // 相比 SANDBOX_TOKENS 仍然不包含 allow-top-navigation / allow-pointer-lock /
     // allow-orientation-lock 等，防止应用劫持整页跳转或锁定指针/屏幕方向。
     const SANDBOX_MIN_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin allow-popups-to-escape-sandbox';
-    
+
     function toggleSandbox() {
       if (sandboxToggle.checked) {
         // 用户想要关闭沙箱：撤回勾选，进入多重确认流程（知情勾选 + 密码 + 输入确认短语）
@@ -2811,7 +2819,7 @@
       showToast('⚠️ 沙箱已关闭，系统处于低保护状态（仍保留基础防护）！', 'warning', 5000);
       addLog('warn', '沙箱已关闭，系统处于低保护状态！');
     }
-    
+
     // 修复：仅在状态变化时写DB，避免每次启动应用都产生多余写入
     // 无论沙箱是否"关闭"，iframe 永远保留 sandbox 属性（至少 SANDBOX_MIN_TOKENS），
     // 绝不会被完全移除，从而始终保留基础防护。
@@ -2822,7 +2830,7 @@
       }
       if (persist) dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
     }
-    
+
     // ==================== 用户信息管理 ====================
     // 头像的"当前选中值"单独用变量跟踪(而不是从预览元素的 textContent 读取)，
     // 因为图片头像渲染成 <img> 后 textContent 为空，之前的写法会导致保存图片头像失败
@@ -2873,7 +2881,7 @@
       renderAvatar(userAvatarPreview, currentUser.avatar);
       const isImageAvatar = typeof currentUser.avatar === 'string' && currentUser.avatar.startsWith('data:image');
       customAvatarInput.value = (isImageAvatar || presetAvatars.includes(currentUser.avatar)) ? '' : currentUser.avatar;
-      
+
       avatarGrid.innerHTML = '';
       presetAvatars.forEach(avatar => {
         const div = document.createElement('div');
@@ -2888,14 +2896,14 @@
         };
         avatarGrid.appendChild(div);
       });
-      
+
       userInfoModal.classList.add('show');
     }
-    
+
     function closeUserInfoModal() {
       userInfoModal.classList.remove('show');
     }
-    
+
     function applyCustomAvatar() {
       const customAvatar = customAvatarInput.value.trim();
       if (customAvatar) {
@@ -2905,45 +2913,45 @@
         showToast('自定义头像已应用', 'success');
       }
     }
-    
+
     async function saveUserInfo() {
       const newName = userNameInput.value.trim();
       const newAvatar = pendingAvatarValue;
-      
+
       if (!newName) {
         showToast('用户名不能为空', 'error');
         return;
       }
-      
+
       currentUser.name = newName;
       currentUser.avatar = newAvatar;
       userName.textContent = newName;
       renderAvatar(userIcon, newAvatar);
-      
+
       await dbPut(STORE_SETTINGS, { key: 'user_name', value: newName });
       await dbPut(STORE_SETTINGS, { key: 'user_avatar', value: newAvatar });
-      
+
       closeUserInfoModal();
       showToast('用户信息已保存', 'success');
       addLog('info', '用户信息已更新');
     }
-    
+
     // ==================== 全屏应用信息功能 ====================
     async function showAppInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
-      
+
       currentAppInfoFile = fileKey;
       document.querySelector('.app-action-modal')?.remove();
-      
+
       const content = await getContentSafe(fileKey);
       const sizeKB = content ? Math.round(content.length / 1024 * 100) / 100 : 0;
       const sizeBytes = content ? content.length : 0;
       const usageCount = appUsageStats[fileKey] || 0;
       const isSystem = app.source === 'system';
-      
+
       appInfoTitle.textContent = (app.icon || '📱') + ' ' + app.name;
-      
+
       appInfoContent.innerHTML = `
         <div class="app-info-card">
           <h3>📋 基本信息</h3>
@@ -2980,7 +2988,7 @@
             <span class="app-info-value">${app.locked ? '已锁定' : '未锁定'}</span>
           </div>
         </div>
-        
+
         <div class="app-info-card">
           <h3>📊 大小与统计</h3>
           <div class="app-info-item">
@@ -3000,7 +3008,7 @@
             <span class="app-info-value">${app.lastUpdated ? new Date(app.lastUpdated).toLocaleString() : '未知'}</span>
           </div>
         </div>
-        
+
         <div class="app-info-card">
           <h3>🛠️ 快捷操作</h3>
           <div class="app-info-actions">
@@ -3015,16 +3023,16 @@
           ${isSystem ? '<p style="margin-top:12px;font-size:12px;color:var(--text-secondary);">🛡️ 系统核心应用受保护，无法卸载、隐藏、重命名或更新。</p>' : ''}
         </div>
       `;
-      
+
       appInfoFullscreen.classList.add('show');
       addLog('info', '查看应用信息: ' + app.name);
     }
-    
+
     function closeAppInfo() {
       appInfoFullscreen.classList.remove('show');
       currentAppInfoFile = null;
     }
-    
+
     function launchAppFromInfo(fileKey) {
       closeAppInfo();
       setTimeout(() => {
@@ -3032,12 +3040,12 @@
         launchApp(fileKey, element);
       }, 300);
     }
-    
+
     function updateAppFromInfo(fileKey) {
       updateAppFromFile(fileKey);
       closeAppInfo();
     }
-    
+
     // 系统核心应用保护检查
     function isSystemApp(app) {
       return app && app.source === 'system';
@@ -3060,21 +3068,21 @@
       }
       return trimmed;
     }
-    
+
     function renameAppFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
       if (isSystemApp(app)) { showToast('系统核心应用，无法重命名', 'error'); return; }
       const newName = prompt('请输入新的应用名称：', app.name);
-      if (newName?.trim()) { 
+      if (newName?.trim()) {
         const finalName = sanitizeAppDisplayName(newName.trim().slice(0, 50));
         app.name = finalName;
-        saveApps(); 
+        saveApps();
         showToast(finalName !== newName.trim().slice(0, 50) ? '该名称为系统保留名称，已自动调整' : '已重命名', 'success', 1500);
         showAppInfo(fileKey);
       }
     }
-    
+
     function toggleHideFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
@@ -3085,7 +3093,7 @@
       showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
       showAppInfo(fileKey);
     }
-    
+
     function toggleLockFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
@@ -3096,7 +3104,7 @@
       showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
       showAppInfo(fileKey);
     }
-    
+
     async function exportSingleApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
@@ -3110,13 +3118,13 @@
       URL.revokeObjectURL(url);
       showToast('✅ 应用已导出', 'success');
     }
-    
+
     async function deleteAppFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
       if (isSystemApp(app)) { showToast('🛡️ 系统核心应用，无法卸载', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法卸载', 'error'); return; }
-      
+
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
       await dbDelete(STORE_APPS, fileKey);
@@ -3129,7 +3137,7 @@
       showToast('应用已卸载', 'info', 2000);
       addLog('info', '卸载应用: ' + fileKey);
     }
-    
+
     // ==================== IndexedDB 数据库层 ====================
     const DB_NAME = 'htmlos_db';
     const DB_VERSION = 17;
@@ -3137,9 +3145,9 @@
     const STORE_CONTENT = 'appContent';
     const STORE_SETTINGS = 'settings';
     const STORE_STATS = 'stats';
-    
+
     let db = null;
-    
+
     function openDB() {
       return new Promise((resolve, reject) => {
         if (db) return resolve(db);
@@ -3155,7 +3163,7 @@
         };
       });
     }
-    
+
     function dbPut(storeName, data) {
       return openDB().then(database => new Promise((resolve, reject) => {
         const request = database.transaction(storeName, 'readwrite').objectStore(storeName).put(data);
@@ -3163,7 +3171,7 @@
         request.onerror = (e) => reject(e.target.error);
       }));
     }
-    
+
     function dbGet(storeName, key) {
       return openDB().then(database => new Promise((resolve, reject) => {
         const request = database.transaction(storeName, 'readonly').objectStore(storeName).get(key);
@@ -3171,7 +3179,7 @@
         request.onerror = (e) => reject(e.target.error);
       }));
     }
-    
+
     function dbGetAll(storeName) {
       return openDB().then(database => new Promise((resolve, reject) => {
         const request = database.transaction(storeName, 'readonly').objectStore(storeName).getAll();
@@ -3179,7 +3187,7 @@
         request.onerror = (e) => reject(e.target.error);
       }));
     }
-    
+
     function dbDelete(storeName, key) {
       return openDB().then(database => new Promise((resolve, reject) => {
         const request = database.transaction(storeName, 'readwrite').objectStore(storeName).delete(key);
@@ -3187,7 +3195,7 @@
         request.onerror = (e) => reject(e.target.error);
       }));
     }
-    
+
     function dbClear(storeName) {
       return openDB().then(database => new Promise((resolve, reject) => {
         const request = database.transaction(storeName, 'readwrite').objectStore(storeName).clear();
@@ -3195,7 +3203,7 @@
         request.onerror = (e) => reject(e.target.error);
       }));
     }
-    
+
     // ==================== 全局工具函数 ====================
     function escapeHtml(str) {
       if (!str) return '';
@@ -3205,7 +3213,7 @@
       let timeout;
       return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); };
     }
-    
+
     // ==================== 设置标签页切换 ====================
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.settings-tab').forEach(tab => {
@@ -3217,7 +3225,7 @@
         });
       });
     });
-    
+
     // ==================== FPS 模块（自适应屏幕刷新率上限，有多少帧跑多少帧）====================
     (function() {
       let frameCount = 0, lastTime = 0, rafId = null, maxFps = 0;
@@ -3238,12 +3246,12 @@
         rafId = requestAnimationFrame(updateFPS);
       }
       function toggleFPS(show) {
-        if (show) { 
-          fpsCounter.classList.add('show'); 
+        if (show) {
+          fpsCounter.classList.add('show');
           if (!rafId) { lastTime = performance.now(); rafId = requestAnimationFrame(updateFPS); }
-        } else { 
-          fpsCounter.classList.remove('show'); 
-          if (rafId) { cancelAnimationFrame(rafId); rafId = null; } 
+        } else {
+          fpsCounter.classList.remove('show');
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
         }
       }
       // 实测屏幕刷新率上限：rAF 与显示器刷新率同步，采样约0.6秒，不设任何帧率上限
@@ -3259,18 +3267,18 @@
       }
       window.fpsControl = { toggle: toggleFPS, measureRefresh };
     })();
-    
+
     // ========== 开发者模式 ==========
     function activateDevMode() {
       if (devModeActive) {
         showToast('🔧 开发者模式已开启', 'dev', 2000);
         return;
       }
-      
+
       versionClickCount++;
       clearTimeout(versionClickTimer);
       versionClickTimer = setTimeout(() => { versionClickCount = 0; }, 1500);
-      
+
       if (versionClickCount >= 7) {
         clearTimeout(versionClickTimer);
         versionClickCount = 0;
@@ -3284,37 +3292,37 @@
         if (remaining <= 3) showToast('再点击 ' + remaining + ' 次激活开发者模式', 'dev', 1200);
       }
     }
-    
+
     function deactivateDevMode() {
       devModeActive = false;
       dbPut(STORE_SETTINGS, { key: 'dev_mode', value: 'false' });
       devTab.style.display = 'none';
       window.fpsControl.toggle(false);
       fpsToggle.checked = false;
-      
+
       systemSettings.advancedOptimizeMemory = false;
       advancedOptimizeMemoryToggle.checked = false;
       if (advancedMemoryOptimizeTimer) {
         clearInterval(advancedMemoryOptimizeTimer);
         advancedMemoryOptimizeTimer = null;
       }
-      
+
       showToast('✅ 开发者模式已关闭', 'success');
       addLog('info', '开发者模式已关闭');
     }
-    
+
     // ========== 壁纸预设（含选中状态同步，修复蓝边不消除问题）==========
     function clearPresetSelection() {
       document.querySelectorAll('.wallpaper-preset.selected').forEach(p => p.classList.remove('selected'));
     }
-    
+
     function syncPresetSelection() {
       const cur = bgImageInput.value.trim();
       document.querySelectorAll('.wallpaper-preset').forEach(p => {
         p.classList.toggle('selected', cur !== '' && p.dataset.url === cur);
       });
     }
-    
+
     function initWallpaperPresets() {
       wallpaperPresets.innerHTML = '';
       presetWallpapers.forEach(wp => {
@@ -3331,7 +3339,7 @@
         wallpaperPresets.appendChild(div);
       });
     }
-    
+
     // ========== 本地壁纸上传 ==========
     function uploadWallpaper() {
       const input = document.createElement('input');
@@ -3350,19 +3358,19 @@
       };
       input.click();
     }
-    
+
     // ========== 排序功能 ==========
     function showSortMenu() { sortMenu.style.display = 'block'; }
     function closeSortMenu() { sortMenu.style.display = 'none'; }
-    
+
     async function sortApps(sortBy) {
       currentSort = sortBy;
       currentPage = 0;
-      
+
       await dbPut(STORE_SETTINGS, { key: 'currentSort', value: sortBy });
-      
+
       let appsToSort = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
-      
+
       switch(sortBy) {
         case 'name':
           appsToSort.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
@@ -3387,23 +3395,23 @@
           appsToSort = appSizes.map(item => item.app);
           break;
       }
-      
+
       // 修复：显示隐藏应用时直接采用排序结果，避免隐藏应用被重复拼接
       if (showHiddenApps) {
         installedApps = appsToSort;
       } else {
         installedApps = [...appsToSort, ...installedApps.filter(a => a.hidden)];
       }
-      
+
       await saveApps();
       renderApps();
       closeSortMenu();
-      
+
       const sortLabels = { 'name': '名称', 'installTime': '安装时间', 'lastUsed': '使用频率', 'size': '应用大小' };
       showToast('已按' + sortLabels[sortBy] + '排序', 'info');
       addLog('info', '应用已按' + sortLabels[sortBy] + '排序');
     }
-    
+
     // ========== 应用隐藏/锁定 ==========
     function toggleHiddenApps() {
       showHiddenApps = !showHiddenApps;
@@ -3411,7 +3419,7 @@
       renderApps();
       showToast(showHiddenApps ? '已显示隐藏应用' : '已隐藏隐藏应用', 'info');
     }
-    
+
     function hideApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
@@ -3422,7 +3430,7 @@
       showToast(app.hidden ? '应用已隐藏' : '应用已取消隐藏', 'info');
       document.querySelector('.app-action-modal')?.remove();
     }
-    
+
     function lockApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
@@ -3433,12 +3441,12 @@
       showToast(app.locked ? '应用已锁定' : '应用已解锁', 'info');
       document.querySelector('.app-action-modal')?.remove();
     }
-    
+
     // ========== 返回顶部 ==========
     function scrollToTop() {
       appsContainer.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     let lastHeaderClick = 0;
     winHeader.addEventListener('click', () => {
       if (!systemSettings.doubleClickTop) return;
@@ -3446,26 +3454,26 @@
       if (now - lastHeaderClick < 300) scrollToTop();
       lastHeaderClick = now;
     });
-    
+
     // ========== 修复磁贴布局 ==========
     function fixTileLayout() {
       currentPage = 0;
       renderApps();
       showToast('磁贴布局已修复', 'success');
     }
-    
+
     // ========== 更新页面指示器 ==========
     function updatePageIndicator(totalPages) {
       const showIndicator = pageIndicatorToggle?.checked ?? true;
-      
+
       if (!showIndicator || totalPages <= 1) {
         pageIndicator.style.display = 'none';
         return;
       }
-      
+
       pageIndicator.style.display = 'flex';
       pageIndicator.innerHTML = '';
-      
+
       for (let i = 0; i < totalPages; i++) {
         const dot = document.createElement('div');
         dot.className = 'page-dot' + (i === currentPage ? ' active' : '');
@@ -3473,12 +3481,12 @@
         pageIndicator.appendChild(dot);
       }
     }
-    
+
     // ========== 系统原生调色盘功能 ==========
     function openSystemColorPicker(appFile) {
       const app = installedApps.find(a => a.file === appFile);
       if (!app) return;
-      
+
       const colorInput = document.createElement('input');
       colorInput.type = 'color';
       colorInput.value = app.customColor || app.color || '#0078d7';
@@ -3489,24 +3497,24 @@
       });
       colorInput.click();
     }
-    
+
     // ========== 网络状态监听 ==========
     window.addEventListener('online', () => {
       offlineBanner.classList.remove('show');
       showToast('网络已恢复', 'success');
     });
-    
+
     window.addEventListener('offline', () => {
       offlineBanner.classList.add('show');
       showToast('您已离线，部分功能可能受限', 'warning');
     });
-    
+
     // ========== 系统设置加载与保存 ==========
     async function loadSystemSettings() {
       const settings = await dbGetAll(STORE_SETTINGS);
       const map = {};
       settings.forEach(s => map[s.key] = s.value);
-      
+
       systemSettings.showSeconds = map['show_seconds'] !== 'false';
       systemSettings.time24 = map['time_24'] !== 'false';
       systemSettings.showDate = map['show_date'] !== 'false';
@@ -3518,7 +3526,7 @@
       systemSettings.sandboxEnabled = map['sandbox_enabled'] !== 'false';
       systemSettings.autoOptimizeMemory = map['auto_optimize_memory'] === 'true';
       systemSettings.advancedOptimizeMemory = map['advanced_optimize_memory'] === 'true';
-      
+
       showSecondsToggle.checked = systemSettings.showSeconds;
       time24Toggle.checked = systemSettings.time24;
       showDateToggle.checked = systemSettings.showDate;
@@ -3530,22 +3538,22 @@
       autoOptimizeMemoryToggle.checked = systemSettings.autoOptimizeMemory;
       advancedOptimizeMemoryToggle.checked = systemSettings.advancedOptimizeMemory;
     }
-    
+
     async function saveSystemSettings() {
       systemSettings.showSeconds = showSecondsToggle.checked;
       systemSettings.time24 = time24Toggle.checked;
       systemSettings.showDate = showDateToggle.checked;
       systemSettings.toastEnabled = toastEnabledToggle.checked;
-      
+
       const durationVal = parseInt(toastDurationInput.value);
       systemSettings.toastDuration = (isNaN(durationVal) || durationVal < 1 || durationVal > 60) ? 3000 : durationVal * 1000;
-      
+
       systemSettings.notificationSound = notificationSoundToggle.checked;
       systemSettings.doubleClickTop = doubleClickTopToggle.checked;
       systemSettings.appCloseConfirm = appCloseConfirmToggle.checked;
       systemSettings.autoOptimizeMemory = autoOptimizeMemoryToggle.checked;
       systemSettings.advancedOptimizeMemory = advancedOptimizeMemoryToggle.checked;
-      
+
       await dbPut(STORE_SETTINGS, { key: 'show_seconds', value: String(systemSettings.showSeconds) });
       await dbPut(STORE_SETTINGS, { key: 'time_24', value: String(systemSettings.time24) });
       await dbPut(STORE_SETTINGS, { key: 'show_date', value: String(systemSettings.showDate) });
@@ -3556,14 +3564,14 @@
       await dbPut(STORE_SETTINGS, { key: 'app_close_confirm', value: String(systemSettings.appCloseConfirm) });
       await dbPut(STORE_SETTINGS, { key: 'auto_optimize_memory', value: String(systemSettings.autoOptimizeMemory) });
       await dbPut(STORE_SETTINGS, { key: 'advanced_optimize_memory', value: String(systemSettings.advancedOptimizeMemory) });
-      
+
       startAutoMemoryOptimize();
       if (devModeActive) startAdvancedAutoMemoryOptimize();
-      
+
       buildDateTimeFormatters();
       updateDateTime();
     }
-    
+
     // ========== iframe postMessage 通信（含限流防刷、高危操作拦截）==========
     let _msgWindowStart = 0, _msgCount = 0;
     // 允许的应用操作白名单（基础能力与硬件调用如震动均保留，确保正常使用不受影响）
@@ -3579,14 +3587,14 @@
       'navigateTop', 'setSource', 'setAsSystem'
     ]);
     const MAX_MSG_DATA_SIZE = 8000; // 单条消息 data 字段最大序列化字符数，避免超大payload滥用
-    
+
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
         if (!appFrame || event.source !== appFrame.contentWindow) {
           if (event.source !== window) addLog('warn', '收到来自未知来源的消息，已阻止');
           return;
         }
-        
+
         // 限流：每秒最多30条，防止恶意应用消息洪水攻击拖垮系统
         const now = Date.now();
         if (now - _msgWindowStart > 1000) { _msgWindowStart = now; _msgCount = 0; }
@@ -3594,25 +3602,25 @@
           if (_msgCount === 31) addLog('warn', '应用消息过于频繁，已触发限流');
           return;
         }
-        
+
         const msg = event.data;
         if (!msg || typeof msg !== 'object' || !msg.type || msg.from !== 'htmlos-app' || typeof msg.action !== 'string') {
           addLog('warn', '收到来自应用的无效消息格式，已阻止');
           return;
         }
-        
+
         // 高危操作显式拦截：应用尝试冒充系统级/高权限指令时，直接拒绝并提示用户
         if (BLOCKED_HIGH_RISK_ACTIONS.includes(msg.action)) {
           addLog('error', '⚠️ 检测到应用尝试执行高危/越权操作: ' + msg.action + '，已强制拦截');
           showToast('检测到应用尝试执行高危操作，已拦截', 'error', 4000);
           return;
         }
-        
+
         if (!ALLOWED_APP_ACTIONS.includes(msg.action)) {
           addLog('warn', '应用尝试执行未授权操作: ' + msg.action + '，已阻止');
           return;
         }
-        
+
         // 限制data体积，防止利用超大payload进行存储/内存滥用攻击
         if (msg.data !== undefined) {
           try {
@@ -3622,14 +3630,14 @@
             }
           } catch (e) { /* 非可序列化数据，交由各分支自行校验 */ }
         }
-        
+
         switch (msg.action) {
           case 'getSystemInfo':
-            sendMessageToApp({ 
-              type: 'systemInfo', 
-              version: VERSION, 
-              theme: document.body.className, 
-              appCount: installedApps.length, 
+            sendMessageToApp({
+              type: 'systemInfo',
+              version: VERSION,
+              theme: document.body.className,
+              appCount: installedApps.length,
               online: navigator.onLine,
               sandbox: systemSettings.sandboxEnabled,
               guard: true
@@ -3644,8 +3652,8 @@
           case 'vibrate':
             // 基础硬件能力：仅做参数安全裁剪，不额外限制，确保震动等硬件调用正常可用
             if (navigator.vibrate && msg.data?.pattern && vibrationToggle.checked) {
-              const safePattern = Array.isArray(msg.data.pattern) 
-                ? msg.data.pattern.slice(0, 10).map(n => Math.min(Math.max(0, n), 1000)) 
+              const safePattern = Array.isArray(msg.data.pattern)
+                ? msg.data.pattern.slice(0, 10).map(n => Math.min(Math.max(0, n), 1000))
                 : [Math.min(Math.max(0, msg.data.pattern), 1000)];
               navigator.vibrate(safePattern);
             }
@@ -3694,7 +3702,7 @@
         }
       });
     }
-    
+
     function sendMessageToApp(data) {
       try {
         if (appFrame?.contentWindow) {
@@ -3704,7 +3712,7 @@
         addLog('warn', '发送消息到应用失败: ' + e.message);
       }
     }
-    
+
     // ========== 数据加载 ==========
     async function loadInstalledApps() {
       try {
@@ -3729,12 +3737,12 @@
             }
           }
         }
-      } catch (e) { 
-        addLog('error', '加载应用数据失败', e); 
-        installedApps = []; 
+      } catch (e) {
+        addLog('error', '加载应用数据失败', e);
+        installedApps = [];
       }
     }
-    
+
     // 单事务批量写入；先清空 store，确保已卸载应用不残留
     let _saveAppsPending = false;
     const saveApps = debounce(async function() {
@@ -3770,13 +3778,13 @@
         _saveAppsPending = false;
       }
     }, 300);
-    
+
     // 统一的主题应用入口（供DOMGuard追踪当前主题）
     function applyTheme(theme) {
       currentTheme = theme;
       document.body.className = 'theme-' + theme;
     }
-    
+
     // 统一的背景应用入口（DOMGuard以此值为授权基准）
     // 修复：只更新 CSS 自定义属性 --bg，不直接赋值 body.style.background，
     // 避免内联 style 覆盖各主题的 body background 规则，从而导致壁纸不显示。
@@ -3789,7 +3797,7 @@
       }
       authorizedBGNormalized = bgValue; // 以 --bg 变量值作为巡检基准，而非 computed background
     }
-    
+
     async function loadSettings() {
       try {
         const settings = await dbGetAll(STORE_SETTINGS);
@@ -3807,35 +3815,35 @@
         applyTheme(localStorage.getItem('htmlos_theme') || 'sharp');
       }
     }
-    
+
     async function saveSettings() {
       const color = bgColorPicker.value;
       const imageUrl = bgImageInput.value.trim();
       const bgValue = imageUrl ? 'url(' + imageUrl + ') center/cover no-repeat fixed' : color;
       setAuthorizedBackground(bgValue);
-      
+
       cols = parseInt(colsSelect.value);
       document.body.style.setProperty('--cols', cols);
-      
+
       try {
         await dbPut(STORE_SETTINGS, { key: 'bg', value: bgValue });
         await dbPut(STORE_SETTINGS, { key: 'cols', value: String(cols) });
         const theme = themeSelect.value;
         applyTheme(theme);
         await dbPut(STORE_SETTINGS, { key: 'theme', value: theme });
-        
+
         const fpsState = fpsToggle.checked;
         await dbPut(STORE_SETTINGS, { key: 'fps', value: fpsState ? 'on' : 'off' });
         window.fpsControl.toggle(fpsState);
-        
+
         await dbPut(STORE_SETTINGS, { key: 'launchAnim', value: launchAnimToggle.checked ? 'on' : 'off' });
         await dbPut(STORE_SETTINGS, { key: 'vibration', value: vibrationToggle.checked ? 'on' : 'off' });
         await dbPut(STORE_SETTINGS, { key: 'pageIndicator', value: pageIndicatorToggle.checked ? 'on' : 'off' });
-        
+
         await saveSystemSettings();
-        
+
         pageIndicator.style.display = pageIndicatorToggle.checked ? 'flex' : 'none';
-        
+
         showToast('设置已保存', 'success');
         addLog('info', '设置已保存');
       } catch (e) {
@@ -3844,51 +3852,51 @@
         localStorage.setItem('htmlos_cols', String(cols));
         localStorage.setItem('htmlos_theme', themeSelect.value);
       }
-      
+
       closeSettings();
       currentPage = 0;
       renderApps();
     }
-    
+
     // ========== 内容存取兼容层 ==========
     async function getContentSafe(key) {
-      try { 
-        const result = await dbGet(STORE_CONTENT, key); 
-        if (result && result.content !== undefined && result.content !== null) return result.content; 
-      } catch (e) { 
-        addLog('warn', 'IndexedDB读取失败，尝试localStorage: ' + key); 
+      try {
+        const result = await dbGet(STORE_CONTENT, key);
+        if (result && result.content !== undefined && result.content !== null) return result.content;
+      } catch (e) {
+        addLog('warn', 'IndexedDB读取失败，尝试localStorage: ' + key);
       }
       return localStorage.getItem(key);
     }
-    
+
     async function setContentSafe(key, content) {
-      try { 
-        await dbPut(STORE_CONTENT, { file: key, content: content }); 
-      } catch (e) { 
-        addLog('warn', 'IndexedDB写入失败，回退到localStorage: ' + key); 
-        localStorage.setItem(key, content); 
+      try {
+        await dbPut(STORE_CONTENT, { file: key, content: content });
+      } catch (e) {
+        addLog('warn', 'IndexedDB写入失败，回退到localStorage: ' + key);
+        localStorage.setItem(key, content);
       }
     }
-    
+
     async function deleteContentSafe(key) {
-      try { 
-        await dbDelete(STORE_CONTENT, key); 
-      } catch (e) { 
-        localStorage.removeItem(key); 
+      try {
+        await dbDelete(STORE_CONTENT, key);
+      } catch (e) {
+        localStorage.removeItem(key);
       }
     }
-    
+
     // ==================== 应用属性修改 ====================
     function changeAppColor(file, color) {
       const app = installedApps.find(a => a.file === file);
       if (app) { app.customColor = color; app.color = color; saveApps(); renderApps(); }
     }
-    
+
     function changeAppIcon(file, icon) {
       const app = installedApps.find(a => a.file === file);
       if (app) { app.icon = icon || '📱'; saveApps(); renderApps(); showToast('图标已更新', 'info', 1500); }
     }
-    
+
     function changeAppSize(file, size) {
       const app = installedApps.find(a => a.file === file);
       if (!app) return;
@@ -3898,7 +3906,7 @@
       renderApps();
       showToast('磁贴大小: ' + sizeLabels[app.size], 'info', 1500);
     }
-    
+
     // ========== 渲染应用（rAF合帧）==========
     function renderApps() {
       if (window._renderRaf) cancelAnimationFrame(window._renderRaf);
@@ -3907,32 +3915,32 @@
         window._renderRaf = null;
       });
     }
-    
+
     function _renderAppsImpl() {
       appsContainer.innerHTML = '';
-      
+
       const filteredApps = showHiddenApps ? [...installedApps] : installedApps.filter(a => !a.hidden);
       const perPage = cols * 3;
       const totalPages = Math.ceil(filteredApps.length / perPage) || 1;
-      
+
       if (currentPage < 0) currentPage = 0;
       if (currentPage >= totalPages) currentPage = totalPages - 1;
-      
+
       const pageApps = filteredApps.slice(currentPage * perPage, currentPage * perPage + perPage);
-      
+
       if (pageApps.length === 0 && filteredApps.length > 0) {
         currentPage = 0;
         renderApps();
         return;
       }
-      
+
       if (pageApps.length === 0) {
         appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>';
         navButtons.classList.add('hidden');
         updatePageIndicator(totalPages);
         return;
       }
-      
+
       const fragment = document.createDocumentFragment();
       pageApps.forEach(app => {
         const div = document.createElement('div');
@@ -3943,27 +3951,27 @@
         div.innerHTML = '<span class="icon-emoji">' + escapeHtml(app.icon || '📱') + '</span><span class="tile-label" title="' + escapeHtml(app.name) + '">' + escapeHtml(app.name) + '</span>';
         fragment.appendChild(div);
       });
-      
+
       appsContainer.appendChild(fragment);
       updatePageInfo(filteredApps.length, perPage);
       updatePageIndicator(totalPages);
-      
+
       navButtons.classList.toggle('hidden', totalPages <= 1);
     }
-    
+
     // ========== 应用图标事件处理（修复鼠标二次点击失效bug）==========
     let longPressTimer, touchMoved, suppressNextClick, currentAppElement;
-    
+
     appsContainer.addEventListener('touchstart', (e) => {
       const appIcon = e.target.closest('.app-icon');
       if (!appIcon) return;
-      
+
       currentAppElement = appIcon;
       touchMoved = false;
       suppressNextClick = false;
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
-      
+
       longPressTimer = setTimeout(() => {
         if (!touchMoved) {
           suppressNextClick = true;
@@ -3973,30 +3981,30 @@
         }
       }, 500);
     }, { passive: true });
-    
+
     appsContainer.addEventListener('touchmove', (e) => {
-      if (Math.abs(e.touches[0].clientX - touchStartX) > TOUCH_THRESHOLD || 
+      if (Math.abs(e.touches[0].clientX - touchStartX) > TOUCH_THRESHOLD ||
           Math.abs(e.touches[0].clientY - touchStartY) > TOUCH_THRESHOLD) {
         touchMoved = true;
         if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
       }
     }, { passive: true });
-    
+
     appsContainer.addEventListener('touchend', (e) => {
       if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
-      
+
       const appIcon = e.target.closest('.app-icon');
       if (!appIcon || appIcon !== currentAppElement) return;
-      
+
       if (!touchMoved && !suppressNextClick) {
-        if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD && 
+        if (Math.abs(e.changedTouches[0].clientX - touchStartX) < TOUCH_THRESHOLD &&
             Math.abs(e.changedTouches[0].clientY - touchStartY) < TOUCH_THRESHOLD) {
           suppressNextClick = true; // 抑制紧随其后的合成click，防止重复启动
           launchApp(appIcon.getAttribute('data-file'), appIcon);
         }
       }
     });
-    
+
     appsContainer.addEventListener('click', (e) => {
       const appIcon = e.target.closest('.app-icon');
       if (!appIcon) return;
@@ -4004,7 +4012,7 @@
       if (suppressNextClick) { suppressNextClick = false; return; }
       launchApp(appIcon.getAttribute('data-file'), appIcon);
     });
-    
+
     appsContainer.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       const appIcon = e.target.closest('.app-icon');
@@ -4020,25 +4028,25 @@
       const app = installedApps.find(a => a.file === appIcon.getAttribute('data-file'));
       if (app) showActionMenu(app, appIcon);
     });
-    
+
     // ========== 应用菜单 ==========
     function showActionMenu(app, element) {
       document.querySelector('.app-action-modal')?.remove();
       const modal = document.createElement('div');
       modal.className = 'app-action-modal';
       const isSystem = isSystemApp(app);
-      
-      const iconOptions = iconLibrary.map(icon => 
+
+      const iconOptions = iconLibrary.map(icon =>
         '<div class="icon-option' + (app.icon === icon ? ' selected' : '') + '" onclick="changeAppIcon(\'' + app.file + '\',\'' + icon + '\');document.querySelector(\'.app-action-modal\')?.remove()">' + icon + '</div>'
       ).join('');
-      
+
       const colorOptions = colorPalette.map(c =>
         '<div class="color-swatch" style="background:' + c + ';" onclick="changeAppColor(\'' + app.file + '\',\'' + c + '\');document.querySelector(\'.app-action-modal\')?.remove()"></div>'
       ).join('');
-      
+
       const menuBtnStyle = 'display:block;width:100%;margin:8px 0;padding:12px;color:#fff;cursor:pointer;border-radius:8px;';
       const normalBtn = menuBtnStyle + 'background:var(--input-bg);border:var(--input-border);';
-      
+
       modal.innerHTML = `
         <h3 style="margin-bottom:15px;text-align:center;">${escapeHtml(app.icon || '📱')} ${escapeHtml(app.name)}${isSystem ? ' 🛡️' : ''}</h3>
         <div class="icon-selector"><div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">🎨 选择图标</div><div class="icon-grid">${iconOptions}</div>
@@ -4060,7 +4068,7 @@
         <button onclick="this.parentElement.remove()" style="${normalBtn}">取消</button>`;
       document.body.appendChild(modal);
     }
-    
+
     function applyCustomIcon(appFile) {
       const input = document.getElementById('customIconInput_' + appFile);
       const customIcon = input.value.trim();
@@ -4071,13 +4079,13 @@
         showToast('请输入图标', 'warning');
       }
     }
-    
+
     function renameApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
       if (isSystemApp(app)) { showToast('系统核心应用，无法重命名', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法重命名', 'error'); return; }
-      
+
       const newName = prompt('请输入新的应用名称：', app.name);
       if (newName?.trim()) {
         const finalName = sanitizeAppDisplayName(newName.trim().slice(0, 50));
@@ -4087,13 +4095,13 @@
       }
       document.querySelector('.app-action-modal')?.remove();
     }
-    
+
     async function deleteApp(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
       if (isSystemApp(app)) { showToast('🛡️ 系统核心应用，无法卸载', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法卸载', 'error'); return; }
-      
+
       if (!confirm('确定卸载此应用？')) return;
       await deleteContentSafe(fileKey);
       await dbDelete(STORE_APPS, fileKey);
@@ -4106,7 +4114,7 @@
       showToast('应用已卸载', 'info', 2000);
       addLog('info', '卸载应用: ' + fileKey);
     }
-    
+
     // ========== 分页 ==========
     function updatePageInfo(total, perPage) {
       const totalPages = Math.ceil(total / perPage) || 1;
@@ -4114,27 +4122,27 @@
       prevBtn.disabled = currentPage === 0;
       nextBtn.disabled = currentPage >= totalPages - 1;
     }
-    
-    function prevPage() { 
-      if (currentPage > 0) { currentPage--; renderApps(); } 
+
+    function prevPage() {
+      if (currentPage > 0) { currentPage--; renderApps(); }
     }
-    
-    function nextPage() { 
+
+    function nextPage() {
       const filteredApps = showHiddenApps ? installedApps : installedApps.filter(a => !a.hidden);
       const totalPages = Math.ceil(filteredApps.length / (cols * 3)) || 1;
-      if (currentPage < totalPages - 1) { currentPage++; renderApps(); } 
+      if (currentPage < totalPages - 1) { currentPage++; renderApps(); }
     }
-    
+
     // ========== 滑动翻页 ==========
     function setupSwipe() {
       let sx = 0, sy = 0, startTime = 0;
-      
+
       mainContainer.addEventListener('touchstart', e => {
         sx = e.touches[0].clientX;
         sy = e.touches[0].clientY;
         startTime = Date.now();
       }, { passive: true });
-      
+
       mainContainer.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - sx;
         const dy = Math.abs(e.changedTouches[0].clientY - sy);
@@ -4144,7 +4152,7 @@
         }
       }, { passive: true });
     }
-    
+
     // ========== 搜索 ==========
     function setupSearch() {
       searchApps.addEventListener('input', debounce((e) => {
@@ -4157,46 +4165,73 @@
         requestAnimationFrame(() => _performSearch(term));
       }, 300));
     }
-    
+
     function _performSearch(term) {
       appsContainer.innerHTML = '';
       navButtons.classList.add('hidden');
       pageIndicator.style.display = 'none';
-      
+
       const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       // 修复：搜索默认不显示隐藏应用（除非已开启"显示隐藏"）
       const filtered = installedApps
         .filter(a => (showHiddenApps || !a.hidden) && a.name.toLowerCase().includes(term))
         .sort((a, b) => a.name.localeCompare(b.name, 'zh'));
-      
-      if (filtered.length === 0) { 
-        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>'; 
-        return; 
+
+      if (filtered.length === 0) {
+        appsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-secondary);">没有找到应用</div>';
+        return;
       }
-      
+
       const fragment = document.createDocumentFragment();
       filtered.forEach(app => {
         const div = document.createElement('div');
         div.className = 'app-icon size-' + (app.size || 'small');
         div.style.setProperty('--icon-bg', app.customColor || app.color || '#0078d7');
         div.setAttribute('data-file', app.file);
-        
+
         const safeName = escapeHtml(app.name);
-        const highlightedName = safeName.replace(new RegExp(escapedTerm, 'gi'), match => 
+        const highlightedName = safeName.replace(new RegExp(escapedTerm, 'gi'), match =>
           '<span class="search-highlight">' + match + '</span>'
         );
-        
+
         div.innerHTML = '<span class="icon-emoji">' + escapeHtml(app.icon || '📱') + '</span><span class="tile-label" title="' + safeName + '">' + highlightedName + '</span>';
         fragment.appendChild(div);
       });
-      
+
       appsContainer.appendChild(fragment);
     }
-    
+
     // ========== 安装应用 ==========
     function openInstaller() { installModal.classList.add('show'); }
     function closeModal() { installModal.classList.remove('show'); installProgress.style.display = 'none'; }
-    
+
+    // 拖拽安装：支持将一个或多个 .html 文件直接拖入安装弹窗
+    (function setupInstallDropZone() {
+      const zone = $('installDropZone');
+      if (!zone) return;
+      let dragDepth = 0;
+      const highlight = (on) => {
+        zone.style.background = on ? 'rgba(10,132,255,0.15)' : '';
+        zone.style.borderColor = on ? 'rgba(10,132,255,0.6)' : 'rgba(255,255,255,0.3)';
+      };
+      ['dragenter', 'dragover'].forEach(evt => zone.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dragDepth++; highlight(true);
+      }));
+      ['dragleave', 'dragend'].forEach(evt => zone.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dragDepth = Math.max(0, dragDepth - 1);
+        if (dragDepth === 0) highlight(false);
+      }));
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dragDepth = 0; highlight(false);
+        const files = Array.from(e.dataTransfer?.files || []);
+        if (files.length === 0) return;
+        batchInstall(files, false);
+      });
+    })();
+
     // 修复："更新的时候有概率会直接卡死"：原生文件选择框是模态的，如果用户在
     // 一次选择尚未完成（对话框仍开着）时再次触发安装/更新，会重复创建 input
     // 并 .click()，在部分移动端 WebView 上会导致两个原生对话框状态冲突，
@@ -4221,12 +4256,12 @@
       input.click();
       return true;
     }
-    
+
     // 净化文件名，防止引号破坏内联事件与选择器
     function safeFileName(name) {
       return String(name).replace(/['"\\<>]/g, '_');
     }
-    
+
     async function showFilePicker() {
       const input = document.createElement('input');
       input.type = 'file';
@@ -4251,21 +4286,21 @@
       };
       openFilePickerSafely(input);
     }
-    
+
     async function batchInstall(files, isFolder) {
-      installProgress.style.display = 'block'; 
-      progressFill.style.width = '0%'; 
+      installProgress.style.display = 'block';
+      progressFill.style.width = '0%';
       progressText.textContent = isFolder ? '正在扫描文件夹...' : '准备安装...';
-      
+
       const htmlFiles = files.filter(f => /\.html?$/i.test(f.name));
       if (htmlFiles.length === 0) { showToast('没有有效的HTML文件', 'warning'); installProgress.style.display = 'none'; return; }
-      
+
       let sc = 0, fc = 0;
       for (let i = 0; i < htmlFiles.length; i++) {
         const file = htmlFiles[i];
         progressFill.style.width = Math.round((i / htmlFiles.length) * 100) + '%';
         progressText.textContent = '正在安装 ' + (i + 1) + '/' + htmlFiles.length + ': ' + file.name;
-        
+
         try {
           const content = await new Promise((resolve, reject) => {
             const r = new FileReader();
@@ -4273,14 +4308,14 @@
             r.onerror = reject;
             r.readAsText(file);
           });
-          
+
           const fn = 'user/apps/' + Date.now() + '_' + safeFileName(file.name);
           await setContentSafe(fn, content);
-          
+
           const ex = installedApps.findIndex(a => a.name === file.name.replace(/\.html?$/i, ''));
           const now = new Date().toISOString();
           const cl = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-          
+
           if (ex !== -1) {
             // 修复：覆盖安装时清理旧内容文件与统计，避免残留
             const oldFile = installedApps[ex].file;
@@ -4303,13 +4338,13 @@
           addLog('error', '安装失败: ' + file.name, err);
         }
       }
-      
-      progressFill.style.width = '100%'; 
+
+      progressFill.style.width = '100%';
       progressText.textContent = '完成！成功: ' + sc + ', 失败: ' + fc;
       await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
-      await saveApps(); 
+      await saveApps();
       renderApps();
-      
+
       setTimeout(() => {
         installProgress.style.display = 'none';
         closeModal();
@@ -4317,7 +4352,7 @@
         addLog('info', (isFolder ? '文件夹' : '多文件') + '安装完成: ' + sc + '成功, ' + fc + '失败');
       }, 1500);
     }
-    
+
     function showMultiFilePicker() {
       const input = document.createElement('input');
       input.type = 'file';
@@ -4326,7 +4361,7 @@
       input.onchange = e => batchInstall(Array.from(e.target.files), false);
       openFilePickerSafely(input);
     }
-    
+
     function showFolderPicker() {
       const input = document.createElement('input');
       input.type = 'file';
@@ -4335,7 +4370,7 @@
       input.onchange = e => batchInstall(Array.from(e.target.files), true);
       openFilePickerSafely(input);
     }
-    
+
     // ========== 应用启动/关闭 ==========
     let _lastLaunchTime = 0;
     async function launchApp(filePath, iconElement) {
@@ -4343,39 +4378,39 @@
       const now = Date.now();
       if (now - _lastLaunchTime < 300) return;
       _lastLaunchTime = now;
-      
+
       const app = installedApps.find(a => a.file === filePath);
       if (!app) { showToast('应用文件丢失，无法打开', 'error'); return; }
-      
+
       if (launchAnimToggle.checked && iconElement) {
         iconElement.classList.add('launch-anim');
         setTimeout(() => iconElement.classList.remove('launch-anim'), 300);
       }
-      
+
       const content = await getContentSafe(filePath);
       if (!content) { showToast('应用文件损坏，无法打开', 'error'); return; }
-      
+
       appUsageStats[filePath] = (appUsageStats[filePath] || 0) + 1;
       dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
-      
+
       runningAppFile = filePath;
       runningAppTitle.textContent = (app.icon ? app.icon + ' ' : '') + app.name;
       populateSwitchAppSelect();
       appFrameContainer.classList.add('show');
       mainContainer.style.display = 'none';
-      
+
       // 确保沙箱状态正确后再注入内容
       updateSandboxState(false);
       appFrame.srcdoc = content;
-      
+
       setTimeout(() => {
         sendMessageToApp({ type: 'appLaunched', appName: app.name, appFile: app.file, timestamp: Date.now() });
       }, 500);
-      
+
       if (vibrationToggle.checked && navigator.vibrate) navigator.vibrate(30);
       addLog('info', '启动应用: ' + app.name);
     }
-    
+
     // 重建全新干净的iframe（防残留、防逃逸）
     function rebuildAppFrame() {
       if (appFrame && appFrame.parentNode) {
@@ -4390,23 +4425,23 @@
       appFrameContainer.appendChild(newFrame);
       appFrame = newFrame;
     }
-    
+
     function closeApp() {
       if (systemSettings.appCloseConfirm && !confirm('确定返回主屏幕吗？')) return;
-      
+
       try { sendMessageToApp({ type: 'appClosing', timestamp: Date.now() }); } catch (e) {}
-      
+
       mainContainer.style.display = 'flex';
       mainContainer.style.flexDirection = 'column';
       appFrameContainer.classList.remove('show');
-      
+
       rebuildAppFrame();
-      
+
       runningAppFile = null;
       renderApps();
       addLog('info', '应用已关闭，iframe已彻底重建');
     }
-    
+
     function populateSwitchAppSelect() {
       while (switchAppSelect.firstChild) switchAppSelect.removeChild(switchAppSelect.firstChild);
       const fragment = document.createDocumentFragment();
@@ -4419,7 +4454,7 @@
       }
       switchAppSelect.appendChild(fragment);
     }
-    
+
     function switchAppFromSelect() {
       const nf = switchAppSelect.value;
       if (nf && nf !== runningAppFile) {
@@ -4427,29 +4462,29 @@
         launchApp(nf);
       }
     }
-    
+
     // ========== 恢复默认设置 ==========
     function triggerResetWarning() {
       closeSettings();
       resetPasswordInput.value = '';
       resetWarningModal.classList.add('show');
     }
-    
+
     function closeResetWarning() { resetWarningModal.classList.remove('show'); }
-    
+
     async function confirmReset() {
       if (resetPasswordInput.value !== SYSTEM_PASSWORD) {
         showToast('密码错误！', 'error');
         return;
       }
-      
+
       try {
         const settingsToKeep = ['user_name', 'user_avatar', 'dev_mode', 'fps', 'sandbox_enabled', 'currentSort', 'system_password'];
         const allSettings = await dbGetAll(STORE_SETTINGS);
         for (const setting of allSettings) {
           if (!settingsToKeep.includes(setting.key)) await dbDelete(STORE_SETTINGS, setting.key);
         }
-        
+
         showToast('✅ 系统设置已恢复默认', 'success');
         addLog('info', '系统设置已恢复默认');
         location.reload();
@@ -4458,7 +4493,7 @@
         addLog('error', '恢复默认设置失败', e);
       }
     }
-    
+
     // ========== 格式化 ==========
     function triggerFormatWarning() {
       closeSettings();
@@ -4466,9 +4501,9 @@
       formatPasswordInput.value = '';
       formatWarningModal.classList.add('show');
     }
-    
+
     function closeFormatWarning() { formatWarningModal.classList.remove('show'); }
-    
+
     async function confirmFormat() {
       if (formatPasswordInput.value !== SYSTEM_PASSWORD) {
         showToast('密码错误！', 'error');
@@ -4483,7 +4518,7 @@
       localStorage.clear();
       location.reload();
     }
-    
+
     // ========== 导出/导入 ==========
     async function exportApps() {
       const awc = [];
@@ -4507,7 +4542,7 @@
       URL.revokeObjectURL(url);
       showToast('备份已导出', 'success');
     }
-    
+
     async function importApps() {
       const input = document.createElement('input');
       input.type = 'file';
@@ -4518,14 +4553,14 @@
           try {
             const data = JSON.parse(e.target.result);
             if (!data.apps || !Array.isArray(data.apps)) throw new Error('无效的备份文件');
-            
+
             const merge = mergeBackup.checked;
             if (!merge) {
               await dbClear(STORE_APPS);
               await dbClear(STORE_CONTENT);
               installedApps = [];
             }
-            
+
             for (const app of data.apps) {
               // 系统核心应用不通过备份导入，启动时由系统自动安装最新版
               if (app.file && String(app.file).startsWith('system/')) continue;
@@ -4546,7 +4581,7 @@
                 locked: app.locked || false
               });
             }
-            
+
             const database = await openDB();
             const tx = database.transaction(STORE_APPS, 'readwrite');
             const store = tx.objectStore(STORE_APPS);
@@ -4564,18 +4599,18 @@
               tx.oncomplete = resolve;
               tx.onerror = (e) => reject(e.target.error);
             });
-            
+
             if (data.settings && !merge) {
               for (const [k, v] of Object.entries(data.settings)) {
                 if (v && k !== 'system_password') await dbPut(STORE_SETTINGS, { key: k, value: v });
               }
             }
-            
+
             if (data.stats) {
               appUsageStats = data.stats;
               await dbPut(STORE_STATS, { key: 'appUsage', value: appUsageStats });
             }
-            
+
             showToast('✅ 导入成功！' + data.apps.length + ' 个应用', 'success');
             addLog('info', '导入备份完成');
             setTimeout(() => location.reload(), 1000);
@@ -4588,14 +4623,14 @@
       };
       openFilePickerSafely(input);
     }
-    
+
     // ========== 强制刷新所有应用 ==========
     function forceRefreshAllApps() {
       renderApps();
       showToast('✅ 所有应用已强制刷新', 'success');
       addLog('info', '强制刷新所有应用');
     }
-    
+
     // ========== 设置 ==========
     async function openSettings() {
       const bgVal = (await dbGet(STORE_SETTINGS, 'bg'))?.value || localStorage.getItem('htmlos_bg') || '';
@@ -4608,19 +4643,19 @@
         bgColorPicker.value = bgVal;
       }
       syncPresetSelection();
-      
+
       themeSelect.value = (await dbGet(STORE_SETTINGS, 'theme'))?.value || localStorage.getItem('htmlos_theme') || 'sharp';
       colsSelect.value = String(cols);
       fpsToggle.checked = ((await dbGet(STORE_SETTINGS, 'fps'))?.value || localStorage.getItem('htmlos_fps')) === 'on';
       pageIndicatorToggle.checked = ((await dbGet(STORE_SETTINGS, 'pageIndicator'))?.value || 'on') === 'on';
-      
+
       let memoryInfo = '不支持';
       if (window.performance?.memory) {
         const usedMB = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
         const totalMB = Math.round(window.performance.memory.totalJSHeapSize / 1024 / 1024);
         memoryInfo = usedMB + ' MB / ' + totalMB + ' MB';
       }
-      
+
       sysInfo.innerHTML = '<p>📊 系统信息</p><p>应用数量: ' + installedApps.length + '</p><p>内存使用: ' + memoryInfo + '</p><p>自动优化: ' + (systemSettings.autoOptimizeMemory ? '已开启' : '已关闭') + '</p><p>高级优化: ' + (systemSettings.advancedOptimizeMemory ? '已开启' : '已关闭') + '</p><p>存储引擎: IndexedDB</p><p>沙箱状态: ' + (systemSettings.sandboxEnabled ? '✅ 已开启' : '⚠️ 已关闭') + '</p><p>界面防护: ✅ DOMGuard 运行中</p><p>屏幕刷新率: <span id="refreshRateText">测量中…</span></p><p>日志条数: ' + systemLogs.length + '</p><p>版本: <span id="versionText" onclick="activateDevMode()">' + VERSION + '</span></p>';
       settingsModal.classList.add('show');
       // 实测屏幕刷新率上限（120Hz 屏会显示约 120）
@@ -4630,20 +4665,20 @@
       });
     }
     function closeSettings() { settingsModal.classList.remove('show'); }
-    
+
     function updateDateTime() {
       const now = new Date();
       headerDate.textContent = dtfDate.format(now);
       datetime.textContent = dtfTime.format(now);
     }
-    
+
     // ========== 应用更新功能 ==========
     function updateAppFromFile(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
       if (!app) return;
       if (isSystemApp(app)) { showToast('系统核心应用由系统自动维护', 'error'); return; }
       if (app.locked) { showToast('应用已锁定，无法更新', 'error'); return; }
-      
+
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.html,.htm';
@@ -4671,7 +4706,7 @@
       };
       openFilePickerSafely(input);
     }
-    
+
     // ==================== 系统核心应用：安全中心（不可删除）====================
     const SYSTEM_APP_FILE = 'system/apps/security-center';
     const SECURITY_CENTER_HTML = `<!DOCTYPE html>
@@ -4779,7 +4814,7 @@
 <\/script>
 </body>
 </html>`;
-    
+
     // 从设置中打开安全中心（不占桌面磁贴；内容内置于系统代码，天然无法卸载/篡改）
     function launchSecurityCenter() {
       closeSettings();
@@ -4795,7 +4830,7 @@
       }, 500);
       addLog('info', '打开安全中心');
     }
-    
+
     // 迁移旧版本：清理桌面上遗留的安全中心磁贴
     async function removeLegacySystemApp() {
       const legacy = installedApps.filter(a => String(a.file).startsWith('system/'));
@@ -4807,7 +4842,7 @@
       await saveApps();
       addLog('info', '安全中心已迁移至设置，桌面磁贴已移除');
     }
-    
+
     // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', async () => {
       window.addEventListener('error', (e) => {
@@ -4817,14 +4852,14 @@
       window.addEventListener('unhandledrejection', (e) => {
         addLog('error', '未处理Promise拒绝: ' + e.rejection);
       });
-      
+
       try { await openDB(); } catch (err) { addLog('error', '数据库初始化失败', err); }
-      
+
       await loadSystemPassword();
-      
+
       const stats = await dbGet(STORE_STATS, 'appUsage');
       if (stats) appUsageStats = stats.value;
-      
+
       // 恢复持久化通知
       try {
         const savedNotifs = await dbGet(STORE_STATS, 'notifications');
@@ -4833,65 +4868,65 @@
           notifSeq = notifications.length;
         }
       } catch (e) {}
-      
+
       const userNameVal = await dbGet(STORE_SETTINGS, 'user_name');
       const userAvatarVal = await dbGet(STORE_SETTINGS, 'user_avatar');
       if (userNameVal) currentUser.name = userNameVal.value;
       if (userAvatarVal) currentUser.avatar = userAvatarVal.value;
       userName.textContent = currentUser.name;
       renderAvatar(userIcon, currentUser.avatar);
-      
+
       await loadSystemSettings();
       await loadInstalledApps();
       await removeLegacySystemApp();
       await loadSettings();
       initWallpaperPresets();
       initBatteryStatus();
-      
+
       const devSetting = await dbGet(STORE_SETTINGS, 'dev_mode');
       devModeActive = devSetting && devSetting.value === 'true';
       if (devModeActive) devTab.style.display = 'block';
-      
+
       const fpsState = await dbGet(STORE_SETTINGS, 'fps');
       if (fpsState?.value === 'on') {
         fpsToggle.checked = true;
         window.fpsControl.toggle(true);
       }
-      
+
       const sandboxState = await dbGet(STORE_SETTINGS, 'sandbox_enabled');
       systemSettings.sandboxEnabled = sandboxState ? sandboxState.value === 'true' : true;
       sandboxToggle.checked = !systemSettings.sandboxEnabled;
       updateSandboxState(false);
-      
+
       const autoOptimizeState = await dbGet(STORE_SETTINGS, 'auto_optimize_memory');
       systemSettings.autoOptimizeMemory = autoOptimizeState?.value === 'true';
       autoOptimizeMemoryToggle.checked = systemSettings.autoOptimizeMemory;
       startAutoMemoryOptimize();
-      
+
       const advancedOptimizeState = await dbGet(STORE_SETTINGS, 'advanced_optimize_memory');
       systemSettings.advancedOptimizeMemory = advancedOptimizeState?.value === 'true';
       advancedOptimizeMemoryToggle.checked = systemSettings.advancedOptimizeMemory;
       if (devModeActive) startAdvancedAutoMemoryOptimize();
-      
+
       const launchAnim = await dbGet(STORE_SETTINGS, 'launchAnim');
       if (launchAnim?.value === 'off') launchAnimToggle.checked = false;
-      
+
       const vibration = await dbGet(STORE_SETTINGS, 'vibration');
       if (vibration?.value === 'on') vibrationToggle.checked = true;
-      
+
       const pageIndicatorSetting = await dbGet(STORE_SETTINGS, 'pageIndicator');
       if (pageIndicatorSetting?.value === 'off') {
         pageIndicatorToggle.checked = false;
         pageIndicator.style.display = 'none';
       }
-      
+
       const savedSort = await dbGet(STORE_SETTINGS, 'currentSort');
       if (savedSort) currentSort = savedSort.value;
-      
+
       // 启动界面防护与紧急退出
       DOMGuard.init();
       setupEmergencyExit();
-      
+
       renderApps();
       renderNotifications();
       updateNotifBadge();
@@ -4901,11 +4936,16 @@
       setInterval(updateDateTime, 1000);
       setupSearch();
       setupPostMessageListener();
-      
+
       // 壁纸输入变化时清除快速壁纸选中态（修复蓝边不消除）
       bgImageInput.addEventListener('input', clearPresetSelection);
+      $('clearBgImageBtn').addEventListener('click', () => {
+        bgImageInput.value = '';
+        clearPresetSelection();
+        bgImageInput.focus();
+      });
       bgColorPicker.addEventListener('input', clearPresetSelection);
-      
+
       // 通知过滤器
       notifFilters.addEventListener('click', (e) => {
         const btn = e.target.closest('button');
@@ -4915,7 +4955,7 @@
         notifFilter = btn.dataset.f;
         renderNotifications();
       });
-      
+
       document.addEventListener('click', (e) => {
         if (!e.target.closest('#notificationCenter') && !e.target.closest('#notifBell')) {
           notificationCenter.classList.remove('show');
@@ -4930,8 +4970,8 @@
           document.querySelector('.app-action-modal')?.remove();
         }
       });
-      
-      addLog('info', 'HTMLOS v4.2 初始化完成, 应用数: ' + installedApps.length);
+
+      addLog('info', 'HTMLOS v4.3 初始化完成, 应用数: ' + installedApps.length);
     });
   </script>
 </body>
