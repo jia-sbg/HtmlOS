@@ -156,6 +156,24 @@
       box-shadow: 0 0 0 2px rgba(10,132,255,0.3);
     }
 
+    /* 修复：玻璃质感下窗口/面板背景直接透出下层内容（看起来"通透"而非"模糊毛玻璃"）。
+       之前的性能修复移除了所有 backdrop-filter，只靠预模糊壁纸撑场面——但这些面板
+       很多时候叠在其他界面元素（图标、列表、其它窗口）之上而不是直接叠在壁纸上，
+       此时半透明色块下面透出的是清晰未模糊的内容。这里只给"数量固定的少数几个
+       容器级"面板（头部栏、底部栏、弹窗、操作菜单、搜索框）恢复 backdrop-filter，
+       不涉及会随列表/磁贴数量增长的元素，因此不会重新引入之前滑动卡顿的问题。 */
+    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+      .theme-glass .win-header,
+      .theme-glass .bottom-bar,
+      .theme-glass .modal-content,
+      .theme-glass .app-action-modal,
+      .theme-glass .sort-menu,
+      .theme-glass .search-box input {
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+      }
+    }
+
     .theme-dark {
       --card-bg: rgba(20,20,22,0.9);
       --card-border: 1px solid rgba(255,255,255,0.1);
@@ -3991,6 +4009,14 @@
       e.preventDefault();
       const appIcon = e.target.closest('.app-icon');
       if (!appIcon) return;
+      // 修复：部分浏览器/设备在长按时会原生触发 contextmenu，与上面基于
+      // touchstart+setTimeout 的自定义长按检测是两条独立的路径。之前这里没有
+      // 同步 suppressNextClick/longPressTimer，导致 contextmenu 弹出菜单后，
+      // 紧随其后的 touchend 仍判定为"未长按"而继续 launchApp，造成菜单和
+      // 应用同时打开。这里统一走同一套抑制状态，确保二者只会触发一个。
+      if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
+      touchMoved = true;
+      suppressNextClick = true;
       const app = installedApps.find(a => a.file === appIcon.getAttribute('data-file'));
       if (app) showActionMenu(app, appIcon);
     });
@@ -4171,6 +4197,31 @@
     function openInstaller() { installModal.classList.add('show'); }
     function closeModal() { installModal.classList.remove('show'); installProgress.style.display = 'none'; }
     
+    // 修复："更新的时候有概率会直接卡死"：原生文件选择框是模态的，如果用户在
+    // 一次选择尚未完成（对话框仍开着）时再次触发安装/更新，会重复创建 input
+    // 并 .click()，在部分移动端 WebView 上会导致两个原生对话框状态冲突，
+    // 页面表现为完全无响应。这里加一个轻量的互斥锁：打开期间再次触发直接
+    // 提示"稍候"，并通过 window focus（对话框关闭后页面重新获得焦点）自动
+    // 解锁，避免用户被永久卡住又不知道原因。
+    let _filePickerBusy = false;
+    function openFilePickerSafely(input) {
+      if (_filePickerBusy) {
+        showToast('请等待当前操作完成', 'warning');
+        return false;
+      }
+      _filePickerBusy = true;
+      const release = () => {
+        window.removeEventListener('focus', onWinFocus);
+        // 对话框关闭后 focus 会先于 onchange 触发，延迟释放避免与随后的
+        // onchange/reader 流程竞争
+        setTimeout(() => { _filePickerBusy = false; }, 500);
+      };
+      const onWinFocus = () => release();
+      window.addEventListener('focus', onWinFocus);
+      input.click();
+      return true;
+    }
+    
     // 净化文件名，防止引号破坏内联事件与选择器
     function safeFileName(name) {
       return String(name).replace(/['"\\<>]/g, '_');
@@ -4198,7 +4249,7 @@
         reader.onerror = () => showToast('读取文件失败', 'error');
         reader.readAsText(file);
       };
-      input.click();
+      openFilePickerSafely(input);
     }
     
     async function batchInstall(files, isFolder) {
@@ -4273,7 +4324,7 @@
       input.multiple = true;
       input.accept = '.html,.htm';
       input.onchange = e => batchInstall(Array.from(e.target.files), false);
-      input.click();
+      openFilePickerSafely(input);
     }
     
     function showFolderPicker() {
@@ -4282,7 +4333,7 @@
       input.webkitdirectory = true;
       input.multiple = true;
       input.onchange = e => batchInstall(Array.from(e.target.files), true);
-      input.click();
+      openFilePickerSafely(input);
     }
     
     // ========== 应用启动/关闭 ==========
@@ -4530,9 +4581,12 @@
             setTimeout(() => location.reload(), 1000);
           } catch (err) { showToast('导入失败：' + err.message, 'error'); }
         };
-        reader.readAsText(e.target.files[0]);
+        reader.onerror = () => showToast('读取备份文件失败', 'error');
+        const f = e.target.files[0];
+        if (!f) return;
+        reader.readAsText(f);
       };
-      input.click();
+      openFilePickerSafely(input);
     }
     
     // ========== 强制刷新所有应用 ==========
@@ -4598,16 +4652,24 @@
         if (!file) return;
         const reader = new FileReader();
         reader.onload = async (e) => {
-          await setContentSafe(fileKey, e.target.result);
-          app.lastUpdated = new Date().toISOString();
-          saveApps();
-          document.querySelector('.app-action-modal')?.remove();
-          showToast('应用已更新', 'success');
-          addLog('info', '更新应用: ' + app.name);
+          try {
+            await setContentSafe(fileKey, e.target.result);
+            app.lastUpdated = new Date().toISOString();
+            saveApps();
+            document.querySelector('.app-action-modal')?.remove();
+            showToast('应用已更新', 'success');
+            addLog('info', '更新应用: ' + app.name);
+          } catch (err) {
+            showToast('更新失败: ' + (err?.message || err), 'error');
+            addLog('error', '更新应用失败: ' + app.name, err);
+          }
         };
+        // 修复：之前没有 onerror，一旦读取失败（文件损坏/被占用等，小概率但会发生），
+        // 整个更新操作就没有任何后续反馈——菜单不关、没有提示，看起来像是"卡死"。
+        reader.onerror = () => showToast('读取文件失败，更新已取消', 'error');
         reader.readAsText(file);
       };
-      input.click();
+      openFilePickerSafely(input);
     }
     
     // ==================== 系统核心应用：安全中心（不可删除）====================
