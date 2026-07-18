@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-v4.0.0-0a84ff?style=flat-square)
+![版本](https://img.shields.io/badge/版本-v4.1.0-0a84ff?style=flat-square)
 ![许可](https://img.shields.io/badge/许可-MIT-30d158?style=flat-square)
 ![技术栈](https://img.shields.io/badge/技术栈-HTML%2FCSS%2FJS-ffb900?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-支持-5e5ce6?style=flat-square)
@@ -28,9 +28,9 @@
 | 🚀 **开发者功能** | FPS 监控（自适应刷新率）、基础/高级内存自动回收、系统日志导出/清空、沙箱控制、DOMGuard 界面防护 |
 | 📱 **移动优化** | 触摸手势、长按菜单、滑动翻页、震动反馈、PWA 支持、安全区域适配、双击顶部返回 |
 | 🌐 **离线能力** | PWA 离线缓存、离线提示、断网可用 |
-| 🛡️ **安全防护** | DOMGuard 界面防护系统、紧急退出机制（Esc/F12）、应用沙箱隔离、密码保护（恢复默认/格式化） |
+| 🛡️ **安全防护** | DOMGuard 界面防护系统、紧急退出机制（Esc/F12）、应用沙箱隔离、密码保护（恢复默认/格式化）、应用防伪装校验、高危操作黑名单拦截 |
 | 📢 **通知系统** | Toast 通知（限流队列）、通知中心（分类过滤、持久化）、通知声音 |
-| 👤 **用户系统** | 自定义用户名、Emoji 头像选择、系统密码管理 |
+| 👤 **用户系统** | 自定义用户名、Emoji 头像选择、系统密码管理（AES-GCM 加密存储） |
 | 🔋 **硬件集成** | 电池状态实时显示、摄像头/麦克风硬件检测（安全中心） |
 
 ---
@@ -62,7 +62,7 @@ python -m http.server 8080
 
 ```
 ┌─────────────────────────────────────────────────┐
-│              HTMLOS v4.0.0 主页面                 │
+│              HTMLOS v4.1.0 主页面                 │
 ├─────────────────────────────────────────────────┤
 │  IndexedDB ── 应用存储 / 设置 / 统计 / 通知       │
 │  Service Worker ── 离线缓存 / PWA 支持            │
@@ -86,7 +86,8 @@ python -m http.server 8080
 | **iframe + sandbox** | 应用隔离运行、安全执行（支持关闭沙箱的开发者选项） |
 | **postMessage** | 系统与应用双向通信（限流：每秒最多 30 条，防消息洪水） |
 | **Service Worker** | 离线缓存、PWA 支持 |
-| **MutationObserver** | DOMGuard 界面防护系统（防移除、防隐藏、防 head 注入、防主题篡改） |
+| **MutationObserver** | DOMGuard 界面防护系统（防移除、防隐藏、防 head 注入、防主题篡改、核心函数防篡改） |
+| **Web Crypto API** | 系统密码 AES-GCM 加密存储 |
 | **Battery Status API** | 电量实时显示 |
 | **Vibration API** | 触摸反馈 |
 | **File System Access** | 批量/文件夹应用安装 |
@@ -185,7 +186,7 @@ python -m http.server 8080
 
 ```
 HtmlOS/
-├── index.html              # 单文件完整系统（v4.0.0）
+├── index.html              # 单文件完整系统（v4.1.0）
 ├── README.md               # 项目说明
 └── .github/                # GitHub 配置
 ```
@@ -206,7 +207,7 @@ HtmlOS/
 
 ## 📜 声明
 
-- **AI 辅助开发**：本项目由多个 AI（DeepSeek、豆包、Kimi 等）协助完成
+- **AI 辅助开发**：本项目由多个 AI（DeepSeek、Claude、Kimi、豆包等）协助完成
 - **原创声明**：GitHub 上存在同名项目，但本项目的代码和设计均为独立原创，绝非抄袭
 - **开源许可**：MIT License
 
@@ -227,5 +228,3 @@ HtmlOS/
 
 🔗 [GitHub 仓库](https://github.com/jia-sbg/HtmlOS) · 
 🎬 [B站主页](https://space.bilibili.com/3546866897651966)
-
-*DeepSeek & Kimi 帮我写的 😋*
