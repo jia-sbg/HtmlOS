@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
   <meta name="theme-color" content="#0078d7">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline' https:; img-src * data: blob:; connect-src *; media-src blob:;">
-  <title>HTMLOS · v4.0.0</title>
+  <title>HTMLOS · v4.1.0</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -31,7 +31,10 @@
     
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg, #1e5f9e) no-repeat center center fixed;
+      background: var(--bg, #1e5f9e);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
       background-size: cover;
       color: #fff;
       height: 100dvh;
@@ -90,7 +93,7 @@
       --btn-hover: rgba(255,255,255,0.28);
       --primary-color: #0a84ff;
       --transition-speed: 0.2s;
-      --backdrop-blur: blur(12px) saturate(130%);
+      --backdrop-blur: blur(20px) saturate(150%);
       --text-color: #fff;
       --text-secondary: rgba(255,255,255,0.7);
       --input-bg: rgba(255,255,255,0.08);
@@ -98,19 +101,30 @@
       --setting-group-bg: rgba(255,255,255,0.06);
     }
 
+    /* 玻璃主题默认背景仅作为"无壁纸时"的兜底，用户设置了壁纸(--bg)后应正常显示壁纸供毛玻璃卡片透视模糊 */
     .theme-glass body {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) fixed;
+      background: var(--bg, linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%));
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
       background-size: cover;
     }
 
     .theme-glass .app-icon {
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
       border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
 
     .theme-glass .app-icon:hover {
       transform: scale(1.03);
       box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+
+    .theme-glass .setting-item {
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
     }
 
     .theme-glass .win-header {
@@ -1793,8 +1807,12 @@
         <div class="setting-section">
           <div class="setting-section-title">安全与权限</div>
           <div class="setting-item">
-            <label>关闭沙箱(危险)</label>
+            <label>关闭沙箱(危险，仍保留基础防护)</label>
             <input type="checkbox" id="sandboxToggle" onchange="toggleSandbox()" />
+          </div>
+          <div class="setting-item">
+            <label>系统密码</label>
+            <button onclick="triggerChangePassword()">🔑 修改密码</button>
           </div>
         </div>
         
@@ -1865,6 +1883,46 @@
     </div>
   </div>
   
+  <!-- 关闭沙箱：多重确认 -->
+  <div class="modal" id="sandboxWarningModal">
+    <div class="modal-content reset-modal-content">
+      <div class="warning-icon">⚠️</div>
+      <h3>关闭沙箱确认</h3>
+      <p>关闭沙箱后，应用将获得更高的运行权限，可能带来安全风险。</p>
+      <div class="warning-text">
+        即使关闭，系统仍会保留基础防护（例如禁止应用劫持整个页面跳转、锁定指针/屏幕方向等），但风险依然存在，请谨慎操作。
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin:14px 0 10px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" id="sandboxAckCheckbox" onchange="updateSandboxConfirmState()" style="width:16px;height:16px;" />
+        我已知晓上述风险，仍要继续
+      </label>
+      <p>请输入系统密码：</p>
+      <input type="password" id="sandboxPasswordInput" placeholder="输入系统密码" oninput="updateSandboxConfirmState()" style="width: 100%; padding: 10px; margin: 8px 0; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <p>请输入「关闭沙箱」以最终确认：</p>
+      <input type="text" id="sandboxPhraseInput" placeholder="关闭沙箱" oninput="updateSandboxConfirmState()" style="width: 100%; padding: 10px; margin: 8px 0 15px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px;" />
+      <div style="display: flex; gap: 10px;">
+        <button id="sandboxConfirmBtn" onclick="confirmDisableSandbox()" disabled style="flex:1; padding: 12px; background: #ff4530; border: none; color: white; border-radius: 8px; cursor: pointer; opacity: 0.5;">确认关闭</button>
+        <button onclick="closeSandboxWarning()" style="flex:1; padding: 12px; background: var(--input-bg); border: var(--input-border); color: white; border-radius: 8px; cursor: pointer;">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 修改系统密码 -->
+  <div class="modal" id="changePasswordModal">
+    <div class="modal-content reset-modal-content">
+      <div class="warning-icon">🔑</div>
+      <h3>修改系统密码</h3>
+      <p>此密码用于确认关闭沙箱、恢复默认设置、格式化系统等高危操作，将加密后存储在本机。</p>
+      <input type="password" id="oldPasswordInput" placeholder="当前密码" style="width:100%;padding:10px;margin:14px 0 10px;background:var(--input-bg);border:var(--input-border);color:white;border-radius:8px;" />
+      <input type="password" id="newPasswordInput" placeholder="新密码（至少4位）" style="width:100%;padding:10px;margin:10px 0;background:var(--input-bg);border:var(--input-border);color:white;border-radius:8px;" />
+      <input type="password" id="newPasswordConfirmInput" placeholder="确认新密码" style="width:100%;padding:10px;margin:10px 0 15px;background:var(--input-bg);border:var(--input-border);color:white;border-radius:8px;" />
+      <div style="display:flex; gap:10px;">
+        <button onclick="confirmChangePassword()" style="flex:1;padding:12px;background:var(--primary-color);border:none;color:white;border-radius:8px;cursor:pointer;">确认修改</button>
+        <button onclick="closeChangePassword()" style="flex:1;padding:12px;background:var(--input-bg);border:var(--input-border);color:white;border-radius:8px;cursor:pointer;">取消</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 排序菜单 -->
   <div class="sort-menu" id="sortMenu" style="display:none;">
     <h3>🔄 应用排序</h3>
@@ -1991,7 +2049,7 @@
     let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v4.0.0';
+    const VERSION = 'HTMLOS v4.1.0';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -2045,6 +2103,8 @@
     const sandboxToggle = $('sandboxToggle');
     const sysInfo = $('sysInfo');
     const resetWarningModal = $('resetWarningModal');
+    const sandboxWarningModal = $('sandboxWarningModal');
+    const changePasswordModal = $('changePasswordModal');
     const resetPasswordInput = $('resetPasswordInput');
     const formatWarningModal = $('formatWarningModal');
     const formatPasswordInput = $('formatPasswordInput');
@@ -2091,7 +2151,7 @@
       watchedFns: {},
       _integrityTimer: null,
       protectedIds: ['bottomBar', 'mainContainer', 'winHeader', 'toastContainer', 'notificationCenter'],
-      watchedFnNames: ['showToast', 'closeApp', 'renderApps', 'openSettings', 'saveSettings', 'addLog', 'deleteApp', 'launchApp', 'confirmReset', 'confirmFormat', 'updateSandboxState', 'toggleNotificationCenter', 'launchSecurityCenter'],
+      watchedFnNames: ['showToast', 'closeApp', 'renderApps', 'openSettings', 'saveSettings', 'addLog', 'deleteApp', 'launchApp', 'confirmReset', 'confirmFormat', 'updateSandboxState', 'toggleSandbox', 'confirmDisableSandbox', 'sanitizeAppSource', 'isSystemApp', 'toggleNotificationCenter', 'launchSecurityCenter'],
       
       init() {
         this.protectedIds.forEach(id => {
@@ -2200,12 +2260,13 @@
             }
           });
         }
-        // 主页背景防篡改（与授权快照比对）
-        if (authorizedBGNormalized && document.body.style.background !== authorizedBGNormalized) {
-          addLog('warn', 'DOMGuard: 主页背景被篡改，已恢复');
-          document.body.style.setProperty('--bg', authorizedBG);
-          document.body.style.background = authorizedBG;
-          authorizedBGNormalized = document.body.style.background;
+        // 主页背景防篡改：比对 CSS 变量 --bg 是否被恶意清除
+        if (authorizedBGNormalized) {
+          const currentBG = document.body.style.getPropertyValue('--bg');
+          if (currentBG !== authorizedBGNormalized) {
+            addLog('warn', 'DOMGuard: 主页背景(--bg)被篡改，已恢复');
+            document.body.style.setProperty('--bg', authorizedBG);
+          }
         }
         // 应用 iframe 防移除
         if (appFrameContainer.classList.contains('show') && appFrame && !appFrameContainer.contains(appFrame)) {
@@ -2545,31 +2606,127 @@
       }
     }
     
-    // ==================== 密码管理 ====================
+    // ==================== 密码管理（加密存储） ====================
+    // 说明：HTMLOS 完全运行在客户端浏览器内，无法做到服务器级别的绝对保密；
+    // 这里使用 Web Crypto AES-GCM 对密码做"数据落盘加密"，避免密码以明文形式
+    // 直接躺在 IndexedDB 里被随意查看，属于纵深防御的一环。
+    const PW_CRYPTO_SALT = new TextEncoder().encode('htmlos-pw-salt-v1');
+    const PW_CRYPTO_PASSPHRASE = 'htmlos-static-passphrase-v1-do-not-reuse';
+
+    async function deriveCryptoKey() {
+      const keyMaterial = await crypto.subtle.importKey(
+        'raw', new TextEncoder().encode(PW_CRYPTO_PASSPHRASE), 'PBKDF2', false, ['deriveKey']
+      );
+      return crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: PW_CRYPTO_SALT, iterations: 100000, hash: 'SHA-256' },
+        keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
+      );
+    }
+
+    async function encryptPassword(plain) {
+      try {
+        const key = await deriveCryptoKey();
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const encoded = new TextEncoder().encode(String(plain));
+        const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+        const combined = new Uint8Array(iv.length + cipher.byteLength);
+        combined.set(iv, 0);
+        combined.set(new Uint8Array(cipher), iv.length);
+        return 'enc:' + btoa(String.fromCharCode(...combined));
+      } catch (e) {
+        addLog('error', '密码加密失败，本次以明文保存以确保功能可用: ' + e.message);
+        return String(plain); // 加密失败时安全回退，保证不中断使用
+      }
+    }
+
+    async function decryptPassword(stored) {
+      if (!stored) return null;
+      if (!String(stored).startsWith('enc:')) return String(stored); // 兼容旧版明文数据
+      try {
+        const raw = Uint8Array.from(atob(stored.slice(4)), c => c.charCodeAt(0));
+        const iv = raw.slice(0, 12);
+        const data = raw.slice(12);
+        const key = await deriveCryptoKey();
+        const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+        return new TextDecoder().decode(plainBuf);
+      } catch (e) {
+        addLog('error', '密码解密失败: ' + e.message);
+        return null;
+      }
+    }
+
     async function loadSystemPassword() {
-      const pwdSetting = await dbGet(STORE_SETTINGS, 'system_password');
-      if (pwdSetting && pwdSetting.value) {
-        SYSTEM_PASSWORD = pwdSetting.value;
-        addLog('info', '系统密码已加载');
+      try {
+        const pwdSetting = await dbGet(STORE_SETTINGS, 'system_password');
+        if (pwdSetting && pwdSetting.value) {
+          const decrypted = await decryptPassword(pwdSetting.value);
+          if (decrypted !== null) {
+            SYSTEM_PASSWORD = decrypted;
+            addLog('info', '系统密码已加载（加密存储）');
+            // 兼容迁移：若读到旧版明文，静默升级为加密存储，确保确认流程始终能正常工作
+            if (!String(pwdSetting.value).startsWith('enc:')) {
+              const enc = await encryptPassword(decrypted);
+              await dbPut(STORE_SETTINGS, { key: 'system_password', value: enc });
+              addLog('info', '检测到明文密码，已自动升级为加密存储');
+            }
+          } else {
+            // 解密异常时不静默改变密码值，仅回退为内存默认值，避免"確認时出问题"
+            addLog('warn', '密码解密异常，本次会话回退为默认密码，建议在设置中重新修改密码');
+          }
+        } else {
+          // 首次运行：立即将默认密码加密落盘，避免明文常驻数据库
+          const enc = await encryptPassword(SYSTEM_PASSWORD);
+          await dbPut(STORE_SETTINGS, { key: 'system_password', value: enc });
+          addLog('info', '默认系统密码已加密存储');
+        }
+      } catch (e) {
+        addLog('error', '系统密码初始化失败，使用内存默认密码: ' + e.message);
+      }
+    }
+
+    function closeChangePassword() {
+      changePasswordModal.classList.remove('show');
+    }
+
+    function triggerChangePassword() {
+      $('oldPasswordInput').value = '';
+      $('newPasswordInput').value = '';
+      $('newPasswordConfirmInput').value = '';
+      changePasswordModal.classList.add('show');
+    }
+
+    async function confirmChangePassword() {
+      const oldPwd = $('oldPasswordInput').value;
+      const newPwd = $('newPasswordInput').value;
+      const confirmPwd = $('newPasswordConfirmInput').value;
+      if (oldPwd !== SYSTEM_PASSWORD) { showToast('当前密码错误', 'error'); return; }
+      if (newPwd.length < 4) { showToast('新密码至少需要4位', 'error'); return; }
+      if (newPwd !== confirmPwd) { showToast('两次输入的新密码不一致', 'error'); return; }
+      try {
+        const enc = await encryptPassword(newPwd);
+        await dbPut(STORE_SETTINGS, { key: 'system_password', value: enc });
+        SYSTEM_PASSWORD = newPwd;
+        closeChangePassword();
+        showToast('密码已修改并加密保存', 'success');
+        addLog('info', '系统密码已修改');
+      } catch (e) {
+        addLog('error', '密码修改失败: ' + e.message);
+        showToast('密码修改失败，请重试', 'error');
       }
     }
     
     // ==================== 沙箱控制 ====================
     const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
+    // 关闭沙箱后依然保留的最小防护集合：绝不允许 iframe 变为完全无限制状态。
+    // 相比 SANDBOX_TOKENS 仍然不包含 allow-top-navigation / allow-pointer-lock /
+    // allow-orientation-lock 等，防止应用劫持整页跳转或锁定指针/屏幕方向。
+    const SANDBOX_MIN_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin allow-popups-to-escape-sandbox';
     
     function toggleSandbox() {
       if (sandboxToggle.checked) {
+        // 用户想要关闭沙箱：撤回勾选，进入多重确认流程（知情勾选 + 密码 + 输入确认短语）
         sandboxToggle.checked = false;
-        const password = prompt('⚠️ 关闭沙箱将使所有应用获得完全权限，可能导致严重的安全风险！\n\n请输入密码确认关闭：');
-        if (password === SYSTEM_PASSWORD) {
-          systemSettings.sandboxEnabled = false;
-          updateSandboxState(true);
-          sandboxToggle.checked = true;
-          showToast('⚠️ 沙箱已关闭，系统处于不安全状态！', 'warning', 5000);
-          addLog('warn', '沙箱已关闭，系统处于不安全状态！');
-        } else if (password !== null) {
-          showToast('密码错误，沙箱未关闭', 'error');
-        }
+        triggerSandboxWarning();
       } else {
         systemSettings.sandboxEnabled = true;
         updateSandboxState(true);
@@ -2577,15 +2734,52 @@
         addLog('info', '沙箱已开启');
       }
     }
+
+    function triggerSandboxWarning() {
+      $('sandboxAckCheckbox').checked = false;
+      $('sandboxPasswordInput').value = '';
+      $('sandboxPhraseInput').value = '';
+      updateSandboxConfirmState();
+      sandboxWarningModal.classList.add('show');
+    }
+
+    function closeSandboxWarning() {
+      sandboxWarningModal.classList.remove('show');
+      sandboxToggle.checked = false; // 用户取消，沙箱保持开启状态
+    }
+
+    function updateSandboxConfirmState() {
+      const ack = $('sandboxAckCheckbox').checked;
+      const phrase = $('sandboxPhraseInput').value.trim();
+      const pwd = $('sandboxPasswordInput').value;
+      const btn = $('sandboxConfirmBtn');
+      const ready = ack && phrase === '关闭沙箱' && pwd.length > 0;
+      btn.disabled = !ready;
+      btn.style.opacity = ready ? '1' : '0.5';
+    }
+
+    function confirmDisableSandbox() {
+      const pwd = $('sandboxPasswordInput').value;
+      if (pwd !== SYSTEM_PASSWORD) {
+        showToast('密码错误，沙箱未关闭', 'error');
+        addLog('warn', '关闭沙箱密码验证失败');
+        return;
+      }
+      systemSettings.sandboxEnabled = false;
+      updateSandboxState(true);
+      sandboxToggle.checked = true;
+      sandboxWarningModal.classList.remove('show');
+      showToast('⚠️ 沙箱已关闭，系统处于低保护状态（仍保留基础防护）！', 'warning', 5000);
+      addLog('warn', '沙箱已关闭，系统处于低保护状态！');
+    }
     
     // 修复：仅在状态变化时写DB，避免每次启动应用都产生多余写入
+    // 无论沙箱是否"关闭"，iframe 永远保留 sandbox 属性（至少 SANDBOX_MIN_TOKENS），
+    // 绝不会被完全移除，从而始终保留基础防护。
     function updateSandboxState(persist) {
       if (appFrame) {
-        if (systemSettings.sandboxEnabled) {
-          if (appFrame.getAttribute('sandbox') !== SANDBOX_TOKENS) appFrame.setAttribute('sandbox', SANDBOX_TOKENS);
-        } else if (appFrame.hasAttribute('sandbox')) {
-          appFrame.removeAttribute('sandbox');
-        }
+        const targetTokens = systemSettings.sandboxEnabled ? SANDBOX_TOKENS : SANDBOX_MIN_TOKENS;
+        if (appFrame.getAttribute('sandbox') !== targetTokens) appFrame.setAttribute('sandbox', targetTokens);
       }
       if (persist) dbPut(STORE_SETTINGS, { key: 'sandbox_enabled', value: String(systemSettings.sandboxEnabled) });
     }
@@ -2762,6 +2956,24 @@
     function isSystemApp(app) {
       return app && app.source === 'system';
     }
+
+    // 防伪装：source 字段只允许对唯一的系统内置应用文件生效为 'system'，
+    // 其余任何情况（包括导入备份、批量写入等路径）一律强制归一为 'user'，
+    // 避免用户/恶意应用通过伪造 source 字段冒充系统应用从而变得"无法卸载"。
+    function sanitizeAppSource(app) {
+      return (app && app.file === SYSTEM_APP_FILE) ? 'system' : 'user';
+    }
+
+    // 防伪装：禁止用户应用使用与系统应用完全相同的名称，避免视觉上冒充系统组件
+    // 误导用户信任或误以为该应用受系统保护、无法卸载。
+    const RESERVED_SYSTEM_APP_NAMES = ['安全中心', 'security center', 'htmlos安全中心'];
+    function sanitizeAppDisplayName(name) {
+      const trimmed = String(name || '').trim();
+      if (RESERVED_SYSTEM_APP_NAMES.includes(trimmed.toLowerCase())) {
+        return trimmed + '（用户应用）';
+      }
+      return trimmed;
+    }
     
     function renameAppFromInfo(fileKey) {
       const app = installedApps.find(a => a.file === fileKey);
@@ -2769,9 +2981,10 @@
       if (isSystemApp(app)) { showToast('系统核心应用，无法重命名', 'error'); return; }
       const newName = prompt('请输入新的应用名称：', app.name);
       if (newName?.trim()) { 
-        app.name = newName.trim().slice(0, 50);
+        const finalName = sanitizeAppDisplayName(newName.trim().slice(0, 50));
+        app.name = finalName;
         saveApps(); 
-        showToast('已重命名', 'success', 1500);
+        showToast(finalName !== newName.trim().slice(0, 50) ? '该名称为系统保留名称，已自动调整' : '已重命名', 'success', 1500);
         showAppInfo(fileKey);
       }
     }
@@ -3265,8 +3478,21 @@
       updateDateTime();
     }
     
-    // ========== iframe postMessage 通信（含限流防刷）==========
+    // ========== iframe postMessage 通信（含限流防刷、高危操作拦截）==========
     let _msgWindowStart = 0, _msgCount = 0;
+    // 允许的应用操作白名单（基础能力与硬件调用如震动均保留，确保正常使用不受影响）
+    const ALLOWED_APP_ACTIONS = Object.freeze(['getSystemInfo', 'setTitle', 'toast', 'vibrate', 'saveData', 'getData', 'close', 'openUrl']);
+    // 高危/越权操作显式黑名单：即使白名单被篡改，也在此处兜底拦截，防止应用伪装成
+    // 系统级指令（如尝试自我提权、篡改密码、操控沙箱、执行任意脚本等）
+    const BLOCKED_HIGH_RISK_ACTIONS = Object.freeze([
+      'eval', 'exec', 'execute', 'execScript', 'runScript', 'runCode',
+      'installApp', 'uninstallApp', 'deleteApp', 'removeApp',
+      'setPassword', 'changePassword', 'setSystemPassword',
+      'disableSandbox', 'toggleSandbox', 'setSandbox',
+      'grantPermission', 'elevate', 'setSystemSetting', 'readSystemData',
+      'navigateTop', 'setSource', 'setAsSystem'
+    ]);
+    const MAX_MSG_DATA_SIZE = 8000; // 单条消息 data 字段最大序列化字符数，避免超大payload滥用
     
     function setupPostMessageListener() {
       window.addEventListener('message', (event) => {
@@ -3284,15 +3510,31 @@
         }
         
         const msg = event.data;
-        if (!msg || typeof msg !== 'object' || !msg.type || msg.from !== 'htmlos-app') {
+        if (!msg || typeof msg !== 'object' || !msg.type || msg.from !== 'htmlos-app' || typeof msg.action !== 'string') {
           addLog('warn', '收到来自应用的无效消息格式，已阻止');
           return;
         }
         
-        const allowedActions = ['getSystemInfo', 'setTitle', 'toast', 'vibrate', 'saveData', 'getData', 'close', 'openUrl'];
-        if (!allowedActions.includes(msg.action)) {
+        // 高危操作显式拦截：应用尝试冒充系统级/高权限指令时，直接拒绝并提示用户
+        if (BLOCKED_HIGH_RISK_ACTIONS.includes(msg.action)) {
+          addLog('error', '⚠️ 检测到应用尝试执行高危/越权操作: ' + msg.action + '，已强制拦截');
+          showToast('检测到应用尝试执行高危操作，已拦截', 'error', 4000);
+          return;
+        }
+        
+        if (!ALLOWED_APP_ACTIONS.includes(msg.action)) {
           addLog('warn', '应用尝试执行未授权操作: ' + msg.action + '，已阻止');
           return;
+        }
+        
+        // 限制data体积，防止利用超大payload进行存储/内存滥用攻击
+        if (msg.data !== undefined) {
+          try {
+            if (JSON.stringify(msg.data).length > MAX_MSG_DATA_SIZE) {
+              addLog('warn', '应用消息data体积超限，已阻止: ' + msg.action);
+              return;
+            }
+          } catch (e) { /* 非可序列化数据，交由各分支自行校验 */ }
         }
         
         switch (msg.action) {
@@ -3314,6 +3556,7 @@
             if (msg.data?.message) showToast(String(msg.data.message).slice(0, 200), msg.data.type || 'info', msg.data.duration || 3000);
             break;
           case 'vibrate':
+            // 基础硬件能力：仅做参数安全裁剪，不额外限制，确保震动等硬件调用正常可用
             if (navigator.vibrate && msg.data?.pattern && vibrationToggle.checked) {
               const safePattern = Array.isArray(msg.data.pattern) 
                 ? msg.data.pattern.slice(0, 10).map(n => Math.min(Math.max(0, n), 1000)) 
@@ -3323,13 +3566,22 @@
             break;
           case 'saveData':
             if (msg.data?.key && runningAppFile) {
-              dbPut(STORE_SETTINGS, { key: 'app_data_' + runningAppFile + '_' + msg.data.key, value: msg.data.value });
+              const safeKey = String(msg.data.key).slice(0, 100);
+              let valueSize = 0;
+              try { valueSize = JSON.stringify(msg.data.value).length; } catch (e) {}
+              if (valueSize > MAX_MSG_DATA_SIZE) {
+                addLog('warn', '应用尝试写入超大数据，已阻止: ' + runningAppFile);
+                sendMessageToApp({ type: 'dataSaved', key: msg.data.key, success: false, error: 'data too large' });
+                break;
+              }
+              dbPut(STORE_SETTINGS, { key: 'app_data_' + runningAppFile + '_' + safeKey, value: msg.data.value });
               sendMessageToApp({ type: 'dataSaved', key: msg.data.key, success: true });
             }
             break;
           case 'getData':
             if (msg.data?.key && runningAppFile) {
-              dbGet(STORE_SETTINGS, 'app_data_' + runningAppFile + '_' + msg.data.key).then(result => {
+              const safeKey = String(msg.data.key).slice(0, 100);
+              dbGet(STORE_SETTINGS, 'app_data_' + runningAppFile + '_' + safeKey).then(result => {
                 sendMessageToApp({ type: 'dataLoaded', key: msg.data.key, value: result?.value || null });
               });
             }
@@ -3338,8 +3590,19 @@
             closeApp();
             break;
           case 'openUrl':
-            if (msg.data?.url && confirm('应用想打开外部链接:\n' + msg.data.url + '\n\n是否允许？')) {
-              window.open(msg.data.url, '_blank', 'noopener,noreferrer');
+            if (msg.data?.url) {
+              let safeUrl = null;
+              try {
+                const u = new URL(String(msg.data.url), location.href);
+                if (u.protocol === 'http:' || u.protocol === 'https:') safeUrl = u.href;
+              } catch (e) {}
+              if (!safeUrl) {
+                addLog('warn', '应用尝试打开不安全的链接协议，已阻止: ' + msg.data.url);
+                break;
+              }
+              if (confirm('应用想打开外部链接:\n' + safeUrl + '\n\n是否允许？')) {
+                window.open(safeUrl, '_blank', 'noopener,noreferrer');
+              }
             }
             break;
         }
@@ -3361,7 +3624,7 @@
       try {
         const apps = await dbGetAll(STORE_APPS);
         // 修复：名称不再入库前转义（转义只在渲染时做），避免二次转义导致 &amp;lt; 乱码
-        installedApps = apps.map(app => ({ ...app, name: String(app.name || '未命名'), hidden: app.hidden || false, locked: app.locked || false }));
+        installedApps = apps.map(app => ({ ...app, name: String(app.name || '未命名'), source: sanitizeAppSource(app), hidden: app.hidden || false, locked: app.locked || false }));
         if (installedApps.length === 0) {
           const legacyData = localStorage.getItem('htmlos_apps');
           if (legacyData) {
@@ -3404,7 +3667,7 @@
             color: app.color || colorPalette[0],
             customColor: app.customColor || app.color || colorPalette[0],
             size: app.size || 'small',
-            source: app.source || 'user',
+            source: sanitizeAppSource(app),
             installTime: app.installTime || new Date().toISOString(),
             lastUpdated: app.lastUpdated || new Date().toISOString(),
             hidden: app.hidden || false,
@@ -3429,12 +3692,16 @@
     }
     
     // 统一的背景应用入口（DOMGuard以此值为授权基准）
+    // 修复：只更新 CSS 自定义属性 --bg，不直接赋值 body.style.background，
+    // 避免内联 style 覆盖各主题的 body background 规则，从而导致壁纸不显示。
     function setAuthorizedBackground(bgValue) {
       authorizedBG = bgValue;
       document.body.style.setProperty('--bg', bgValue);
-      document.body.style.background = bgValue;
-      // 存储浏览器规范化后的快照，供巡检精确比对
-      authorizedBGNormalized = document.body.style.background;
+      // 清除可能残留的旧版内联 background 赋值（兼容升级场景）
+      if (document.body.style.background && !document.body.style.background.startsWith('var(')) {
+        document.body.style.removeProperty('background');
+      }
+      authorizedBGNormalized = bgValue; // 以 --bg 变量值作为巡检基准，而非 computed background
     }
     
     async function loadSettings() {
@@ -3718,7 +3985,12 @@
       if (app.locked) { showToast('应用已锁定，无法重命名', 'error'); return; }
       
       const newName = prompt('请输入新的应用名称：', app.name);
-      if (newName?.trim()) { app.name = newName.trim().slice(0, 50); saveApps(); renderApps(); showToast('已重命名', 'success', 1500); }
+      if (newName?.trim()) {
+        const finalName = sanitizeAppDisplayName(newName.trim().slice(0, 50));
+        app.name = finalName;
+        saveApps(); renderApps();
+        showToast(finalName !== newName.trim().slice(0, 50) ? '该名称为系统保留名称，已自动调整' : '已重命名', 'success', 1500);
+      }
       document.querySelector('.app-action-modal')?.remove();
     }
     
@@ -3850,7 +4122,7 @@
           await setContentSafe(fileName, content);
           const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
           const now = new Date().toISOString();
-          installedApps.push({ name: file.name.replace(/\.html?$/i, '').slice(0, 50), file: fileName, icon: '📱', color: color, customColor: color, size: 'small', source: 'user', installTime: now, lastUpdated: now, hidden: false, locked: false });
+          installedApps.push({ name: sanitizeAppDisplayName(file.name.replace(/\.html?$/i, '').slice(0, 50)), file: fileName, icon: '📱', color: color, customColor: color, size: 'small', source: 'user', installTime: now, lastUpdated: now, hidden: false, locked: false });
           saveApps(); closeModal(); currentPage = 0; renderApps();
           showToast('安装成功！', 'success');
           addLog('info', '安装应用: ' + file.name);
@@ -3901,7 +4173,7 @@
             installedApps[ex].lastUpdated = now;
           } else {
             installedApps.push({
-              name: file.name.replace(/\.html?$/i, '').slice(0, 50),
+              name: sanitizeAppDisplayName(file.name.replace(/\.html?$/i, '').slice(0, 50)),
               file: fn, icon: '📱', color: cl, customColor: cl, size: 'small',
               source: 'user', installTime: now, lastUpdated: now, hidden: false, locked: false
             });
@@ -4138,7 +4410,7 @@
               if (app.fileContent) await setContentSafe(safeFile, app.fileContent);
               if (merge && installedApps.find(a => a.file === safeFile)) continue;
               installedApps.push({
-                name: String(app.name || '未命名').slice(0, 50),
+                name: sanitizeAppDisplayName(String(app.name || '未命名').slice(0, 50)),
                 file: safeFile,
                 icon: app.icon || '📱',
                 color: app.color || colorPalette[0],
@@ -4318,7 +4590,7 @@
   </div>
   <div class="card">
     <h2>ℹ️ 说明</h2>
-    <div class="note">安全中心内置于系统（设置 → 系统 → 系统安全），内容随系统版本更新，无法被卸载或篡改。系统通过沙箱隔离、DOMGuard 界面防护、消息鉴权与限流等多重机制，防止恶意应用篡改主页样式或逃逸容器。</div>
+    <div class="note">安全中心内置于系统（设置 → 系统 → 系统安全），内容随系统版本更新，无法被卸载或篡改。系统通过沙箱隔离（关闭后仍保留基础防护）、DOMGuard 界面防护、消息鉴权与限流、高危操作黑名单拦截、系统密码加密存储、应用防伪装校验等多重机制，防止恶意应用篡改主页样式、越权操作或冒充系统组件。</div>
   </div>
 <script>
 (function(){
@@ -4525,7 +4797,7 @@
         }
       });
       
-      addLog('info', 'HTMLOS v4.0 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v4.1 初始化完成, 应用数: ' + installedApps.length);
     });
   </script>
 </body>
