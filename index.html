@@ -170,7 +170,9 @@
       .theme-glass .sort-menu,
       .theme-glass .search-box input,
       .theme-glass .notification-center,
-      .theme-glass .toast-notification {
+      .theme-glass .toast-notification,
+      .theme-glass .toolbar,
+      .theme-glass .nav-buttons {
         backdrop-filter: blur(20px) saturate(150%);
         -webkit-backdrop-filter: blur(20px) saturate(150%);
       }
@@ -369,6 +371,10 @@
       margin-bottom: 12px;
       flex-shrink: 0;
       flex-wrap: wrap;
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 6px;
+      transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
 
     .toolbar button {
@@ -518,6 +524,10 @@
       gap: 15px;
       margin: 15px 0 8px;
       flex-shrink: 0;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 6px 10px;
+      transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
 
     .nav-buttons.hidden { display: none; }
