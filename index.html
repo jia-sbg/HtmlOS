@@ -178,6 +178,18 @@
       }
     }
 
+    .theme-glass .toolbar {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 6px;
+    }
+
+    .theme-glass .nav-buttons {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 6px 10px;
+    }
+
     .theme-dark {
       --card-bg: rgba(20,20,22,0.9);
       --card-border: 1px solid rgba(255,255,255,0.1);
@@ -371,9 +383,6 @@
       margin-bottom: 12px;
       flex-shrink: 0;
       flex-wrap: wrap;
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 6px;
       transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
 
@@ -524,9 +533,6 @@
       gap: 15px;
       margin: 15px 0 8px;
       flex-shrink: 0;
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 6px 10px;
       transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
 
