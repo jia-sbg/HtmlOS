@@ -31,16 +31,26 @@
     
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg, #1e5f9e);
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-attachment: fixed;
-      background-size: cover;
       color: #fff;
       height: 100dvh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+    }
+    
+    /* 壁纸单独用 fixed 定位伪元素承载，使其成为独立合成层，
+       完全脱离主层重绘路径，消除 background-attachment:fixed 
+       在移动端每帧触发整页 repaint 的性能问题 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--bg, #1e5f9e);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      transform: translateZ(0);
     }
 
     /* 减少动画偏好支持 */
@@ -102,11 +112,10 @@
     }
 
     /* 玻璃主题默认背景仅作为"无壁纸时"的兜底，用户设置了壁纸(--bg)后应正常显示壁纸供毛玻璃卡片透视模糊 */
-    .theme-glass body {
+    .theme-glass body::before {
       background: var(--bg, linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%));
       background-repeat: no-repeat;
       background-position: center center;
-      background-attachment: fixed;
       background-size: cover;
     }
 
@@ -204,6 +213,7 @@
       z-index: 100;
       min-height: 44px;
       padding-top: env(safe-area-inset-top, 8px);
+      transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
     
     .win-user {
@@ -416,10 +426,11 @@
       flex: 1;
       min-height: 0;
       -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
       touch-action: pan-y;
       align-content: start;
       contain: layout style paint;
+      overscroll-behavior: contain;
+      will-change: scroll-position;
     }
     
     /* 应用磁贴 */
@@ -432,7 +443,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, filter var(--transition-speed) ease;
+      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       color: var(--text-color);
       padding: 8px;
@@ -453,10 +464,12 @@
     .app-icon.size-wide { grid-column: span 3; grid-row: span 1; aspect-ratio: 3 / 1; }
     .app-icon.size-big { grid-column: span 3; grid-row: span 2; aspect-ratio: 3 / 2; }
     
-    .app-icon:hover {
-      transform: scale(1.03);
-      filter: brightness(1.15);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    /* 移动端无 hover，只保留 active 状态，避免 filter 产生额外合成层 */
+    @media (hover: hover) {
+      .app-icon:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      }
     }
     
     .app-icon:active { transform: scale(0.97); }
@@ -468,14 +481,15 @@
       top: 4px; 
       right: 4px; 
       font-size: 12px; 
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     
     .app-icon .icon-emoji { 
       flex-shrink: 0;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
       line-height: 1;
       text-align: center;
+      /* 移除 drop-shadow filter：大量图标时每个均创建独立合成层，严重影响帧率 */
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
     }
     
     .app-icon.size-small .icon-emoji { font-size: clamp(24px, 5vw, 44px); }
@@ -550,6 +564,8 @@
       padding: 20px;
       padding-top: env(safe-area-inset-top, 20px);
       padding-bottom: env(safe-area-inset-bottom, 20px);
+      /* modal 是 fixed 层，确保独立合成不影响主界面 */
+      isolation: isolate;
     }
     
     .modal.show { display: flex; }
@@ -757,6 +773,7 @@
       flex-shrink: 0;
       transition: background-color var(--transition-speed) ease;
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
+      transform: translateZ(0); /* 独立合成层，隔离滚动重绘 */
     }
     
     .bottom-bar button { 
@@ -785,19 +802,23 @@
       width: 100%; height: 100%;
       background: #000;
       z-index: 200;
-      display: none;
+      display: flex; /* 保持 flex 使 transition 能正常运行 */
       flex-direction: column;
       transform: scale(0.95);
       opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      pointer-events: none;
+      visibility: hidden;
+      transition: transform 0.25s ease, opacity 0.25s ease, visibility 0s linear 0.25s;
       will-change: transform, opacity;
       padding-top: env(safe-area-inset-top, 0);
     }
     
     #appFrameContainer.show { 
-      display: flex;
       transform: scale(1);
       opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+      transition: transform 0.25s ease, opacity 0.25s ease, visibility 0s linear 0s;
     }
     
     .app-navbar {
@@ -2049,7 +2070,7 @@
     let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v4.1.0';
+    const VERSION = 'HTMLOS v4.1.1';
     
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
