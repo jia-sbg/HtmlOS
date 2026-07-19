@@ -2016,7 +2016,7 @@
     <iframe id="appFrame"
       allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *; autoplay *; clipboard-write *"
       allowfullscreen
-      sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads">
+      sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin">
     </iframe>
   </div>
 
@@ -2246,7 +2246,19 @@
 
         // 快照核心函数引用，供周期性比对
         this.watchedFnNames.forEach(name => {
-          if (typeof window[name] === 'function') this.watchedFns[name] = window[name];
+          if (typeof window[name] === 'function') {
+            this.watchedFns[name] = window[name];
+            // 锁定为不可写/不可配置：即使 allow-same-origin 存在，
+            // 恶意应用通过 parent.eval('coreFunc = fake') 也会直接抛
+            // TypeError: Cannot assign to read only property，攻击立即失效。
+            try {
+              Object.defineProperty(window, name, {
+                value: window[name],
+                writable: false,
+                configurable: false
+              });
+            } catch (e) { /* 极少数浏览器不允许重定义，回退到巡检恢复 */ }
+          }
         });
 
         // ① 关键元素被移除 → 自动恢复
@@ -2324,7 +2336,7 @@
           const ref = this.watchedFns[name];
           if (window[name] !== ref) {
             addLog('warn', 'DOMGuard: 核心函数 ' + name + ' 被篡改，已恢复');
-            try { window[name] = ref; } catch (e) {}
+            try { Object.defineProperty(window, name, { value: ref, writable: false, configurable: false }); } catch (e) {}
           }
         }
         // 主界面可见性（应用运行时主容器允许隐藏）
@@ -2794,19 +2806,15 @@
     }
 
     // ==================== 沙箱控制 ====================
-    // 安全修复：彻底移除 allow-same-origin。srcdoc + allow-same-origin 会让应用文档与
-    // 父页面同源，应用脚本因此能直接拿到 window.parent 的完整读写权限，进而执行
-    // parent.eval(...) 篡改 launchSecurityCenter / DOMGuard.watchedFns 等核心函数，
-    // 伪造"安全中心已卸载"的假象——这正是"制裁.html"演示的攻击路径。应用与主机之间
-    // 的全部通信本就走 postMessage（getSystemInfo/saveData/... 见上文白名单），并不
-    // 依赖同源，所以去掉这一项不影响任何正常功能，却能从根上切断这一整类越权访问：
-    // 无同源 = 无法读写 parent 的任何属性/函数，parent.eval 也会直接抛 SecurityError。
-    const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+    // allow-same-origin 是 srcdoc 方式加载应用的必要条件（没有它 about:srcdoc 文档无法运行）。
+    // 这会让应用文档与主页同源，理论上可通过 parent.eval 越权。
+    // 对策：在 DOMGuard.init() 里用 Object.defineProperty 将所有核心函数锁为 non-writable
+    // non-configurable，之后任何 parent.eval('launchSecurityCenter = ...') 都会直接抛
+    // TypeError，无论 srcdoc / allow-same-origin 是否存在。
+    const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
     // 关闭沙箱后依然保留的最小防护集合：绝不允许 iframe 变为完全无限制状态，
-    // 尤其绝不重新加回 allow-same-origin。
-    // 相比 SANDBOX_TOKENS 仍然不包含 allow-top-navigation / allow-pointer-lock /
-    // allow-orientation-lock 等，防止应用劫持整页跳转或锁定指针/屏幕方向。
-    const SANDBOX_MIN_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-popups-to-escape-sandbox';
+    // 也绝不加入 allow-top-navigation / allow-pointer-lock / allow-orientation-lock。
+    const SANDBOX_MIN_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin allow-popups-to-escape-sandbox';
 
     function toggleSandbox() {
       if (sandboxToggle.checked) {
@@ -4440,15 +4448,7 @@
 
       // 确保沙箱状态正确后再注入内容
       updateSandboxState(false);
-      // 安全 + 硬件兼容：使用 Blob URL 代替 srcdoc。
-      // srcdoc 在 about:srcdoc 源下无法接收 Feature Policy 委托（摄像头/麦克风失效）；
-      // 加 allow-same-origin 虽可修复权限但同时让应用能 parent.eval 越权。
-      // Blob URL 的文档 origin 是独立的 opaque origin：既隔离父窗口（parent 属性跨源）
-      // 又能正常接收 allow="camera *; microphone *; ..." 的权限委托，两者兼顾。
-      if (appFrame._blobUrl) { URL.revokeObjectURL(appFrame._blobUrl); appFrame._blobUrl = null; }
-      const _blob = new Blob([content], { type: 'text/html' });
-      appFrame._blobUrl = URL.createObjectURL(_blob);
-      appFrame.src = appFrame._blobUrl;
+      appFrame.srcdoc = content;
 
       setTimeout(() => {
         sendMessageToApp({ type: 'appLaunched', appName: app.name, appFile: app.file, timestamp: Date.now() });
@@ -4461,8 +4461,7 @@
     // 重建全新干净的iframe（防残留、防逃逸）
     function rebuildAppFrame() {
       if (appFrame && appFrame.parentNode) {
-        if (appFrame._blobUrl) { URL.revokeObjectURL(appFrame._blobUrl); appFrame._blobUrl = null; }
-        appFrame.src = 'about:blank';
+        appFrame.srcdoc = '';
         appFrame.parentNode.removeChild(appFrame);
       }
       const newFrame = document.createElement('iframe');
@@ -4872,10 +4871,7 @@
       appFrameContainer.classList.add('show');
       mainContainer.style.display = 'none';
       updateSandboxState(false);
-      if (appFrame._blobUrl) { URL.revokeObjectURL(appFrame._blobUrl); appFrame._blobUrl = null; }
-      const _scBlob = new Blob([SECURITY_CENTER_HTML], { type: 'text/html' });
-      appFrame._blobUrl = URL.createObjectURL(_scBlob);
-      appFrame.src = appFrame._blobUrl;
+      appFrame.srcdoc = SECURITY_CENTER_HTML;
       setTimeout(() => {
         sendMessageToApp({ type: 'appLaunched', appName: '安全中心', appFile: SYSTEM_APP_FILE, timestamp: Date.now() });
       }, 500);
