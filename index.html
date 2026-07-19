@@ -4440,7 +4440,15 @@
 
       // 确保沙箱状态正确后再注入内容
       updateSandboxState(false);
-      appFrame.srcdoc = content;
+      // 安全 + 硬件兼容：使用 Blob URL 代替 srcdoc。
+      // srcdoc 在 about:srcdoc 源下无法接收 Feature Policy 委托（摄像头/麦克风失效）；
+      // 加 allow-same-origin 虽可修复权限但同时让应用能 parent.eval 越权。
+      // Blob URL 的文档 origin 是独立的 opaque origin：既隔离父窗口（parent 属性跨源）
+      // 又能正常接收 allow="camera *; microphone *; ..." 的权限委托，两者兼顾。
+      if (appFrame._blobUrl) { URL.revokeObjectURL(appFrame._blobUrl); appFrame._blobUrl = null; }
+      const _blob = new Blob([content], { type: 'text/html' });
+      appFrame._blobUrl = URL.createObjectURL(_blob);
+      appFrame.src = appFrame._blobUrl;
 
       setTimeout(() => {
         sendMessageToApp({ type: 'appLaunched', appName: app.name, appFile: app.file, timestamp: Date.now() });
@@ -4453,7 +4461,8 @@
     // 重建全新干净的iframe（防残留、防逃逸）
     function rebuildAppFrame() {
       if (appFrame && appFrame.parentNode) {
-        appFrame.srcdoc = '';
+        if (appFrame._blobUrl) { URL.revokeObjectURL(appFrame._blobUrl); appFrame._blobUrl = null; }
+        appFrame.src = 'about:blank';
         appFrame.parentNode.removeChild(appFrame);
       }
       const newFrame = document.createElement('iframe');
@@ -4863,7 +4872,10 @@
       appFrameContainer.classList.add('show');
       mainContainer.style.display = 'none';
       updateSandboxState(false);
-      appFrame.srcdoc = SECURITY_CENTER_HTML;
+      if (appFrame._blobUrl) { URL.revokeObjectURL(appFrame._blobUrl); appFrame._blobUrl = null; }
+      const _scBlob = new Blob([SECURITY_CENTER_HTML], { type: 'text/html' });
+      appFrame._blobUrl = URL.createObjectURL(_scBlob);
+      appFrame.src = appFrame._blobUrl;
       setTimeout(() => {
         sendMessageToApp({ type: 'appLaunched', appName: '安全中心', appFile: SYSTEM_APP_FILE, timestamp: Date.now() });
       }, 500);
