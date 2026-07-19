@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
   <meta name="theme-color" content="#0078d7">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline' https:; img-src * data: blob:; connect-src *; media-src blob:;">
-  <title>HTMLOS · v4.4.0</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' https:; style-src 'unsafe-inline' https:; img-src * data: blob:; connect-src *; media-src blob:;">
+  <title>HTMLOS · v4.5.0</title>
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -2016,7 +2016,7 @@
     <iframe id="appFrame"
       allow="camera *; microphone *; accelerometer *; geolocation *; gyroscope *; display-capture *; fullscreen *; autoplay *; clipboard-write *"
       allowfullscreen
-      sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin">
+      sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads">
     </iframe>
   </div>
 
@@ -2124,7 +2124,7 @@
     let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v4.4.0';
+    const VERSION = 'HTMLOS v4.5.0';
 
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -2794,11 +2794,19 @@
     }
 
     // ==================== 沙箱控制 ====================
-    const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin';
-    // 关闭沙箱后依然保留的最小防护集合：绝不允许 iframe 变为完全无限制状态。
+    // 安全修复：彻底移除 allow-same-origin。srcdoc + allow-same-origin 会让应用文档与
+    // 父页面同源，应用脚本因此能直接拿到 window.parent 的完整读写权限，进而执行
+    // parent.eval(...) 篡改 launchSecurityCenter / DOMGuard.watchedFns 等核心函数，
+    // 伪造"安全中心已卸载"的假象——这正是"制裁.html"演示的攻击路径。应用与主机之间
+    // 的全部通信本就走 postMessage（getSystemInfo/saveData/... 见上文白名单），并不
+    // 依赖同源，所以去掉这一项不影响任何正常功能，却能从根上切断这一整类越权访问：
+    // 无同源 = 无法读写 parent 的任何属性/函数，parent.eval 也会直接抛 SecurityError。
+    const SANDBOX_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads';
+    // 关闭沙箱后依然保留的最小防护集合：绝不允许 iframe 变为完全无限制状态，
+    // 尤其绝不重新加回 allow-same-origin。
     // 相比 SANDBOX_TOKENS 仍然不包含 allow-top-navigation / allow-pointer-lock /
     // allow-orientation-lock 等，防止应用劫持整页跳转或锁定指针/屏幕方向。
-    const SANDBOX_MIN_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin allow-popups-to-escape-sandbox';
+    const SANDBOX_MIN_TOKENS = 'allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-popups-to-escape-sandbox';
 
     function toggleSandbox() {
       if (sandboxToggle.checked) {
@@ -5002,7 +5010,7 @@
         }
       });
 
-      addLog('info', 'HTMLOS v4.4 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v4.5 初始化完成, 应用数: ' + installedApps.length);
     });
   </script>
 </body>
