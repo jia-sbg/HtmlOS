@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"/>
   <meta name="theme-color" content="#0078d7">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline' https:; img-src * data: blob:; connect-src *; media-src blob:;">
-  <title>HTMLOS · v4.3.0</title>
+  <title>HTMLOS · v4.4.0</title>
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhUTUxPUyIsCiAgInNob3J0X25hbWUiOiAiSFRNTE9TIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWU1ZjllIiwKICAidGhlbWVfY29sb3IiOiAiIzAwNzhkNyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnJTIwdmlld0JveD0nMCAwJTIwMTAwJTIwMTAwJyUzRSUzQ3JlY3QlMjB3aWR0aD0nMTAwJyUyMGhlaWdodD0nMTAwJyUyMHJ4PScyMCclMjBmaWxsPSclMjMwMDc4ZDcnLyUzRSUzQ3RleHQlMjB4PSc1MCclMjB5PSc1MCclMjBkb21pbmFudC1iYXNlbGluZT0nbWlkZGxlJyUyMHRleHQtYW5jaG9yPSdtaWRkbGUnJTIwZmlsbD0nd2hpdGUnJTIwZm9udC1zaXplPSc0MCclMjBmb250LWZhbWlseT0nc2Fucy1zZXJpZiclM0VIJTI2bHQ7JTI2Z3Q7TyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0=">
@@ -579,6 +579,15 @@
       padding-bottom: env(safe-area-inset-bottom, 20px);
       /* modal 是 fixed 层，确保独立合成不影响主界面 */
       isolation: isolate;
+    }
+
+    /* 所有弹窗（包括用户信息界面）统一加上毛玻璃模糊蒙层，而不只是玻璃主题下才有。
+       只有一层 fixed 蒙层参与实时模糊，不随内容多少变化，开销恒定。 */
+    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+      .modal {
+        backdrop-filter: blur(16px) saturate(150%);
+        -webkit-backdrop-filter: blur(16px) saturate(150%);
+      }
     }
 
     .modal.show { display: flex; }
@@ -1527,6 +1536,10 @@
       .icon-grid { grid-template-columns: repeat(4, 1fr); }
       .color-palette { grid-template-columns: repeat(6, 1fr); }
       .app-info-actions { grid-template-columns: 1fr; }
+      .modal-actions { flex-wrap: wrap; }
+      .modal-actions button { font-size: 13px; padding: 10px; min-width: 45%; }
+      .settings-tab { font-size: 13px; padding: 6px 12px; }
+      .modal-content h2 { font-size: 19px; }
     }
 
     @media (max-width: 360px) {
@@ -1578,7 +1591,7 @@
   </div>
 
   <div class="container" id="mainContainer" oncontextmenu="return false;">
-    <h1>开始</h1>
+    <h1>主页</h1>
     <div class="datetime" id="datetime"></div>
 
     <!-- 搜索框 -->
@@ -1715,9 +1728,9 @@
           <div class="setting-item">
             <label>系统主题</label>
             <select id="themeSelect">
-              <option value="sharp" selected>直角无动画</option>
-              <option value="glass">玻璃质感+丝滑动画</option>
-              <option value="dark">纯黑夜间模式</option>
+              <option value="sharp" selected>扁平化</option>
+              <option value="glass">毛玻璃</option>
+              <option value="dark">深色模式</option>
             </select>
           </div>
           <div class="setting-item">
@@ -1996,7 +2009,7 @@
   <!-- 应用框架（修复：移除空src，防止页面自我嵌套加载） -->
   <div id="appFrameContainer">
     <div class="app-navbar">
-      <button onclick="closeApp()">🏠 开始</button>
+      <button onclick="closeApp()">🏠 主页</button>
       <select id="switchAppSelect" onchange="switchAppFromSelect()"></select>
       <span class="app-title" id="runningAppTitle">应用</span>
     </div>
@@ -2111,7 +2124,7 @@
     let authorizedBGNormalized = '';
     const TOUCH_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 80;
-    const VERSION = 'HTMLOS v4.3.0';
+    const VERSION = 'HTMLOS v4.4.0';
 
     // 缓存DOM元素
     const $ = (id) => document.getElementById(id);
@@ -4989,7 +5002,7 @@
         }
       });
 
-      addLog('info', 'HTMLOS v4.3 初始化完成, 应用数: ' + installedApps.length);
+      addLog('info', 'HTMLOS v4.4 初始化完成, 应用数: ' + installedApps.length);
     });
   </script>
 </body>
